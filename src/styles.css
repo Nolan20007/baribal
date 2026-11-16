@@ -246,3 +246,9 @@ html[data-theme="light"] .header .nav a{border-color:#454647}
  .topline-inner div a{font-size:14px}
  .footer-grid>div{gap:10px}
 }
+
+/* Readable dark text on the white service cards in the dark site theme. */
+.service-card .service-copy h3{color:#171819}
+.service-card .service-copy h4{color:#555650}
+.service-card .service-copy p{color:#696a68}
+.service-card .service-copy .eyebrow{color:#b8752f}
