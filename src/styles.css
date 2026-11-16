@@ -760,3 +760,12 @@ html[data-theme="light"] .contact-widget-form small{color:#dedede}
   .studio-map-card .studio-map-address p{margin-top:6px;font-size:11px;line-height:1.55}
   .studio-map-card .studio-map-link{min-height:38px;padding:9px 10px;font-size:10px}
 }
+
+
+/* Studio: reduce only the large top photo; keep the lower row and layout unchanged. */
+.studio-gallery .studio-photo-main{
+  width:50%;
+  max-width:50%;
+  margin-left:auto;
+  margin-right:auto;
+}
