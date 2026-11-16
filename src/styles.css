@@ -850,7 +850,7 @@ html.device-preview-phone .contact-widget-form output{font-size:8px}
 
 /* Separate test-preview launcher in the header and an isolated responsive modal. */
 .device-preview-open{
-  flex:0 0 auto;order:2;display:inline-flex;align-items:center;justify-content:center;
+  flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;
   min-height:30px;padding:6px 10px;border:1px dashed rgba(240,160,77,.75);
   border-radius:4px;background:rgba(240,160,77,.07);color:var(--orange);
   font:700 9px/1.2 Manrope,Arial,sans-serif;letter-spacing:.35px;white-space:nowrap;
