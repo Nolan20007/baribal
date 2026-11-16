@@ -297,3 +297,9 @@ html[data-theme="light"] .service-info-tech{background:#f4f2ed}
 .work-card .work-copy p{color:#696a68}
 .work-card .work-copy .eyebrow{color:#b8752f}
 .work-card .work-copy .text-link{color:#171819}
+
+
+/* Portfolio expansion on the dedicated /foto page. */
+.portfolio-card.is-extra{display:none}
+.portfolio-card.is-extra.is-visible{display:block}
+.portfolio-more-wrap{margin:34px 0 12px}
