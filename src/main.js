@@ -1,5 +1,4 @@
 import "./styles.css";
-const devicePreviewMode = new URLSearchParams(location.search).get("devicePreview") === "1";
 try { const savedTheme = localStorage.getItem("baribal-theme"); if (savedTheme === "light" || savedTheme === "dark") document.documentElement.dataset.theme = savedTheme; } catch {}
 const logo = "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/f055b8b248f6e844ebf90239d4536b94.png";
 const work = [
@@ -88,8 +87,12 @@ const header = () => `
     <a class="brand" href="/"><img src="${logo}" alt="" /><span><b>BARIBAL</b><small>СТУДИЯ ЗАЩИТНЫХ ТЕХНОЛОГИЙ</small></span></a>
     <button class="menu-toggle" aria-label="Открыть меню" aria-expanded="false"><i></i><i></i><i></i></button>
     <nav class="nav">${nav.map(([label, href]) => `<a href="${href}" ${(isVideoPage && href === "/video") ? 'aria-current="page"' : ""}>${label}</a>`).join("")}</nav>
-    ${devicePreviewMode || path !== "/" ? "" : '<button class="device-preview-launcher" type="button" aria-expanded="false" aria-controls="device-preview-popover">Предпросмотр <span aria-hidden="true">▱</span></button>'}
-    ${devicePreviewPanel()}\n    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Переключить цветовую тему"><span class="theme-icon" aria-hidden="true">☀</span><span class="theme-label">Светлая</span></button>
+    <div class="device-preview-tools" role="group" aria-label="Тестовый блок адаптивности">
+      <span class="device-preview-caption">ТЕСТОВЫЙ БЛОК</span>
+      <button class="device-preview-button" type="button" data-preview-width="390" aria-pressed="false">Телефон</button>
+      <button class="device-preview-button is-active" type="button" data-preview-width="1366" aria-pressed="true">Ноутбук</button>
+      <button class="device-preview-button" type="button" data-preview-width="1920" aria-pressed="false">Широкий монитор</button>
+    </div>\n    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Переключить цветовую тему"><span class="theme-icon" aria-hidden="true">☀</span><span class="theme-label">Светлая</span></button>
     <button class="button button-small js-callback">Записаться</button>
   </div></header>`;
 const footer = () => `
@@ -140,21 +143,6 @@ const portfolioCards = () => portfolio.map((item, index) => {
   return `<article class="work-card portfolio-card${index >= 9 ? " is-extra" : ""}" data-categories="${categories.join("|")}"><div class="work-image"><img src="${item.image}" alt="${item.title}" loading="lazy" /></div><div class="work-copy"><span class="eyebrow">${item.type}</span><h3>${item.title}</h3><p>${item.text}</p><a class="text-link js-callback" href="#callback" data-service-title="${serviceForWork(item)}">Обсудить похожую работу <span>↗</span></a></div></article>`;
 }).join("");
 const serviceCards = () => services.map((item, i) => `<article class="service-card"><div class="service-image"><img src="${item.image}" alt="" loading="lazy" /></div><div class="service-copy"><span class="eyebrow">0${i + 1} / УСЛУГА</span><h3>${item.title}</h3><h4>${item.subtitle}</h4><p>${item.text}</p><div class="service-bottom"><b>${item.price}</b><button class="text-link js-callback">Узнать больше <span>↗</span></button></div></div></article>`).join("");
-const devicePreviewPanel = () => devicePreviewMode || path !== "/" ? "" : `
-    <div class="device-preview-popover" id="device-preview-popover" aria-label="Технический предпросмотр адаптивности">
-      <div class="device-preview-panel">
-        <div class="device-preview-popover-heading"><div><span class="eyebrow">ТЕХНИЧЕСКИЙ ИНСТРУМЕНТ</span><h3>Предпросмотр сайта</h3></div><button class="device-preview-close" type="button" aria-label="Закрыть предпросмотр">×</button></div>
-          <div class="device-preview-toolbar" role="group" aria-label="Размер экрана">
-            <button class="device-preview-button" type="button" data-preview-width="390" data-preview-height="844" aria-pressed="false"><span aria-hidden="true">▯</span> Телефон</button>
-            <button class="device-preview-button is-active" type="button" data-preview-width="1366" data-preview-height="900" aria-pressed="true"><span aria-hidden="true">▱</span> Ноутбук</button>
-            <button class="device-preview-button" type="button" data-preview-width="1920" data-preview-height="1080" aria-pressed="false"><span aria-hidden="true">▭</span> Широкий монитор</button>
-          </div>
-          <div class="device-preview-stage" aria-label="Предпросмотр страницы">
-            <iframe class="device-preview-frame" title="Предпросмотр сайта в выбранном размере экрана" loading="lazy"></iframe>
-          </div>
-        <p class="device-preview-note">Внутри окна можно прокручивать страницу независимо от основного сайта.</p>
-      </div>
-    </div>`;
 const homePage = () => `
   <main>
     <section class="hero"><div class="hero-shade"></div><div class="wrap hero-content"><span class="eyebrow">BARIBAL · СТУДИЯ ЗАЩИТНЫХ ТЕХНОЛОГИЙ</span><h1>Современные технологии<br /><em>защиты автомобиля</em><br />в Перми</h1><p>Профессиональный уход, защита кузова и интерьера<br class="desktop-only" /> с гарантией от 12 до 72 месяцев</p><div class="hero-actions"><button class="button js-callback">Записаться на обслуживание <span>↗</span></button><a class="button button-outline" href="#works">Наши работы</a></div><div class="hero-index"><b>01</b><span>ЗАЩИТА · УХОД · СТИЛЬ</span></div></div></section>
@@ -359,49 +347,64 @@ if (location.pathname === basePath || location.pathname.startsWith(basePath + "/
   document.querySelectorAll("#app a[href^=\"/\"]").forEach(link => { link.setAttribute("href", basePath + link.getAttribute("href")); });
 }
 
-const devicePreview = document.querySelector(".device-preview-popover");
-const previewLauncher = document.querySelector(".device-preview-launcher");
-if (devicePreview && previewLauncher) {
-  const previewStage = devicePreview.querySelector(".device-preview-stage");
-  const previewFrame = devicePreview.querySelector(".device-preview-frame");
-  const previewButtons = [...devicePreview.querySelectorAll(".device-preview-button")];
-  const previewClose = devicePreview.querySelector(".device-preview-close");
-  const previewUrl = new URL(location.href);
-  previewUrl.searchParams.set("devicePreview", "1");
-  previewUrl.hash = "";
-  previewFrame.src = previewUrl.toString();
-  let previewSize = { width: 1366, height: 900 };
-  const fitPreview = () => {
-    const scale = Math.min(1, Math.max(.2, (previewStage.clientWidth - 24) / previewSize.width));
-    previewFrame.style.width = previewSize.width + "px";
-    previewFrame.style.height = previewSize.height + "px";
-    previewFrame.style.transform = "translateX(-50%) scale(" + scale + ")";
-    previewStage.style.height = Math.round(previewSize.height * scale) + "px";
-  };
-  const closePreview = () => {
-    devicePreview.classList.remove("is-open");
-    previewLauncher.setAttribute("aria-expanded", "false");
-  };
-  previewLauncher.addEventListener("click", () => {
-    const open = !devicePreview.classList.contains("is-open");
-    devicePreview.classList.toggle("is-open", open);
-    previewLauncher.setAttribute("aria-expanded", String(open));
-    if (open) fitPreview();
-  });
-  previewClose.addEventListener("click", closePreview);
-  previewButtons.forEach(button => button.addEventListener("click", () => {
-    previewSize = { width: Number(button.dataset.previewWidth), height: Number(button.dataset.previewHeight) };
-    previewButtons.forEach(item => {
-      const active = item === button;
-      item.classList.toggle("is-active", active);
-      item.setAttribute("aria-pressed", String(active));
-    });
-    fitPreview();
-  }));
-  if ("ResizeObserver" in window) new ResizeObserver(fitPreview).observe(previewStage);
-  else window.addEventListener("resize", fitPreview);
-  document.addEventListener("keydown", event => { if (event.key === "Escape") closePreview(); });
+const devicePreviewButtons = [...document.querySelectorAll(".device-preview-button")];
+const devicePreviewRoot = document.querySelector("#app");
+let devicePreviewStyle = document.querySelector("#device-preview-responsive-rules");
+if (!devicePreviewStyle) {
+  devicePreviewStyle = document.createElement("style");
+  devicePreviewStyle.id = "device-preview-responsive-rules";
+  document.head.append(devicePreviewStyle);
 }
+const rebuildDevicePreviewRules = width => {
+  const output = [];
+  const walk = (rules, active = false) => {
+    for (const rule of rules) {
+      if (rule instanceof CSSMediaRule) {
+        const max = rule.conditionText.match(/max-width\s*:\s*(\d+(?:\.\d+)?)px/i);
+        const min = rule.conditionText.match(/min-width\s*:\s*(\d+(?:\.\d+)?)px/i);
+        const matches = (!max || width <= Number(max[1])) && (!min || width >= Number(min[1]));
+        if (matches) walk(rule.cssRules, true);
+      } else if (rule instanceof CSSStyleRule && active) {
+        const selectors = rule.selectorText.split(",").map(selector => {
+          const trimmed = selector.trim();
+          return trimmed.startsWith("html") ? trimmed.replace(/^html/, "html.device-preview-phone") : "html.device-preview-phone " + trimmed;
+        });
+        output.push(selectors.join(",") + "{" + rule.style.cssText + "}");
+      }
+    }
+  };
+  for (const sheet of document.styleSheets) {
+    try { walk(sheet.cssRules); } catch {}
+  }
+  devicePreviewStyle.textContent = output.join("\n");
+};
+const setDevicePreview = width => {
+  const phoneMode = width <= 760;
+  document.documentElement.classList.toggle("device-preview-phone", phoneMode);
+  document.documentElement.classList.toggle("device-preview-wide", width > 1366);
+  devicePreviewRoot.style.width = width + "px";
+  devicePreviewRoot.style.maxWidth = "none";
+  devicePreviewRoot.style.marginLeft = "auto";
+  devicePreviewRoot.style.marginRight = "auto";
+  document.body.style.overflowX = width > window.innerWidth ? "auto" : "hidden";
+  if (phoneMode) rebuildDevicePreviewRules(width);
+  else devicePreviewStyle.textContent = "";
+  devicePreviewButtons.forEach(button => {
+    const active = Number(button.dataset.previewWidth) === width;
+    button.classList.toggle("is-active", active);
+    button.setAttribute("aria-pressed", String(active));
+  });
+  window.scrollTo({ top: 0, behavior: "instant" });
+};
+devicePreviewButtons.forEach(button => button.addEventListener("click", () => {
+  setDevicePreview(Number(button.dataset.previewWidth));
+}));
+window.addEventListener("resize", () => {
+  if (document.documentElement.classList.contains("device-preview-phone")) {
+    const active = Number(document.querySelector(".device-preview-button.is-active")?.dataset.previewWidth || 390);
+    setDevicePreview(active);
+  }
+});
 const backToTop = document.querySelector(".back-to-top");
 const updateBackToTop = () => {
   const scrollPosition = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
