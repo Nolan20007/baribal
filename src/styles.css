@@ -1746,3 +1746,11 @@ html[data-design="3"] .works-section .work-actions .js-open-work-gallery{
     box-shadow:0 3px 16px rgba(0,0,0,.45);
   }
 }
+
+
+/* Keep the compact callback action's label black. */
+.works-section .work-actions .js-callback,
+.works-section .work-actions .js-callback:visited,
+.works-section .work-actions .js-callback:hover{
+  color:#000!important;
+}
