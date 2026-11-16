@@ -313,3 +313,12 @@ html[data-theme="light"] .service-info-tech{background:#f4f2ed}
 .back-to-top span{transform:translateY(-1px)}
 @media(max-width:560px){.back-to-top{width:44px;height:44px;right:16px;bottom:18px}}
 @media(prefers-reduced-motion:reduce){.back-to-top{transition:none}}
+
+
+/* Portfolio category filters. */
+.portfolio-filters{display:flex;flex-wrap:wrap;gap:9px;margin:0 0 30px}
+.portfolio-filter{border:1px solid var(--line);border-radius:999px;padding:10px 16px;background:transparent;color:inherit;font-size:11px;font-weight:700;transition:background .2s,border-color .2s,color .2s}
+.portfolio-filter:hover,.portfolio-filter.is-active{background:var(--orange);border-color:var(--orange);color:#171819}
+.portfolio-card[hidden]{display:none!important}
+.portfolio-more-wrap button[hidden]{display:none!important}
+@media(max-width:560px){.portfolio-filters{gap:7px}.portfolio-filter{padding:9px 12px;font-size:10px}}
