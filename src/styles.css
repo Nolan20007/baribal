@@ -1151,3 +1151,9 @@ html[data-theme="light"] .device-preview-close{color:#222;border-color:rgba(20,2
     box-sizing:border-box;
   }
 }
+
+
+/* The device preview is intended for desktop/tablet testing, not narrow phones. */
+@media(max-width:760px){
+  .device-preview-open{display:none!important}
+}
