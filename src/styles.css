@@ -726,3 +726,37 @@ html[data-theme="light"] .contact-widget-form small{color:#dedede}
  .studio-map-card .studio-map-address{border-left:0;border-top:1px solid rgba(255,255,255,.13);padding:9px 0 0}
  .studio-map-card .studio-map-frame{height:135px;min-height:135px}
 }
+
+
+/* Studio gallery: scale the complete photo-and-map composition down to half width. */
+.studio-gallery{
+  width:50%;
+  max-width:50%;
+  margin-left:auto;
+  margin-right:auto;
+}
+.studio-lower{
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,.82fr);
+  gap:6px;
+}
+.studio-map.studio-map-card{
+  padding:9px;
+  gap:6px;
+}
+.studio-map-card .studio-map-heading h3{font-size:clamp(14px,1.15vw,18px)}
+.studio-map-card .studio-map-frame{height:56px;min-height:56px}
+.studio-map-card .studio-map-address{padding-top:5px}
+.studio-map-card .studio-map-address .eyebrow{font-size:7px;letter-spacing:1px}
+.studio-map-card .studio-map-address p{margin-top:3px;font-size:7px;line-height:1.4}
+.studio-map-card .studio-map-link{min-height:25px;padding:5px 5px;font-size:7px}
+@media(max-width:700px){
+  .studio-gallery{width:100%;max-width:100%}
+  .studio-lower{grid-template-columns:1fr 1fr;gap:10px}
+  .studio-map.studio-map-card{padding:16px;gap:9px}
+  .studio-map-card .studio-map-heading h3{font-size:clamp(22px,5vw,28px)}
+  .studio-map-card .studio-map-frame{height:125px;min-height:125px}
+  .studio-map-card .studio-map-address{padding:9px 0 0}
+  .studio-map-card .studio-map-address .eyebrow{font-size:9px;letter-spacing:1.4px}
+  .studio-map-card .studio-map-address p{margin-top:6px;font-size:11px;line-height:1.55}
+  .studio-map-card .studio-map-link{min-height:38px;padding:9px 10px;font-size:10px}
+}
