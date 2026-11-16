@@ -36,8 +36,8 @@ const footer = () => `
     <div><h4>Навигация</h4><a href="/tehnology">Услуги</a><a href="/foto">Наши работы</a><a href="/reviews">Отзывы</a><a href="/video">Видео</a><a href="/politika-konfidencialnosti">Политика конфиденциальности</a></div>
   </div><div class="wrap footer-bottom"><span>© BARIBAL — студия защитных технологий</span><span>Пермь</span></div></footer>`;
 const callback = () => `
-  <div class="modal" id="callback-modal" aria-hidden="true"><div class="modal-backdrop js-close"></div><section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button class="modal-close js-close" aria-label="Закрыть">×</button><span class="eyebrow">BARIBAL · ПЕРМЬ</span><h2 id="modal-title">Мы вам перезвоним</h2><p>Оставьте номер — обсудим задачу и подберём решение для вашего автомобиля.</p><form class="lead-form demo-form"><label>Ваше имя<input name="name" placeholder="Как к вам обращаться" /></label><label>Телефон<input name="phone" type="tel" placeholder="+7 (___) ___-__-__" required /></label><button class="button" type="submit">Заказать консультацию</button><small>Форма пока работает в режиме предпросмотра. Перед публикацией подключим отправку через Creatium.</small><output></output></form></section></div>`;
-const workCards = () => work.map(item => `<article class="work-card"><div class="work-image"><img src="${item.image}" alt="${item.title}" loading="lazy" /></div><div class="work-copy"><span class="eyebrow">${item.type}</span><h3>${item.title}</h3><p>${item.text}</p><a class="text-link" href="#callback">Обсудить похожую работу <span>↗</span></a></div></article>`).join("");
+  <div class="modal" id="callback-modal" aria-hidden="true"><div class="modal-backdrop js-close"></div><section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button class="modal-close js-close" aria-label="Закрыть">×</button><span class="eyebrow">BARIBAL · ПЕРМЬ</span><h2 id="modal-title">Мы вам перезвоним</h2><p id="callback-context">Оставьте номер — обсудим задачу и подберём решение для вашего автомобиля.</p><form class="lead-form demo-form"><label>Ваше имя<input name="name" placeholder="Как к вам обращаться" /></label><label>Телефон<input name="phone" type="tel" placeholder="+7 (___) ___-__-__" required /></label><button class="button" type="submit">Заказать консультацию</button><small>Форма пока работает в режиме предпросмотра. Перед публикацией подключим отправку через Creatium.</small><output></output></form></section></div>`;
+const workCards = () => work.map(item => `<article class="work-card"><div class="work-image"><img src="${item.image}" alt="${item.title}" loading="lazy" /></div><div class="work-copy"><span class="eyebrow">${item.type}</span><h3>${item.title}</h3><p>${item.text}</p><a class="text-link js-callback" href="#callback" data-work-title="${item.title}">Обсудить похожую работу <span>↗</span></a></div></article>`).join("");
 const serviceCards = () => services.map((item, i) => `<article class="service-card"><div class="service-image"><img src="${item.image}" alt="" loading="lazy" /></div><div class="service-copy"><span class="eyebrow">0${i + 1} / УСЛУГА</span><h3>${item.title}</h3><h4>${item.subtitle}</h4><p>${item.text}</p><div class="service-bottom"><b>${item.price}</b><button class="text-link js-callback">Узнать больше <span>↗</span></button></div></div></article>`).join("");
 const homePage = () => `
   <main>
@@ -123,9 +123,17 @@ document.querySelectorAll(".nav a").forEach(link => link.addEventListener("click
   menuButton.setAttribute("aria-expanded", "false");
 }));
 const modal = document.querySelector("#callback-modal");
-const openModal = () => { modal.classList.add("modal-open"); modal.setAttribute("aria-hidden", "false"); document.body.classList.add("no-scroll"); };
+const openModal = (workTitle = "") => {
+  const context = document.querySelector("#callback-context");
+  context.textContent = workTitle
+    ? `Вы выбрали работу «${workTitle}». Оставьте телефон — обсудим похожее решение для вашего автомобиля.`
+    : "Оставьте номер — обсудим задачу и подберём решение для вашего автомобиля.";
+  modal.classList.add("modal-open");
+  modal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("no-scroll");
+};
 const closeModal = () => { modal.classList.remove("modal-open"); modal.setAttribute("aria-hidden", "true"); document.body.classList.remove("no-scroll"); };
-document.querySelectorAll(".js-callback").forEach(button => button.addEventListener("click", openModal));
+document.querySelectorAll(".js-callback").forEach(button => button.addEventListener("click", event => { event.preventDefault(); openModal(button.dataset.workTitle || ""); }));
 document.querySelectorAll(".js-close").forEach(button => button.addEventListener("click", closeModal));
 document.addEventListener("keydown", event => { if (event.key === "Escape") closeModal(); });
 document.querySelectorAll('input[type="tel"]').forEach(input => input.addEventListener("input", () => {
