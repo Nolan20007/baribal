@@ -1157,3 +1157,39 @@ html[data-theme="light"] .device-preview-close{color:#222;border-color:rgba(20,2
 @media(max-width:760px){
   .device-preview-open{display:none!important}
 }
+
+
+/* Inner pages: prevent page-specific content from widening the mobile viewport. */
+@media(max-width:760px){
+  main{
+    width:100%;
+    max-width:100%;
+    min-width:0;
+    overflow-x:clip;
+  }
+  main .wrap,
+  main .section,
+  main .video-section,
+  main .page-hero,
+  main .split-feature,
+  main .prose-block,
+  main .service-grid,
+  main .work-grid,
+  main .video-grid{
+    min-width:0;
+    max-width:100%;
+  }
+  main .page-hero h1,
+  main .page-hero p,
+  main .prose-block,
+  main .prose-block p,
+  main .review-quote blockquote{
+    overflow-wrap:anywhere;
+  }
+  main .split-feature>* ,
+  main .service-grid>* ,
+  main .work-grid>* ,
+  main .video-grid>*{
+    min-width:0;
+  }
+}
