@@ -1,4 +1,5 @@
 import "./styles.css";
+try { const savedTheme = localStorage.getItem("baribal-theme"); if (savedTheme === "light" || savedTheme === "dark") document.documentElement.dataset.theme = savedTheme; } catch {}
 const logo = "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/f055b8b248f6e844ebf90239d4536b94.png";
 const work = [
   { image: "https://img1.creatium.ru/disk2/d8/42/1a/7a83075790fe329feddf15ee2582b4adb2/1.jpg", type: "Оклейка", title: "Оклейка LAND CRUISER в матовый полиуретан", text: "Отличная защита кузова и выразительный матовый дизайн." },
@@ -24,6 +25,7 @@ const header = () => `
     <a class="brand" href="/"><img src="${logo}" alt="" /><span><b>BARIBAL</b><small>СТУДИЯ ЗАЩИТНЫХ ТЕХНОЛОГИЙ</small></span></a>
     <button class="menu-toggle" aria-label="Открыть меню" aria-expanded="false"><i></i><i></i><i></i></button>
     <nav class="nav">${nav.map(([label, href]) => `<a href="${href}" ${(isVideoPage && href === "/video") ? 'aria-current="page"' : ""}>${label}</a>`).join("")}</nav>
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Переключить цветовую тему"><span class="theme-icon" aria-hidden="true">☀</span><span class="theme-label">Светлая</span></button>
     <button class="button button-small js-callback">Записаться</button>
   </div></header>`;
 const footer = () => `
@@ -96,6 +98,19 @@ document.querySelector("#app").innerHTML = header() + renderPage() + footer() + 
 if (location.pathname === basePath || location.pathname.startsWith(basePath + "/")) {
   document.querySelectorAll("#app a[href^=\"/\"]").forEach(link => { link.setAttribute("href", basePath + link.getAttribute("href")); });
 }
+
+const themeButton = document.querySelector("[data-theme-toggle]");
+const applyTheme = theme => {
+  document.documentElement.dataset.theme = theme;
+  try { localStorage.setItem("baribal-theme", theme); } catch {}
+  const nextTheme = theme === "dark" ? "light" : "dark";
+  themeButton.querySelector(".theme-icon").textContent = nextTheme === "light" ? "☀" : "☾";
+  themeButton.querySelector(".theme-label").textContent = nextTheme === "light" ? "Светлая" : "Тёмная";
+  themeButton.setAttribute("aria-label", nextTheme === "light" ? "Включить светлую тему" : "Включить тёмную тему");
+  themeButton.setAttribute("aria-pressed", String(theme === "light"));
+};
+applyTheme(document.documentElement.dataset.theme === "light" ? "light" : "dark");
+themeButton.addEventListener("click", () => applyTheme(document.documentElement.dataset.theme === "light" ? "dark" : "light"));
 
 const menuButton = document.querySelector(".menu-toggle");
 menuButton.addEventListener("click", () => {
