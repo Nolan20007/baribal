@@ -501,3 +501,48 @@ html[data-theme="light"] .contact-widget-form small{color:#dedede}
 @media(max-width:560px){
   .back-to-top{top:70vh;bottom:auto;right:12px;min-width:44px;height:44px;padding:0 12px;gap:8px}
 }
+
+
+/* Back-to-top: keep only the arrow inside the orange circular outline. */
+.back-to-top{
+  min-width:0;
+  width:auto;
+  height:48px;
+  padding:0;
+  gap:10px;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  color:inherit;
+  box-shadow:none;
+}
+.back-to-top:hover{
+  background:transparent;
+  transform:translateY(calc(-50% - 3px));
+}
+.back-to-top-label{
+  color:inherit;
+}
+.back-to-top span[aria-hidden="true"]{
+  box-sizing:border-box;
+  display:grid;
+  place-items:center;
+  flex:0 0 48px;
+  width:48px;
+  height:48px;
+  padding:0;
+  border:1.5px solid var(--orange);
+  border-radius:50%;
+  background:transparent;
+  color:var(--orange);
+  font:500 25px/1 Oswald,sans-serif;
+  transform:none;
+}
+.back-to-top:hover span[aria-hidden="true"]{
+  background:var(--orange);
+  color:#171819;
+}
+@media(max-width:560px){
+  .back-to-top{width:auto;min-width:0;height:44px;padding:0;gap:8px}
+  .back-to-top span[aria-hidden="true"]{flex-basis:44px;width:44px;height:44px}
+}
