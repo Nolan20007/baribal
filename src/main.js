@@ -145,8 +145,8 @@ const devicePreviewPanel = () => devicePreviewMode ? "" : `
       <div class="device-preview-panel">
         <div class="device-preview-popover-heading"><div><span class="eyebrow">ТЕХНИЧЕСКИЙ ИНСТРУМЕНТ</span><h3>Предпросмотр сайта</h3></div><button class="device-preview-close" type="button" aria-label="Закрыть предпросмотр">×</button></div>
           <div class="device-preview-toolbar" role="group" aria-label="Размер экрана">
-            <button class="device-preview-button is-active" type="button" data-preview-width="1366" data-preview-height="900" aria-pressed="true"><span aria-hidden="true">▱</span> Ноутбук</button>
             <button class="device-preview-button" type="button" data-preview-width="390" data-preview-height="844" aria-pressed="false"><span aria-hidden="true">▯</span> Телефон</button>
+            <button class="device-preview-button is-active" type="button" data-preview-width="1366" data-preview-height="900" aria-pressed="true"><span aria-hidden="true">▱</span> Ноутбук</button>
             <button class="device-preview-button" type="button" data-preview-width="1920" data-preview-height="1080" aria-pressed="false"><span aria-hidden="true">▭</span> Широкий монитор</button>
           </div>
           <div class="device-preview-stage" aria-label="Предпросмотр страницы">
