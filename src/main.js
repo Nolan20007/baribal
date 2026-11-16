@@ -90,7 +90,7 @@ const header = () => `
     <div class="device-preview-tools" role="group" aria-label="Тестовый блок адаптивности">
       <span class="device-preview-caption">ТЕСТОВЫЙ БЛОК</span>
       <button class="device-preview-button" type="button" data-preview-width="390" aria-pressed="false">Телефон</button>
-      <button class="device-preview-button is-active" type="button" data-preview-width="1366" aria-pressed="true">Ноутбук</button>
+      <button class="device-preview-button" type="button" data-preview-width="1366" aria-pressed="false">Ноутбук</button>
       <button class="device-preview-button" type="button" data-preview-width="1920" aria-pressed="false">Широкий монитор</button>
     </div>\n    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Переключить цветовую тему"><span class="theme-icon" aria-hidden="true">☀</span><span class="theme-label">Светлая</span></button>
     <button class="button button-small js-callback">Записаться</button>
