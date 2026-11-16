@@ -290,3 +290,10 @@ html[data-theme="light"] .service-info-tech{background:#f4f2ed}
  .service-info-bottom{align-items:flex-start;flex-direction:column}
  .service-info-bottom .button{width:100%}
 }
+
+
+/* Keep portfolio card text readable on its white surface in both themes. */
+.work-card .work-copy h3{color:#171819}
+.work-card .work-copy p{color:#696a68}
+.work-card .work-copy .eyebrow{color:#b8752f}
+.work-card .work-copy .text-link{color:#171819}
