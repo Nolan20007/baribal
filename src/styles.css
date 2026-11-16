@@ -1087,3 +1087,19 @@ html[data-theme="light"] .device-preview-close{color:#222;border-color:rgba(20,2
   .studio-gallery .studio-map-card,
   .studio-gallery .studio-address-card{height:280px}
 }
+
+
+/* Compact inner-page hero and reduce the gap before the first content block. */
+/* Home page uses .hero, so it is intentionally unaffected. */
+.page-hero{padding:74px 0 61px}
+.page-hero + .section{padding-top:62px}
+.page-hero + .video-section{padding-top:42px}
+@media(min-width:1440px){
+  .page-hero{padding:clamp(80px,5.6vw,120px) 0}
+  .page-hero + .section{padding-top:clamp(63px,4.2vw,90px)}
+}
+@media(max-width:760px){
+  .page-hero{padding:52px 0 40px}
+  .page-hero + .section{padding-top:42px}
+  .page-hero + .video-section{padding-top:42px}
+}
