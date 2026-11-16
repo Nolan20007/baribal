@@ -88,7 +88,7 @@ const header = () => `
     <a class="brand" href="/"><img src="${logo}" alt="" /><span><b>BARIBAL</b><small>СТУДИЯ ЗАЩИТНЫХ ТЕХНОЛОГИЙ</small></span></a>
     <button class="menu-toggle" aria-label="Открыть меню" aria-expanded="false"><i></i><i></i><i></i></button>
     <nav class="nav">${nav.map(([label, href]) => `<a href="${href}" ${(isVideoPage && href === "/video") ? 'aria-current="page"' : ""}>${label}</a>`).join("")}</nav>
-    ${devicePreviewMode ? "" : '<button class="device-preview-launcher" type="button" aria-expanded="false" aria-controls="device-preview-popover">Предпросмотр <span aria-hidden="true">▱</span></button>'}
+    ${devicePreviewMode || path !== "/" ? "" : '<button class="device-preview-launcher" type="button" aria-expanded="false" aria-controls="device-preview-popover">Предпросмотр <span aria-hidden="true">▱</span></button>'}
     ${devicePreviewPanel()}\n    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Переключить цветовую тему"><span class="theme-icon" aria-hidden="true">☀</span><span class="theme-label">Светлая</span></button>
     <button class="button button-small js-callback">Записаться</button>
   </div></header>`;
@@ -140,7 +140,7 @@ const portfolioCards = () => portfolio.map((item, index) => {
   return `<article class="work-card portfolio-card${index >= 9 ? " is-extra" : ""}" data-categories="${categories.join("|")}"><div class="work-image"><img src="${item.image}" alt="${item.title}" loading="lazy" /></div><div class="work-copy"><span class="eyebrow">${item.type}</span><h3>${item.title}</h3><p>${item.text}</p><a class="text-link js-callback" href="#callback" data-service-title="${serviceForWork(item)}">Обсудить похожую работу <span>↗</span></a></div></article>`;
 }).join("");
 const serviceCards = () => services.map((item, i) => `<article class="service-card"><div class="service-image"><img src="${item.image}" alt="" loading="lazy" /></div><div class="service-copy"><span class="eyebrow">0${i + 1} / УСЛУГА</span><h3>${item.title}</h3><h4>${item.subtitle}</h4><p>${item.text}</p><div class="service-bottom"><b>${item.price}</b><button class="text-link js-callback">Узнать больше <span>↗</span></button></div></div></article>`).join("");
-const devicePreviewPanel = () => devicePreviewMode ? "" : `
+const devicePreviewPanel = () => devicePreviewMode || path !== "/" ? "" : `
     <div class="device-preview-popover" id="device-preview-popover" aria-label="Технический предпросмотр адаптивности">
       <div class="device-preview-panel">
         <div class="device-preview-popover-heading"><div><span class="eyebrow">ТЕХНИЧЕСКИЙ ИНСТРУМЕНТ</span><h3>Предпросмотр сайта</h3></div><button class="device-preview-close" type="button" aria-label="Закрыть предпросмотр">×</button></div>
