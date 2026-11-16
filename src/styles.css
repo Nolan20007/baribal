@@ -1701,3 +1701,48 @@ html[data-design="4"] .works-section .work-actions .js-open-work-gallery{color:#
  .work-gallery-arrow{width:38px;height:48px;font-size:31px;background:rgba(12,14,16,.82)}
  .work-gallery-arrow.prev{left:7px}.work-gallery-arrow.next{right:7px}
 }
+
+
+/* Work-card actions: consistent button treatments and a compact single row on phones. */
+.works-section .work-actions .js-callback{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:10px 13px;border:1px solid var(--orange);
+  background:var(--orange);color:#fff!important;
+  text-decoration:none;font-weight:800;
+}
+.works-section .work-actions .js-callback:hover{
+  background:#d95b16;border-color:#d95b16;color:#fff!important;
+}
+.works-section .work-actions .js-open-work-gallery{
+  background:#fff!important;border:1px solid var(--orange)!important;
+  color:#171819!important;text-decoration:none;
+}
+.works-section .work-actions .js-open-work-gallery:hover{
+  background:#fff4ec!important;border-color:var(--orange)!important;color:#171819!important;
+}
+html[data-design="3"] .works-section .work-actions .js-open-work-gallery{
+  background:#fff!important;border-color:var(--orange)!important;color:#171819!important;
+}
+@media(max-width:760px){
+  .works-section .work-actions{
+    display:flex;flex-wrap:nowrap;gap:6px;padding-top:15px;
+  }
+  .works-section .work-actions>*{
+    flex:1 1 0;min-width:0;white-space:nowrap;
+    display:inline-flex;align-items:center;justify-content:center;
+    text-align:center;font-size:7.5px;line-height:1.15;
+    padding:9px 4px;letter-spacing:0;
+  }
+  .works-section .work-actions .text-link span{display:none}
+  .works-section .work-actions .js-callback{padding:9px 4px}
+  .works-section .work-actions .js-open-work-gallery{padding:9px 4px}
+  .work-gallery-modal{padding:12px}
+  .work-gallery-dialog{padding-top:48px}
+  .work-gallery-close{
+    position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);right:12px;
+    z-index:130;width:46px;height:46px;border:2px solid #fff;border-radius:50%;
+    background:var(--orange);color:#fff;font-size:32px;line-height:1;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 3px 16px rgba(0,0,0,.45);
+  }
+}
