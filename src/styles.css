@@ -1754,3 +1754,18 @@ html[data-design="3"] .works-section .work-actions .js-open-work-gallery{
 .works-section .work-actions .js-callback:hover{
   color:#000!important;
 }
+
+
+/* Match the work-card callback hover to the site's lighter primary buttons. */
+.works-section .work-actions .js-callback:hover{
+  background:#f0bb7f;
+  border-color:#f0bb7f;
+  color:#000!important;
+}
+
+/* Enlarge only the bear mark in the footer; keep the header logo unchanged. */
+.footer-brand img{
+  width:75px;
+  height:90px;
+  object-fit:contain;
+}
