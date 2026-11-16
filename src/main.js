@@ -97,8 +97,25 @@ const footer = () => `
     <div><h4>Адрес студии</h4><p>Пермь, ул. Героев Хасана, 105Э</p><p>За ТЦ «Шоколад», в районе Велты</p></div>
     <div><h4>Навигация</h4><a href="/tehnology">Услуги</a><a href="/foto">Наши работы</a><a href="/reviews">Отзывы</a><a href="/video">Видео</a><a href="/politika-konfidencialnosti">Политика конфиденциальности</a></div>
   </div><div class="wrap footer-bottom"><span>© BARIBAL — студия защитных технологий</span><span>Пермь</span></div></footer>`;
+const contactPreferences = () => `
+  <fieldset class="contact-preferences">
+    <legend>Как с вами связаться?</legend>
+    <div class="contact-preference-list">
+      <label><input type="checkbox" name="contact_method" value="phone" checked><span>По телефону</span></label>
+      <label><input type="checkbox" name="contact_method" value="max"><span>MAX</span></label>
+      <label><input type="checkbox" name="contact_method" value="telegram"><span>Telegram</span></label>
+      <label><input type="checkbox" name="contact_method" value="whatsapp"><span>WhatsApp</span></label>
+      <label><input type="checkbox" name="contact_method" value="viber"><span>Viber</span></label>
+      <label><input type="checkbox" name="contact_method" value="other" data-contact-other-toggle><span>Другой способ</span></label>
+    </div>
+    <div class="contact-other-details" hidden>
+      <label>Укажите e-mail, мессенджер или другой способ связи
+        <input type="text" name="contact_other" placeholder="Например: name@mail.ru или Signal">
+      </label>
+    </div>
+  </fieldset>`;
 const callback = () => `
-  <div class="modal" id="callback-modal" aria-hidden="true"><div class="modal-backdrop js-close"></div><section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button class="modal-close js-close" aria-label="Закрыть">×</button><span class="eyebrow">BARIBAL · ПЕРМЬ</span><h2 id="modal-title">Мы вам перезвоним</h2><p id="callback-context">Оставьте номер — обсудим задачу и подберём решение для вашего автомобиля.</p><form class="lead-form demo-form"><input type="hidden" name="service" id="callback-service" value=""><label>Ваше имя<input name="name" placeholder="Как к вам обращаться" /></label><label>Телефон<input name="phone" type="tel" placeholder="+7 (___) ___-__-__" required /></label><label>Как с вами связаться<select name="contact_method"><option value="phone" selected>По телефону</option><option value="whatsapp">По WhatsApp</option><option value="max">В MAX</option><option value="telegram">В Telegram</option><option value="other">В другом мессенджере</option></select></label><button class="button" type="submit">Заказать консультацию</button><output></output></form></section></div>`;
+  <div class="modal" id="callback-modal" aria-hidden="true"><div class="modal-backdrop js-close"></div><section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button class="modal-close js-close" aria-label="Закрыть">×</button><span class="eyebrow">BARIBAL · ПЕРМЬ</span><h2 id="modal-title">Мы вам перезвоним</h2><p id="callback-context">Оставьте номер — обсудим задачу и подберём решение для вашего автомобиля.</p><form class="lead-form demo-form"><input type="hidden" name="service" id="callback-service" value=""><label>Ваше имя<input name="name" placeholder="Как к вам обращаться" /></label><label>Телефон<input name="phone" type="tel" placeholder="+7 (___) ___-__-__" required /></label>${contactPreferences()}<button class="button" type="submit">Заказать консультацию</button><output></output></form></section></div>`;
 const workCards = (items = work) => items.map(item => `<article class="work-card"><div class="work-image"><img src="${item.image}" alt="${item.title}" loading="lazy" /></div><div class="work-copy"><span class="eyebrow">${item.type}</span><h3>${item.title}</h3><p>${item.text}</p><a class="text-link js-callback" href="#callback" data-service-title="Защита кузова">Обсудить похожую работу <span>↗</span></a></div></article>`).join("");
 const portfolioCategories = item => {
   const value = `${item.type} ${item.title} ${item.text}`.toLowerCase();
@@ -125,7 +142,7 @@ const homePage = () => `
   <main>
     <section class="hero"><div class="hero-shade"></div><div class="wrap hero-content"><span class="eyebrow">BARIBAL · СТУДИЯ ЗАЩИТНЫХ ТЕХНОЛОГИЙ</span><h1>Современные технологии<br /><em>защиты автомобиля</em><br />в Перми</h1><p>Профессиональный уход, защита кузова и интерьера<br class="desktop-only" /> с гарантией от 12 до 72 месяцев</p><div class="hero-actions"><button class="button js-callback">Записаться на обслуживание <span>↗</span></button><a class="button button-outline" href="#works">Наши работы</a></div><div class="hero-index"><b>01</b><span>ЗАЩИТА · УХОД · СТИЛЬ</span></div></div></section>
     <section class="section works-section" id="works"><div class="wrap"><div class="section-heading"><div><span class="eyebrow">ПОРТФОЛИО</span><h2>Последние выполненные<br /><em>нами работы</em></h2></div><a class="text-link" href="#callback">Обсудить проект <span>↗</span></a></div><div class="work-grid">${workCards()}</div><div class="center-action"><button class="button button-dark js-callback">Хочу такой же результат</button></div></div></section>
-    <section class="estimate"><div class="wrap estimate-inner"><div><span class="eyebrow">ИНДИВИДУАЛЬНЫЙ ПОДХОД</span><h2>Рассчитаем стоимость<br /><em>защиты вашего автомобиля</em></h2><p>Расскажите, что хотите защитить. Мы свяжемся с вами и сориентируем по стоимости.</p></div><form class="estimate-form demo-form"><label>Ваш автомобиль<input name="car" placeholder="Марка и модель" /></label><label>Что вас интересует<select name="service"><option>Защита кузова</option><option>Автохимчистка</option><option>Автовинил</option><option>Защита стёкол</option><option>Другое</option></select></label><label>Телефон<input name="phone" type="tel" placeholder="+7 (___) ___-__-__" required /></label><label>Как с вами связаться<select name="contact_method"><option value="phone" selected>По телефону</option><option value="whatsapp">По WhatsApp</option><option value="max">В MAX</option><option value="telegram">В Telegram</option><option value="other">В другом мессенджере</option></select></label><button class="button" type="submit">Отправить на расчёт <span>↗</span></button><output></output></form></div></section>
+    <section class="estimate"><div class="wrap estimate-inner"><div><span class="eyebrow">ИНДИВИДУАЛЬНЫЙ ПОДХОД</span><h2>Рассчитаем стоимость<br /><em>защиты вашего автомобиля</em></h2><p>Расскажите, что хотите защитить. Мы свяжемся с вами и сориентируем по стоимости.</p></div><form class="estimate-form demo-form"><label>Ваш автомобиль<input name="car" placeholder="Марка и модель" /></label><label>Что вас интересует<select name="service"><option>Защита кузова</option><option>Автохимчистка</option><option>Автовинил</option><option>Защита стёкол</option><option>Другое</option></select></label><label>Телефон<input name="phone" type="tel" placeholder="+7 (___) ___-__-__" required /></label>${contactPreferences()}<button class="button" type="submit">Отправить на расчёт <span>↗</span></button><output></output></form></div></section>
     <section class="section services-section" id="services"><div class="wrap"><div class="section-heading"><div><span class="eyebrow">ЧТО МЫ ДЕЛАЕМ</span><h2>Услуги студии <em>BARIBAL</em></h2></div><p>Технологичные решения для сохранения внешнего вида и ценности вашего автомобиля.</p></div><div class="service-grid">${serviceCards()}</div></div></section>
 
     <section class="section studio-section" id="studio"><div class="wrap"><div class="section-heading"><div><span class="eyebrow">МЫ РАБОТАЕМ В ПЕРМИ</span><h2>Наша <em>студия</em></h2></div><p>Приезжайте познакомиться, обсудить задачу и выбрать подходящее решение для автомобиля.</p></div><div class="studio-gallery"><figure class="studio-photo studio-photo-main"><img src="https://i.1.creatium.io/plp/u21.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/b0d8da0f788fb697ef85e2876f2e2d8a.jpg" alt="Здание студии BARIBAL" loading="lazy"><figcaption>Студия BARIBAL · Пермь</figcaption></figure><figure class="studio-photo"><img src="https://i.1.creatium.io/plp/u21.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/7ab8d1717c459b9fcc44c1af91c91aa0.jpg" alt="Въезд в студию BARIBAL" loading="lazy"><figcaption>Въезд в студию</figcaption></figure><figure class="studio-photo"><img src="https://i.1.creatium.io/plp/u21.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/da220dd7b47feb810724df41a5ca515e.jpg" alt="Фасад студии BARIBAL" loading="lazy"><figcaption>Мы находимся на улице Героев Хасана</figcaption></figure></div><div class="studio-bottom"><span>Пермь, ул. Героев Хасана, 105Э · За ТЦ «Шоколад», в районе Велты</span><a class="text-link" href="https://yandex.ru/maps/?text=Пермь%2C%20ул.%20Героев%20Хасана%2C%20105Э" target="_blank" rel="noopener">Построить маршрут <span>↗</span></a></div></div></section>
@@ -318,7 +335,7 @@ const reviewsPage = () => contentPage("МНЕНИЕ КЛИЕНТОВ","Отзы�
 const privacyPage = () => contentPage("ДОКУМЕНТЫ","Политика <em>конфиденциальности</em>","Политика обработки персональных данных сайта BARIBAL.",`<div class="prose-block legal-copy"><p>Политика обработки персональных данных разработана в соответствии с Федеральным законом от 27.07.2006 № 152-ФЗ «О персональных данных» и определяет порядок обработки персональных данных и меры по обеспечению их безопасности владельцем сайта baribal-studio.ru.</p><h2>Цели обработки</h2><p>Персональные данные используются для предоставления запрашиваемых услуг и информации, ответа на обращения, улучшения качества обслуживания, внутреннего учёта и связи с пользователями.</p><h2>Какие данные могут обрабатываться</h2><p>Имя, адрес электронной почты, номер телефона, файлы cookie и иная информация, которую пользователь добровольно передаёт через формы сайта.</p><h2>Обработка и защита</h2><p>Обработка осуществляется на законной основе и только в объёме, необходимом для заявленных целей. Оператор принимает меры для защиты данных и не продаёт персональные данные пользователей.</p><h2>Отзыв согласия</h2><p>Пользователь может обратиться к оператору по вопросам обработки и отзыва согласия по электронной почте: mihail051206@yandex.ru.</p></div>`);
 const pageMap = {"/":homePage,"/video":videoPage,"/tehnology":techPage,"/kuzov":bodyPage,"/himchistka":cleanPage,"/avtovinil":vinylPage,"/foto":galleryPage,"/reviews":reviewsPage,"/politika-konfidencialnosti":privacyPage};
 const renderPage = pageMap[path] || homePage;
-document.querySelector("#app").innerHTML = header() + renderPage() + footer() + callback() + serviceInfoModal() + '<aside class="contact-widget" aria-label="Связаться с BARIBAL"><button class="contact-widget-toggle" type="button" aria-expanded="false" aria-controls="contact-widget-panel"><img src="https://i.1.creatium.io/plp/u21.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/f617d4a6d428eb5f80ca69db89761cc4.jpg" alt=""><span>Связаться с нами</span><b aria-hidden="true">+</b></button><section class="contact-widget-panel" id="contact-widget-panel" aria-hidden="true"><div class="contact-widget-heading"><img src="https://i.1.creatium.io/plp/u21.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/f617d4a6d428eb5f80ca69db89761cc4.jpg" alt="Представитель студии BARIBAL"><div><b>Давайте обсудим ваш автомобиль</b><span>Оставьте номер — мы свяжемся с вами</span></div><button class="contact-widget-close" type="button" aria-label="Закрыть">×</button></div><a class="contact-widget-phone" href="tel:+79824814142">+7 (982) 481-41-42</a><form class="lead-form demo-form contact-widget-form"><label>Ваше имя<input name="name" placeholder="Как к вам обращаться"></label><label>Телефон<input name="phone" type="tel" placeholder="+7 (___) ___-__-__" required></label><label>Как с вами связаться<select name="contact_method"><option value="phone" selected>По телефону</option><option value="whatsapp">По WhatsApp</option><option value="max">В MAX</option><option value="telegram">В Telegram</option><option value="other">В другом мессенджере</option></select></label><button class="button" type="submit">Заказать звонок <span>↗</span></button><output></output></form></section></aside>' + '<button class="back-to-top" type="button" aria-label="Наверх" title="Наверх"><span aria-hidden="true">↑</span></button>';
+document.querySelector("#app").innerHTML = header() + renderPage() + footer() + callback() + serviceInfoModal() + `<aside class="contact-widget" aria-label="Связаться с BARIBAL"><button class="contact-widget-toggle" type="button" aria-expanded="false" aria-controls="contact-widget-panel"><img src="/baribal/1.jpg" alt=""><span>Связаться с нами</span><b aria-hidden="true">+</b></button><section class="contact-widget-panel" id="contact-widget-panel" aria-hidden="true"><div class="contact-widget-heading"><img src="/baribal/2.png" alt=""><div><b>Давайте обсудим ваш автомобиль</b><span>Оставьте номер — мы свяжемся с вами</span></div></div><a class="contact-widget-phone" href="tel:+79824814142">+7 (982) 481-41-42</a><form class="lead-form demo-form contact-widget-form"><label>Ваше имя<input name="name" placeholder="Как к вам обращаться"></label><label>Телефон<input name="phone" type="tel" placeholder="+7 (___) ___-__-__" required></label>${contactPreferences()}<button class="button" type="submit">Заказать звонок <span>↗</span></button><output></output></form></section></aside>` + '<button class="back-to-top"' type="button" aria-label="Наверх" title="Наверх"><span aria-hidden="true">↑</span></button>';
 if (location.pathname === basePath || location.pathname.startsWith(basePath + "/")) {
   document.querySelectorAll("#app a[href^=\"/\"]").forEach(link => { link.setAttribute("href", basePath + link.getAttribute("href")); });
 }
@@ -338,13 +355,51 @@ backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "s
 const contactWidget = document.querySelector(".contact-widget");
 const contactWidgetToggle = document.querySelector(".contact-widget-toggle");
 const contactWidgetPanel = document.querySelector(".contact-widget-panel");
+let contactWidgetDismissed = false;
+let contactWidgetAlreadyShown = false;
+try {
+  contactWidgetDismissed = sessionStorage.getItem("baribal-contact-widget-dismissed") === "1";
+  contactWidgetAlreadyShown = sessionStorage.getItem("baribal-contact-widget-shown") === "1";
+} catch {}
 const setContactWidgetOpen = open => {
   contactWidget.classList.toggle("is-open", open);
   contactWidgetToggle.setAttribute("aria-expanded", String(open));
   contactWidgetPanel.setAttribute("aria-hidden", String(!open));
+  contactWidgetToggle.querySelector("span").textContent = open ? "Скрыть" : "Связаться с нами";
+  contactWidgetToggle.querySelector("b").textContent = open ? "−" : "+";
 };
-contactWidgetToggle.addEventListener("click", () => setContactWidgetOpen(!contactWidget.classList.contains("is-open")));
-document.querySelector(".contact-widget-close").addEventListener("click", () => setContactWidgetOpen(false));
+contactWidgetToggle.addEventListener("click", () => {
+  const opening = !contactWidget.classList.contains("is-open");
+  if (opening) {
+    contactWidgetAlreadyShown = true;
+    try { sessionStorage.setItem("baribal-contact-widget-shown", "1"); } catch {}
+  } else {
+    contactWidgetDismissed = true;
+    try { sessionStorage.setItem("baribal-contact-widget-dismissed", "1"); } catch {}
+  }
+  setContactWidgetOpen(opening);
+});
+if (!contactWidgetAlreadyShown && !contactWidgetDismissed) {
+  window.setTimeout(() => {
+    if (!contactWidgetAlreadyShown && !contactWidgetDismissed) {
+      contactWidgetAlreadyShown = true;
+      try { sessionStorage.setItem("baribal-contact-widget-shown", "1"); } catch {}
+      setContactWidgetOpen(true);
+    }
+  }, 7000);
+}
+document.querySelectorAll(".contact-preferences").forEach(group => {
+  const otherToggle = group.querySelector("[data-contact-other-toggle]");
+  const details = group.querySelector(".contact-other-details");
+  const otherInput = group.querySelector('input[name="contact_other"]');
+  const syncOther = () => {
+    const visible = otherToggle.checked;
+    details.hidden = !visible;
+    otherInput.required = visible;
+  };
+  otherToggle.addEventListener("change", syncOther);
+  syncOther();
+});
 
 const themeButton = document.querySelector("[data-theme-toggle]");
 const applyTheme = theme => {
