@@ -769,3 +769,23 @@ html[data-theme="light"] .contact-widget-form small{color:#dedede}
   margin-left:auto;
   margin-right:auto;
 }
+
+
+/* Temporary responsive preview tool for checking the home page at common viewport widths. */
+.device-preview-section{padding:clamp(42px,6vw,76px) 0;background:var(--surface,#202123)}
+.device-preview-panel{padding:18px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.12);border-radius:14px}
+.device-preview-toolbar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:16px}
+.device-preview-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:9px 16px;border:1px solid rgba(255,255,255,.2);border-radius:999px;background:transparent;color:inherit;font:600 12px Manrope,Arial,sans-serif;cursor:pointer;transition:background .2s,border-color .2s,color .2s}
+.device-preview-button span{font-size:17px;color:var(--orange)}
+.device-preview-button.is-active{background:var(--orange);border-color:var(--orange);color:#171819}
+.device-preview-button.is-active span{color:#171819}
+.device-preview-stage{position:relative;width:100%;height:650px;overflow:hidden;border:1px solid rgba(255,255,255,.16);border-radius:8px;background:#111;transition:height .2s}
+.device-preview-frame{position:absolute;top:0;left:50%;display:block;max-width:none;border:0;background:#fff;transform-origin:top center}
+.device-preview-note{margin:12px 0 0;color:var(--muted,#aaa);font-size:11px;line-height:1.5;text-align:center}
+html.device-preview-mode .device-preview-section{display:none!important}
+@media(max-width:620px){
+ .device-preview-panel{padding:10px}
+ .device-preview-toolbar{gap:6px}
+ .device-preview-button{flex:1 1 42%;padding:8px 9px;font-size:11px}
+ .device-preview-stage{border-radius:5px}
+}
