@@ -99,8 +99,27 @@ const footer = () => `
   </div><div class="wrap footer-bottom"><span>© BARIBAL — студия защитных технологий</span><span>Пермь</span></div></footer>`;
 const callback = () => `
   <div class="modal" id="callback-modal" aria-hidden="true"><div class="modal-backdrop js-close"></div><section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button class="modal-close js-close" aria-label="Закрыть">×</button><span class="eyebrow">BARIBAL · ПЕРМЬ</span><h2 id="modal-title">Мы вам перезвоним</h2><p id="callback-context">Оставьте номер — обсудим задачу и подберём решение для вашего автомобиля.</p><form class="lead-form demo-form"><input type="hidden" name="service" id="callback-service" value=""><label>Ваше имя<input name="name" placeholder="Как к вам обращаться" /></label><label>Телефон<input name="phone" type="tel" placeholder="+7 (___) ___-__-__" required /></label><button class="button" type="submit">Заказать консультацию</button><output></output></form></section></div>`;
-const workCards = (items = work) => items.map(item => `<article class="work-card"><div class="work-image"><img src="${item.image}" alt="${item.title}" loading="lazy" /></div><div class="work-copy"><span class="eyebrow">${item.type}</span><h3>${item.title}</h3><p>${item.text}</p><a class="text-link js-callback" href="#callback" data-work-title="${item.title}">Обсудить похожую работу <span>↗</span></a></div></article>`).join("");
-const portfolioCards = () => portfolio.map((item, index) => `<article class="work-card portfolio-card${index >= 9 ? " is-extra" : ""}"><div class="work-image"><img src="${item.image}" alt="${item.title}" loading="lazy" /></div><div class="work-copy"><span class="eyebrow">${item.type}</span><h3>${item.title}</h3><p>${item.text}</p><a class="text-link js-callback" href="#callback" data-work-title="${item.title}">Обсудить похожую работу <span>↗</span></a></div></article>`).join("");
+const workCards = (items = work) => items.map(item => `<article class="work-card"><div class="work-image"><img src="${item.image}" alt="${item.title}" loading="lazy" /></div><div class="work-copy"><span class="eyebrow">${item.type}</span><h3>${item.title}</h3><p>${item.text}</p><a class="text-link js-callback" href="#callback" data-service-title="Защита кузова">Обсудить похожую работу <span>↗</span></a></div></article>`).join("");
+const portfolioCategories = item => {
+  const value = `${item.type} ${item.title} ${item.text}`.toLowerCase();
+  const result = [];
+  if (/clearplex|лобов(ое|ого|ому)|стекл/.test(value)) result.push("Защита стёкол");
+  if (/химчист|детейлинг|полировк|предпродаж|салон/.test(value)) result.push("Детейлинг и уход");
+  if (/винил|стайлинг|рекламн|изменение цвета/.test(value)) result.push("Оклейка и стайлинг");
+  if (/бронир|защит|advance|кузов|пленк|плёнк|hexis|suntek/.test(value)) result.push("Защита кузова");
+  return result.length ? [...new Set(result)] : ["Другое"];
+};
+const serviceForWork = item => {
+  const categories = portfolioCategories(item);
+  if (categories.includes("Защита стёкол") && !categories.includes("Защита кузова")) return "Защита стёкол";
+  if (categories.includes("Детейлинг и уход") && !categories.includes("Защита кузова")) return "Детейлинг и уход";
+  if (categories.includes("Оклейка и стайлинг") && !categories.includes("Защита кузова")) return "Оклейка и стайлинг";
+  return "Защита кузова";
+};
+const portfolioCards = () => portfolio.map((item, index) => {
+  const categories = portfolioCategories(item);
+  return `<article class="work-card portfolio-card${index >= 9 ? " is-extra" : ""}" data-categories="${categories.join("|")}"><div class="work-image"><img src="${item.image}" alt="${item.title}" loading="lazy" /></div><div class="work-copy"><span class="eyebrow">${item.type}</span><h3>${item.title}</h3><p>${item.text}</p><a class="text-link js-callback" href="#callback" data-service-title="${serviceForWork(item)}">Обсудить похожую работу <span>↗</span></a></div></article>`;
+}).join("");
 const serviceCards = () => services.map((item, i) => `<article class="service-card"><div class="service-image"><img src="${item.image}" alt="" loading="lazy" /></div><div class="service-copy"><span class="eyebrow">0${i + 1} / УСЛУГА</span><h3>${item.title}</h3><h4>${item.subtitle}</h4><p>${item.text}</p><div class="service-bottom"><b>${item.price}</b><button class="text-link js-callback">Узнать больше <span>↗</span></button></div></div></article>`).join("");
 const homePage = () => `
   <main>
@@ -119,7 +138,7 @@ const cleanPath = location.pathname.startsWith(basePath) ? location.pathname.sli
 const path = cleanPath.replace(/\/$/, "") || "/";
 const pageHero = (eyebrow, title, intro = "") => `<section class="page-hero"><div class="wrap"><span class="eyebrow">${eyebrow}</span><h1>${title}</h1>${intro ? `<p>${intro}</p>` : ""}</div></section>`;
 const contentPage = (eyebrow, title, intro, body) => `<main>${pageHero(eyebrow,title,intro)}<section class="section"><div class="wrap">${body}</div></section></main>`;
-const galleryPage = () => contentPage("ПОРТФОЛИО BARIBAL","Наши <em>работы</em>","Реальные проекты BARIBAL: бронирование кузова, защитные покрытия и стайлинг автомобилей.",`<div class="work-grid" id="portfolio-grid">${portfolioCards()}</div><div class="center-action portfolio-more-wrap"><button class="button button-dark" id="portfolio-more" type="button" aria-expanded="false">Показать все работы</button></div><div class="center-action"><button class="button js-callback">Обсудить ваш автомобиль</button></div>`);
+const galleryPage = () => contentPage("ПОРТФОЛИО BARIBAL","Наши <em>работы</em>","Выберите интересующее направление — покажем проекты с подходящими видами работ.",`<div class="portfolio-filters" role="group" aria-label="Фильтр работ"><button class="portfolio-filter is-active" type="button" data-filter="Все работы" aria-pressed="true">Все работы</button><button class="portfolio-filter" type="button" data-filter="Защита кузова" aria-pressed="false">Защита кузова</button><button class="portfolio-filter" type="button" data-filter="Защита стёкол" aria-pressed="false">Защита стёкол</button><button class="portfolio-filter" type="button" data-filter="Оклейка и стайлинг" aria-pressed="false">Оклейка и стайлинг</button><button class="portfolio-filter" type="button" data-filter="Детейлинг и уход" aria-pressed="false">Детейлинг и уход</button></div><div class="work-grid" id="portfolio-grid">${portfolioCards()}</div><div class="center-action portfolio-more-wrap"><button class="button button-dark" id="portfolio-more" type="button" aria-expanded="false">Показать все работы</button></div><div class="center-action"><button class="button js-callback">Обсудить ваш автомобиль</button></div>`);
 const allServices = [
   { title: "AdVance", subtitle: "Защитное покрытие кузова", text: "Защитное покрытие для выразительного блеска и сохранения внешнего вида автомобиля. Гарантия на покрытие — 3 года.", price: "от 15 000 ₽", image: "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/c2d8bf6b6f8e8cdd6e21617c92f6d618.jpg"},
   { title: "Бронирование кузова плёнкой", subtitle: "HEXIS и SunTek", text: "Защитная плёнка помогает уберечь лакокрасочное покрытие от мелкого щебня, дорожного мусора и насекомых.", price: "от 3 000 ₽", image: "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/49e6ea0c7e4f85447a41d1a7867892de.jpg"},
@@ -326,13 +345,39 @@ menuButton.addEventListener("click", () => {
   menuButton.setAttribute("aria-expanded", String(open));
   document.querySelector(".nav").classList.toggle("nav-open", open);
 });
+const portfolioGrid = document.querySelector("#portfolio-grid");
 const portfolioMore = document.querySelector("#portfolio-more");
-if (portfolioMore) portfolioMore.addEventListener("click", () => {
-  const expanded = portfolioMore.getAttribute("aria-expanded") === "true";
-  document.querySelectorAll(".portfolio-card.is-extra").forEach(card => card.classList.toggle("is-visible", !expanded));
-  portfolioMore.setAttribute("aria-expanded", String(!expanded));
-  portfolioMore.textContent = expanded ? "Показать все работы" : "Свернуть работы";
-});
+let portfolioExpanded = false;
+let activePortfolioFilter = "Все работы";
+const updatePortfolioView = () => {
+  if (!portfolioGrid) return;
+  const cards = [...portfolioGrid.querySelectorAll(".portfolio-card")];
+  const filtered = cards.filter(card => activePortfolioFilter === "Все работы" || card.dataset.categories.split("|").includes(activePortfolioFilter));
+  cards.forEach(card => {
+    const visibleInFilter = filtered.includes(card);
+    const position = filtered.indexOf(card);
+    card.hidden = !visibleInFilter || (!portfolioExpanded && position >= 9);
+    card.classList.toggle("is-extra", position >= 9);
+  });
+  if (portfolioMore) {
+    const hasMore = filtered.length > 9;
+    portfolioMore.hidden = !hasMore;
+    portfolioMore.setAttribute("aria-expanded", String(portfolioExpanded));
+    portfolioMore.textContent = portfolioExpanded ? "Свернуть работы" : `Показать все работы (${filtered.length})`;
+  }
+};
+if (portfolioMore) portfolioMore.addEventListener("click", () => { portfolioExpanded = !portfolioExpanded; updatePortfolioView(); });
+document.querySelectorAll(".portfolio-filter").forEach(button => button.addEventListener("click", () => {
+  activePortfolioFilter = button.dataset.filter;
+  portfolioExpanded = false;
+  document.querySelectorAll(".portfolio-filter").forEach(filter => {
+    const active = filter === button;
+    filter.classList.toggle("is-active", active);
+    filter.setAttribute("aria-pressed", String(active));
+  });
+  updatePortfolioView();
+}));
+updatePortfolioView();
 document.querySelectorAll(".nav a").forEach(link => link.addEventListener("click", () => {
   document.querySelector(".nav").classList.remove("nav-open");
   menuButton.setAttribute("aria-expanded", "false");
