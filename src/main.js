@@ -51,7 +51,7 @@ const videoPage = () => `
 
 const basePath = "/baribal";
 const cleanPath = location.pathname.startsWith(basePath) ? location.pathname.slice(basePath.length) : location.pathname;
-const path = cleanPath.replace(/\\/$/, "") || "/";
+const path = cleanPath.replace(/\/$/, "") || "/";
 const pageHero = (eyebrow, title, intro = "") => `<section class="page-hero"><div class="wrap"><span class="eyebrow">${eyebrow}</span><h1>${title}</h1>${intro ? `<p>${intro}</p>` : ""}</div></section>`;
 const contentPage = (eyebrow, title, intro, body) => `<main>${pageHero(eyebrow,title,intro)}<section class="section"><div class="wrap">${body}</div></section></main>`;
 const galleryPage = () => contentPage("ПОРТФОЛИО BARIBAL","Наши <em>работы</em>","Примеры защиты, оклейки и ухода за автомобилями в нашей студии.",`<div class="work-grid">${workCards()}</div><div class="center-action"><button class="button button-dark js-callback">Обсудить ваш автомобиль</button></div>`);
