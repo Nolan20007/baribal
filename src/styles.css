@@ -775,7 +775,7 @@ html[data-theme="light"] .contact-widget-form small{color:#dedede}
 /* Compact test controls in the header; device widths are applied to the full page. */
 .device-preview-tools{
   display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:5px;
-  flex:0 1 auto;min-width:0;padding:6px 8px;border:1px dashed rgba(255,255,255,.28);
+  flex:1 1 100%;order:10;min-width:0;padding:6px 8px;border:1px dashed rgba(255,255,255,.28);
   border-radius:8px;background:rgba(255,255,255,.035);
 }
 .device-preview-caption{
@@ -794,7 +794,7 @@ html.device-preview-phone #app{width:390px;max-width:none;overflow:hidden}
 html.device-preview-phone body{overflow-x:hidden}
 html.device-preview-phone .header{width:390px}
 html.device-preview-phone .header-inner{min-height:0;padding-top:10px;padding-bottom:10px;gap:8px;flex-wrap:wrap}
-html.device-preview-phone .device-preview-tools{order:5;flex:1 1 100%;width:100%;padding:6px;gap:4px}
+html.device-preview-phone .device-preview-tools{order:10;flex:1 1 100%;width:100%;padding:6px;gap:4px}
 html.device-preview-phone .device-preview-caption{font-size:8px}
 html.device-preview-phone .device-preview-button{flex:1 1 auto;padding:6px 5px;font-size:8px}
 html.device-preview-phone .theme-toggle{margin-left:auto}
