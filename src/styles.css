@@ -252,3 +252,33 @@ html[data-theme="light"] .header .nav a{border-color:#454647}
 .service-card .service-copy h4{color:#555650}
 .service-card .service-copy p{color:#696a68}
 .service-card .service-copy .eyebrow{color:#b8752f}
+
+/* Modern service details and separate order action on technology cards */
+.service-actions{display:flex;align-items:center;gap:14px}
+.service-actions .button-order{padding:10px 14px;font-size:9px;white-space:nowrap}
+.service-info-card{width:min(680px,100%);max-height:min(88vh,850px);overflow:auto;padding:clamp(28px,5vw,52px)}
+.service-info-card h2{font:500 clamp(30px,4vw,43px)/1.12 Oswald,sans-serif;text-transform:uppercase;margin:13px 36px 18px 0}
+.service-info-card .service-info-lead{font-size:14px;line-height:1.8;color:#c9c8c3;margin:0 0 25px}
+.service-info-card h3{font:500 18px Oswald,sans-serif;text-transform:uppercase;margin:0 0 14px;color:#fff}
+.service-info-card ul{list-style:none;padding:0;margin:0 0 26px;display:grid;gap:12px}
+.service-info-card li{position:relative;padding-left:24px;color:#d5d4cf;font-size:13px;line-height:1.65}
+.service-info-card li:before{content:"↗";position:absolute;left:0;color:var(--orange);font-weight:800}
+.service-info-fit{padding:18px 20px;background:rgba(255,255,255,.055);border-left:2px solid var(--orange);margin-bottom:26px}
+.service-info-fit>b{font:500 15px Oswald,sans-serif;text-transform:uppercase;color:#fff}
+.service-info-fit p{margin:7px 0 0;color:#c9c8c3;font-size:12px;line-height:1.75}
+.service-info-bottom{display:flex;align-items:center;justify-content:space-between;gap:18px;padding-top:4px}
+.service-info-bottom>span{font:500 23px Oswald,sans-serif;color:var(--orange)}
+.service-info-bottom .button{white-space:nowrap}
+html[data-theme="light"] .service-info-card .service-info-lead,
+html[data-theme="light"] .service-info-card li,
+html[data-theme="light"] .service-info-fit p{color:#555650}
+html[data-theme="light"] .service-info-card h3,
+html[data-theme="light"] .service-info-fit>b{color:#202123}
+html[data-theme="light"] .service-info-fit{background:#f4f2ed}
+@media(max-width:560px){
+ .service-actions{width:100%;justify-content:space-between;gap:8px}
+ .service-actions .button-order{padding:10px 12px}
+ .service-info-card{padding:34px 22px 24px}
+ .service-info-bottom{align-items:flex-start;flex-direction:column}
+ .service-info-bottom .button{width:100%}
+}
