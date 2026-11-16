@@ -49,7 +49,9 @@ const homePage = () => `
 const videoPage = () => `
   <main><section class="page-hero"><div class="wrap"><span class="eyebrow">BARIBAL · ВИДЕО</span><h1>Наши <em>видео</em></h1><p>Знакомьтесь с технологиями, процессами и результатами нашей работы.</p></div></section><section class="section video-section"><div class="wrap"><div class="video-grid">${videos.map((id, i) => `<article class="video-card"><div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/${id}" title="BARIBAL — видео ${i + 1}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div><div class="video-label"><span>0${i + 1}</span><h3>Видео ${i + 1}</h3></div></article>`).join("")}</div></div></section></main>`;
 
-const path = location.pathname.replace(/\\/$/, "") || "/";
+const basePath = "/baribal";
+const cleanPath = location.pathname.startsWith(basePath) ? location.pathname.slice(basePath.length) : location.pathname;
+const path = cleanPath.replace(/\\/$/, "") || "/";
 const pageHero = (eyebrow, title, intro = "") => `<section class="page-hero"><div class="wrap"><span class="eyebrow">${eyebrow}</span><h1>${title}</h1>${intro ? `<p>${intro}</p>` : ""}</div></section>`;
 const contentPage = (eyebrow, title, intro, body) => `<main>${pageHero(eyebrow,title,intro)}<section class="section"><div class="wrap">${body}</div></section></main>`;
 const galleryPage = () => contentPage("ПОРТФОЛИО BARIBAL","Наши <em>работы</em>","Примеры защиты, оклейки и ухода за автомобилями в нашей студии.",`<div class="work-grid">${workCards()}</div><div class="center-action"><button class="button button-dark js-callback">Обсудить ваш автомобиль</button></div>`);
@@ -62,6 +64,9 @@ const privacyPage = () => contentPage("ДОКУМЕНТЫ","Политика <em
 const pageMap = {"/":homePage,"/video":videoPage,"/tehnology":techPage,"/kuzov":bodyPage,"/himchistka":cleanPage,"/avtovinil":vinylPage,"/foto":galleryPage,"/reviews":reviewsPage,"/politika-konfidencialnosti":privacyPage};
 const renderPage = pageMap[path] || homePage;
 document.querySelector("#app").innerHTML = header() + renderPage() + footer() + callback();
+if (location.pathname === basePath || location.pathname.startsWith(basePath + "/")) {
+  document.querySelectorAll("#app a[href^=\"/\"]").forEach(link => { link.setAttribute("href", basePath + link.getAttribute("href")); });
+}
 
 const menuButton = document.querySelector(".menu-toggle");
 menuButton.addEventListener("click", () => {
