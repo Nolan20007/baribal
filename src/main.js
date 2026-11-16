@@ -16,7 +16,7 @@ const services = [
 const videos = ["iVKBjaP6TVI", "GUl93A3olWg", "TdFB4GnGhGk", "XXYMypYvk4E"];
 const isVideoPage = location.pathname.replace(/\/$/, "") === "/video";
 const nav = [
-  ["Защита кузова", "/kuzov"], ["Автохимчистка", "/himchistka"], ["Автовинил", "/avtovinil"],
+  ["Главная", "/"], ["Защита кузова", "/kuzov"], ["Автохимчистка", "/himchistka"], ["Автовинил", "/avtovinil"],
   ["Все технологии", "/tehnology"], ["Наши работы", "/foto"], ["Видео", "/video"], ["Отзывы", "/reviews"]
 ];
 const header = () => `
