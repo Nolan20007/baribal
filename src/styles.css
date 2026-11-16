@@ -306,7 +306,7 @@ html[data-theme="light"] .service-info-tech{background:#f4f2ed}
 
 
 /* Floating back-to-top control shared by all pages. */
-.back-to-top{position:fixed;right:clamp(16px,3vw,34px);bottom:clamp(18px,3vw,34px);z-index:80;width:48px;height:48px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:grid;place-items:center;background:#d98542;color:#171819;font:500 27px/1 Oswald,sans-serif;box-shadow:0 8px 26px rgba(0,0,0,.24);cursor:pointer;opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .22s ease,visibility .22s ease,transform .22s ease,background .2s ease}
+.back-to-top{position:fixed;right:clamp(16px,3vw,34px);bottom:88px;z-index:80;width:48px;height:48px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:grid;place-items:center;background:#d98542;color:#171819;font:500 27px/1 Oswald,sans-serif;box-shadow:0 8px 26px rgba(0,0,0,.24);cursor:pointer;opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .22s ease,visibility .22s ease,transform .22s ease,background .2s ease}
 .back-to-top.is-visible{opacity:1;visibility:visible;transform:translateY(0)}
 .back-to-top:hover{background:#f0a04d;transform:translateY(-3px)}
 .back-to-top:focus-visible{outline:2px solid #f0a04d;outline-offset:4px}
