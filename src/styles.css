@@ -13,3 +13,27 @@
 @media(max-width:1050px){.nav{gap:12px}.nav a{font-size:9px}.header-inner{gap:16px}.brand img{width:40px}.brand b{font-size:23px}.button-small{padding:11px 12px}.service-card{grid-template-columns:38% 1fr}.service-copy{padding:19px}.service-bottom{align-items:flex-start;flex-direction:column}}
 @media(max-width:760px){.wrap{width:min(100% - 34px,560px)}.topline-inner{justify-content:center}.topline-inner>span{display:none}.topline-inner div{width:100%;justify-content:space-between;gap:10px}.header-inner{min-height:75px}.brand img{width:38px;height:45px}.brand b{font-size:22px}.brand small{font-size:7px}.menu-toggle{display:block;margin-left:auto}.header .button-small{display:none}.nav{display:none;position:absolute;left:0;right:0;top:75px;padding:20px 24px 24px;background:#111214;border-top:1px solid var(--line);flex-direction:column;align-items:stretch;gap:0}.nav-open{display:flex}.nav a{padding:13px 0;border-bottom:1px solid var(--line);font-size:11px}.hero{min-height:610px;background-position:58% center}.hero-shade{background:linear-gradient(90deg,rgba(8,9,10,.92),rgba(8,9,10,.5)),linear-gradient(0deg,rgba(8,9,10,.45),transparent)}.hero h1{font-size:47px}.hero-content>p{font-size:12px}.hero-actions{align-items:stretch;flex-direction:column;width:min(100%,310px)}.hero-actions .button{width:100%}.hero-index{margin-top:65px}.section{padding:70px 0}.section-heading{align-items:flex-start;flex-direction:column;margin-bottom:28px}.section h2,.estimate h2,.video-teaser h2{font-size:39px}.work-grid{grid-template-columns:1fr;gap:16px}.work-image{height:245px}.work-copy p{min-height:0}.estimate{padding:65px 0}.estimate-inner{grid-template-columns:1fr;gap:30px}.service-grid{grid-template-columns:1fr}.service-card{grid-template-columns:40% 1fr;min-height:230px}.service-image{min-height:230px}.service-copy{padding:17px}.service-copy h3{font-size:20px}.service-copy p{font-size:10px}.service-bottom>b{font-size:17px}.video-teaser{padding:65px 0}.video-teaser-inner{grid-template-columns:1fr;gap:25px}.video-preview{height:240px}.contact-strip{padding:50px 0}.contact-strip-inner{align-items:flex-start;flex-direction:column}.contact-strip h2{font-size:37px}.footer-grid{grid-template-columns:1fr 1fr;gap:30px 18px}.footer-brand{grid-column:1/-1}.page-hero{padding:65px 0 50px}.video-section{padding-top:42px}.video-grid{grid-template-columns:1fr;gap:20px}.modal-card{padding:35px 24px}}
 @media(max-width:390px){.topline-inner div{font-size:10px}.service-card{grid-template-columns:1fr}.service-image{height:180px;min-height:180px}.service-bottom{flex-direction:row;align-items:center}.footer-grid{grid-template-columns:1fr}.footer-brand{grid-column:auto}.hero h1{font-size:41px}}
+
+/* Multi-page content */
+.prose-block{max-width:850px;color:#c9c8c3;font-size:13px;line-height:1.95}
+.prose-block h2{font:500 30px Oswald,sans-serif;text-transform:uppercase;color:#f4f2ed;margin:34px 0 12px}
+.prose-block p{margin:0 0 18px}
+.prose-block strong{color:var(--orange)}
+.feature-list{padding-left:20px;display:grid;gap:10px;color:#c9c8c3;font-size:12px;line-height:1.8}
+.feature-list li::marker{color:var(--orange)}
+.split-feature{display:grid;grid-template-columns:1fr 1fr;gap:55px;align-items:center}
+.feature-photo{min-height:380px;background:#222;overflow:hidden}
+.feature-photo img{width:100%;height:100%;min-height:380px;object-fit:cover;display:block}
+.split-feature .prose-block h2{margin-top:0}
+.split-feature .button{margin-top:12px}
+.review-quote{max-width:800px;padding:40px;background:#202123;border-left:3px solid var(--orange);margin-bottom:55px}
+.review-quote>span{font:500 64px Georgia;color:var(--orange);line-height:.7}
+.review-quote blockquote{margin:12px 0 22px;font:400 20px/1.8 Oswald,sans-serif;color:#f0efeb}
+.review-quote>b{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange)}
+.review-form-wrap{max-width:650px}
+.review-form-wrap h2{font:500 34px Oswald;text-transform:uppercase;margin:0 0 10px}
+.review-form-wrap>p{font-size:12px;color:#aaa;line-height:1.8;margin-bottom:25px}
+.lead-form textarea{width:100%;background:#2b2c2e;border:1px solid #454648;color:#fff;padding:14px;resize:vertical;font:12px Manrope,Arial,sans-serif}
+.lead-form textarea:focus{outline:0;border-color:var(--orange)}
+.legal-copy{max-width:900px}
+@media(max-width:760px){.split-feature{grid-template-columns:1fr;gap:28px}.feature-photo,.feature-photo img{min-height:250px;height:250px}.review-quote{padding:27px}.review-quote blockquote{font-size:17px}}
