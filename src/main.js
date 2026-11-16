@@ -1,4 +1,5 @@
 import "./styles.css";
+const devicePreviewMode = new URLSearchParams(location.search).get("devicePreview") === "1";
 try { const savedTheme = localStorage.getItem("baribal-theme"); if (savedTheme === "light" || savedTheme === "dark") document.documentElement.dataset.theme = savedTheme; } catch {}
 const logo = "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/f055b8b248f6e844ebf90239d4536b94.png";
 const work = [
@@ -138,6 +139,23 @@ const portfolioCards = () => portfolio.map((item, index) => {
   return `<article class="work-card portfolio-card${index >= 9 ? " is-extra" : ""}" data-categories="${categories.join("|")}"><div class="work-image"><img src="${item.image}" alt="${item.title}" loading="lazy" /></div><div class="work-copy"><span class="eyebrow">${item.type}</span><h3>${item.title}</h3><p>${item.text}</p><a class="text-link js-callback" href="#callback" data-service-title="${serviceForWork(item)}">Обсудить похожую работу <span>↗</span></a></div></article>`;
 }).join("");
 const serviceCards = () => services.map((item, i) => `<article class="service-card"><div class="service-image"><img src="${item.image}" alt="" loading="lazy" /></div><div class="service-copy"><span class="eyebrow">0${i + 1} / УСЛУГА</span><h3>${item.title}</h3><h4>${item.subtitle}</h4><p>${item.text}</p><div class="service-bottom"><b>${item.price}</b><button class="text-link js-callback">Узнать больше <span>↗</span></button></div></div></article>`).join("");
+const devicePreviewPanel = () => devicePreviewMode ? "" : `
+    <section class="device-preview-section" aria-label="Технический предпросмотр адаптивности">
+      <div class="wrap">
+        <div class="section-heading"><div><span class="eyebrow">ТЕХНИЧЕСКИЙ ИНСТРУМЕНТ</span><h2>Предпросмотр <em>сайта</em></h2></div><p>Проверьте, как сайт выглядит на разных экранах.</p></div>
+        <div class="device-preview-panel">
+          <div class="device-preview-toolbar" role="group" aria-label="Размер экрана">
+            <button class="device-preview-button is-active" type="button" data-preview-width="1366" data-preview-height="900" aria-pressed="true"><span aria-hidden="true">▱</span> Ноутбук</button>
+            <button class="device-preview-button" type="button" data-preview-width="390" data-preview-height="844" aria-pressed="false"><span aria-hidden="true">▯</span> Телефон</button>
+            <button class="device-preview-button" type="button" data-preview-width="1920" data-preview-height="1080" aria-pressed="false"><span aria-hidden="true">▭</span> Широкий монитор</button>
+          </div>
+          <div class="device-preview-stage" aria-label="Предпросмотр страницы">
+            <iframe class="device-preview-frame" title="Предпросмотр сайта в выбранном размере экрана" loading="lazy"></iframe>
+          </div>
+          <p class="device-preview-note">Это тестовый инструмент. Внутри окна можно прокручивать страницу независимо от основного сайта.</p>
+        </div>
+      </div>
+    </section>`;
 const homePage = () => `
   <main>
     <section class="hero"><div class="hero-shade"></div><div class="wrap hero-content"><span class="eyebrow">BARIBAL · СТУДИЯ ЗАЩИТНЫХ ТЕХНОЛОГИЙ</span><h1>Современные технологии<br /><em>защиты автомобиля</em><br />в Перми</h1><p>Профессиональный уход, защита кузова и интерьера<br class="desktop-only" /> с гарантией от 12 до 72 месяцев</p><div class="hero-actions"><button class="button js-callback">Записаться на обслуживание <span>↗</span></button><a class="button button-outline" href="#works">Наши работы</a></div><div class="hero-index"><b>01</b><span>ЗАЩИТА · УХОД · СТИЛЬ</span></div></div></section>
@@ -148,6 +166,7 @@ const homePage = () => `
     <section class="section studio-section" id="studio"><div class="wrap"><div class="section-heading"><div><span class="eyebrow">МЫ РАБОТАЕМ В ПЕРМИ</span><h2>Наша <em>студия</em></h2></div><p>Приезжайте познакомиться, обсудить задачу и выбрать подходящее решение для автомобиля.</p></div><div class="studio-gallery"><figure class="studio-photo studio-photo-main"><img src="https://i.1.creatium.io/plp/u21.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/b0d8da0f788fb697ef85e2876f2e2d8a.jpg" alt="Здание студии BARIBAL" loading="lazy"><figcaption>Студия BARIBAL · Пермь</figcaption></figure><div class="studio-lower"><figure class="studio-photo studio-photo-full"><img src="https://i.1.creatium.io/plp/u21.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/7ab8d1717c459b9fcc44c1af91c91aa0.jpg" alt="Въезд в студию BARIBAL" loading="lazy"><figcaption>Въезд в студию</figcaption></figure><figure class="studio-photo studio-photo-full"><img src="https://i.1.creatium.io/plp/u21.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/da220dd7b47feb810724df41a5ca515e.jpg" alt="Фасад студии BARIBAL на улице Героев Хасана" loading="lazy"><figcaption>Фасад студии</figcaption></figure><div class="studio-map studio-map-card"><div class="studio-map-heading"><span class="eyebrow">КАК НАС НАЙТИ</span><h3>Мы на <em>карте</em></h3></div><div class="studio-map-frame"><iframe title="Расположение студии BARIBAL на Яндекс Картах" src="https://yandex.ru/map-widget/v1/?text=Пермь%2C%20ул.%20Героев%20Хасана%2C%20105%D0%AD&z=16" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div><div class="studio-map-address"><span class="eyebrow">ЖДЁМ ВАС В ГОСТИ</span><p><strong>Пермь, ул. Героев Хасана, 105Э</strong><br>за ТЦ «Шоколад», в районе Велты</p></div><a class="button button-small studio-map-link" href="https://yandex.ru/maps/?text=Пермь%2C%20ул.%20Героев%20Хасана%2C%20105Э" target="_blank" rel="noopener">Построить маршрут ↗</a></div></div></div></section>
     <section class="section partners-section" id="partners"><div class="wrap"><div class="section-heading"><div><span class="eyebrow">НАМ ДОВЕРЯЮТ</span><h2>Клиенты и <em>партнёры</em></h2></div><p>Компании и автомобильные бренды, логотипы которых представлены в истории студии.</p></div><div class="partner-grid"><div class="partner-logo"><img src="https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/7a1ddbeb7c441bf94297bb7019a3a42e.jpg" alt="Логотип партнёра 1" loading="lazy"></div><div class="partner-logo"><img src="https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/3cb42adbe082d65c4765f1b6af1d38ec.jpg" alt="Логотип партнёра 2" loading="lazy"></div><div class="partner-logo"><img src="https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/55100add09475d0b079eef90c70b5b6b.jpg" alt="Логотип партнёра 3" loading="lazy"></div><div class="partner-logo"><img src="https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/bec077765443f6253661a0dd04c7e48a.jpg" alt="Логотип партнёра 4" loading="lazy"></div><div class="partner-logo"><img src="https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/16a3ac3b0d610d95cd054254f8dd82d6.jpg" alt="Логотип партнёра 5" loading="lazy"></div><div class="partner-logo"><img src="https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/f8c076634d6a4476bf1b1a09e1c9afd8.jpg" alt="Логотип партнёра 6" loading="lazy"></div><div class="partner-logo"><img src="https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/daadf6c993fa258204d2de1b3142b951.jpg" alt="Логотип партнёра 7" loading="lazy"></div><div class="partner-logo"><img src="https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/7181e175d5cff2eaad187d7f7f47a3c6.jpg" alt="Логотип партнёра 8" loading="lazy"></div><div class="partner-logo"><img src="https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/3d8df7015a244f7cecebe1bab38eddca.jpg" alt="Логотип партнёра 9" loading="lazy"></div><div class="partner-logo"><img src="https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/b55e74547638791bcbf6d727dd1dade4.jpg" alt="Логотип партнёра 10" loading="lazy"></div><div class="partner-logo"><img src="https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/4c36baefbeedbad198ccb5f84131fc18.jpg" alt="Логотип партнёра 11" loading="lazy"></div></div></div></section>
     <section class="video-teaser"><div class="wrap video-teaser-inner"><div><span class="eyebrow">ЗНАКОМСТВО СО СТУДИЕЙ</span><h2>Посмотрите,<br /><em>как мы работаем</em></h2><p>Процессы, технологии и результаты в видео.</p><a class="button" href="/video">Смотреть видео <span>↗</span></a></div><div class="video-preview"><img src="https://img1.creatium.ru/disk2/d8/42/1a/7a83075790fe329feddf15ee2582b4adb2/1.jpg" alt="Автомобиль в студии BARIBAL" loading="lazy" /><span class="play-mark">▶</span></div></div></section>
+    ${devicePreviewPanel()}
     <section class="contact-strip"><div class="wrap contact-strip-inner"><div><span class="eyebrow">ЖДЁМ ВАС В СТУДИИ</span><h2>Ваш автомобиль<br /><em>в надёжных руках</em></h2></div><div><p>Пермь, ул. Героев Хасана, 105Э</p><a href="tel:+73422024142">+7 (342) 202-41-42</a></div><button class="button js-callback">Записаться <span>↗</span></button></div></section>
   </main>`;
 const videoPage = () => `
@@ -341,6 +360,36 @@ if (location.pathname === basePath || location.pathname.startsWith(basePath + "/
   document.querySelectorAll("#app a[href^=\"/\"]").forEach(link => { link.setAttribute("href", basePath + link.getAttribute("href")); });
 }
 
+const devicePreview = document.querySelector(".device-preview-section");
+if (devicePreview) {
+  const previewStage = devicePreview.querySelector(".device-preview-stage");
+  const previewFrame = devicePreview.querySelector(".device-preview-frame");
+  const previewButtons = [...devicePreview.querySelectorAll(".device-preview-button")];
+  const previewUrl = new URL(location.href);
+  previewUrl.searchParams.set("devicePreview", "1");
+  previewUrl.hash = "";
+  previewFrame.src = previewUrl.toString();
+  let previewSize = { width: 1366, height: 900 };
+  const fitPreview = () => {
+    const scale = Math.min(1, Math.max(.2, (previewStage.clientWidth - 24) / previewSize.width));
+    previewFrame.style.width = previewSize.width + "px";
+    previewFrame.style.height = previewSize.height + "px";
+    previewFrame.style.transform = "translateX(-50%) scale(" + scale + ")";
+    previewStage.style.height = Math.round(previewSize.height * scale) + "px";
+  };
+  previewButtons.forEach(button => button.addEventListener("click", () => {
+    previewSize = { width: Number(button.dataset.previewWidth), height: Number(button.dataset.previewHeight) };
+    previewButtons.forEach(item => {
+      const active = item === button;
+      item.classList.toggle("is-active", active);
+      item.setAttribute("aria-pressed", String(active));
+    });
+    fitPreview();
+  }));
+  if ("ResizeObserver" in window) new ResizeObserver(fitPreview).observe(previewStage);
+  else window.addEventListener("resize", fitPreview);
+  fitPreview();
+}
 const backToTop = document.querySelector(".back-to-top");
 const updateBackToTop = () => {
   const scrollPosition = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
