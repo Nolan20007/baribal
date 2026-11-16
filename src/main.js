@@ -179,8 +179,8 @@ document.querySelector("#service-info-order").addEventListener("click", () => {
   closeInfoModal();
   openModal("", title);
 });
-document.querySelectorAll(".js-close").forEach(button => button.addEventListener("click", closeModal));
-document.addEventListener("keydown", event => { if (event.key === "Escape") closeModal(); });
+document.querySelectorAll(".js-close").forEach(button => button.addEventListener("click", () => { closeModal(); closeInfoModal(); }));
+document.addEventListener("keydown", event => { if (event.key === "Escape") { closeModal(); closeInfoModal(); } });
 document.querySelectorAll('input[type="tel"]').forEach(input => input.addEventListener("input", () => {
   let digits = input.value.replace(/\D/g, "");
   if (digits.startsWith("8")) digits = "7" + digits.slice(1);
