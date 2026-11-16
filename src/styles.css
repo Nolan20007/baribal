@@ -1239,3 +1239,187 @@ html[data-theme="light"] .device-preview-close{color:#222;border-color:rgba(20,2
     font-size:8px;
   }
 }
+
+
+/* Four visual directions: content and layout stay shared; only presentation changes. */
+.hero-test-controls{
+  position:absolute;
+  z-index:4;
+  right:clamp(18px,3vw,42px);
+  bottom:20px;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:7px;
+}
+.hero-test-controls .hero-photo-toggle,
+.hero-test-controls .hero-design-toggle{
+  position:static;
+  padding:7px 10px;
+  border:1px solid rgba(240,160,77,.58);
+  border-radius:3px;
+  background:rgba(20,21,22,.68);
+  color:#f4f2ed;
+  font:700 8px/1.2 Manrope,Arial,sans-serif;
+  letter-spacing:.35px;
+  white-space:nowrap;
+  cursor:pointer;
+  opacity:.82;
+  transition:opacity .2s,background .2s,border-color .2s;
+}
+.hero-test-controls .hero-photo-toggle:hover,
+.hero-test-controls .hero-photo-toggle:focus-visible,
+.hero-test-controls .hero-design-toggle:hover,
+.hero-test-controls .hero-design-toggle:focus-visible{
+  opacity:1;
+  background:rgba(20,21,22,.94);
+  border-color:var(--orange);
+  outline:none;
+}
+.hero-test-controls .hero-design-toggle{border-color:rgba(255,255,255,.34)}
+@media(max-width:760px){
+  .hero-test-controls{
+    top:12px;
+    right:10px;
+    bottom:auto;
+    gap:5px;
+  }
+  .hero-test-controls .hero-photo-toggle,
+  .hero-test-controls .hero-design-toggle{
+    padding:6px 7px;
+    font-size:7px;
+    letter-spacing:.1px;
+  }
+}
+
+/* 2 — Premium minimalism: warm stone, deep graphite and restrained brass. */
+html[data-design="2"]{
+  --orange:#b88b55;
+  --paper:#eeece6;
+  --dark:#171819;
+  --muted:#77746e;
+  --line:rgba(35,33,29,.16);
+}
+html[data-design="2"] body{background:#eeece6;color:#242321}
+html[data-design="2"] .topline{background:#151617;border-color:rgba(255,255,255,.08)}
+html[data-design="2"] .header{background:#1b1c1d;border-color:rgba(255,255,255,.12)}
+html[data-design="2"] .hero-shade{background:linear-gradient(90deg,rgba(10,10,10,.88),rgba(10,10,10,.57) 48%,rgba(10,10,10,.12)),linear-gradient(0deg,rgba(10,10,10,.38),transparent 60%)}
+html[data-design="2"] .hero h1,
+html[data-design="2"] .page-hero h1,
+html[data-design="2"] .section h2,
+html[data-design="2"] .estimate h2,
+html[data-design="2"] .video-teaser h2,
+html[data-design="2"] .contact-strip h2{letter-spacing:.8px;font-weight:400}
+html[data-design="2"] .works-section,
+html[data-design="2"] .services-section,
+html[data-design="2"] .video-section{background:#eeece6;color:#242321}
+html[data-design="2"] .work-card,
+html[data-design="2"] .service-card,
+html[data-design="2"] .video-card{background:#faf9f6;border:1px solid rgba(39,37,32,.09);box-shadow:0 12px 34px rgba(31,29,25,.055)}
+html[data-design="2"] .work-image,
+html[data-design="2"] .service-image{background:#d8d4cb}
+html[data-design="2"] .estimate,
+html[data-design="2"] .video-teaser{background:#242526;color:#f4f1eb}
+html[data-design="2"] .studio-section{background:#242526;color:#f4f1eb}
+html[data-design="2"] .partners-section{background:#e5e1d8;color:#242321}
+html[data-design="2"] .contact-strip{background:#d8d2c6;color:#242321}
+html[data-design="2"] .footer{background:#151617}
+html[data-design="2"] .page-hero{background:linear-gradient(110deg,#202122,#343331);color:#f4f1eb}
+html[data-design="2"] .button{border-radius:1px;letter-spacing:1.35px}
+html[data-design="2"] .button-outline{border-color:rgba(255,255,255,.58)}
+html[data-design="2"] .service-card{grid-template-columns:40% 1fr}
+html[data-design="2"] .work-copy,
+html[data-design="2"] .service-copy{padding:clamp(23px,2.2vw,32px)}
+html[data-design="2"] .studio-photo,
+html[data-design="2"] .studio-map-card,
+html[data-design="2"] .studio-address-card{border-color:rgba(255,255,255,.14)}
+html[data-design="2"] .hero-test-controls .hero-photo-toggle,
+html[data-design="2"] .hero-test-controls .hero-design-toggle{border-color:rgba(232,208,174,.5)}
+
+/* 3 — Modern technology: cool silver, crisp white and electric blue accents. */
+html[data-design="3"]{
+  --orange:#d47742;
+  --paper:#e9eef0;
+  --dark:#17212a;
+  --muted:#697681;
+  --line:rgba(25,42,54,.15);
+}
+html[data-design="3"] body{background:#edf1f3;color:#1c2932}
+html[data-design="3"] .topline{background:#101b24;color:#c5d0d7}
+html[data-design="3"] .header{background:#f8fafb;color:#1c2932;border-color:#d8e0e5}
+html[data-design="3"] .brand b{color:#1c2932}
+html[data-design="3"] .brand small{color:#697681}
+html[data-design="3"] .nav a{color:#354550}
+html[data-design="3"] .nav a:hover,
+html[data-design="3"] .nav a[aria-current=page]{color:#c66c3c}
+html[data-design="3"] .menu-toggle i{background:#1c2932}
+html[data-design="3"] .hero{background-color:#13212c}
+html[data-design="3"] .hero-shade{background:linear-gradient(90deg,rgba(10,25,37,.96),rgba(10,25,37,.78) 48%,rgba(10,25,37,.22)),linear-gradient(0deg,rgba(10,25,37,.48),transparent 60%)}
+html[data-design="3"] .works-section,
+html[data-design="3"] .services-section,
+html[data-design="3"] .video-section{background:#e9eef0;color:#1c2932}
+html[data-design="3"] .work-card,
+html[data-design="3"] .service-card,
+html[data-design="3"] .video-card{background:#fbfcfd;border:1px solid #dce4e8;box-shadow:0 10px 28px rgba(25,48,64,.07)}
+html[data-design="3"] .work-image,
+html[data-design="3"] .service-image{background:#d5dfe4}
+html[data-design="3"] .estimate,
+html[data-design="3"] .video-teaser,
+html[data-design="3"] .studio-section{background:#172631;color:#f3f7f9}
+html[data-design="3"] .partners-section{background:#f8fafb;color:#1c2932}
+html[data-design="3"] .contact-strip{background:#dce5e9;color:#1c2932}
+html[data-design="3"] .footer{background:#101b24}
+html[data-design="3"] .page-hero{background:linear-gradient(110deg,#172631,#294252);color:#f3f7f9}
+html[data-design="3"] .button{border-radius:4px;box-shadow:0 5px 14px rgba(16,33,45,.12)}
+html[data-design="3"] .button-outline{color:#fff;border-color:rgba(255,255,255,.58)}
+html[data-design="3"] .service-card{border-radius:5px}
+html[data-design="3"] .work-card,
+html[data-design="3"] .video-card{border-radius:5px;overflow:hidden}
+html[data-design="3"] .studio-photo,
+html[data-design="3"] .studio-map-card,
+html[data-design="3"] .studio-address-card{border-radius:4px;overflow:hidden}
+html[data-design="3"] .hero-test-controls .hero-photo-toggle,
+html[data-design="3"] .hero-test-controls .hero-design-toggle{border-color:rgba(255,255,255,.5)}
+
+/* 4 — Editorial motorsport: ink-black surfaces, warm sand and copper details. */
+html[data-design="4"]{
+  --orange:#d28a54;
+  --paper:#d9d4ca;
+  --dark:#141918;
+  --muted:#a6aaa4;
+  --line:rgba(255,255,255,.16);
+}
+html[data-design="4"] body{background:#141918;color:#f0eee8}
+html[data-design="4"] .topline{background:#0b100f}
+html[data-design="4"] .header{background:#141918;border-color:rgba(210,138,84,.28)}
+html[data-design="4"] .hero-shade{background:linear-gradient(90deg,rgba(5,11,9,.96),rgba(5,11,9,.76) 48%,rgba(5,11,9,.24)),linear-gradient(0deg,rgba(5,11,9,.55),transparent 62%)}
+html[data-design="4"] .hero h1,
+html[data-design="4"] .page-hero h1,
+html[data-design="4"] .section h2,
+html[data-design="4"] .estimate h2,
+html[data-design="4"] .video-teaser h2,
+html[data-design="4"] .contact-strip h2{font-weight:500;letter-spacing:1.15px}
+html[data-design="4"] .works-section,
+html[data-design="4"] .services-section,
+html[data-design="4"] .video-section{background:#d9d4ca;color:#171c1a}
+html[data-design="4"] .work-card,
+html[data-design="4"] .service-card,
+html[data-design="4"] .video-card{background:#f0ede6;border:1px solid rgba(20,25,23,.12)}
+html[data-design="4"] .work-image,
+html[data-design="4"] .service-image{background:#c7c1b5}
+html[data-design="4"] .estimate,
+html[data-design="4"] .video-teaser,
+html[data-design="4"] .studio-section{background:#1b2420;color:#f0eee8}
+html[data-design="4"] .partners-section{background:#c9c2b5;color:#171c1a}
+html[data-design="4"] .contact-strip{background:#bd9878;color:#171c1a}
+html[data-design="4"] .footer{background:#0b100f}
+html[data-design="4"] .page-hero{background:linear-gradient(110deg,#111816,#26332c);color:#f0eee8}
+html[data-design="4"] .button{border-radius:0;text-transform:uppercase;letter-spacing:1.3px}
+html[data-design="4"] .button-outline{border-color:rgba(255,255,255,.6)}
+html[data-design="4"] .work-card,
+html[data-design="4"] .service-card{box-shadow:8px 8px 0 rgba(20,25,23,.10)}
+html[data-design="4"] .studio-photo,
+html[data-design="4"] .studio-map-card,
+html[data-design="4"] .studio-address-card{border-color:rgba(210,138,84,.32)}
+html[data-design="4"] .hero-test-controls .hero-photo-toggle,
+html[data-design="4"] .hero-test-controls .hero-design-toggle{border-color:rgba(210,138,84,.62)}
