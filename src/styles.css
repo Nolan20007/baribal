@@ -983,3 +983,107 @@ html[data-theme="light"] .device-preview-close{color:#222;border-color:rgba(20,2
   .studio-gallery{width:100%;max-width:100%}
   .studio-gallery .studio-photo-main{width:100%;max-width:100%}
 }
+
+
+/* Studio gallery: address first, then three photos and the map. */
+@media(min-width:1201px){
+  .studio-gallery{
+    width:100%;
+    max-width:100%;
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    grid-template-rows:405px;
+    gap:14px;
+  }
+  .studio-gallery .studio-photo,
+  .studio-gallery .studio-map-card,
+  .studio-gallery .studio-address-card{
+    width:100%;
+    max-width:100%;
+    height:405px;
+    min-width:0;
+    box-sizing:border-box;
+  }
+}
+.studio-address-card{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+  overflow:hidden;
+  padding:clamp(16px,1.8vw,26px);
+  color:#f4f2ed;
+  background:linear-gradient(145deg,#292a2b 0%,#171819 72%);
+  border:1px solid rgba(255,255,255,.13);
+  border-top:3px solid var(--orange);
+}
+.studio-address-card .eyebrow{
+  color:var(--orange);
+  font-size:9px;
+  letter-spacing:1.5px;
+  line-height:1.5;
+}
+.studio-address-card h3{
+  margin:15px 0 18px;
+  font:500 clamp(27px,2.5vw,39px)/.98 Oswald,sans-serif;
+  letter-spacing:.5px;
+}
+.studio-address-card h3 em{
+  color:var(--orange);
+  font-style:normal;
+}
+.studio-address-card p{
+  margin:0;
+  color:#fff;
+  font:500 clamp(14px,1.25vw,18px)/1.35 Oswald,sans-serif;
+  letter-spacing:.25px;
+}
+.studio-address-card .studio-address-note{
+  margin-top:9px;
+  color:#bdbdbd;
+  font-size:10px;
+  line-height:1.5;
+}
+@media(max-width:1200px){
+  .studio-gallery{
+    width:100%;
+    max-width:100%;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    grid-auto-rows:340px;
+    grid-template-rows:none;
+    gap:14px;
+  }
+  .studio-gallery .studio-photo,
+  .studio-gallery .studio-map-card,
+  .studio-gallery .studio-address-card{
+    width:100%;
+    max-width:100%;
+    height:340px;
+  }
+  .studio-gallery .studio-photo-main{grid-row:auto}
+  .studio-gallery .studio-map-card .studio-map-frame{min-height:110px}
+  .studio-address-card h3{font-size:clamp(25px,3vw,36px)}
+}
+@media(max-width:620px){
+  .studio-gallery{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    grid-auto-rows:260px;
+    gap:10px;
+  }
+  .studio-gallery .studio-photo,
+  .studio-gallery .studio-map-card,
+  .studio-gallery .studio-address-card{height:260px}
+  .studio-address-card{padding:15px}
+  .studio-address-card h3{font-size:clamp(23px,6vw,31px);margin:12px 0}
+  .studio-address-card p{font-size:14px}
+  .studio-gallery .studio-map-card{padding:12px}
+  .studio-gallery .studio-map-card .studio-map-frame{min-height:90px}
+}
+@media(max-width:390px){
+  .studio-gallery{
+    grid-template-columns:1fr;
+    grid-auto-rows:280px;
+  }
+  .studio-gallery .studio-photo,
+  .studio-gallery .studio-map-card,
+  .studio-gallery .studio-address-card{height:280px}
+}
