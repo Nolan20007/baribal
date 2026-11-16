@@ -259,6 +259,10 @@ html[data-theme="light"] .header .nav a{border-color:#454647}
 .service-info-card{width:min(680px,100%);max-height:min(88vh,850px);overflow:auto;padding:clamp(28px,5vw,52px)}
 .service-info-card h2{font:500 clamp(30px,4vw,43px)/1.12 Oswald,sans-serif;text-transform:uppercase;margin:13px 36px 18px 0}
 .service-info-card .service-info-lead{font-size:14px;line-height:1.8;color:#c9c8c3;margin:0 0 25px}
+.service-info-card .service-info-story{margin:0 0 26px;color:#d5d4cf;font-size:13px;line-height:1.85}
+.service-info-card .service-info-tech{padding:18px 20px;background:rgba(255,255,255,.045);border-left:2px solid rgba(222,132,62,.65);margin:0 0 18px}
+.service-info-card .service-info-tech>b{font:500 15px Oswald,sans-serif;text-transform:uppercase;color:#fff}
+.service-info-card .service-info-tech p{margin:8px 0 0;color:#c9c8c3;font-size:12px;line-height:1.8}
 .service-info-card h3{font:500 18px Oswald,sans-serif;text-transform:uppercase;margin:0 0 14px;color:#fff}
 .service-info-card ul{list-style:none;padding:0;margin:0 0 26px;display:grid;gap:12px}
 .service-info-card li{position:relative;padding-left:24px;color:#d5d4cf;font-size:13px;line-height:1.65}
@@ -271,10 +275,14 @@ html[data-theme="light"] .header .nav a{border-color:#454647}
 .service-info-bottom .button{white-space:nowrap}
 html[data-theme="light"] .service-info-card .service-info-lead,
 html[data-theme="light"] .service-info-card li,
-html[data-theme="light"] .service-info-fit p{color:#555650}
+html[data-theme="light"] .service-info-fit p,
+html[data-theme="light"] .service-info-story,
+html[data-theme="light"] .service-info-tech p{color:#555650}
 html[data-theme="light"] .service-info-card h3,
-html[data-theme="light"] .service-info-fit>b{color:#202123}
-html[data-theme="light"] .service-info-fit{background:#f4f2ed}
+html[data-theme="light"] .service-info-fit>b,
+html[data-theme="light"] .service-info-tech>b{color:#202123}
+html[data-theme="light"] .service-info-fit,
+html[data-theme="light"] .service-info-tech{background:#f4f2ed}
 @media(max-width:560px){
  .service-actions{width:100%;justify-content:space-between;gap:8px}
  .service-actions .button-order{padding:10px 12px}
