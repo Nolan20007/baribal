@@ -361,12 +361,14 @@ const rebuildDevicePreviewRules = width => {
       if (rule instanceof CSSMediaRule) {
         const max = rule.conditionText.match(/max-width\s*:\s*(\d+(?:\.\d+)?)px/i);
         const min = rule.conditionText.match(/min-width\s*:\s*(\d+(?:\.\d+)?)px/i);
-        const matches = (!max || width <= Number(max[1])) && (!min || width >= Number(min[1]));
+        const matches = (!max && !min)
+          ? window.matchMedia(rule.conditionText).matches
+          : (!max || width <= Number(max[1])) && (!min || width >= Number(min[1]));
         if (matches) walk(rule.cssRules, true);
       } else if (rule instanceof CSSStyleRule && active) {
         const selectors = rule.selectorText.split(",").map(selector => {
           const trimmed = selector.trim();
-          return trimmed.startsWith("html") ? trimmed.replace(/^html/, "html.device-preview-phone") : "html.device-preview-phone " + trimmed;
+          return trimmed.startsWith("html") ? trimmed.replace(/^html/, "html.device-preview-emulated") : "html.device-preview-emulated " + trimmed;
         });
         output.push(selectors.join(",") + "{" + rule.style.cssText + "}");
       }
@@ -379,6 +381,7 @@ const rebuildDevicePreviewRules = width => {
 };
 const setDevicePreview = width => {
   const phoneMode = width <= 760;
+  document.documentElement.classList.add("device-preview-emulated");
   document.documentElement.classList.toggle("device-preview-phone", phoneMode);
   document.documentElement.classList.toggle("device-preview-wide", width > 1366);
   devicePreviewRoot.style.width = width + "px";
@@ -386,20 +389,19 @@ const setDevicePreview = width => {
   devicePreviewRoot.style.marginLeft = "auto";
   devicePreviewRoot.style.marginRight = "auto";
   document.body.style.overflowX = width > window.innerWidth ? "auto" : "hidden";
-  if (phoneMode) rebuildDevicePreviewRules(width);
-  else devicePreviewStyle.textContent = "";
+  rebuildDevicePreviewRules(width);
   devicePreviewButtons.forEach(button => {
     const active = Number(button.dataset.previewWidth) === width;
     button.classList.toggle("is-active", active);
     button.setAttribute("aria-pressed", String(active));
   });
-  window.scrollTo({ top: 0, behavior: "instant" });
+  window.scrollTo({ top: 0, behavior: "auto" });
 };
 devicePreviewButtons.forEach(button => button.addEventListener("click", () => {
   setDevicePreview(Number(button.dataset.previewWidth));
 }));
 window.addEventListener("resize", () => {
-  if (document.documentElement.classList.contains("device-preview-phone")) {
+  if (document.documentElement.classList.contains("device-preview-emulated")) {
     const active = Number(document.querySelector(".device-preview-button.is-active")?.dataset.previewWidth || 390);
     setDevicePreview(active);
   }
