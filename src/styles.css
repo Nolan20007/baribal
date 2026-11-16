@@ -196,3 +196,20 @@ html[data-theme="light"] .review-quote blockquote{color:#333}
 html[data-theme="light"] .review-form-wrap>p{color:#666}
 html[data-theme="light"] .video-card{background:#fff}
 html[data-theme="light"] .button-dark{background:#202123;color:#fff;border-color:#202123}
+
+
+/* Make the primary contact numbers easy to spot */
+.topline{font-size:14px;color:#e5e3dd}
+.topline-inner{min-height:48px}
+.topline-inner div{gap:clamp(22px,3vw,48px)}
+.topline-inner div a{font:600 18px Oswald,Manrope,sans-serif;letter-spacing:.45px;color:#f7f5ef;white-space:nowrap;transition:color .2s}
+.topline-inner div a:hover{color:var(--orange)}
+html[data-theme="light"] .topline{background:#e4e2dc;color:#555}
+html[data-theme="light"] .topline-inner div a{color:#202123}
+html[data-theme="light"] .topline-inner div a:hover{color:#a9682b}
+@media(max-width:760px){
+ .topline-inner{min-height:50px}
+ .topline-inner div{justify-content:center;gap:clamp(12px,4vw,24px)}
+ .topline-inner div a{font-size:clamp(15px,4vw,18px)}
+}
+@media(max-width:360px){.topline-inner div{gap:9px}.topline-inner div a{font-size:14px}}
