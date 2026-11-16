@@ -77,6 +77,24 @@ const services = [
 ];
 const videos = [1, 2, 3, 4];
 const localVideo = new URL("../1.mp4", import.meta.url).href;
+const videoPlayer = (poster, label) => `
+  <div class="baribal-player">
+    <video playsinline preload="metadata" aria-label="${label}">
+      <source src="${localVideo}" type="video/mp4">Ваш браузер не поддерживает воспроизведение видео.
+    </video>
+    <div class="video-poster">
+      <img src="${poster}" alt="${label}" loading="lazy">
+      <button class="video-poster-play" type="button" data-player-start aria-label="Воспроизвести видео"><span></span></button>
+      <span class="video-poster-caption">BARIBAL <i>·</i> VIDEO</span>
+    </div>
+    <div class="baribal-controls" data-player-controls hidden>
+      <button class="player-play" type="button" data-player-play aria-label="Воспроизвести или приостановить">▶</button>
+      <span class="player-time" data-player-time>0:00 / 0:00</span>
+      <input class="player-progress" data-player-progress type="range" min="0" max="100" step="0.1" value="0" aria-label="Позиция видео">
+      <button class="player-mute" type="button" data-player-mute aria-label="Выключить звук">♪</button>
+      <button class="player-fullscreen" type="button" data-player-fullscreen aria-label="Полноэкранный режим">⛶</button>
+    </div>
+  </div>`;
 const isVideoPage = location.pathname.replace(/\/$/, "") === "/video";
 const nav = [
   ["Главная", "/"], ["Защита кузова", "/kuzov"], ["Автохимчистка", "/himchistka"], ["Автовинил", "/avtovinil"],
@@ -160,11 +178,11 @@ const homePage = () => `
 
     <section class="section studio-section" id="studio"><div class="wrap"><div class="section-heading"><div><span class="eyebrow">МЫ РАБОТАЕМ В ПЕРМИ</span><h2>Наша <em>студия</em></h2></div><p>Приезжайте познакомиться, обсудить задачу и выбрать подходящее решение для автомобиля.</p></div><div class="studio-gallery"><div class="studio-address-card"><span class="eyebrow">ЖДЁМ ВАС В ГОСТИ</span><h3>BARIBAL<br><em>STUDIO</em></h3><p>Пермь, ул. Героев Хасана, 105Э</p><span class="studio-address-note">За ТЦ «Шоколад», в районе Велты</span></div><figure class="studio-photo studio-photo-main"><img src="https://i.1.creatium.io/plp/u21.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/b0d8da0f788fb697ef85e2876f2e2d8a.jpg" alt="Здание студии BARIBAL" loading="lazy"><figcaption>Студия BARIBAL · Пермь</figcaption></figure><figure class="studio-photo studio-photo-full"><img src="https://i.1.creatium.io/plp/u21.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/7ab8d1717c459b9fcc44c1af91c91aa0.jpg" alt="Въезд в студию BARIBAL" loading="lazy"><figcaption>Въезд в студию</figcaption></figure><figure class="studio-photo studio-photo-full"><img src="https://i.1.creatium.io/plp/u21.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/da220dd7b47feb810724df41a5ca515e.jpg" alt="Фасад студии BARIBAL на улице Героев Хасана" loading="lazy"><figcaption>Фасад студии</figcaption></figure><div class="studio-map studio-map-card"><div class="studio-map-heading"><span class="eyebrow">КАК НАС НАЙТИ</span><h3>Мы на <em>карте</em></h3></div><div class="studio-map-frame"><iframe title="Расположение студии BARIBAL на Яндекс Картах" src="https://yandex.ru/map-widget/v1/?text=Пермь%2C%20ул.%20Героев%20Хасана%2C%20105%D0%AD&z=16" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div><div class="studio-map-address"><span class="eyebrow">ЖДЁМ ВАС В ГОСТИ</span><p><strong>Пермь, ул. Героев Хасана, 105Э</strong><br>за ТЦ «Шоколад», в районе Велты</p></div><a class="button button-small studio-map-link" href="https://yandex.ru/maps/?text=Пермь%2C%20ул.%20Героев%20Хасана%2C%20105%D0%AD" target="_blank" rel="noopener">Построить маршрут ↗</a></div></div></section>
     <section class="section partners-section" id="partners"><div class="wrap"><div class="section-heading"><div><span class="eyebrow">НАМ ДОВЕРЯЮТ</span><h2>Клиенты и <em>партнёры</em></h2></div></div><div class="partner-grid"><div class="partner-logo"><img src="https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/7a1ddbeb7c441bf94297bb7019a3a42e.jpg" alt="Логотип партнёра 1" loading="lazy"></div><div class="partner-logo"><img src="https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/3cb42adbe082d65c4765f1b6af1d38ec.jpg" alt="Логотип партнёра 2" loading="lazy"></div><div class="partner-logo"><img src="https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/55100add09475d0b079eef90c70b5b6b.jpg" alt="Логотип партнёра 3" loading="lazy"></div><div class="partner-logo"><img src="https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/bec077765443f6253661a0dd04c7e48a.jpg" alt="Логотип партнёра 4" loading="lazy"></div><div class="partner-logo"><img src="https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/16a3ac3b0d610d95cd054254f8dd82d6.jpg" alt="Логотип партнёра 5" loading="lazy"></div><div class="partner-logo"><img src="https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/f8c076634d6a4476bf1b1a09e1c9afd8.jpg" alt="Логотип партнёра 6" loading="lazy"></div><div class="partner-logo"><img src="https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/daadf6c993fa258204d2de1b3142b951.jpg" alt="Логотип партнёра 7" loading="lazy"></div><div class="partner-logo"><img src="https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/7181e175d5cff2eaad187d7f7f47a3c6.jpg" alt="Логотип партнёра 8" loading="lazy"></div><div class="partner-logo"><img src="https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/3d8df7015a244f7cecebe1bab38eddca.jpg" alt="Логотип партнёра 9" loading="lazy"></div><div class="partner-logo"><img src="https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/b55e74547638791bcbf6d727dd1dade4.jpg" alt="Логотип партнёра 10" loading="lazy"></div><div class="partner-logo"><img src="https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/4c36baefbeedbad198ccb5f84131fc18.jpg" alt="Логотип партнёра 11" loading="lazy"></div></div></div></section>
-    <section class="video-teaser"><div class="wrap video-teaser-inner"><div><span class="eyebrow">ЗНАКОМСТВО СО СТУДИЕЙ</span><h2>Посмотрите,<br /><em>как мы работаем</em></h2><p>Процессы, технологии и результаты в видео.</p><a class="button" href="/video">Смотреть видео <span>↗</span></a></div><div class="video-preview"><video controls playsinline preload="metadata" poster="https://img1.creatium.ru/disk2/d8/42/1a/7a83075790fe329feddf15ee2582b4adb2/1.jpg"><source src="${localVideo}" type="video/mp4">Ваш браузер не поддерживает воспроизведение видео.</video></div></div></section>
+    <section class="video-teaser"><div class="wrap video-teaser-inner"><div><span class="eyebrow">ЗНАКОМСТВО СО СТУДИЕЙ</span><h2>Посмотрите,<br /><em>как мы работаем</em></h2><p>Процессы, технологии и результаты в видео.</p><a class="button" href="/video">Смотреть видео <span>↗</span></a></div><div class="video-preview">${videoPlayer(work[0].image, "BARIBAL — процесс работы")}</div></div></section>
     <section class="contact-strip"><div class="wrap contact-strip-inner"><div><span class="eyebrow">ЖДЁМ ВАС В СТУДИИ</span><h2>Ваш автомобиль<br /><em>в надёжных руках</em></h2></div><div><p>Пермь, ул. Героев Хасана, 105Э</p><a href="tel:+73422024142">+7 (342) 202-41-42</a></div><button class="button js-callback">Записаться <span>↗</span></button></div></section>
   </main>`;
 const videoPage = () => `
-  <main><section class="page-hero"><div class="wrap"><span class="eyebrow">BARIBAL · ВИДЕО</span><h1>Наши <em>видео</em></h1><p>Знакомьтесь с технологиями, процессами и результатами нашей работы.</p></div></section><section class="section video-section"><div class="wrap"><div class="video-grid">${videos.map((id, i) => `<article class="video-card"><div class="video-frame"><video controls playsinline preload="metadata"><source src="${localVideo}" type="video/mp4">Ваш браузер не поддерживает воспроизведение видео.</video></div><div class="video-label"><span>0${i + 1}</span><h3>Видео ${i + 1}</h3></div></article>`).join("")}</div></div></section></main>`;
+  <main><section class="page-hero"><div class="wrap"><span class="eyebrow">BARIBAL · ВИДЕО</span><h1>Наши <em>видео</em></h1><p>Знакомьтесь с технологиями, процессами и результатами нашей работы.</p></div></section><section class="section video-section"><div class="wrap"><div class="video-grid">${videos.map((id, i) => `<article class="video-card"><div class="video-frame">${videoPlayer(portfolio[i].image, `BARIBAL — тестовое видео ${i + 1}`)}</div><div class="video-label"><span>0${i + 1}</span><h3>Видео ${i + 1}</h3></div></article>`).join("")}</div></div></section></main>`;
 
 const basePath = "/baribal";
 const contactWidgetImage = new URL("../3.png", import.meta.url).href;
@@ -494,6 +512,68 @@ document.querySelectorAll(".contact-preferences").forEach(group => {
   };
   otherToggle.addEventListener("change", syncOther);
   syncOther();
+});
+
+
+/* BARIBAL video players: branded poster, play control and orange timeline. */
+const formatPlayerTime = seconds => {
+  if (!Number.isFinite(seconds)) return "0:00";
+  const value = Math.floor(seconds);
+  return `${Math.floor(value / 60)}:${String(value % 60).padStart(2, "0")}`;
+};
+document.querySelectorAll(".baribal-player").forEach(player => {
+  const video = player.querySelector("video");
+  const poster = player.querySelector(".video-poster");
+  const controls = player.querySelector("[data-player-controls]");
+  const playButton = player.querySelector("[data-player-play]");
+  const progress = player.querySelector("[data-player-progress]");
+  const time = player.querySelector("[data-player-time]");
+  const muteButton = player.querySelector("[data-player-mute]");
+  const updatePlayState = () => {
+    playButton.textContent = video.paused ? "▶" : "Ⅱ";
+    playButton.setAttribute("aria-label", video.paused ? "Воспроизвести видео" : "Приостановить видео");
+  };
+  const updateProgress = () => {
+    const duration = Number.isFinite(video.duration) ? video.duration : 0;
+    const percent = duration ? (video.currentTime / duration) * 100 : 0;
+    progress.value = String(percent);
+    progress.style.setProperty("--player-progress", `${percent}%`);
+    time.textContent = `${formatPlayerTime(video.currentTime)} / ${formatPlayerTime(duration)}`;
+  };
+  const startVideo = () => {
+    poster.hidden = true;
+    controls.hidden = false;
+    video.play().catch(() => {
+      poster.hidden = false;
+      controls.hidden = true;
+    });
+  };
+  player.querySelector("[data-player-start]").addEventListener("click", startVideo);
+  playButton.addEventListener("click", () => {
+    if (video.paused) {
+      if (video.ended) video.currentTime = 0;
+      video.play().catch(() => {});
+    } else video.pause();
+  });
+  video.addEventListener("play", updatePlayState);
+  video.addEventListener("pause", updatePlayState);
+  video.addEventListener("timeupdate", updateProgress);
+  video.addEventListener("loadedmetadata", updateProgress);
+  video.addEventListener("ended", updatePlayState);
+  progress.addEventListener("input", () => {
+    if (Number.isFinite(video.duration)) video.currentTime = video.duration * Number(progress.value) / 100;
+  });
+  muteButton.addEventListener("click", () => {
+    video.muted = !video.muted;
+    muteButton.textContent = video.muted ? "×" : "♪";
+    muteButton.setAttribute("aria-label", video.muted ? "Включить звук" : "Выключить звук");
+  });
+  player.querySelector("[data-player-fullscreen]").addEventListener("click", () => {
+    if (document.fullscreenElement) document.exitFullscreen?.();
+    else player.requestFullscreen?.();
+  });
+  updatePlayState();
+  updateProgress();
 });
 
 const themeButton = document.querySelector("[data-theme-toggle]");
