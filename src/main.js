@@ -118,7 +118,7 @@ const contactPreferences = () => `
   </fieldset>`;
 const callback = () => `
   <div class="modal" id="callback-modal" aria-hidden="true"><div class="modal-backdrop js-close"></div><section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button class="modal-close js-close" aria-label="Закрыть">×</button><span class="eyebrow">BARIBAL · ПЕРМЬ</span><h2 id="modal-title">Мы вам перезвоним</h2><p id="callback-context">Оставьте номер — обсудим задачу и подберём решение для вашего автомобиля.</p><form class="lead-form demo-form"><input type="hidden" name="service" id="callback-service" value=""><label>Ваше имя<input name="name" placeholder="Как к вам обращаться" /></label><label>Телефон<input name="phone" type="tel" placeholder="+7 (___) ___-__-__" required /></label>${contactPreferences()}<button class="button" type="submit">Заказать консультацию</button><output></output></form></section></div>`;
-const workCards = (items = work) => items.map(item => `<article class="work-card"><div class="work-image"><img src="${item.image}" alt="${item.title}" loading="lazy" /></div><div class="work-copy"><span class="eyebrow">${item.type}</span><h3>${item.title}</h3><p>${item.text}</p><a class="text-link js-callback" href="#callback" data-service-title="Защита кузова">Обсудить похожую работу <span>↗</span></a></div></article>`).join("");
+const workCards = (items = work) => items.map(item => { const serviceTitle = serviceForWork(item); return `<article class="work-card"><div class="work-image"><img src="${item.image}" alt="${item.title}" loading="lazy" /></div><div class="work-copy"><span class="eyebrow">${item.type}</span><h3>${item.title}</h3><p>${item.text}</p><div class="work-actions"><button class="text-link js-service-info" type="button" data-service-title="${serviceTitle}">Подробнее <span>↗</span></button><a class="text-link js-callback" href="#callback" data-service-title="${serviceTitle}">Хочу такую же услугу <span>↗</span></a></div></div></article>`; }).join("");
 const portfolioCategories = item => {
   const value = `${item.type} ${item.title} ${item.text}`.toLowerCase();
   const result = [];
@@ -129,15 +129,20 @@ const portfolioCategories = item => {
   return result.length ? [...new Set(result)] : ["Другое"];
 };
 const serviceForWork = item => {
-  const categories = portfolioCategories(item);
-  if (categories.includes("Защита стёкол") && !categories.includes("Защита кузова")) return "Защита стёкол";
-  if (categories.includes("Детейлинг и уход") && !categories.includes("Защита кузова")) return "Детейлинг и уход";
-  if (categories.includes("Оклейка и стайлинг") && !categories.includes("Защита кузова")) return "Оклейка и стайлинг";
-  return "Защита кузова";
+  const value = `${item.type} ${item.title} ${item.text}`.toLowerCase();
+  if (/clearplex|лобов(ое|ого|ому) стекл|защит(а|ы) ст[её]кол/.test(value)) return "Бронирование лобового стекла ClearPlex";
+  if (/bariglass/.test(value)) return "BariGlass";
+  if (/baritools/.test(value)) return "BariTools";
+  if (/химчист|детейлинг|салон/.test(value)) return "Химчистка салона";
+  if (/полировк/.test(value)) return "Ручная полировка";
+  if (/винил|стайлинг|рекламн|изменение цвета/.test(value)) return "Автовинил";
+  if (/advance|защитное покрытие/.test(value)) return "AdVance";
+  return "Бронирование кузова плёнкой";
 };
 const portfolioCards = () => portfolio.map((item, index) => {
   const categories = portfolioCategories(item);
-  return `<article class="work-card portfolio-card${index >= 9 ? " is-extra" : ""}" data-categories="${categories.join("|")}"><div class="work-image"><img src="${item.image}" alt="${item.title}" loading="lazy" /></div><div class="work-copy"><span class="eyebrow">${item.type}</span><h3>${item.title}</h3><p>${item.text}</p><a class="text-link js-callback" href="#callback" data-service-title="${serviceForWork(item)}">Обсудить похожую работу <span>↗</span></a></div></article>`;
+  const serviceTitle = serviceForWork(item);
+  return `<article class="work-card portfolio-card${index >= 9 ? " is-extra" : ""}" data-categories="${categories.join("|")}"><div class="work-image"><img src="${item.image}" alt="${item.title}" loading="lazy" /></div><div class="work-copy"><span class="eyebrow">${item.type}</span><h3>${item.title}</h3><p>${item.text}</p><div class="work-actions"><button class="text-link js-service-info" type="button" data-service-title="${serviceTitle}">Подробнее <span>↗</span></button><a class="text-link js-callback" href="#callback" data-service-title="${serviceTitle}">Хочу такую же услугу <span>↗</span></a></div></div></article>`;
 }).join("");
 const serviceCards = () => services.map((item, i) => `<article class="service-card"><div class="service-image"><img src="${item.image}" alt="" loading="lazy" /></div><div class="service-copy"><span class="eyebrow">0${i + 1} / УСЛУГА</span><h3>${item.title}</h3><h4>${item.subtitle}</h4><p>${item.text}</p><div class="service-bottom"><b>${item.price}</b><button class="text-link js-callback">Узнать больше <span>↗</span></button></div></div></article>`).join("");
 const homePage = () => `
@@ -316,7 +321,7 @@ const serviceInfoModal = () => `
       <ul id="service-info-benefits"></ul>
       <div class="service-info-tech"><b>Технология и важные нюансы</b><p id="service-info-tech"></p></div>
       <div class="service-info-fit"><b>Кому подойдёт</b><p id="service-info-fit"></p></div>
-      <div class="service-info-bottom"><span id="service-info-price"></span><button class="button" id="service-info-order" type="button">Заказать услугу <span>↗</span></button></div>
+      <div class="service-info-bottom"><span id="service-info-price"></span><button class="button" id="service-info-order" type="button">Хочу такую же услугу <span>↗</span></button></div>
     </section>
   </div>`;
 const allServiceCards = () => allServices.map((item, i) => `<article class="service-card"><div class="service-image"><img src="${item.image}" alt="${item.title}" loading="lazy" /></div><div class="service-copy"><span class="eyebrow">0${i + 1} / УСЛУГА</span><h3>${item.title}</h3><h4>${item.subtitle}</h4><p>${item.text}</p><div class="service-bottom"><b>${item.price}</b><div class="service-actions"><button class="text-link js-service-info" type="button" data-service-title="${item.title}">Подробнее <span>↗</span></button><button class="button button-order js-callback" type="button" data-service-title="${item.title}">Заказать</button></div></div></div></article>`).join("");
