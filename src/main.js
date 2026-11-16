@@ -357,7 +357,8 @@ const updatePortfolioView = () => {
     const visibleInFilter = filtered.includes(card);
     const position = filtered.indexOf(card);
     card.hidden = !visibleInFilter || (!portfolioExpanded && position >= 9);
-    card.classList.toggle("is-extra", position >= 9);
+    card.classList.toggle("is-extra", position >= 9 && !portfolioExpanded);
+    card.classList.toggle("is-visible", position >= 9 && portfolioExpanded);
   });
   if (portfolioMore) {
     const hasMore = filtered.length > 9;
