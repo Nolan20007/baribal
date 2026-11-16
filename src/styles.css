@@ -380,3 +380,30 @@ html[data-theme="light"] .service-info-tech{background:#f4f2ed}
  .contact-widget-panel{padding:17px}
  .partner-logo{height:82px;padding:11px}
 }
+
+
+/* Contact preferences and timed assistant widget. */
+.contact-preferences{border:0;padding:0;margin:2px 0 5px;min-width:0}
+.contact-preferences legend{padding:0 0 9px;color:inherit;font-size:11px;font-weight:700}
+.contact-preference-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 10px}
+.contact-preference-list label{display:flex!important;align-items:center;gap:8px;min-height:31px;margin:0;padding:7px 9px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.12);font-size:11px!important;line-height:1.3;cursor:pointer;transition:border-color .2s,background .2s}
+.contact-preference-list label:has(input:checked){border-color:var(--orange);background:rgba(214,137,55,.12)}
+.contact-preference-list input[type="checkbox"]{appearance:none;-webkit-appearance:none;flex:0 0 15px;width:15px!important;height:15px!important;margin:0;border:1px solid #858585;border-radius:3px;background:transparent;cursor:pointer;position:relative;padding:0}
+.contact-preference-list input[type="checkbox"]:checked{background:var(--orange);border-color:var(--orange)}
+.contact-preference-list input[type="checkbox"]:checked:after{content:"✓";position:absolute;inset:-2px 0 0;text-align:center;color:#171819;font-size:12px;font-weight:900}
+.contact-other-details{margin-top:9px}
+.contact-other-details[hidden]{display:none!important}
+.contact-other-details label{display:grid!important;gap:6px;font-size:10px!important;line-height:1.5}
+.contact-other-details input{width:100%!important;min-width:0}
+.contact-widget-toggle{min-width:190px;justify-content:center}
+.contact-widget.is-open .contact-widget-toggle img{display:none}
+.contact-widget.is-open .contact-widget-toggle{padding-left:18px;padding-right:18px}
+.contact-widget.is-open .contact-widget-toggle b{font-size:19px}
+.contact-widget-heading>img{object-fit:contain;object-position:center;background:transparent;border:0;border-radius:0;width:68px;height:68px;flex-basis:68px}
+.contact-widget-form .contact-preference-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+.contact-widget-form .contact-preference-list label{font-size:10px!important}
+@media(max-width:760px){
+ .contact-preference-list{gap:6px}
+ .contact-preference-list label{min-height:34px;padding:7px}
+ .contact-widget-panel{width:min(370px,calc(100vw - 24px))}
+}
