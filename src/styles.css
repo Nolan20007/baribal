@@ -637,3 +637,40 @@ html[data-theme="light"] .contact-widget-form small{color:#dedede}
  .studio-gallery .studio-photo-main{aspect-ratio:1.9/1;max-height:180px}
  .studio-lower .studio-photo{height:118px}
 }
+
+
+/* Studio: balanced photo proportions and a compact map card beside the photos. */
+.studio-gallery{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+.studio-gallery .studio-photo-main{aspect-ratio:2.35/1;max-height:310px;background:#202123}
+.studio-gallery .studio-photo-main img{width:100%;height:100%;object-fit:contain;padding:0}
+.studio-lower{display:grid;grid-template-columns:1fr 1fr 1.12fr;gap:12px;align-items:stretch}
+.studio-lower .studio-photo{height:205px;min-height:0;background:#202123}
+.studio-lower .studio-photo img{width:100%;height:100%;object-fit:contain;padding:0}
+.studio-lower .studio-photo:after{inset:55% 0 0}
+.studio-map.studio-map-card{display:flex;flex-direction:column;justify-content:space-between;gap:12px;margin:0;padding:17px;background:#202123;border:1px solid rgba(255,255,255,.1);min-width:0}
+.studio-map-card .studio-map-heading{display:block;margin:0}
+.studio-map-card .studio-map-heading h3{margin:5px 0 7px;font-size:clamp(22px,2.2vw,29px)}
+.studio-map-card .studio-map-heading p{color:#e2e0dc;font-size:11px;line-height:1.5}
+.studio-map-card .studio-map-frame{height:104px;min-height:104px;border:1px solid rgba(255,255,255,.14)}
+.studio-map-card .studio-map-link{width:100%;justify-content:center;text-align:center;font-size:10px;padding:10px 12px;white-space:normal}
+@media(max-width:980px){
+ .studio-gallery .studio-photo-main{aspect-ratio:2.2/1;max-height:275px}
+ .studio-lower{grid-template-columns:1fr 1fr}
+ .studio-lower .studio-photo{height:190px}
+ .studio-map.studio-map-card{grid-column:1/-1;display:grid;grid-template-columns:1fr minmax(180px,.8fr);align-items:center;gap:16px}
+ .studio-map-card .studio-map-frame{height:130px}
+ .studio-map-card .studio-map-link{grid-column:1/-1}
+}
+@media(max-width:620px){
+ .studio-gallery{gap:10px}
+ .studio-gallery .studio-photo-main{aspect-ratio:1.75/1;max-height:230px}
+ .studio-lower{grid-template-columns:1fr 1fr;gap:9px}
+ .studio-lower .studio-photo{height:155px}
+ .studio-map.studio-map-card{grid-column:1/-1;display:flex;padding:17px;gap:12px}
+ .studio-map-card .studio-map-frame{height:135px;min-height:135px;width:100%}
+ .studio-map-card .studio-map-link{width:100%}
+}
+@media(max-width:390px){
+ .studio-gallery .studio-photo-main{aspect-ratio:1.55/1;max-height:205px}
+ .studio-lower .studio-photo{height:135px}
+}
