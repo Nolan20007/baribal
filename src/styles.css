@@ -1632,3 +1632,34 @@ html[data-design="4"] .hero-test-controls .hero-design-name{border-color:#ef684f
   html[data-design="4"] .service-card{grid-template-columns:1fr}
   html[data-design="4"] .service-image{height:180px;min-height:180px}
 }
+
+
+/* Estimate block: restore the original intro and form, with a separate service checklist between them. */
+.estimate-inner{grid-template-columns:minmax(0,1fr) 250px 420px;column-gap:34px;align-items:center}
+.estimate-intro{min-width:0}
+.estimate-services{min-width:0;margin:0;padding:13px 12px;border:1px solid #454648;display:flex;flex-direction:column;gap:9px;max-height:440px;overflow:auto;align-self:center}
+.estimate-services-title{color:#c4c2bd;font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:2px}
+.estimate-service-option{display:flex;align-items:flex-start;gap:8px;color:#e7e5e0;font-size:9px;line-height:1.35;letter-spacing:0;text-transform:none;cursor:pointer}
+.estimate-service-option input{appearance:auto;-webkit-appearance:checkbox;width:13px;height:13px;flex:0 0 13px;margin:1px 0 0;padding:0;accent-color:var(--orange);cursor:pointer}
+.estimate-service-option span{line-height:1.35}
+.estimate-form{min-width:0}
+html[data-design="2"] .estimate-services{border-color:#625b4f;background:#35322c}
+html[data-design="2"] .estimate-services-title{color:#d6cbbb}
+html[data-design="3"] .estimate-services{border-color:#315261;background:#10232f}
+html[data-design="3"] .estimate-services-title{color:#b8cbd4}
+html[data-design="4"] .estimate-services{border-color:rgba(25,27,29,.28);background:#f4eee9}
+html[data-design="4"] .estimate-services-title,
+html[data-design="4"] .estimate-service-option{color:#2d2725}
+@media(max-width:1100px) and (min-width:761px){
+  .estimate-inner{grid-template-columns:minmax(0,1fr) 220px 340px;column-gap:22px}
+  .estimate h2{font-size:clamp(30px,3.2vw,42px)}
+}
+@media(max-width:760px){
+  .estimate-inner,
+  html[data-design="2"] .estimate-inner,
+  html[data-design="3"] .estimate-inner{grid-template-columns:1fr;gap:28px}
+  .estimate-services{max-height:300px}
+  .estimate-intro{order:0}
+  .estimate-services{order:1}
+  .estimate-form{order:2}
+}
