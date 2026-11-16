@@ -88,7 +88,8 @@ const header = () => `
     <a class="brand" href="/"><img src="${logo}" alt="" /><span><b>BARIBAL</b><small>СТУДИЯ ЗАЩИТНЫХ ТЕХНОЛОГИЙ</small></span></a>
     <button class="menu-toggle" aria-label="Открыть меню" aria-expanded="false"><i></i><i></i><i></i></button>
     <nav class="nav">${nav.map(([label, href]) => `<a href="${href}" ${(isVideoPage && href === "/video") ? 'aria-current="page"' : ""}>${label}</a>`).join("")}</nav>
-    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Переключить цветовую тему"><span class="theme-icon" aria-hidden="true">☀</span><span class="theme-label">Светлая</span></button>
+    ${devicePreviewMode ? "" : '<button class="device-preview-launcher" type="button" aria-expanded="false" aria-controls="device-preview-popover">Предпросмотр <span aria-hidden="true">▱</span></button>'}
+    ${devicePreviewPanel()}\n    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Переключить цветовую тему"><span class="theme-icon" aria-hidden="true">☀</span><span class="theme-label">Светлая</span></button>
     <button class="button button-small js-callback">Записаться</button>
   </div></header>`;
 const footer = () => `
@@ -140,10 +141,9 @@ const portfolioCards = () => portfolio.map((item, index) => {
 }).join("");
 const serviceCards = () => services.map((item, i) => `<article class="service-card"><div class="service-image"><img src="${item.image}" alt="" loading="lazy" /></div><div class="service-copy"><span class="eyebrow">0${i + 1} / УСЛУГА</span><h3>${item.title}</h3><h4>${item.subtitle}</h4><p>${item.text}</p><div class="service-bottom"><b>${item.price}</b><button class="text-link js-callback">Узнать больше <span>↗</span></button></div></div></article>`).join("");
 const devicePreviewPanel = () => devicePreviewMode ? "" : `
-    <section class="device-preview-section" aria-label="Технический предпросмотр адаптивности">
-      <div class="wrap">
-        <div class="section-heading"><div><span class="eyebrow">ТЕХНИЧЕСКИЙ ИНСТРУМЕНТ</span><h2>Предпросмотр <em>сайта</em></h2></div><p>Проверьте, как сайт выглядит на разных экранах.</p></div>
-        <div class="device-preview-panel">
+    <div class="device-preview-popover" id="device-preview-popover" aria-label="Технический предпросмотр адаптивности">
+      <div class="device-preview-panel">
+        <div class="device-preview-popover-heading"><div><span class="eyebrow">ТЕХНИЧЕСКИЙ ИНСТРУМЕНТ</span><h3>Предпросмотр сайта</h3></div><button class="device-preview-close" type="button" aria-label="Закрыть предпросмотр">×</button></div>
           <div class="device-preview-toolbar" role="group" aria-label="Размер экрана">
             <button class="device-preview-button is-active" type="button" data-preview-width="1366" data-preview-height="900" aria-pressed="true"><span aria-hidden="true">▱</span> Ноутбук</button>
             <button class="device-preview-button" type="button" data-preview-width="390" data-preview-height="844" aria-pressed="false"><span aria-hidden="true">▯</span> Телефон</button>
@@ -152,10 +152,9 @@ const devicePreviewPanel = () => devicePreviewMode ? "" : `
           <div class="device-preview-stage" aria-label="Предпросмотр страницы">
             <iframe class="device-preview-frame" title="Предпросмотр сайта в выбранном размере экрана" loading="lazy"></iframe>
           </div>
-          <p class="device-preview-note">Это тестовый инструмент. Внутри окна можно прокручивать страницу независимо от основного сайта.</p>
-        </div>
+        <p class="device-preview-note">Внутри окна можно прокручивать страницу независимо от основного сайта.</p>
       </div>
-    </section>`;
+    </div>`;
 const homePage = () => `
   <main>
     <section class="hero"><div class="hero-shade"></div><div class="wrap hero-content"><span class="eyebrow">BARIBAL · СТУДИЯ ЗАЩИТНЫХ ТЕХНОЛОГИЙ</span><h1>Современные технологии<br /><em>защиты автомобиля</em><br />в Перми</h1><p>Профессиональный уход, защита кузова и интерьера<br class="desktop-only" /> с гарантией от 12 до 72 месяцев</p><div class="hero-actions"><button class="button js-callback">Записаться на обслуживание <span>↗</span></button><a class="button button-outline" href="#works">Наши работы</a></div><div class="hero-index"><b>01</b><span>ЗАЩИТА · УХОД · СТИЛЬ</span></div></div></section>
@@ -360,11 +359,13 @@ if (location.pathname === basePath || location.pathname.startsWith(basePath + "/
   document.querySelectorAll("#app a[href^=\"/\"]").forEach(link => { link.setAttribute("href", basePath + link.getAttribute("href")); });
 }
 
-const devicePreview = document.querySelector(".device-preview-section");
-if (devicePreview) {
+const devicePreview = document.querySelector(".device-preview-popover");
+const previewLauncher = document.querySelector(".device-preview-launcher");
+if (devicePreview && previewLauncher) {
   const previewStage = devicePreview.querySelector(".device-preview-stage");
   const previewFrame = devicePreview.querySelector(".device-preview-frame");
   const previewButtons = [...devicePreview.querySelectorAll(".device-preview-button")];
+  const previewClose = devicePreview.querySelector(".device-preview-close");
   const previewUrl = new URL(location.href);
   previewUrl.searchParams.set("devicePreview", "1");
   previewUrl.hash = "";
@@ -377,6 +378,17 @@ if (devicePreview) {
     previewFrame.style.transform = "translateX(-50%) scale(" + scale + ")";
     previewStage.style.height = Math.round(previewSize.height * scale) + "px";
   };
+  const closePreview = () => {
+    devicePreview.classList.remove("is-open");
+    previewLauncher.setAttribute("aria-expanded", "false");
+  };
+  previewLauncher.addEventListener("click", () => {
+    const open = !devicePreview.classList.contains("is-open");
+    devicePreview.classList.toggle("is-open", open);
+    previewLauncher.setAttribute("aria-expanded", String(open));
+    if (open) fitPreview();
+  });
+  previewClose.addEventListener("click", closePreview);
   previewButtons.forEach(button => button.addEventListener("click", () => {
     previewSize = { width: Number(button.dataset.previewWidth), height: Number(button.dataset.previewHeight) };
     previewButtons.forEach(item => {
@@ -388,7 +400,7 @@ if (devicePreview) {
   }));
   if ("ResizeObserver" in window) new ResizeObserver(fitPreview).observe(previewStage);
   else window.addEventListener("resize", fitPreview);
-  fitPreview();
+  document.addEventListener("keydown", event => { if (event.key === "Escape") closePreview(); });
 }
 const backToTop = document.querySelector(".back-to-top");
 const updateBackToTop = () => {
