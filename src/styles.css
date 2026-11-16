@@ -441,3 +441,35 @@ html[data-theme="light"] .service-info-tech{background:#f4f2ed}
  .studio-gallery{grid-template-columns:1fr;grid-template-rows:220px 190px 190px}
  .studio-photo-main{grid-column:auto}
 }
+
+
+/* Contact widget sizing and contrast refinements. */
+.contact-widget:not(.is-open) .contact-widget-toggle{
+  min-width:285px;
+  gap:16px;
+  padding:10px 25px 10px 10px;
+  font-size:16px;
+}
+.contact-widget:not(.is-open) .contact-widget-toggle img{width:58px;height:58px}
+.contact-widget:not(.is-open) .contact-widget-toggle b{width:27px;height:27px;font-size:21px}
+.contact-widget-heading{gap:16px;margin-bottom:19px}
+.contact-widget-heading>img{width:82px;height:82px;flex-basis:82px}
+.contact-widget-heading b{font-size:19px}
+.contact-widget-heading span{font-size:11px}
+html[data-theme="light"] .contact-widget-panel{background:#202123;color:#fff}
+html[data-theme="light"] .contact-widget-form label,
+html[data-theme="light"] .contact-widget-form .contact-preference-list label,
+html[data-theme="light"] .contact-widget-form .contact-preferences legend,
+html[data-theme="light"] .contact-widget-heading span{color:#fff}
+html[data-theme="light"] .contact-widget-form input,
+html[data-theme="light"] .contact-widget-form select{background:#303133;border-color:#66686a;color:#fff}
+html[data-theme="light"] .contact-widget-form input::placeholder{color:#c6c6c6}
+html[data-theme="light"] .contact-widget-form small{color:#dedede}
+@media(max-width:760px){
+  .contact-widget:not(.is-open) .contact-widget-toggle{min-width:0;padding:9px 16px 9px 9px;font-size:14px;gap:12px}
+  .contact-widget:not(.is-open) .contact-widget-toggle img{width:51px;height:51px}
+  .contact-widget:not(.is-open) .contact-widget-toggle b{width:25px;height:25px;font-size:19px}
+}
+@media(max-width:390px){
+  .contact-widget:not(.is-open) .contact-widget-toggle{font-size:13px;padding-right:13px}
+}
