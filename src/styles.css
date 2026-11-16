@@ -473,3 +473,31 @@ html[data-theme="light"] .contact-widget-form small{color:#dedede}
 @media(max-width:390px){
   .contact-widget:not(.is-open) .contact-widget-toggle{font-size:13px;padding-right:13px}
 }
+
+
+/* Keep the back-to-top control clear of the contact widget and explain its action. */
+.back-to-top{
+  top:70vh;
+  bottom:auto;
+  width:auto;
+  min-width:48px;
+  height:48px;
+  padding:0 15px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  border-radius:999px;
+  transform:translateY(-50%);
+}
+.back-to-top.is-visible{transform:translateY(-50%)}
+.back-to-top:hover{transform:translateY(calc(-50% - 3px))}
+.back-to-top-label{
+  font:700 11px/1 Manrope,Arial,sans-serif;
+  letter-spacing:.2px;
+  white-space:nowrap;
+}
+.back-to-top span[aria-hidden="true"]{font-size:25px}
+@media(max-width:560px){
+  .back-to-top{top:70vh;bottom:auto;right:12px;min-width:44px;height:44px;padding:0 12px;gap:8px}
+}
