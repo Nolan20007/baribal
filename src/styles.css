@@ -1193,3 +1193,13 @@ html[data-theme="light"] .device-preview-close{color:#222;border-color:rgba(20,2
     min-width:0;
   }
 }
+
+
+/* Keep service-card prices on one line on mobile only. */
+@media(max-width:760px){
+  .service-card .service-bottom>b{
+    font-size:14px;
+    white-space:nowrap;
+    flex-shrink:0;
+  }
+}
