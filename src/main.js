@@ -147,7 +147,7 @@ const portfolioCards = () => portfolio.map((item, index) => {
 const serviceCards = () => services.map((item, i) => `<article class="service-card"><div class="service-image"><img src="${item.image}" alt="" loading="lazy" /></div><div class="service-copy"><span class="eyebrow">0${i + 1} / УСЛУГА</span><h3>${item.title}</h3><h4>${item.subtitle}</h4><p>${item.text}</p><div class="service-bottom"><b>${item.price}</b><button class="text-link js-callback">Узнать больше <span>↗</span></button></div></div></article>`).join("");
 const homePage = () => `
   <main>
-    <section class="hero"><div class="hero-shade"></div><div class="hero-test-controls"><button class="hero-photo-toggle" type="button" aria-label="Показать новую фотографию" aria-pressed="false">Сменить фото</button><button class="hero-design-toggle" type="button" aria-label="Переключить оформление сайта">Сменить дизайн</button></div><div class="wrap hero-content"><span class="eyebrow">BARIBAL · СТУДИЯ ЗАЩИТНЫХ ТЕХНОЛОГИЙ</span><h1>Современные технологии<br /><em>защиты автомобиля</em><br />в Перми</h1><p>Профессиональный уход, защита кузова и интерьера<br class="desktop-only" /> с гарантией от 12 до 72 месяцев</p><div class="hero-actions"><button class="button js-callback">Записаться на обслуживание <span>↗</span></button><a class="button button-outline" href="#works">Наши работы</a></div><div class="hero-index"><b>01</b><span>ЗАЩИТА · УХОД · СТИЛЬ</span></div></div></section>
+    <section class="hero"><div class="hero-shade"></div><div class="hero-test-controls"><button class="hero-photo-toggle" type="button" aria-label="Показать новую фотографию" aria-pressed="false">Сменить фото</button><div class="hero-design-control"><button class="hero-design-toggle" type="button" aria-label="Переключить оформление сайта">Сменить дизайн</button><span class="hero-design-name" aria-live="polite">Основной</span></div></div><div class="wrap hero-content"><span class="eyebrow">BARIBAL · СТУДИЯ ЗАЩИТНЫХ ТЕХНОЛОГИЙ</span><h1>Современные технологии<br /><em>защиты автомобиля</em><br />в Перми</h1><p>Профессиональный уход, защита кузова и интерьера<br class="desktop-only" /> с гарантией от 12 до 72 месяцев</p><div class="hero-actions"><button class="button js-callback">Записаться на обслуживание <span>↗</span></button><a class="button button-outline" href="#works">Наши работы</a></div><div class="hero-index"><b>01</b><span>ЗАЩИТА · УХОД · СТИЛЬ</span></div></div></section>
     <section class="section works-section" id="works"><div class="wrap"><div class="section-heading"><div><span class="eyebrow">ПОРТФОЛИО</span><h2>Последние выполненные<br /><em>нами работы</em></h2></div><a class="text-link" href="#callback">Обсудить проект <span>↗</span></a></div><div class="work-grid">${workCards()}</div><div class="center-action"><button class="button button-dark js-callback">Хочу такой же результат</button></div></div></section>
     <section class="estimate"><div class="wrap estimate-inner"><div><span class="eyebrow">ИНДИВИДУАЛЬНЫЙ ПОДХОД</span><h2>Рассчитаем стоимость<br /><em>защиты вашего автомобиля</em></h2><p>Расскажите, что хотите защитить. Мы свяжемся с вами и сориентируем по стоимости.</p></div><form class="estimate-form demo-form"><label>Ваш автомобиль<input name="car" placeholder="Марка и модель" /></label><label>Что вас интересует<select name="service"><option>Защита кузова</option><option>Автохимчистка</option><option>Автовинил</option><option>Защита стёкол</option><option>Другое</option></select></label><label>Телефон<input name="phone" type="tel" placeholder="+7 (___) ___-__-__" required /></label>${contactPreferences()}<button class="button" type="submit">Отправить на расчёт <span>↗</span></button><output></output></form></div></section>
     <section class="section services-section" id="services"><div class="wrap"><div class="section-heading"><div><span class="eyebrow">ЧТО МЫ ДЕЛАЕМ</span><h2>Услуги студии <em>BARIBAL</em></h2></div><p>Технологичные решения для сохранения внешнего вида и ценности вашего автомобиля.</p></div><div class="service-grid">${serviceCards()}</div></div></section>
@@ -408,7 +408,8 @@ heroPhotoToggle?.addEventListener("click", () => {
   heroPhotoToggle.setAttribute("aria-label", showingNewPhoto ? "Показать старую фотографию" : "Показать новую фотографию");
 });
 const designToggle = document.querySelector(".hero-design-toggle");
-const designNames = ["BARIBAL", "Премиум", "Технологичный", "Editorial"];
+const designName = document.querySelector(".hero-design-name");
+const designNames = ["Основной", "Премиум", "Хайтек", "Автомобильный"];
 let activeDesign = 0;
 try {
   const savedDesign = Number(localStorage.getItem("baribal-design"));
@@ -419,6 +420,7 @@ const applyDesign = () => {
   if (designToggle) {
     designToggle.setAttribute("aria-label", `Текущий дизайн: ${designNames[activeDesign]}. Переключить дизайн`);
     designToggle.dataset.design = String(activeDesign + 1);
+    if (designName) designName.textContent = designNames[activeDesign];
   }
 };
 applyDesign();
