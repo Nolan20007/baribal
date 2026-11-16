@@ -575,3 +575,38 @@ html[data-theme="light"] .contact-widget-form small{color:#dedede}
   border-color:#f0a04d;
   color:#111214;
 }
+
+
+/* Studio gallery: panoramic hero image, then two entrance photos and a clear address block. */
+.studio-gallery{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto;gap:16px}
+.studio-gallery .studio-photo-main{grid-row:auto;aspect-ratio:2.8/1;min-height:0}
+.studio-gallery .studio-photo-main img{object-fit:cover}
+.studio-lower{display:grid;grid-template-columns:1fr 1fr 1.12fr;gap:16px;align-items:stretch}
+.studio-lower .studio-photo{height:220px;min-height:0}
+.studio-lower .studio-photo img{object-fit:cover;padding:0}
+.studio-lower .studio-photo:after{inset:48% 0 0}
+.studio-address{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;min-width:0;padding:clamp(20px,3vw,34px);background:#202123;border-left:3px solid var(--orange)}
+.studio-address .eyebrow{color:var(--orange);font-size:10px;letter-spacing:1.6px}
+.studio-address h3{display:grid;gap:4px;margin:14px 0 10px;font:500 clamp(25px,3vw,37px)/1.08 Oswald,sans-serif;text-transform:uppercase}
+.studio-address h3 span{color:#f4f2ed}
+.studio-address h3 em{color:var(--orange);font-style:normal}
+.studio-address p{margin:0 0 20px;color:#f4f2ed;font:500 17px/1.3 Oswald,sans-serif;letter-spacing:.5px}
+.studio-address .text-link{margin-top:auto;color:#fff;font-size:11px}
+@media(max-width:980px){
+ .studio-gallery .studio-photo-main{aspect-ratio:2.2/1}
+ .studio-lower{grid-template-columns:1fr 1fr}
+ .studio-lower .studio-photo{height:205px}
+ .studio-address{grid-column:1/-1;min-height:170px}
+}
+@media(max-width:620px){
+ .studio-gallery{gap:11px}
+ .studio-gallery .studio-photo-main{aspect-ratio:1.65/1}
+ .studio-lower{grid-template-columns:1fr 1fr;gap:10px}
+ .studio-lower .studio-photo{height:160px}
+ .studio-address{grid-column:1/-1;min-height:0;padding:22px}
+ .studio-address h3{font-size:clamp(25px,7vw,32px)}
+}
+@media(max-width:390px){
+ .studio-lower .studio-photo{height:145px}
+ .studio-lower .studio-photo figcaption{left:10px;bottom:10px;font-size:9px}
+}
