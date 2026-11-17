@@ -7,6 +7,9 @@ on:
         description: "Full URL of the Creatium page to scan"
         required: true
         type: string
+  # Keep the currently targeted BARIBAL gallery fresh without a manual button press.
+  schedule:
+    - cron: "15 3 * * *"
 
 permissions:
   contents: read
@@ -14,7 +17,7 @@ permissions:
 jobs:
   extract:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -31,7 +34,7 @@ jobs:
 
       - name: Extract images
         env:
-          PAGE_URL: ${{ inputs.page_url }}
+          PAGE_URL: ${{ github.event.inputs.page_url || 'https://baribal-studio.ru/himchistka' }}
         run: node tools/extract-creatium-images.mjs
 
       - name: Upload images and report
@@ -41,4 +44,4 @@ jobs:
           name: creatium-images
           path: output/creatium-images/
           if-no-files-found: warn
-          retention-days: 7
+          retention-days: 14
