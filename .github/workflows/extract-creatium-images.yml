@@ -2,11 +2,6 @@ name: Extract Creatium page images
 
 on:
   workflow_dispatch:
-    inputs:
-      page_url:
-        description: "Full URL of the Creatium page to scan"
-        required: true
-        type: string
   # Keep the currently targeted BARIBAL gallery fresh without a manual button press.
   schedule:
     - cron: "15 3 * * *"
@@ -34,7 +29,7 @@ jobs:
 
       - name: Extract images
         env:
-          PAGE_URL: ${{ github.event.inputs.page_url || 'https://baribal-studio.ru/himchistka' }}
+          PAGE_URL: https://baribal-studio.ru/himchistka
         run: node tools/extract-creatium-images.mjs
 
       - name: Upload images and report
