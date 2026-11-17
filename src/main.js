@@ -114,7 +114,7 @@ const footer = () => `
   <footer class="footer"><div class="wrap footer-grid">
     <a class="brand footer-brand" href="/"><img src="${logo}" alt="" /><span><b>BARIBAL</b><small>СТУДИЯ ЗАЩИТНЫХ ТЕХНОЛОГИЙ</small></span></a>
     <div><h4>Контакты</h4><a href="tel:+73422024142">+7 (342) 202-41-42</a><a href="tel:+79824814142">+7 (982) 481-41-42</a><a href="mailto:mihail051206@yandex.ru">mihail051206@yandex.ru</a></div>
-    <div><h4>Адрес студии</h4><p>Пермь, ул. Героев Хасана, 105Э</p><p>За ТЦ «Шоколад», в районе Велты</p></div>
+    <div class="footer-address"><h4>Адрес студии</h4><p>Пермь, ул. Героев Хасана, 105Э</p><p>За ТЦ «Шоколад», в районе Велты</p><a class="footer-route-button" href="https://yandex.ru/maps/?rtext=~Пермь%2C%20ул.%20Героев%20Хасана%2C%20105Э&rtt=auto" target="_blank" rel="noopener noreferrer">Построить маршрут <span aria-hidden="true">↗</span></a></div>
     <div><h4>Навигация</h4><a href="/tehnology">Услуги</a><a href="/foto">Наши работы</a><a href="/reviews">Отзывы</a><a href="/video">Видео</a><a href="/politika-konfidencialnosti">Политика конфиденциальности</a></div>
   </div><div class="wrap footer-bottom"><span>© BARIBAL — студия защитных технологий</span><span>Пермь</span></div></footer>`;
 const contactPreferences = () => `
