@@ -90,8 +90,8 @@ async function clickThroughGalleries() {
   const imageSelectors = [
     "[data-fancybox]", "[data-lightbox]", "[data-gallery] a",
     "a:has(img)", "[role='button']:has(img)",
-    "[class*='gallery'] img", "[class*='swiper'] img",
-    "[class*='slider'] img", "[class*='carousel'] img"
+    "[class*='gallery'] a", "[class*='swiper'] a",
+    "[class*='slider'] a", "[class*='carousel'] a"
   ];
   const candidates = await page.evaluate(selectors => {
     const result = [];
@@ -105,9 +105,11 @@ async function clickThroughGalleries() {
         if (rect.width < 35 || rect.height < 35) return;
         const hrefAttr = el.getAttribute("href");
         const dataSrc = el.getAttribute("data-src") || el.getAttribute("data-full") || el.getAttribute("data-original");
-        const directImageLink = hrefAttr && /\\.(?:jpe?g|png|webp|gif|avif|bmp|tiff?)(?:$|[?#])/i.test(hrefAttr);
+        const directImageLink = hrefAttr && /\.(?:jpe?g|png|webp|gif|avif|bmp|tiff?)(?:$|[?#])/i.test(hrefAttr);
+        const parentLink = el.closest("a[href]");
+        const parentIsDirectImage = parentLink && /\.(?:jpe?g|png|webp|gif|avif|bmp|tiff?)(?:$|[?#])/i.test(parentLink.getAttribute("href") || "");
         // Direct image links are already collected as URLs; clicking them would navigate away.
-        if (directImageLink && !el.hasAttribute("data-fancybox") && !el.hasAttribute("data-lightbox")) return;
+        if ((directImageLink || parentIsDirectImage) && !el.hasAttribute("data-fancybox") && !el.hasAttribute("data-lightbox")) return;
         const href = hrefAttr || dataSrc;
         const src = href || img?.currentSrc || img?.src;
         if (!src) return;
