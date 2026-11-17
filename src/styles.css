@@ -1818,3 +1818,51 @@ html[data-design="3"] .works-section .work-actions .js-open-work-gallery{
 .service-info-card::-webkit-scrollbar-track{background:#292a2c;border-radius:10px}
 .service-info-card::-webkit-scrollbar-thumb{background:var(--orange);border:2px solid #292a2c;border-radius:10px}
 .service-info-card::-webkit-scrollbar-thumb:hover{background:#ffb36f}
+
+
+/* BARIBAL orange controls for the work photo gallery. */
+.work-gallery-close,
+.work-gallery-arrow{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid #ffbd84;
+  border-radius:50%;
+  background:var(--orange);
+  color:#fff;
+  box-shadow:0 5px 18px rgba(0,0,0,.32);
+  transition:background .2s ease,border-color .2s ease,box-shadow .2s ease,transform .2s ease;
+}
+.work-gallery-close{
+  width:44px;
+  height:44px;
+  font-size:30px;
+  font-weight:400;
+  line-height:1;
+}
+.work-gallery-arrow{
+  width:50px;
+  height:50px;
+  font-size:34px;
+  line-height:1;
+}
+.work-gallery-close:hover,
+.work-gallery-arrow:hover{
+  background:#ffbd84;
+  border-color:#ffd2ad;
+  color:#171819;
+  box-shadow:0 7px 22px rgba(0,0,0,.42);
+}
+.work-gallery-arrow:hover{transform:translateY(-50%) scale(1.07)}
+.work-gallery-close:focus-visible,
+.work-gallery-arrow:focus-visible{
+  outline:2px solid #fff;
+  outline-offset:4px;
+}
+@media(max-width:760px){
+  .work-gallery-close{width:46px;height:46px;font-size:31px}
+  .work-gallery-arrow{width:42px;height:42px;font-size:29px}
+}
+@media(prefers-reduced-motion:reduce){
+  .work-gallery-close,.work-gallery-arrow{transition:none}
+}
