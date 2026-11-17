@@ -734,6 +734,7 @@ document.querySelectorAll(".estimate").forEach(section => {
   const list = section.querySelector("[data-selected-services]");
   const count = section.querySelector("[data-selected-count]");
   const hidden = section.querySelector("[data-selected-value]");
+  if (!list || !count || !hidden) return;
   const syncSelectedServices = () => {
     const selected = checkboxes.filter(input => input.checked).map(input => input.value);
     count.textContent = String(selected.length);
