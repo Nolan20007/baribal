@@ -267,7 +267,7 @@ html[data-theme="light"] .header .nav a{border-color:#454647}
 .service-card .service-copy .eyebrow{color:#b8752f}
 
 /* Modern service details and separate order action on technology cards */
-.service-actions{display:flex;align-items:center;gap:14px}
+.service-certification{margin:-5px 0 12px}.service-certification .text-link{font-size:10px}.service-actions{display:flex;align-items:center;gap:14px;min-width:0}
 .service-actions .button-order{padding:10px 14px;font-size:9px;white-space:nowrap}
 .service-info-card{width:min(680px,100%);max-height:min(88vh,850px);overflow:auto;padding:clamp(28px,5vw,52px)}
 .service-info-card h2{font:500 clamp(30px,4vw,43px)/1.12 Oswald,sans-serif;text-transform:uppercase;margin:13px 36px 18px 0}
