@@ -192,6 +192,18 @@ const basePath = "/baribal";
 const contactWidgetImage = new URL("../3.png", import.meta.url).href;
 const cleanPath = location.pathname.startsWith(basePath) ? location.pathname.slice(basePath.length) : location.pathname;
 const path = cleanPath.replace(/\/$/, "") || "/";
+const pageTitles = {
+  "/": "Детейлинг и защита автомобилей в Перми — BARIBAL",
+  "/video": "Видео работ и технологий защиты автомобилей — BARIBAL",
+  "/tehnology": "Услуги и технологии защиты автомобилей в Перми — BARIBAL",
+  "/kuzov": "Бронирование кузова автомобиля плёнкой в Перми — BARIBAL",
+  "/himchistka": "Химчистка салона автомобиля в Перми — BARIBAL",
+  "/avtovinil": "Оклейка автомобилей винилом в Перми — BARIBAL",
+  "/foto": "Портфолио работ по защите и детейлингу автомобилей — BARIBAL",
+  "/reviews": "Отзывы клиентов студии BARIBAL в Перми",
+  "/politika-konfidencialnosti": "Политика конфиденциальности — BARIBAL"
+};
+document.title = pageTitles[path] || pageTitles["/"];
 const pageHero = (eyebrow, title, intro = "") => `<section class="page-hero"><div class="wrap"><span class="eyebrow">${eyebrow}</span><h1>${title}</h1>${intro ? `<p>${intro}</p>` : ""}</div></section>`;
 const contentPage = (eyebrow, title, intro, body) => `<main>${pageHero(eyebrow,title,intro)}<section class="section"><div class="wrap">${body}</div></section></main>`;
 const galleryPage = () => contentPage("ПОРТФОЛИО BARIBAL","Наши <em>работы</em>","Выберите интересующее направление — покажем проекты с подходящими видами работ.",`<div class="portfolio-filters" role="group" aria-label="Фильтр работ"><button class="portfolio-filter is-active" type="button" data-filter="Все работы" aria-pressed="true">Все работы</button><button class="portfolio-filter" type="button" data-filter="Защита кузова" aria-pressed="false">Защита кузова</button><button class="portfolio-filter" type="button" data-filter="Защита стёкол" aria-pressed="false">Защита стёкол</button><button class="portfolio-filter" type="button" data-filter="Оклейка и стайлинг" aria-pressed="false">Оклейка и стайлинг</button><button class="portfolio-filter" type="button" data-filter="Детейлинг и уход" aria-pressed="false">Детейлинг и уход</button></div><div class="work-grid" id="portfolio-grid">${portfolioCards()}</div><div class="center-action portfolio-more-wrap"><button class="button button-dark" id="portfolio-more" type="button" aria-expanded="false">Показать все работы</button></div><div class="center-action"><button class="button js-callback">Обсудить ваш автомобиль</button></div>`);
