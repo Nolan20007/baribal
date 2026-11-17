@@ -55,7 +55,7 @@ page.on("response", async response => {
   } catch {}
 });
 
-async function collectDomImages(targetMap, source) {
+async function collectPageDomImages(targetMap, source) {
   const urls = await page.evaluate(() => {
     const result = [];
     const add = (v) => { if (v) result.push(v); };
@@ -66,9 +66,26 @@ async function collectDomImages(targetMap, source) {
         if (/^(data-src|data-original|data-lazy-src|data-image|data-full|data-href|data-large)$/i.test(attr.name)) add(attr.value);
       }
     }
-    for (const el of document.querySelectorAll("*")) {
-      const bg = getComputedStyle(el).backgroundImage;
-      for (const m of bg.matchAll(/url\(["']?(.*?)["']?\)/g)) add(m[1]);
+    return result;
+  });
+  for (const url of urls) addUrl(targetMap, url, source);
+}
+
+async function collectGalleryDomImages(targetMap, source) {
+  const urls = await page.evaluate(() => {
+    const result = [];
+    for (const img of document.images) {
+      const rect = img.getBoundingClientRect();
+      if (rect.width < 35 || rect.height < 35 || getComputedStyle(img).visibility === "hidden") continue;
+      let node = img;
+      let inViewer = false;
+      for (let depth = 0; node && depth < 9; depth++, node = node.parentElement) {
+        const cls = typeof node.className === "string" ? node.className : "";
+        if (node.getAttribute?.("role") === "dialog" || /modal|gallery|lightbox|fancybox|viewer|popup|overlay|glightbox|pswp/i.test(cls)) {
+          inViewer = true; break;
+        }
+      }
+      if (inViewer) result.push(img.currentSrc || img.src);
     }
     return result;
   });
@@ -102,16 +119,15 @@ function slug(value) {
 async function getCardLabel(button) {
   return await button.evaluate(el => {
     let node = el;
-    let best = "";
     for (let depth = 0; node && depth < 7; depth++, node = node.parentElement) {
+      const heading = node.querySelector("h1,h2,h3,h4,[class*='title'],[class*='name']");
+      const headingText = (heading?.innerText || "").replace(/\s+/g, " ").trim();
+      if (headingText.length > 2 && headingText.length < 120) return headingText;
       const text = (node.innerText || "").replace(/\s+/g, " ").trim();
-      if (text.length > 8 && text.length < 700) {
-        const heading = node.querySelector("h1,h2,h3,h4,[class*='title'],[class*='name']");
-        const candidate = (heading?.innerText || text.split(/Все фото/i)[0]).replace(/\s+/g, " ").trim();
-        if (candidate.length > 2) best = candidate.slice(0, 100);
-      }
+      const beforeButton = text.split(/Все фото/i)[0].trim();
+      if (beforeButton.length > 2 && beforeButton.length < 120) return beforeButton;
     }
-    return best || "project";
+    return "project";
   }).catch(() => "project");
 }
 
@@ -176,11 +192,11 @@ async function scanOneGallery(button, cardIndex) {
     await button.scrollIntoViewIfNeeded();
     await button.click({ timeout: 5000 });
     await page.waitForTimeout(500);
-    await collectDomImages(record.assets, "gallery-modal-dom");
+    await collectGalleryDomImages(record.assets, "gallery-modal-dom");
 
     const firstUrl = await clickFirstPhotoInModal();
     await page.waitForTimeout(450);
-    await collectDomImages(record.assets, "gallery-viewer-dom");
+    await collectGalleryDomImages(record.assets, "gallery-viewer-dom");
     if (firstUrl) addUrl(record.assets, firstUrl, "active-viewer");
 
     if (!firstUrl) {
@@ -198,9 +214,25 @@ async function scanOneGallery(button, cardIndex) {
     for (let step = 0; step < 80; step++) {
       // Creatium's lightbox advances with the right-arrow key; the UI button is a fallback.
       await page.keyboard.press("ArrowRight").catch(() => {});
-      await page.waitForTimeout(450);
-      const currentUrl = await activeViewerImageUrl();
-      await collectDomImages(record.assets, "gallery-viewer-dom");
+      await page.waitForTimeout(400);
+      let currentUrl = await activeViewerImageUrl();
+      if (!currentUrl || currentUrl === previousUrl) {
+        const nextSelectors = [
+          ".fancybox__button--arrow_right", ".fancybox-button--arrow_right",
+          ".glightbox-next", ".pswp__button--arrow--right", ".swiper-button-next",
+          'button[aria-label*="next" i]', '[title*="next" i]', '[aria-label*="впер" i]'
+        ];
+        for (const selector of nextSelectors) {
+          const next = page.locator(selector).filter({ visible: true }).first();
+          if (await next.count().catch(() => 0)) {
+            await next.click({ timeout: 1200 }).catch(() => {});
+            await page.waitForTimeout(450);
+            currentUrl = await activeViewerImageUrl();
+            if (currentUrl && currentUrl !== previousUrl) break;
+          }
+        }
+      }
+      await collectGalleryDomImages(record.assets, "gallery-viewer-dom");
       if (currentUrl) addUrl(record.assets, currentUrl, "active-viewer");
       if (!currentUrl) continue;
       if (seenViewerUrls.has(currentUrl)) {
@@ -264,7 +296,7 @@ try {
   await page.goto(pageUrl, { waitUntil: "domcontentloaded", timeout: 60000 });
   await page.waitForTimeout(2200);
   await scrollWholePage();
-  await collectDomImages(pageAssets, "initial-page-dom");
+  await collectPageDomImages(pageAssets, "initial-page-dom");
 
   const buttons = await findAllPhotoButtons();
   console.log("Found 'Все фото' buttons:", buttons.length);
