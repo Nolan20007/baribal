@@ -156,7 +156,7 @@ const portfolioCategories = item => {
 };
 const serviceForWork = item => {
   const value = `${item.type} ${item.title} ${item.text}`.toLowerCase();
-  if (/clearplex|лобов(ое|ого|ому) стекл|защит(а|ы) ст[её]кол/.test(value)) return "Бронирование лобового стекла Quantum Anti-Skol";
+  if (/clearplex|лобов(ое|ого|ому) стекл|защит(а|ы) ст[её]кол/.test(value)) return "Бронирование лобового стекла ClearPlex";
   if (/bariglass/.test(value)) return "BariGlass";
   if (/baritools/.test(value)) return "BariTools";
   if (/химчист|детейлинг|салон/.test(value)) return "Химчистка салона";
@@ -706,7 +706,7 @@ document.querySelectorAll(".js-callback").forEach(button => button.addEventListe
 const infoModal = document.querySelector("#service-info-modal");
 const closeInfoModal = () => { infoModal.classList.remove("modal-open"); infoModal.setAttribute("aria-hidden", "true"); document.body.classList.remove("no-scroll"); };
 const openServiceInfo = title => {
-  const item = allServices.find(service => service.title === title) || bodyServices.find(service => service.title === title);
+  const item = allServices.find(service => service.title === title) || bodyServices.find(service => service.title === title) || (title === "Бронирование лобового стекла ClearPlex" ? allServices.find(service => service.title === "Бронирование лобового стекла Quantum Anti-Skol") : null);
   const details = serviceDetails[title] || (title === "Бронирование кузова плёнкой" ? serviceDetails["Бронирование автомобиля защитной плёнкой"] : null) || (title === "Бронирование плёнкой 3M" ? serviceDetails["Бронирование автомобиля защитной плёнкой"] : null);
   if (!item || !details) return;
   document.querySelector("#service-info-title").textContent = item.title;
