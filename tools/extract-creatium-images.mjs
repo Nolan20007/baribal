@@ -84,66 +84,115 @@ async function scrollWholePage() {
 }
 
 async function clickThroughGalleries() {
-  // Creatium pages commonly use Fancybox, Swiper, GLightbox and custom clickable image cards.
-  const selectors = [
-    "[data-fancybox]", "[data-lightbox]", "[data-gallery] a", "[class*='gallery'] a",
-    "[class*='swiper'] a", "[class*='slider'] a", "a:has(img)", "[role='button']:has(img)"
+  // Capture image links directly, then exercise gallery/lightbox and carousel controls.
+  // Store selector + index rather than guessing a locator from href/data-fancybox values:
+  // data-fancybox is often only a gallery group name, not an image URL.
+  const imageSelectors = [
+    "[data-fancybox]", "[data-lightbox]", "[data-gallery] a",
+    "a:has(img)", "[role='button']:has(img)",
+    "[class*='gallery'] a", "[class*='swiper'] a",
+    "[class*='slider'] a", "[class*='carousel'] a"
   ];
-  const candidates = await page.evaluate((selectors) => {
-    const seen = new Set();
+  const candidates = await page.evaluate(selectors => {
     const result = [];
+    const seen = new Set();
     for (const selector of selectors) {
-      for (const el of document.querySelectorAll(selector)) {
+      let nodes = [];
+      try { nodes = [...document.querySelectorAll(selector)]; } catch {}
+      nodes.forEach((el, index) => {
+        const img = el.tagName === "IMG" ? el : el.querySelector("img");
         const rect = el.getBoundingClientRect();
-        if (rect.width < 35 || rect.height < 35) continue;
-        const href = el.getAttribute("href") || el.getAttribute("data-src") || el.getAttribute("data-fancybox");
-        const img = el.querySelector("img") || (el.tagName === "IMG" ? el : null);
+        if (rect.width < 35 || rect.height < 35) return;
+        const hrefAttr = el.getAttribute("href");
+        const dataSrc = el.getAttribute("data-src") || el.getAttribute("data-full") || el.getAttribute("data-original");
+        const directImageLink = hrefAttr && /\.(?:jpe?g|png|webp|gif|avif|bmp|tiff?)(?:$|[?#])/i.test(hrefAttr);
+        const parentLink = el.closest("a[href]");
+        const parentIsDirectImage = parentLink && /\.(?:jpe?g|png|webp|gif|avif|bmp|tiff?)(?:$|[?#])/i.test(parentLink.getAttribute("href") || "");
+        // Direct image links are already collected as URLs; clicking them would navigate away.
+        if ((directImageLink || parentIsDirectImage) && !el.hasAttribute("data-fancybox") && !el.hasAttribute("data-lightbox")) return;
+        const href = hrefAttr || dataSrc;
         const src = href || img?.currentSrc || img?.src;
-        if (!src || seen.has(src)) continue;
-        seen.add(src);
-        result.push({ selector, src });
-      }
+        if (!src) return;
+        const key = selector + "|" + src;
+        if (seen.has(key)) return;
+        seen.add(key);
+        result.push({ selector, index, src });
+      });
     }
-    return result.slice(0, 100);
-  }, selectors);
+    return result.slice(0, 160);
+  }, imageSelectors);
 
-  console.log("Gallery-like clickable elements:", candidates.length);
+  console.log("Gallery/image click candidates:", candidates.length);
   let opened = 0;
   for (const candidate of candidates) {
     try {
-      // Re-locate by URL so that earlier DOM changes do not invalidate an index.
-      const locator = page.locator(candidate.selector).filter({ has: page.locator("img") });
-      let target = locator.filter({ has: page.locator("img") });
-      const count = await target.count();
-      let clicked = false;
-      for (let i = 0; i < Math.min(count, 100); i++) {
-        const item = target.nth(i);
-        const href = await item.getAttribute("href").catch(() => null);
-        const imgSrc = await item.locator("img").first().getAttribute("src").catch(() => null);
-        if ((href || imgSrc || "") !== candidate.src && (imgSrc || "") !== candidate.src) continue;
-        await item.scrollIntoViewIfNeeded();
-        await item.click({ timeout: 1800 }).catch(() => {});
-        clicked = true;
-        break;
-      }
-      if (!clicked) continue;
-      await page.waitForTimeout(650);
+      const locator = page.locator(candidate.selector).nth(candidate.index);
+      if (!(await locator.count())) continue;
+      await locator.scrollIntoViewIfNeeded({ timeout: 1500 }).catch(() => {});
+      await locator.click({ timeout: 1800, force: true }).catch(() => {});
+      await page.waitForTimeout(450);
       await collectDomImages("gallery-viewer");
-      // Also inspect common viewer containers for full-size sources.
       const viewerImages = await page.evaluate(() => {
-        const selectors = ["[class*='fancybox'] img", "[class*='lightbox'] img", "[class*='glightbox'] img",
-          "[role='dialog'] img", "[class*='modal'] img", "[class*='viewer'] img"];
-        return selectors.flatMap(s => [...document.querySelectorAll(s)].map(img => img.currentSrc || img.src).filter(Boolean));
+        const selectors = [
+          "[class*='fancybox'] img", "[class*='lightbox'] img",
+          "[class*='glightbox'] img", "[role='dialog'] img",
+          "[class*='modal'] img", "[class*='viewer'] img",
+          "[class*='pswp'] img"
+        ];
+        return selectors.flatMap(s => [...document.querySelectorAll(s)]
+          .map(img => img.currentSrc || img.src).filter(Boolean));
       });
       for (const src of viewerImages) remember(src, "gallery-viewer");
       opened++;
       await page.keyboard.press("Escape").catch(() => {});
-      await page.waitForTimeout(250);
+      await page.waitForTimeout(180);
     } catch {}
   }
-  console.log("Gallery items opened:", opened);
-}
 
+  // Step through common carousel implementations. This catches slides whose images
+  // are inserted only when they become active (lazy-loaded Swiper/Slick/Owl sliders).
+  const nextSelectors = [
+    ".swiper-button-next", ".slick-next", ".owl-next",
+    "[class*='gallery'] [class*='next']",
+    "[class*='slider'] [class*='next']",
+    "[class*='carousel'] [class*='next']",
+    "[class*='swiper'] [aria-label*='next' i]",
+    "[class*='slick'] [aria-label*='next' i]"
+  ];
+  let advanced = 0;
+  for (const selector of nextSelectors) {
+    let count = 0;
+    try { count = await page.locator(selector).count(); } catch {}
+    for (let i = 0; i < Math.min(count, 8); i++) {
+      const control = page.locator(selector).nth(i);
+      try {
+        if (!(await control.isVisible())) continue;
+        // A bounded loop prevents a looping carousel from running forever.
+        for (let step = 0; step < 24; step++) {
+          await control.click({ timeout: 1200, force: true }).catch(() => {});
+          await page.waitForTimeout(350);
+          await collectDomImages("carousel-slide");
+          const activeImages = await page.evaluate(() => {
+            const selectors = [
+              ".swiper-slide-active img", ".slick-current img",
+              ".owl-item.active img", "[aria-hidden='false'] img",
+              "[class*='carousel'] img", "[class*='slider'] img"
+            ];
+            return selectors.flatMap(s => [...document.querySelectorAll(s)]
+              .map(img => img.currentSrc || img.src).filter(Boolean));
+          });
+          for (const src of activeImages) remember(src, "carousel-slide");
+          advanced++;
+          const disabled = await control.getAttribute("aria-disabled").catch(() => null);
+          const cls = await control.getAttribute("class").catch(() => "");
+          if (disabled === "true" || /\bdisabled\b/.test(cls || "")) break;
+        }
+      } catch {}
+    }
+  }
+  console.log("Gallery items opened:", opened);
+  console.log("Carousel advances attempted:", advanced);
+}
 try {
   console.log("Opening:", pageUrl);
   await page.goto(pageUrl, { waitUntil: "domcontentloaded", timeout: 60000 });
