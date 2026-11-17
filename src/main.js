@@ -700,7 +700,7 @@ const infoModal = document.querySelector("#service-info-modal");
 const closeInfoModal = () => { infoModal.classList.remove("modal-open"); infoModal.setAttribute("aria-hidden", "true"); document.body.classList.remove("no-scroll"); };
 const openServiceInfo = title => {
   const item = allServices.find(service => service.title === title) || bodyServices.find(service => service.title === title);
-  const details = serviceDetails[title] || (title === "Бронирование плёнкой 3M" ? serviceDetails["Бронирование кузова плёнкой"] : null);
+  const details = serviceDetails[title] || (title === "Бронирование кузова плёнкой" ? serviceDetails["Бронирование автомобиля защитной плёнкой"] : null) || (title === "Бронирование плёнкой 3M" ? serviceDetails["Бронирование автомобиля защитной плёнкой"] : null);
   if (!item || !details) return;
   document.querySelector("#service-info-title").textContent = item.title;
   document.querySelector("#service-info-lead").textContent = details.lead;
