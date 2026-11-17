@@ -1,0 +1,44 @@
+name: Extract Creatium page images
+
+on:
+  workflow_dispatch:
+    inputs:
+      page_url:
+        description: "Full URL of the Creatium page to scan"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install Playwright
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+
+      - name: Extract images
+        env:
+          PAGE_URL: ${{ inputs.page_url }}
+        run: node tools/extract-creatium-images.mjs
+
+      - name: Upload images and report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: creatium-images
+          path: output/creatium-images/
+          if-no-files-found: warn
+          retention-days: 7
