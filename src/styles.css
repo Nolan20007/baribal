@@ -1930,3 +1930,32 @@ html[data-design="4"] .estimate-selected{border-color:rgba(25,27,29,.28);backgro
 html[data-design="4"] .estimate-selected-heading,
 html[data-design="4"] .estimate-selected-list{color:#2d2725}
 html[data-design="4"] .estimate-selected-list .estimate-selected-empty{color:#706963}
+
+
+/* Yandex Maps route link in the footer. */
+.footer-route-button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  margin-top:7px;
+  padding:10px 13px;
+  border:1px solid var(--orange);
+  background:var(--orange);
+  color:#171819!important;
+  font-size:9px!important;
+  font-weight:800;
+  letter-spacing:.65px;
+  line-height:1.2!important;
+  text-transform:uppercase;
+  transition:background .2s ease,border-color .2s ease,transform .2s ease;
+}
+.footer-route-button span{font-size:13px}
+.footer-route-button:hover{
+  background:#f0bb7f;
+  border-color:#f0bb7f;
+  color:#171819!important;
+  transform:translateY(-1px);
+}
+.footer-route-button:focus-visible{outline:2px solid #fff;outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.footer-route-button{transition:none}}
