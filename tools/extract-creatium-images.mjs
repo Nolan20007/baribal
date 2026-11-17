@@ -103,8 +103,12 @@ async function clickThroughGalleries() {
         const img = el.tagName === "IMG" ? el : el.querySelector("img");
         const rect = el.getBoundingClientRect();
         if (rect.width < 35 || rect.height < 35) return;
-        const href = el.getAttribute("href") || el.getAttribute("data-src") ||
-          el.getAttribute("data-full") || el.getAttribute("data-original");
+        const hrefAttr = el.getAttribute("href");
+        const dataSrc = el.getAttribute("data-src") || el.getAttribute("data-full") || el.getAttribute("data-original");
+        const directImageLink = hrefAttr && /\\.(?:jpe?g|png|webp|gif|avif|bmp|tiff?)(?:$|[?#])/i.test(hrefAttr);
+        // Direct image links are already collected as URLs; clicking them would navigate away.
+        if (directImageLink && !el.hasAttribute("data-fancybox") && !el.hasAttribute("data-lightbox")) return;
+        const href = hrefAttr || dataSrc;
         const src = href || img?.currentSrc || img?.src;
         if (!src) return;
         const key = selector + "|" + src;
@@ -147,10 +151,11 @@ async function clickThroughGalleries() {
   // are inserted only when they become active (lazy-loaded Swiper/Slick/Owl sliders).
   const nextSelectors = [
     ".swiper-button-next", ".slick-next", ".owl-next",
-    "[aria-label*='next' i]", "[title*='next' i]",
     "[class*='gallery'] [class*='next']",
     "[class*='slider'] [class*='next']",
-    "[class*='carousel'] [class*='next']"
+    "[class*='carousel'] [class*='next']",
+    "[class*='swiper'] [aria-label*='next' i]",
+    "[class*='slick'] [aria-label*='next' i]"
   ];
   let advanced = 0;
   for (const selector of nextSelectors) {
