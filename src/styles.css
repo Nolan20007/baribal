@@ -1807,3 +1807,14 @@ html[data-design="3"] .works-section .work-actions .js-open-work-gallery{
 @media(prefers-reduced-motion:reduce){
   .video-poster>img,.video-poster-play{transition:none}
 }
+
+
+/* BARIBAL orange scrollbar for the service-description modal only. */
+.service-info-card{
+  scrollbar-width:thin;
+  scrollbar-color:var(--orange) #292a2c;
+}
+.service-info-card::-webkit-scrollbar{width:9px}
+.service-info-card::-webkit-scrollbar-track{background:#292a2c;border-radius:10px}
+.service-info-card::-webkit-scrollbar-thumb{background:var(--orange);border:2px solid #292a2c;border-radius:10px}
+.service-info-card::-webkit-scrollbar-thumb:hover{background:#ffb36f}
