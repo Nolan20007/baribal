@@ -1866,3 +1866,67 @@ html[data-design="3"] .works-section .work-actions .js-open-work-gallery{
 @media(prefers-reduced-motion:reduce){
   .work-gallery-close,.work-gallery-arrow{transition:none}
 }
+
+
+/* Live summary of services checked in the estimate calculator. */
+.estimate-selected{
+  min-width:0;
+  margin:0 0 17px;
+  padding:12px 14px;
+  border:1px solid #55575a;
+  background:rgba(15,16,17,.22);
+}
+.estimate-selected-heading{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:8px;
+  color:#c4c2bd;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+.estimate-selected-heading b{
+  display:grid;
+  place-items:center;
+  min-width:22px;
+  height:22px;
+  padding:0 6px;
+  border-radius:20px;
+  background:var(--orange);
+  color:#171819;
+  font-size:11px;
+  letter-spacing:0;
+}
+.estimate-selected-list{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+  max-height:112px;
+  overflow:auto;
+  margin:0;
+  padding:0 4px 0 15px;
+  color:#f0eeea;
+  font-size:10px;
+  line-height:1.4;
+}
+.estimate-selected-list li{padding-left:1px}
+.estimate-selected-list .estimate-selected-empty{
+  list-style:none;
+  margin-left:-15px;
+  color:#aaa8a3;
+  font-style:italic;
+}
+.estimate-selected-list::-webkit-scrollbar{width:6px}
+.estimate-selected-list::-webkit-scrollbar-thumb{background:var(--orange);border-radius:8px}
+.estimate-selected-list::-webkit-scrollbar-track{background:rgba(255,255,255,.08)}
+html[data-design="2"] .estimate-selected{border-color:#625b4f;background:#35322c}
+html[data-design="2"] .estimate-selected-heading{color:#d6cbbb}
+html[data-design="3"] .estimate-selected{border-color:#315261;background:#10232f}
+html[data-design="3"] .estimate-selected-heading{color:#b8cbd4}
+html[data-design="4"] .estimate-selected{border-color:rgba(25,27,29,.28);background:#f4eee9}
+html[data-design="4"] .estimate-selected-heading,
+html[data-design="4"] .estimate-selected-list{color:#2d2725}
+html[data-design="4"] .estimate-selected-list .estimate-selected-empty{color:#706963}
