@@ -101,7 +101,7 @@ const nav = [
   ["Все технологии", "/tehnology"], ["Наши работы", "/foto"], ["Видео", "/video"], ["Отзывы", "/reviews"]
 ];
 const header = () => `
-  <div class="topline"><div class="wrap topline-inner"><span class="top-address">Пермь, ул. Героев Хасана, 105Э</span><div><a href="tel:+73422024142">8 (342) 202-41-42</a><a href="tel:+79824814142">8 (982) 481-41-42</a></div></div></div>
+  <div class="topline"><div class="wrap topline-inner"><span class="top-address">Пермь, ул. Героев Хасана, 105Э</span><div><a href="tel:+73422024142">+7 (342) 202-41-42</a><a href="tel:+79824814142">+7 (982) 481-41-42</a></div></div></div>
   <header class="header"><div class="wrap header-inner">
     <a class="brand" href="/"><img src="${logo}" alt="" /><span><b>BARIBAL</b><small>СТУДИЯ ЗАЩИТНЫХ ТЕХНОЛОГИЙ</small></span></a>
     <button class="menu-toggle" aria-label="Открыть меню" aria-expanded="false"><i></i><i></i><i></i></button>
