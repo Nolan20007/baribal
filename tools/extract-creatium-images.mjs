@@ -5,6 +5,7 @@ import crypto from "node:crypto";
 
 const pageUrl = process.env.PAGE_URL;
 if (!pageUrl) throw new Error("PAGE_URL is required");
+const extraImageUrls = (process.env.EXTRA_IMAGE_URLS || "").split(/\r?\n/).map(value => value.trim()).filter(Boolean);
 const parsed = new URL(pageUrl);
 if (!["http:", "https:"].includes(parsed.protocol)) throw new Error("Only HTTP(S) page URLs are supported");
 const host = parsed.hostname.toLowerCase();
@@ -29,7 +30,11 @@ function remember(url, source) {
     const absolute = new URL(url, pageUrl);
     if (!["http:", "https:"].includes(absolute.protocol)) return;
     if (/\.(?:svg|png|jpe?g|webp|gif|avif|bmp|tiff?)(?:$|[?#])/i.test(absolute.href) ||
-        /image\//i.test(source)) found.set(absolute.href, source);
+        /image\//i.test(source)) {
+      const previous = found.get(absolute.href);
+      const sources = new Set([...(previous ? previous.split(", ") : []), source]);
+      found.set(absolute.href, [...sources].join(", "));
+    }
   } catch {}
 }
 
@@ -195,6 +200,7 @@ async function clickThroughGalleries() {
 }
 try {
   console.log("Opening:", pageUrl);
+  console.log("Workflow/ref:", process.env.GITHUB_REF_NAME || "local");
   await page.goto(pageUrl, { waitUntil: "domcontentloaded", timeout: 60000 });
   await page.waitForTimeout(2200);
   await scrollWholePage();
@@ -203,25 +209,46 @@ try {
   await scrollWholePage();
   await collectDomImages("after-gallery-scan");
 
+  // Explicit URLs separate URL-discovery problems from download/validation problems.
+  for (const url of extraImageUrls) remember(url, "manual-test-url");
+  const automaticallyDiscovered = [...found.values()].filter(source => !source.split(", ").includes("manual-test-url")).length;
   console.log("Unique image URLs discovered:", found.size);
+  console.log("URLs added explicitly for testing:", extraImageUrls.length);
   const manifest = [];
   let index = 0;
   for (const [url, source] of found) {
     try {
-      const response = await context.request.get(url, { timeout: 30000, failOnStatusCode: false });
+      const response = await context.request.get(url, {
+        timeout: 30000,
+        failOnStatusCode: false,
+        headers: {
+          Referer: pageUrl,
+          Accept: "image/avif,image/webp,image/apng,image/*,*/*;q=0.8"
+        }
+      });
       if (!response.ok()) throw new Error("HTTP " + response.status());
       const body = await response.body();
-      const type = (response.headers()["content-type"] || "").split(";")[0].toLowerCase();
-      if (!type.startsWith("image/")) throw new Error("Not an image content-type: " + type);
+      const headerType = (response.headers()["content-type"] || "").split(";")[0].toLowerCase();
+      // Check file signatures; CDNs may return a generic or misleading Content-Type.
+      let type = headerType;
+      if (body.length >= 3 && body[0] === 0xff && body[1] === 0xd8 && body[2] === 0xff) type = "image/jpeg";
+      else if (body.length >= 8 && body.subarray(0, 8).equals(Buffer.from([137,80,78,71,13,10,26,10]))) type = "image/png";
+      else if (body.length >= 12 && body.toString("ascii", 0, 4) === "RIFF" && body.toString("ascii", 8, 12) === "WEBP") type = "image/webp";
+      else if (body.length >= 6 && /^GIF8[79]a$/.test(body.toString("ascii", 0, 6))) type = "image/gif";
+      else if (body.length >= 12 && body.toString("ascii", 4, 8) === "ftyp") type = "image/avif";
+      else if (body.toString("utf8", 0, Math.min(body.length, 256)).trimStart().startsWith("<svg")) type = "image/svg+xml";
+      if (!type.startsWith("image/")) throw new Error("Response is not a recognized image (Content-Type: " + headerType + ")");
       if (body.length < 2048) { skipped.push({ url, source, reason: "under 2 KB (likely tracking pixel or UI icon)", bytes: body.length }); continue; }
 
-      // Ask Chromium to decode the image and reject tiny tracking pixels and UI glyphs.
-      const dimensions = await page.evaluate(async url => {
+      // Decode the downloaded bytes themselves, avoiding cross-origin URL/CORS issues.
+      const dataUrl = "data:" + type + ";base64," + body.toString("base64");
+      const dimensions = await page.evaluate(async dataUrl => {
         const img = new Image();
-        img.src = url;
-        try { await img.decode(); } catch {}
+        img.src = dataUrl;
+        try { await img.decode(); } catch (error) { return { width: 0, height: 0, decodeError: String(error) }; }
         return { width: img.naturalWidth || 0, height: img.naturalHeight || 0 };
-      }, url).catch(() => ({ width: 0, height: 0 }));
+      }, dataUrl);
+      if (!dimensions.width || !dimensions.height) throw new Error("Image bytes could not be decoded" + (dimensions.decodeError ? ": " + dimensions.decodeError : ""));
       if (dimensions.width < 64 || dimensions.height < 64) {
         skipped.push({ url, source, reason: "smaller than 64 px in at least one dimension", bytes: body.length, ...dimensions });
         continue;
@@ -242,6 +269,8 @@ try {
 
   const report = {
     pageUrl, scannedAt: new Date().toISOString(), discovered: found.size,
+    automaticallyDiscovered,
+    manuallyAdded: extraImageUrls.length,
     downloaded: manifest.filter(x => x.status === "downloaded").length,
     skipped: skipped.length, failed: failures.length, images: manifest, skippedAssets: skipped, failures
   };
