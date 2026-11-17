@@ -5,10 +5,12 @@ on:
     inputs:
       page_url:
         description: "Full URL of the Creatium page to scan"
+        default: "https://baribal-studio.ru/himchistka"
         required: true
         type: string
       extra_image_urls:
         description: "Optional image URLs to test directly, one per line"
+        default: "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/a4111db87cd306de833f08ddb1ac3aeb.jpg"
         required: false
         type: string
   # Keep the currently targeted BARIBAL gallery fresh without a manual button press.
