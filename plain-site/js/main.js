@@ -61,6 +61,58 @@ document.querySelectorAll(".demo-form").forEach((form) => {
 });
 
 
+// Floating callback widget: same timed opening and session behavior as the original site.
+const contactWidget = document.querySelector(".contact-widget");
+if (contactWidget) {
+  const contactWidgetToggle = contactWidget.querySelector(".contact-widget-toggle");
+  const contactWidgetPanel = contactWidget.querySelector(".contact-widget-panel");
+  let widgetDismissed = false;
+  let widgetAlreadyShown = false;
+  try {
+    widgetDismissed = sessionStorage.getItem("baribal-contact-widget-dismissed") === "1";
+    widgetAlreadyShown = sessionStorage.getItem("baribal-contact-widget-shown") === "1";
+  } catch {}
+  const setWidgetOpen = (open) => {
+    contactWidget.classList.toggle("is-open", open);
+    contactWidgetToggle.setAttribute("aria-expanded", String(open));
+    contactWidgetPanel.setAttribute("aria-hidden", String(!open));
+    contactWidgetToggle.querySelector("span").textContent = open ? "Скрыть" : "Связаться с нами";
+    contactWidgetToggle.querySelector("b").textContent = open ? "−" : "+";
+  };
+  contactWidgetToggle.addEventListener("click", () => {
+    const opening = !contactWidget.classList.contains("is-open");
+    if (opening) {
+      widgetAlreadyShown = true;
+      try { sessionStorage.setItem("baribal-contact-widget-shown", "1"); } catch {}
+    } else {
+      widgetDismissed = true;
+      try { sessionStorage.setItem("baribal-contact-widget-dismissed", "1"); } catch {}
+    }
+    setWidgetOpen(opening);
+  });
+  if (!widgetAlreadyShown && !widgetDismissed) {
+    window.setTimeout(() => {
+      if (!widgetAlreadyShown && !widgetDismissed) {
+        widgetAlreadyShown = true;
+        try { sessionStorage.setItem("baribal-contact-widget-shown", "1"); } catch {}
+        setWidgetOpen(true);
+      }
+    }, 7000);
+  }
+  contactWidget.querySelectorAll(".contact-preferences").forEach((group) => {
+    const otherToggle = group.querySelector("[data-contact-other-toggle]");
+    const details = group.querySelector(".contact-other-details");
+    const otherInput = group.querySelector('input[name="contact_other"]');
+    if (!otherToggle || !details || !otherInput) return;
+    const syncOther = () => {
+      details.hidden = !otherToggle.checked;
+      otherInput.required = otherToggle.checked;
+    };
+    otherToggle.addEventListener("change", syncOther);
+    syncOther();
+  });
+}
+
 // Plain-JS work galleries. The first item is the same cover shown on each card.
 const workGallerySets = [
   [
