@@ -105,7 +105,7 @@ const allCards = [...mergedCards.values()].sort((a, b) => a.cardIndex - b.cardIn
 const index = {
   minGalleryImageBytes: MIN_GALLERY_IMAGE_BYTES,
   generatedAt: new Date().toISOString(),
-  source: "https://baribal-studio.ru/foto",
+  source: "https://baribal-studio.ru/",
   cardCount: allCards.length,
   cardsWithMainImage: allCards.filter(card => card.mainImage).length,
   additionalGalleryImages: allCards.reduce((sum, card) => sum + card.galleryCountSaved, 0),
