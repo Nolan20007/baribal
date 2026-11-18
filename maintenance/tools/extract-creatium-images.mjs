@@ -192,143 +192,152 @@ async function clickModalPhoto() {
 }
 
 async function extractOriginalsByClickingThumbnails(limit) {
-  // Creatium's popup contains thumbnails; clicking one opens a separate full-size
-  // viewer. Capture both the viewer DOM and image network responses so we do not
-  // mistake the card image or a thumbnail for the original.
-  const rootSelectors = [
-    "[role='dialog']", "[aria-modal='true']", "[class*='t-popup']",
-    "[class*='t-modal']", "[class*='modal']", "[class*='popup']",
-    "[class*='gallery']", "[class*='fancybox']", "[class*='lightbox']",
-    "[class*='swiper']", "[class*='fotorama']", "[class*='viewer']"
-  ];
-  const snapshot = async () => page.evaluate(selectors => {
+  // Do not scan generic gallery/swiper containers: they also match the page's
+  // background carousel. Restrict the search to actual modal/popup overlays.
+  const inspect = () => page.evaluate(() => {
     const visible = el => {
       const r = el.getBoundingClientRect(), s = getComputedStyle(el);
       return r.width > 0 && r.height > 0 && s.display !== "none" &&
         s.visibility !== "hidden" && Number(s.opacity || 1) > 0;
     };
-    const roots = [...document.querySelectorAll(selectors.join(","))].filter(visible);
-    const ranked = roots.map(root => ({
-      root,
-      imgs: [...root.querySelectorAll("img")].filter(img => {
-        const r = img.getBoundingClientRect();
-        return visible(img) && r.width > 35 && r.height > 35;
-      })
-    })).filter(x => x.imgs.length).sort((a,b) => b.imgs.length-a.imgs.length);
-    const chosen = ranked[0];
-    if (!chosen) return { thumbnails: [], rootCount: roots.length };
+    const selectors = [
+      "[role='dialog']", "[aria-modal='true']",
+      ".t-popup", "[class*='t-popup__']", "[class*='t-popup']",
+      "[class*='modal']", "[class*='lightbox']", "[class*='fancybox']",
+      "[class*='pswp']"
+    ];
+    const nodes = [...new Set(selectors.flatMap(s => [...document.querySelectorAll(s)]))].filter(visible);
+    const candidates = nodes.map(root => {
+      const r = root.getBoundingClientRect(), s = getComputedStyle(root);
+      const imgs = [...root.querySelectorAll("img")].filter(img => {
+        const ir = img.getBoundingClientRect();
+        return visible(img) && ir.width >= 35 && ir.height >= 35;
+      });
+      const z = Number.parseInt(s.zIndex, 10) || 0;
+      const semantic = root.matches("[role='dialog'],[aria-modal='true'],.t-popup,[class*='t-popup']");
+      const fixed = s.position === "fixed";
+      const area = r.width * r.height;
+      return { root, imgs, z, semantic, fixed, area, rect: {x:r.x,y:r.y,width:r.width,height:r.height},
+        tag: root.tagName, id: root.id, cls: String(root.className || "").slice(0,220) };
+    }).filter(x => x.imgs.length);
+    candidates.sort((a,b) =>
+      (Number(b.semantic)*100000 + Number(b.fixed)*50000 + Math.min(b.z,999)*20 + b.imgs.length*10 + b.area/10000) -
+      (Number(a.semantic)*100000 + Number(a.fixed)*50000 + Math.min(a.z,999)*20 + a.imgs.length*10 + a.area/10000)
+    );
+    const chosen = candidates[0];
     return {
-      rootCount: roots.length,
-      thumbnails: chosen.imgs.map((img,index) => ({
-        index, url: img.currentSrc || img.src || img.getAttribute("data-src") || "",
-        width: img.naturalWidth || 0, height: img.naturalHeight || 0
-      }))
+      candidateCount: candidates.length,
+      candidates: candidates.slice(0,12).map(x => ({
+        tag:x.tag,id:x.id,cls:x.cls,zIndex:x.z,fixed:x.fixed,semantic:x.semantic,
+        rect:x.rect,imgCount:x.imgs.length,
+        images:x.imgs.slice(0,30).map((img,index) => {
+          const r=img.getBoundingClientRect();
+          const link=img.closest("a[href],button,[role='button']") || img.parentElement;
+          return {index,url:img.currentSrc||img.src||img.getAttribute("data-src")||"",
+            naturalWidth:img.naturalWidth||0,naturalHeight:img.naturalHeight||0,
+            rect:{x:r.x,y:r.y,width:r.width,height:r.height},
+            clickable:{tag:link?.tagName||"",cls:String(link?.className||"").slice(0,120),
+              href:link?.href||"",role:link?.getAttribute("role")||""}};
+        })
+      })),
+      chosen: chosen ? {tag:chosen.tag,id:chosen.id,cls:chosen.cls,zIndex:chosen.z,
+        fixed:chosen.fixed,semantic:chosen.semantic,rect:chosen.rect,imgCount:chosen.imgs.length} : null,
+      thumbnails: chosen ? chosen.imgs.map((img,index)=>({
+        index,url:img.currentSrc||img.src||img.getAttribute("data-src")||"",
+        naturalWidth:img.naturalWidth||0,naturalHeight:img.naturalHeight||0
+      })) : []
     };
-  }, rootSelectors);
-  const initial = await snapshot();
-  console.log("  popup roots:", initial.rootCount, "| visible thumbnails:", initial.thumbnails.length);
-  if (!initial.thumbnails.length) return [];
+  });
+  const initial = await inspect();
+  console.log("  modal candidates:", initial.candidateCount,
+    "| chosen:", JSON.stringify(initial.chosen),
+    "| thumbnails:", initial.thumbnails.length);
+  if (!initial.thumbnails.length) {
+    console.log("  overlay diagnostic:", JSON.stringify(initial.candidates));
+    return [];
+  }
 
   const networkImages = [];
   const onResponse = async response => {
     try {
-      const headers = response.headers();
-      const type = String(headers["content-type"] || "").split(";")[0].toLowerCase();
-      if (type.startsWith("image/") && response.status() >= 200 && response.status() < 300) {
-        networkImages.push({ url: response.url(), type, status: response.status(),
-          bytes: Number(headers["content-length"] || 0) });
+      const headers=response.headers(), type=String(headers["content-type"]||"").split(";")[0].toLowerCase();
+      const url=response.url();
+      if (type.startsWith("image/") && response.status()>=200 && response.status()<300 &&
+          !/yandex|metrika|analytics|pixel|tracking|clmap/i.test(url)) {
+        networkImages.push({url,type,status:response.status(),bytes:Number(headers["content-length"]||0)});
       }
     } catch {}
   };
-  page.on("response", onResponse);
-  const results = [];
-  const seen = new Set(initial.thumbnails.map(x => x.url).filter(Boolean));
-
+  page.on("response",onResponse);
+  const results=[];
+  const seen=new Set(initial.thumbnails.map(x=>x.url).filter(Boolean));
   try {
     for (const thumb of initial.thumbnails) {
-      if (results.length >= limit) break;
-      const responseStart = networkImages.length;
-      // Re-resolve the popup root for each click; the lightbox may add/remove
-      // DOM nodes, so stale element handles and old image indexes are unsafe.
-      const clicked = await page.evaluate(({selectors,index}) => {
-        const visible = el => {
-          const r = el.getBoundingClientRect(), s = getComputedStyle(el);
-          return r.width > 0 && r.height > 0 && s.display !== "none" &&
-            s.visibility !== "hidden" && Number(s.opacity || 1) > 0;
+      if (results.length>=limit) break;
+      const responseStart=networkImages.length;
+      const clickInfo=await page.evaluate(({index})=>{
+        const visible=el=>{
+          const r=el.getBoundingClientRect(),s=getComputedStyle(el);
+          return r.width>0&&r.height>0&&s.display!=="none"&&s.visibility!=="hidden"&&Number(s.opacity||1)>0;
         };
-        const roots = [...document.querySelectorAll(selectors.join(","))].filter(visible);
-        const ranked = roots.map(root => ({
-          root, imgs: [...root.querySelectorAll("img")].filter(img => {
-            const r = img.getBoundingClientRect();
-            return visible(img) && r.width > 35 && r.height > 35;
-          })
-        })).filter(x => x.imgs.length).sort((a,b) => b.imgs.length-a.imgs.length);
-        const img = ranked[0]?.imgs[index];
-        if (!img) return false;
-        img.click();
-        return true;
-      }, { selectors: rootSelectors, index: thumb.index });
-      if (!clicked) {
-        console.log("  thumbnail", thumb.index + 1, "could not be clicked after popup refresh");
-        continue;
-      }
-      await page.waitForTimeout(1400);
+        const selectors=["[role='dialog']","[aria-modal='true']",".t-popup","[class*='t-popup__']",
+          "[class*='t-popup']","[class*='modal']","[class*='lightbox']","[class*='fancybox']","[class*='pswp']"];
+        const nodes=[...new Set(selectors.flatMap(s=>[...document.querySelectorAll(s)]))].filter(visible);
+        const ranked=nodes.map(root=>{
+          const r=root.getBoundingClientRect(),s=getComputedStyle(root);
+          const imgs=[...root.querySelectorAll("img")].filter(img=>{
+            const ir=img.getBoundingClientRect();return visible(img)&&ir.width>=35&&ir.height>=35;
+          });
+          const z=Number.parseInt(s.zIndex,10)||0, semantic=root.matches("[role='dialog'],[aria-modal='true'],.t-popup,[class*='t-popup']");
+          return {root,imgs,score:Number(semantic)*100000+Number(s.position==="fixed")*50000+Math.min(z,999)*20+imgs.length*10+r.width*r.height/10000};
+        }).filter(x=>x.imgs.length).sort((a,b)=>b.score-a.score);
+        const root=ranked[0]?.root, img=ranked[0]?.imgs[index];
+        if(!root||!img)return {ok:false,rootCount:ranked.length};
+        const clickable=img.closest("a[href],button,[role='button']")||img;
+        const before=img.currentSrc||img.src||"";
+        clickable.click();
+        return {ok:true,root:{tag:root.tagName,id:root.id,cls:String(root.className||"").slice(0,180)},
+          thumb:before,clickTarget:{tag:clickable.tagName,cls:String(clickable.className||"").slice(0,120),href:clickable.href||""}};
+      },{index:thumb.index});
+      if(!clickInfo.ok){console.log("  thumb",thumb.index+1,"not clickable in current overlay");continue;}
+      console.log("  click",thumb.index+1,JSON.stringify(clickInfo));
+      await page.waitForTimeout(1100);
 
-      const freshNetwork = networkImages.slice(responseStart).map(x => x.url);
-      const domUrls = await page.evaluate(() => {
-        const visible = el => {
-          const r = el.getBoundingClientRect(), s = getComputedStyle(el);
-          return r.width > 120 && r.height > 90 && s.display !== "none" &&
-            s.visibility !== "hidden" && Number(s.opacity || 1) > 0;
-        };
-        const selectors = [
-          ".fancybox__image", ".fancybox-image", ".glightbox-container img",
-          ".pswp__img", "[class*='lightbox'] img", "[class*='viewer'] img",
-          "[role='dialog'] img", "[class*='modal'] img", "[class*='popup'] img",
-          "[class*='swiper'] img", "[class*='fotorama'] img"
-        ];
-        const found = new Set();
-        for (const selector of selectors) for (const img of document.querySelectorAll(selector)) {
-          if (visible(img)) {
-            const url = img.currentSrc || img.src || img.getAttribute("data-src") || "";
-            if (url) found.add(url);
+      const state=await page.evaluate(()=>{
+        const visible=el=>{const r=el.getBoundingClientRect(),s=getComputedStyle(el);
+          return r.width>100&&r.height>80&&s.display!=="none"&&s.visibility!=="hidden"&&Number(s.opacity||1)>0;};
+        const selectors=[".fancybox__image",".fancybox-image",".glightbox-container img",".pswp__img",
+          "[class*='lightbox'] img","[class*='viewer'] img","[role='dialog'] img",
+          "[class*='modal'] img","[class*='popup'] img","[class*='t-popup'] img"];
+        const out=[];
+        for(const sel of selectors)for(const img of document.querySelectorAll(sel)){
+          if(!visible(img))continue;
+          const r=img.getBoundingClientRect();
+          for(const url of [img.currentSrc,img.src,img.getAttribute("data-original"),img.getAttribute("data-src")]){
+            if(url&&!out.some(x=>x.url===url))out.push({url,width:img.naturalWidth||0,height:img.naturalHeight||0,
+              rect:{width:r.width,height:r.height},cls:String(img.className||"").slice(0,100)});
           }
         }
-        return [...found];
+        return out;
       });
-      const candidates = [...new Set([...freshNetwork, ...domUrls])]
-        .filter(url => url && !seen.has(url));
-      const measured = await page.evaluate(async urls => {
-        const load = url => new Promise(resolve => {
-          const img = new Image();
-          const timer = setTimeout(() => resolve({url,width:0,height:0}), 5000);
-          img.onload = () => { clearTimeout(timer); resolve({url,width:img.naturalWidth,height:img.naturalHeight}); };
-          img.onerror = () => { clearTimeout(timer); resolve({url,width:0,height:0}); };
-          img.src = url;
-        });
-        return Promise.all(urls.map(load));
-      }, candidates);
-      const valid = measured.filter(x => x.width >= 500 && x.height >= 300)
-        .sort((a,b) => (b.width*b.height)-(a.width*a.height));
-      const best = valid[0];
-      if (best) {
-        seen.add(best.url);
-        results.push({ url: best.url, naturalWidth: best.width, naturalHeight: best.height });
-        const meta = networkImages.find(x => x.url === best.url);
-        console.log("  thumbnail", thumb.index + 1, "=> ORIGINAL", best.width+"x"+best.height,
-          "|", meta?.type || "DOM image", "|", best.url);
-      } else {
-        console.log("  thumbnail", thumb.index + 1, "=> no original identified;",
-          "new image responses:", JSON.stringify(networkImages.slice(responseStart)));
-      }
-      // Escape closes the image viewer while preserving the thumbnail popup.
-      await page.keyboard.press("Escape").catch(() => {});
-      await page.waitForTimeout(450);
+      const freshNetwork=networkImages.slice(responseStart).map(x=>x.url);
+      const urls=[...new Set([...freshNetwork,...state.map(x=>x.url)])].filter(u=>u&&!seen.has(u));
+      const measured=await page.evaluate(async urls=>Promise.all(urls.map(url=>new Promise(resolve=>{
+        const img=new Image(),timer=setTimeout(()=>resolve({url,width:0,height:0}),5000);
+        img.onload=()=>{clearTimeout(timer);resolve({url,width:img.naturalWidth,height:img.naturalHeight});};
+        img.onerror=()=>{clearTimeout(timer);resolve({url,width:0,height:0});};img.src=url;
+      }))),urls);
+      const best=measured.filter(x=>x.width>=500&&x.height>=300)
+        .sort((a,b)=>b.width*b.height-a.width*a.height)[0];
+      if(best){seen.add(best.url);results.push({url:best.url,naturalWidth:best.width,naturalHeight:best.height});
+        console.log("  => original",best.width+"x"+best.height,best.url);}
+      else console.log("  => no original; viewer DOM:",JSON.stringify(state),
+        "| new image responses:",JSON.stringify(networkImages.slice(responseStart)));
+      await page.keyboard.press("Escape").catch(()=>{});
+      await page.waitForTimeout(500);
     }
-  } finally {
-    page.off("response", onResponse);
-  }
-  console.log("  verified distinct originals:", results.length, "of", initial.thumbnails.length);
+  } finally { page.off("response",onResponse); }
+  console.log("  verified distinct originals:",results.length,"of",initial.thumbnails.length);
   return results;
 }
 
