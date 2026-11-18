@@ -3,7 +3,7 @@ import { portfolioGalleries } from "./portfolio-galleries.js";
 try { const savedTheme = localStorage.getItem("baribal-theme"); if (savedTheme === "light" || savedTheme === "dark") document.documentElement.dataset.theme = savedTheme; } catch {}
 const logo = new URL("../assets/images/brand/ca257917ad27e3cc4c7f0e446bc6d0bfdc1cb9d92bc77c476dde83c5275612f5.png", import.meta.url).href;
 const work = [
-  { image: new URL("../assets/images/portfolio/galleries/89ee4c4f6289c7bd307e768dc92246a11143550b3026e1886dff4df82d6a8f05.jpg", import.meta.url).href, type: "Оклейка", title: "Оклейка и изменение цвета из цветного полиуретана на Mercedes-Benz GLE", text: "Изменение цвета кузова и защита автомобиля цветным полиуретаном." },
+  { image: new URL("../assets/images/portfolio/galleries/a58165e7f70299a15a7ca5f55c623020b4190ebe69f09d124ab5bdd9d3eae3b8.jpg", import.meta.url).href, type: "Оклейка", title: "Оклейка и изменение цвета из цветного полиуретана на Mercedes-Benz GLE", text: "Изменение цвета кузова и защита автомобиля цветным полиуретаном." },
   { image: new URL("../assets/images/portfolio/edb1f571acdac6f0a9bc76b7bdcff548467bed7c317eac3fbbbbe6e41cd3430c.jpg", import.meta.url).href, type: "Бронирование", title: "Защита BMW 8", text: "Бронирование передней части автомобиля и лобового стекла." },
   { image: new URL("../assets/images/portfolio/89aa4c603c5fe509040b7999422cd307e8aea34d9ce8fcd7862940961bd39ffa.jpg", import.meta.url).href, type: "Бронирование", title: "Защита Lexus", text: "Оклейка передней части кузова защитной полиуретановой плёнкой." }
 ];
@@ -137,7 +137,8 @@ const callback = () => `
   <div class="modal" id="callback-modal" aria-hidden="true"><div class="modal-backdrop js-close"></div><section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button class="modal-close js-close" aria-label="Закрыть">×</button><div class="callback-modal-heading"><img src="${contactWidgetImage}" alt=""><span class="eyebrow">BARIBAL · ПЕРМЬ</span></div><h2 id="modal-title">Мы вам перезвоним</h2><p id="callback-context">Оставьте номер — обсудим задачу и подберём решение для вашего автомобиля.</p><form class="lead-form demo-form"><input type="hidden" name="service" id="callback-service" value=""><label>Ваше имя<input name="name" placeholder="Как к вам обращаться" /></label><label>Телефон<input name="phone" type="tel" placeholder="+7 (___) ___-__-__" required /></label>${contactPreferences()}<button class="button" type="submit">Заказать консультацию</button><output></output></form></section></div>`;
 const demoWorkGalleries = [
   [
-    new URL("../assets/images/portfolio/galleries/89ee4c4f6289c7bd307e768dc92246a11143550b3026e1886dff4df82d6a8f05.jpg", import.meta.url).href,
+    new URL("../assets/images/studio/760f52fe35ff8702c47501873ce0d7363d54895d149d5983acab9af632d1d8f7.jpg", import.meta.url).href,
+    new URL("../assets/images/portfolio/galleries/d1c3405fac34ce652af2ca2e1443cb41b8798be0491419c24ec5e85aea36df23.jpg", import.meta.url).href,
     new URL("../assets/images/portfolio/galleries/e07619d016a9cf994c3a88f261b674ea13202d2a301cd032299eae535e0f1f59.jpg", import.meta.url).href
   ],
   [
