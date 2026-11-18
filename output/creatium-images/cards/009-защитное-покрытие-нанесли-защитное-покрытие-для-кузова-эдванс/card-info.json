@@ -1,0 +1,30 @@
+{
+  "cardIndex": 9,
+  "description": "Защитное покрытие Нанесли защитное покрытие для кузова Эдванс",
+  "cardText": "Защитное покрытие Нанесли защитное покрытие для кузова Эдванс Все фото",
+  "status": "captured-by-direct-original-links",
+  "mainImageFile": "main.jpg",
+  "galleryCountDetected": 5,
+  "gallery": [
+    {
+      "order": 1,
+      "file": "01.jpg"
+    },
+    {
+      "order": 2,
+      "file": "02.jpg"
+    },
+    {
+      "order": 3,
+      "file": "03.jpg"
+    },
+    {
+      "order": 4,
+      "file": "04.jpg"
+    },
+    {
+      "order": 5,
+      "file": "05.jpg"
+    }
+  ]
+}

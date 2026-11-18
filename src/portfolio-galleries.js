@@ -148,6 +148,21 @@ import image144 from "../assets/images/portfolio/galleries/e9d0d02f42978c6b28cba
 import image145 from "../assets/images/portfolio/galleries/03a6bd7931f6b09034d2443c8a7bc44d4972ba5833a4280729b97ee064f59a30.jpg";
 import image146 from "../assets/images/portfolio/bf670c7abac755af4ae8389a60e8d9155bf6ba7a4e0b0dbad4cf4f7492b74809.jpg";
 
+import image147 from "../assets/images/portfolio/galleries/858fd194e85ea31ce7d49e37872c9e7199b565ad3a61b782daec47391331af98.jpg";
+import image148 from "../assets/images/portfolio/galleries/e6728119eaeb29b96a7b093f7c2418726c237485bdfffa53cae0d046ae29b467.jpg";
+import image149 from "../assets/images/portfolio/galleries/4aae7648c45456d05f5b38f9cc77b0928f8cf94a6c68b0d6b9826712cc792646.jpg";
+import image150 from "../assets/images/portfolio/galleries/cf37c17041ad2342713a748fd2610bdd9c56f2433a346cb4d53ded79a091cee0.jpg";
+import image151 from "../assets/images/portfolio/galleries/c6dcea9afdf45e85e7efc47814b60557bb7d27d5267e37e48215c4bc8ea3a8bd.jpg";
+import image152 from "../assets/images/portfolio/galleries/759ce8eff355aa0372a4dc03cb0a15235394a029c047cdf1f2c901e6352e61f6.jpg";
+import image153 from "../assets/images/portfolio/galleries/c0bdb16a944aa678f735325611be30ea55262a2a6386dd49d59f166d8064f75b.jpg";
+import image154 from "../assets/images/portfolio/d92cd7473a1cf5344c429921e20b4ae153959d2ab69275714f02c97d0f855a3f.jpg";
+import image155 from "../assets/images/portfolio/galleries/1083fefbc9a8f4395d2b122079b8eb12bbb03048e7457e0e323d4b883b649aaf.jpg";
+import image156 from "../assets/images/portfolio/galleries/ab394098a7380a39187110e7923bac56cd58a6f1915fcd7b8c5e730681dab6ff.jpg";
+import image157 from "../assets/images/portfolio/galleries/63f7ca1c920273c0e582f5c11b2b3992f97ff57ba6fd1d946904020f90666093.jpg";
+import image158 from "../assets/images/portfolio/galleries/254c45626e89a8dd5b448538a6456b92a1058a1120f5461a86fd2877ab412e2d.jpg";
+import image159 from "../assets/images/portfolio/galleries/2a62762f329b0cd0b9982c80b3f92449230e39fa4508b3030c7ea1a9270da0c2.jpg";
+import image160 from "../assets/images/portfolio/cb42231a233b675dacc33fa230eaf0ee18c0ec01c00181154dfa1cdce9948633.jpg";
+
 export const portfolioGalleries = [
   { sourceCardIndex: 1, images: [image0, image1, image2, image3, image4] },
   { sourceCardIndex: 2, images: [image5, image6] },
@@ -156,8 +171,8 @@ export const portfolioGalleries = [
   { sourceCardIndex: 5, images: [image19, image20] },
   { sourceCardIndex: 6, images: [image21, image22, image23, image24, image25, image26] },
   { sourceCardIndex: 7, images: [image27, image28, image29, image30, image31] },
-  { sourceCardIndex: 8, images: [image32, image33, image34, image35, image36, image37, image38, image39, image40] },
-  { sourceCardIndex: 9, images: [image94, image95, image96, image97] },
+  { sourceCardIndex: 8, images: [image147, image148, image149, image150, image151, image152, image153, image154, image155] },
+  { sourceCardIndex: 9, images: [image156, image157, image158, image159, image160] },
   { sourceCardIndex: 10, images: [image102, image100, image101] },
   { sourceCardIndex: 11, images: [image103, image104, image105, image106] },
   { sourceCardIndex: 12, images: [image109, image108] },

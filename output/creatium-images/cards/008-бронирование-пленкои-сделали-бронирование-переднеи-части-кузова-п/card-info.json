@@ -1,0 +1,46 @@
+{
+  "cardIndex": 8,
+  "description": "Бронирование пленкой Сделали бронирование передней части кузова пленкой HEXIS",
+  "cardText": "Бронирование пленкой Сделали бронирование передней части кузова пленкой HEXIS Все фото",
+  "status": "captured-by-direct-original-links",
+  "mainImageFile": "main.jpg",
+  "galleryCountDetected": 9,
+  "gallery": [
+    {
+      "order": 1,
+      "file": "01.jpg"
+    },
+    {
+      "order": 2,
+      "file": "02.jpg"
+    },
+    {
+      "order": 3,
+      "file": "03.jpg"
+    },
+    {
+      "order": 4,
+      "file": "04.jpg"
+    },
+    {
+      "order": 5,
+      "file": "05.jpg"
+    },
+    {
+      "order": 6,
+      "file": "06.jpg"
+    },
+    {
+      "order": 7,
+      "file": "07.jpg"
+    },
+    {
+      "order": 8,
+      "file": "08.jpg"
+    },
+    {
+      "order": 9,
+      "file": "09.jpg"
+    }
+  ]
+}

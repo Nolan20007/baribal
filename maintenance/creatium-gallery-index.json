@@ -1,12 +1,12 @@
 {
   "minGalleryImageBytes": 102400,
-  "generatedAt": "2026-11-18T09:03:24.788Z",
+  "generatedAt": "2026-11-18T09:15:17.792Z",
   "source": "https://baribal-studio.ru/",
   "cardCount": 25,
   "cardsWithMainImage": 25,
-  "additionalGalleryImages": 101,
+  "additionalGalleryImages": 104,
   "uniqueBytesAdded": 0,
-  "duplicateReferencesReused": 13,
+  "duplicateReferencesReused": 16,
   "cards": [
     {
       "cardIndex": 1,
@@ -287,11 +287,11 @@
       "folder": "008-бронирование-пленкои-сделали-бронирование-переднеи-части-кузова-п",
       "description": "Бронирование пленкой Сделали бронирование передней части кузова пленкой HEXIS",
       "cardText": "Бронирование пленкой Сделали бронирование передней части кузова пленкой HEXIS Все фото",
-      "status": "captured-by-clicking-thumbnails",
+      "status": "captured-by-direct-original-links",
       "mainImage": {
-        "path": "assets/images/portfolio/galleries/2a6ccb7b0b8a2e48a0eb2c9a009951d13ede8557be468b335e63096fe649f47c.jpg",
-        "sha256": "2a6ccb7b0b8a2e48a0eb2c9a009951d13ede8557be468b335e63096fe649f47c",
-        "bytes": 14441
+        "path": "assets/images/portfolio/d92cd7473a1cf5344c429921e20b4ae153959d2ab69275714f02c97d0f855a3f.jpg",
+        "sha256": "d92cd7473a1cf5344c429921e20b4ae153959d2ab69275714f02c97d0f855a3f",
+        "bytes": 198947
       },
       "gallery": [
         {
@@ -302,83 +302,101 @@
         },
         {
           "order": 2,
+          "path": "assets/images/portfolio/galleries/e6728119eaeb29b96a7b093f7c2418726c237485bdfffa53cae0d046ae29b467.jpg",
+          "sha256": "e6728119eaeb29b96a7b093f7c2418726c237485bdfffa53cae0d046ae29b467",
+          "bytes": 171909
+        },
+        {
+          "order": 3,
           "path": "assets/images/portfolio/galleries/4aae7648c45456d05f5b38f9cc77b0928f8cf94a6c68b0d6b9826712cc792646.jpg",
           "sha256": "4aae7648c45456d05f5b38f9cc77b0928f8cf94a6c68b0d6b9826712cc792646",
           "bytes": 206160
         },
         {
-          "order": 3,
+          "order": 4,
           "path": "assets/images/portfolio/galleries/cf37c17041ad2342713a748fd2610bdd9c56f2433a346cb4d53ded79a091cee0.jpg",
           "sha256": "cf37c17041ad2342713a748fd2610bdd9c56f2433a346cb4d53ded79a091cee0",
           "bytes": 212117
         },
         {
-          "order": 4,
+          "order": 5,
           "path": "assets/images/portfolio/galleries/c6dcea9afdf45e85e7efc47814b60557bb7d27d5267e37e48215c4bc8ea3a8bd.jpg",
           "sha256": "c6dcea9afdf45e85e7efc47814b60557bb7d27d5267e37e48215c4bc8ea3a8bd",
           "bytes": 173382
         },
         {
-          "order": 5,
+          "order": 6,
           "path": "assets/images/portfolio/galleries/759ce8eff355aa0372a4dc03cb0a15235394a029c047cdf1f2c901e6352e61f6.jpg",
           "sha256": "759ce8eff355aa0372a4dc03cb0a15235394a029c047cdf1f2c901e6352e61f6",
           "bytes": 157049
         },
         {
-          "order": 6,
+          "order": 7,
           "path": "assets/images/portfolio/galleries/c0bdb16a944aa678f735325611be30ea55262a2a6386dd49d59f166d8064f75b.jpg",
           "sha256": "c0bdb16a944aa678f735325611be30ea55262a2a6386dd49d59f166d8064f75b",
           "bytes": 190280
         },
         {
-          "order": 7,
+          "order": 8,
           "path": "assets/images/portfolio/d92cd7473a1cf5344c429921e20b4ae153959d2ab69275714f02c97d0f855a3f.jpg",
           "sha256": "d92cd7473a1cf5344c429921e20b4ae153959d2ab69275714f02c97d0f855a3f",
           "bytes": 198947
         },
         {
-          "order": 8,
+          "order": 9,
           "path": "assets/images/portfolio/galleries/1083fefbc9a8f4395d2b122079b8eb12bbb03048e7457e0e323d4b883b649aaf.jpg",
           "sha256": "1083fefbc9a8f4395d2b122079b8eb12bbb03048e7457e0e323d4b883b649aaf",
           "bytes": 167898
         }
       ],
-      "galleryCountDetected": 8,
-      "galleryCountSaved": 8
+      "galleryCountDetected": 9,
+      "galleryCountSaved": 9
     },
     {
       "cardIndex": 9,
       "folder": "009-защитное-покрытие-нанесли-защитное-покрытие-для-кузова-эдванс",
       "description": "Защитное покрытие Нанесли защитное покрытие для кузова Эдванс",
       "cardText": "Защитное покрытие Нанесли защитное покрытие для кузова Эдванс Все фото",
-      "status": "captured-by-clicking-thumbnails",
+      "status": "captured-by-direct-original-links",
       "mainImage": {
-        "path": "assets/images/portfolio/galleries/a3acaf24d28586f1d46f4d2967bd7f0280702a78b1fb1fd6e3b22efa74c9a606.jpg",
-        "sha256": "a3acaf24d28586f1d46f4d2967bd7f0280702a78b1fb1fd6e3b22efa74c9a606",
-        "bytes": 13817
+        "path": "assets/images/portfolio/cb42231a233b675dacc33fa230eaf0ee18c0ec01c00181154dfa1cdce9948633.jpg",
+        "sha256": "cb42231a233b675dacc33fa230eaf0ee18c0ec01c00181154dfa1cdce9948633",
+        "bytes": 203211
       },
       "gallery": [
         {
           "order": 1,
-          "path": "assets/images/portfolio/cb42231a233b675dacc33fa230eaf0ee18c0ec01c00181154dfa1cdce9948633.jpg",
-          "sha256": "cb42231a233b675dacc33fa230eaf0ee18c0ec01c00181154dfa1cdce9948633",
-          "bytes": 203211
+          "path": "assets/images/portfolio/galleries/ab394098a7380a39187110e7923bac56cd58a6f1915fcd7b8c5e730681dab6ff.jpg",
+          "sha256": "ab394098a7380a39187110e7923bac56cd58a6f1915fcd7b8c5e730681dab6ff",
+          "bytes": 207899
         },
         {
           "order": 2,
+          "path": "assets/images/portfolio/galleries/63f7ca1c920273c0e582f5c11b2b3992f97ff57ba6fd1d946904020f90666093.jpg",
+          "sha256": "63f7ca1c920273c0e582f5c11b2b3992f97ff57ba6fd1d946904020f90666093",
+          "bytes": 244892
+        },
+        {
+          "order": 3,
           "path": "assets/images/portfolio/galleries/254c45626e89a8dd5b448538a6456b92a1058a1120f5461a86fd2877ab412e2d.jpg",
           "sha256": "254c45626e89a8dd5b448538a6456b92a1058a1120f5461a86fd2877ab412e2d",
           "bytes": 225267
         },
         {
-          "order": 3,
+          "order": 4,
           "path": "assets/images/portfolio/galleries/2a62762f329b0cd0b9982c80b3f92449230e39fa4508b3030c7ea1a9270da0c2.jpg",
           "sha256": "2a62762f329b0cd0b9982c80b3f92449230e39fa4508b3030c7ea1a9270da0c2",
           "bytes": 225367
+        },
+        {
+          "order": 5,
+          "path": "assets/images/portfolio/cb42231a233b675dacc33fa230eaf0ee18c0ec01c00181154dfa1cdce9948633.jpg",
+          "sha256": "cb42231a233b675dacc33fa230eaf0ee18c0ec01c00181154dfa1cdce9948633",
+          "bytes": 203211
         }
       ],
-      "galleryCountDetected": 3,
-      "galleryCountSaved": 3
+      "galleryCountDetected": 5,
+      "galleryCountSaved": 5
     },
     {
       "cardIndex": 10,
