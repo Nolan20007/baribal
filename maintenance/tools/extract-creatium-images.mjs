@@ -192,6 +192,68 @@ async function clickModalPhoto() {
   return "";
 }
 
+async function extractOriginalsByClickingThumbnails(limit) {
+  const thumbnails = await page.evaluate(() => {
+    const visible = el => {
+      const r = el.getBoundingClientRect(), st = getComputedStyle(el);
+      return r.width > 35 && r.height > 35 && st.display !== "none" &&
+        st.visibility !== "hidden" && Number(st.opacity || 1) > 0;
+    };
+    const roots = [...document.querySelectorAll(
+      "[role='dialog'],[aria-modal='true'],[class*='modal'],[class*='popup'],[class*='gallery'],[class*='swiper'],[class*='fotorama']"
+    )].filter(visible);
+    const root = roots.sort((a,b) => a.querySelectorAll("img").length - b.querySelectorAll("img").length)
+      .find(el => el.querySelectorAll("img").length > 0);
+    if (!root) return [];
+    return [...root.querySelectorAll("img")].filter(visible).map((img,index) => ({
+      index, src: img.currentSrc || img.src || img.getAttribute("data-src") || "",
+      width: img.naturalWidth || 0, height: img.naturalHeight || 0,
+      rectWidth: img.getBoundingClientRect().width, rectHeight: img.getBoundingClientRect().height
+    }));
+  });
+  if (!thumbnails.length) return [];
+  const results = [];
+  const seen = new Set();
+  for (const thumb of thumbnails) {
+    if (results.length >= limit) break;
+    const before = await page.evaluate(() => [...document.images].map(img => img.currentSrc || img.src).filter(Boolean));
+    await page.evaluate(index => {
+      const visible = el => {
+        const r = el.getBoundingClientRect(), st = getComputedStyle(el);
+        return r.width > 35 && r.height > 35 && st.display !== "none" && st.visibility !== "hidden";
+      };
+      const roots = [...document.querySelectorAll(
+        "[role='dialog'],[aria-modal='true'],[class*='modal'],[class*='popup'],[class*='gallery'],[class*='swiper'],[class*='fotorama']"
+      )].filter(visible);
+      const root = roots.sort((a,b) => a.querySelectorAll("img").length - b.querySelectorAll("img").length)
+        .find(el => el.querySelectorAll("img").length > 0);
+      const imgs = root ? [...root.querySelectorAll("img")].filter(visible) : [];
+      imgs[index]?.click();
+    }, thumb.index);
+    await page.waitForTimeout(900);
+    // The clicked thumbnail must open a distinct large image. Never save the thumbnail URL.
+    const candidates = await page.evaluate(beforeUrls => {
+      const before = new Set(beforeUrls);
+      return [...document.images].map(img => {
+        const r = img.getBoundingClientRect(), st = getComputedStyle(img);
+        return { url: img.currentSrc || img.src || "", naturalWidth: img.naturalWidth,
+          naturalHeight: img.naturalHeight, area: r.width * r.height,
+          visible: r.width > 160 && r.height > 120 && st.display !== "none" &&
+            st.visibility !== "hidden" && Number(st.opacity || 1) > 0,
+          changed: !before.has(img.currentSrc || img.src || "") };
+      }).filter(x => x.url && x.visible && x.naturalWidth >= 500 && x.naturalHeight >= 300)
+        .sort((a,b) => (Number(b.changed) - Number(a.changed)) || (b.area-a.area) || (b.naturalWidth*b.naturalHeight-a.naturalWidth*a.naturalHeight));
+    }, before);
+    const best = candidates.find(x => !seen.has(x.url));
+    if (best) {
+      seen.add(best.url);
+      results.push({url:best.url, naturalWidth:best.naturalWidth, naturalHeight:best.naturalHeight});
+      console.log("  clicked thumbnail", thumb.index + 1, "=> original", best.naturalWidth + "x" + best.naturalHeight);
+    }
+  }
+  return results;
+}
+
 async function clickNext(previousUrl) {
   await page.keyboard.press("ArrowRight").catch(() => {});
   for (let wait = 0; wait < 12; wait++) {
@@ -273,44 +335,22 @@ try {
       await button.click({ timeout: 6000 });
       await page.waitForTimeout(600);
 
-      // Creatium may expose every slide in the popup DOM (including lazy-loaded slides)
-      // without creating a separate lightbox. Collect those first; then use the viewer
-      // navigation only as a fallback for galleries that render a single slide at a time.
-      const directUrls = await readGalleryImages();
+      // The popup contains thumbnails only. Click each thumbnail and capture the
+      // full-size image that the site loads into its viewer; never save thumbnail URLs.
+      const clickedOriginals = await extractOriginalsByClickingThumbnails(requestedGalleryLimit);
       const seen = new Set();
-      for (const url of directUrls) {
-        const normalized = normalizeUrl(url);
-        if (normalized && !seen.has(normalized) && record.gallery.length < requestedGalleryLimit) {
+      for (const item of clickedOriginals) {
+        const normalized = normalizeUrl(item.url);
+        if (normalized && !seen.has(normalized)) {
           seen.add(normalized);
-          record.gallery.push({ url: normalized, order: record.gallery.length + 1 });
+          record.gallery.push({ url: normalized, order: record.gallery.length + 1,
+            naturalWidth: item.naturalWidth, naturalHeight: item.naturalHeight });
         }
       }
-
-      if (record.gallery.length <= 1 && record.gallery.length < requestedGalleryLimit) {
-        const firstUrl = await findViewerImage() || await clickModalPhoto();
-        if (firstUrl) {
-          let current = firstUrl;
-          for (let n = 0; n < requestedGalleryLimit && current; n++) {
-            const normalized = normalizeUrl(current);
-            if (!normalized || seen.has(normalized)) {
-              const nextAfterDuplicate = await clickNext(current);
-              if (!nextAfterDuplicate) break;
-              current = nextAfterDuplicate;
-              continue;
-            }
-            seen.add(normalized);
-            record.gallery.push({ url: normalized, order: record.gallery.length + 1 });
-            console.log("  gallery image", record.gallery.length);
-            const next = await clickNext(current);
-            if (!next) break;
-            current = next;
-          }
-        }
+      record.status = record.gallery.length ? "captured-by-clicking-thumbnails" : "original-image-not-detected";
+      if (!record.gallery.length) {
+        console.warn("  No full-size originals detected after clicking thumbnails; refusing to save thumbnails.");
       }
-      record.status = record.gallery.length
-        ? (directUrls.length ? "captured-popup-images" : "captured-viewer-sequence")
-        : "viewer-not-detected";
-      if (!record.gallery.length) console.warn("  No gallery image detected; no guessed files saved.");
 
       // Close the lightbox/modal before proceeding to the next card.
       await page.keyboard.press("Escape").catch(() => {});
