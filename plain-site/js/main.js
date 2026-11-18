@@ -211,6 +211,7 @@ document.querySelectorAll(".baribal-player").forEach((player) => {
     time.textContent = formatPlayerTime(video.currentTime) + " / " + formatPlayerTime(duration);
   };
   const startVideo = () => {
+    if (video.dataset.videoUnavailable === "true") { showUnavailable(); return; }
     if (status) status.hidden = true;
     poster.hidden = true;
     controls.hidden = false;
