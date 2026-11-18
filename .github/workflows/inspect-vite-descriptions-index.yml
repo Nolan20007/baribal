@@ -1,0 +1,59 @@
+name: Index archived Vite service descriptions
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/inspect-vite-descriptions-index.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download archived Vite snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release download baribal-vite-archive-v1 --repo "${GITHUB_REPOSITORY}" --pattern vite-archive.zip --dir /tmp
+          mkdir -p /tmp/vite-snapshot
+          python -m zipfile -e /tmp/vite-archive.zip /tmp/vite-snapshot
+      - name: Index descriptions
+        run: |
+          python <<'PY'
+          from pathlib import Path
+          import re
+
+          root = Path("/tmp/vite-snapshot/vite-archive")
+          bundle = root / "assets/index-CMx3FcMX.js"
+          source = bundle.read_text(encoding="utf-8")
+          print(f"SOURCE FILE: {bundle.relative_to(root)}")
+          print("\nSERVICE CARD DATA:")
+          card = re.compile(r'title:"((?:\\.|[^"\\])*)",subtitle:"((?:\\.|[^"\\])*)",text:"((?:\\.|[^"\\])*)",price:"((?:\\.|[^"\\])*)"', re.S)
+          for title, subtitle, description, price in card.findall(source):
+              print(f"\n{title}\n  subtitle: {subtitle}\n  price: {price}\n  text: {description}")
+
+          print("\nDETAILED SERVICE CONTENT (modal):")
+          detail = re.compile(
+              r'(?:"([^"]+)"|([A-Za-z_$][\\w$]*)):\\{lead:"((?:\\\\.|[^"\\\\])*)",story:"((?:\\\\.|[^"\\\\])*)",benefits:\\[(.*?)\\],tech:"((?:\\\\.|[^"\\\\])*)",fit:"((?:\\\\.|[^"\\\\])*)"\\}',
+              re.S,
+          )
+          matches = list(detail.finditer(source))
+          print(f"DETAIL ENTRIES FOUND: {len(matches)}")
+          for m in matches:
+              name = m.group(1) or m.group(2)
+              benefits = re.findall(r'"((?:\\\\.|[^"\\\\])*)"', m.group(5))
+              print(f"\n## {name}")
+              print(f"lead: {m.group(3)}")
+              print(f"story: {m.group(4)}")
+              for item in benefits:
+                  print(f"benefit: {item}")
+              print(f"tech: {m.group(6)}")
+              print(f"fit: {m.group(7)}")
+
+          print("\nPAGE SHELLS:")
+          for p in sorted(root.rglob("index.html")):
+              print(p.relative_to(root))
+          PY
