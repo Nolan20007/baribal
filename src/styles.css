@@ -1959,3 +1959,23 @@ html[data-design="4"] .estimate-selected-list .estimate-selected-empty{color:#70
 }
 .footer-route-button:focus-visible{outline:2px solid #fff;outline-offset:3px}
 @media(prefers-reduced-motion:reduce){.footer-route-button{transition:none}}
+
+
+/* Compact icons inside contact method options. */
+.contact-preference-list label .contact-option-icon{
+  display:inline-flex;
+  flex:0 0 17px;
+  width:17px;
+  height:17px;
+  align-items:center;
+  justify-content:center;
+  margin-left:1px;
+}
+.contact-preference-list .contact-option-icon svg{display:block;width:17px;height:17px}
+.contact-preference-list .contact-option-phone{color:var(--orange)}
+.contact-preference-list .contact-option-telegram{color:#29a9e8}
+.contact-preference-list .contact-option-max{
+  width:17px;height:17px;flex-basis:17px;border-radius:5px;
+  color:#fff;font-size:11px;font-weight:800;line-height:1;
+  background:linear-gradient(135deg,#397cf6 0%,#7356e8 100%);
+}
