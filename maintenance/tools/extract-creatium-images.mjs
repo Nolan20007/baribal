@@ -21,6 +21,11 @@ page.setDefaultTimeout(9000);
 
 const cards = [];
 const failures = [];
+const requestedStart = Number(process.env.CARD_START || 1);
+const requestedEnd = Number(process.env.CARD_END || 154);
+if (!Number.isInteger(requestedStart) || !Number.isInteger(requestedEnd) || requestedStart < 1 || requestedEnd < requestedStart) {
+  throw new Error("CARD_START/CARD_END must be valid positive card indexes");
+}
 const pageAssets = new Map();
 
 function normalizeUrl(value) {
@@ -174,8 +179,12 @@ try {
 
   const buttonCount = await page.getByText("Все фото", { exact: true }).count();
   console.log("Found gallery cards:", buttonCount);
+  const startCard = Math.min(requestedStart, buttonCount);
+  const endCard = Math.min(requestedEnd, buttonCount);
+  if (startCard > endCard) throw new Error("Requested card range is outside the page");
+  console.log("Processing card range:", startCard + "-" + endCard);
 
-  for (let i = 0; i < buttonCount; i++) {
+  for (let i = startCard - 1; i < endCard; i++) {
     const buttons = page.getByText("Все фото", { exact: true });
     const button = buttons.nth(i);
     const cardInfo = await readCard(button, i + 1).catch(() => ({ description: "", mainImage: "", cardText: "" }));
@@ -271,6 +280,7 @@ try {
   const report = {
     pageUrl, scannedAt: new Date().toISOString(),
     cardCount: cards.length,
+    requestedRange: { start: startCard, end: endCard },
     totalAdditionalGalleryImages: cards.reduce((sum, card) => sum + card.gallery.filter(x => x.file).length, 0),
     cards: cards.map(card => ({
       cardIndex: card.cardIndex, description: card.description, folder: card.folder,
@@ -290,6 +300,7 @@ try {
   await writeFile(path.join(outDir, "report.csv"), csv, "utf8");
   console.log("\nFinished:", JSON.stringify({
     cards: cards.length,
+    requestedRange: { start: startCard, end: endCard },
     additionalGalleryImages: report.totalAdditionalGalleryImages,
     cardsWithGallery: cards.filter(c => c.gallery.length).length,
     failures: failures.length,
