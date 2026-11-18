@@ -3,5 +3,5 @@
   "endCard": 8,
   "galleryLimit": 3,
   "requiredCardText": "Mercedes-Benz GLE Coupe",
-  "note": "Retry card 8 using modal-only popup targeting, clickable thumbnail ancestors, and per-thumbnail DOM/network diagnostics."
+  "note": "Retry card 8 by grouping visible Fancybox image links under their shared gallery ancestor and clicking each original link."
 }
