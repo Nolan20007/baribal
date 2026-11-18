@@ -1,6 +1,11 @@
 name: Diagnose Creatium cards 1 and 2
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - "maintenance/tools/diagnose-creatium-cards.mjs"
+      - ".github/workflows/diagnose-creatium-cards.yml"
   workflow_dispatch:
     inputs:
       page_url:
