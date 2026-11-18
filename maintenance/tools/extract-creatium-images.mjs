@@ -23,13 +23,13 @@ const cards = [];
 const failures = [];
 const requestedStart = Number(process.env.CARD_START || 1);
 const requestedEnd = Number(process.env.CARD_END || requestedStart);
-const requestedGalleryLimit = Number(process.env.GALLERY_LIMIT || 120);
+const requestedGalleryLimit = Number(process.env.GALLERY_LIMIT ?? 0);
 const requiredCardText = String(process.env.REQUIRED_CARD_TEXT || "").trim();
 if (!Number.isInteger(requestedStart) || !Number.isInteger(requestedEnd) || requestedStart < 1 || requestedEnd < requestedStart) {
   throw new Error("CARD_START/CARD_END must be valid positive card indexes");
 }
-if (!Number.isInteger(requestedGalleryLimit) || requestedGalleryLimit < 1 || requestedGalleryLimit > 120) {
-  throw new Error("GALLERY_LIMIT must be an integer between 1 and 120");
+if (!Number.isInteger(requestedGalleryLimit) || requestedGalleryLimit < 0 || requestedGalleryLimit > 1000) {
+  throw new Error("GALLERY_LIMIT must be 0 (all photos) or an integer between 1 and 1000");
 }
 const pageAssets = new Map();
 
@@ -257,7 +257,8 @@ async function extractOriginalsByClickingThumbnails(limit) {
   const found=await discover();
   console.log("  Fancybox anchors:",found.anchorCount,"| ancestor groups:",JSON.stringify(found.groups));
   if(!found.chosen?.links?.length)return [];
-  const links=[...new Set(found.chosen.links)].slice(0,limit);
+  const allLinks=[...new Set(found.chosen.links)];
+  const links=limit===0?allLinks:allLinks.slice(0,limit);
   const results=[],seen=new Set(),imageResponses=[];
   const onResponse=response=>{
     try{
