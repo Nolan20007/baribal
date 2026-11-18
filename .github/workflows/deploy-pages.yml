@@ -29,7 +29,12 @@ jobs:
       - name: Build the archived Vite preview
         env:
           GITHUB_PAGES: "true"
-        run: npx vite build --base=/baribal/vite-archive/ --outDir dist/vite-archive
+        run: |
+          npx vite build --base=/baribal/vite-archive/ --outDir dist/vite-archive
+          for route in kuzov himchistka avtovinil tehnology foto video reviews politika-konfidencialnosti; do
+            mkdir -p "dist/vite-archive/$route"
+            cp dist/vite-archive/index.html "dist/vite-archive/$route/index.html"
+          done
       - name: Assemble the main plain HTML site
         run: |
           mkdir -p dist
@@ -49,6 +54,7 @@ jobs:
           css = root / "css" / "style.css"
           css.write_text(css.read_text().replace("../../assets/", "../assets/"))
           PY
+          rm -f dist/README.md
           cp dist/index.html dist/404.html
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
