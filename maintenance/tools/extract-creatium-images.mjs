@@ -21,10 +21,10 @@ page.setDefaultTimeout(9000);
 
 const cards = [];
 const failures = [];
-const requestedStart = Number(process.env.CARD_START || 1);
-const requestedEnd = Number(process.env.CARD_END || 154);
+const requestedStart = Number(process.env.CARD_START || 8);
+const requestedEnd = Number(process.env.CARD_END || 8);
 const requestedGalleryLimit = Number(process.env.GALLERY_LIMIT || 120);
-const requiredCardText = String(process.env.REQUIRED_CARD_TEXT || "").trim();
+const requiredCardText = String(process.env.REQUIRED_CARD_TEXT || "GLE Coupe").trim();
 if (!Number.isInteger(requestedStart) || !Number.isInteger(requestedEnd) || requestedStart < 1 || requestedEnd < requestedStart) {
   throw new Error("CARD_START/CARD_END must be valid positive card indexes");
 }
@@ -95,12 +95,56 @@ async function readCard(button, index) {
   }, index);
 }
 
+async function readGalleryImages() {
+  return page.evaluate(() => {
+    const visible = el => {
+      const style = getComputedStyle(el);
+      const r = el.getBoundingClientRect();
+      return style.display !== "none" && style.visibility !== "hidden" &&
+        Number(style.opacity || 1) > 0 && r.width > 0 && r.height > 0;
+    };
+    const overlayPattern = /modal|popup|gallery|fancybox|lightbox|swiper|slick|fotorama|viewer|overlay|photo/i;
+    const roots = [...document.querySelectorAll(
+      "[role='dialog'],[aria-modal='true'],[class*='modal'],[class*='popup'],[class*='gallery'],[class*='fancybox'],[class*='lightbox'],[class*='swiper'],[class*='slick'],[class*='fotorama'],[class*='viewer'],[class*='overlay']"
+    )].filter(root => visible(root) && overlayPattern.test(String(root.className || "") + " " + root.getAttribute("role")));
+    const urls = [];
+    const add = value => {
+      if (!value) return;
+      const url = String(value).trim();
+      if (/^https?:\\/\\//i.test(url) && /\\.(?:svg|png|jpe?g|webp|gif|avif|bmp|tiff?)(?:$|[?#])/i.test(url) && !urls.includes(url)) urls.push(url);
+    };
+    for (const root of roots) {
+      for (const img of root.querySelectorAll("img")) {
+        if (!visible(img)) continue;
+        const r = img.getBoundingClientRect();
+        if (r.width < 90 || r.height < 70) continue;
+        add(img.currentSrc); add(img.src);
+        add(img.getAttribute("data-src")); add(img.getAttribute("data-original"));
+        add(img.getAttribute("data-lazy-src")); add(img.getAttribute("data-image"));
+        const source = img.closest("picture")?.querySelector("source[srcset]");
+        if (source) add(source.srcset.split(",")[0].trim().split(/\\s+/)[0]);
+      }
+      for (const link of root.querySelectorAll("a[href]")) add(link.href);
+      for (const el of root.querySelectorAll("*")) {
+        const bg = getComputedStyle(el).backgroundImage;
+        if (bg && bg !== "none") {
+          for (const match of bg.matchAll(/url\\(["']?(.*?)["']?\\)/g)) add(match[1]);
+        }
+      }
+    }
+    return urls;
+  });
+}
+
 async function findViewerImage() {
+  const candidates = await readGalleryImages();
+  if (candidates.length) return candidates[0];
   return page.evaluate(() => {
     const selectors = [
       ".fancybox__image", ".fancybox-image", ".glightbox-container img",
       ".pswp__img", "[class*='lightbox'] img", "[class*='viewer'] img",
-      "[role='dialog'] img", "[class*='modal'] img"
+      "[role='dialog'] img", "[class*='modal'] img", "[class*='popup'] img",
+      "[class*='swiper'] img", "[class*='fotorama'] img", "[class*='t-gallery'] img"
     ];
     const candidates = [];
     for (const selector of selectors) {
@@ -120,7 +164,8 @@ async function findViewerImage() {
 async function clickModalPhoto() {
   const selectors = [
     "[role='dialog'] img", "[class*='modal'] img", "[class*='gallery'] img",
-    "[class*='popup'] img", "[class*='fancybox'] img", "[class*='lightbox'] img"
+    "[class*='popup'] img", "[class*='fancybox'] img", "[class*='lightbox'] img",
+    "[class*='swiper'] img", "[class*='fotorama'] img", "[class*='t-gallery'] img"
   ];
   for (const selector of selectors) {
     const imgs = page.locator(selector);
@@ -131,7 +176,7 @@ async function clickModalPhoto() {
       const box = await img.boundingBox().catch(() => null);
       if (!box || box.width < 60 || box.height < 60) continue;
       await img.click({ timeout: 2500 }).catch(() => {});
-      await page.waitForTimeout(700);
+      await page.waitForTimeout(500);
       const url = await findViewerImage();
       if (url) return url;
     }
@@ -220,25 +265,44 @@ try {
       await button.click({ timeout: 6000 });
       await page.waitForTimeout(600);
 
-      const firstUrl = await clickModalPhoto();
-      if (!firstUrl) {
-        record.status = "viewer-not-detected";
-        console.warn("  Viewer image not detected; no guessed gallery files saved.");
-      } else {
-        const seen = new Set();
-        let current = firstUrl;
-        for (let n = 0; n < requestedGalleryLimit && current; n++) {
-          const normalized = normalizeUrl(current);
-          if (!normalized || seen.has(normalized)) break;
+      // Creatium may expose every slide in the popup DOM (including lazy-loaded slides)
+      // without creating a separate lightbox. Collect those first; then use the viewer
+      // navigation only as a fallback for galleries that render a single slide at a time.
+      const directUrls = await readGalleryImages();
+      const seen = new Set();
+      for (const url of directUrls) {
+        const normalized = normalizeUrl(url);
+        if (normalized && !seen.has(normalized) && record.gallery.length < requestedGalleryLimit) {
           seen.add(normalized);
           record.gallery.push({ url: normalized, order: record.gallery.length + 1 });
-          console.log("  gallery image", record.gallery.length);
-          const next = await clickNext(current);
-          if (!next) break;
-          current = next;
         }
-        record.status = record.gallery.length ? "captured-viewer-sequence" : "empty-gallery";
       }
+
+      if (record.gallery.length < requestedGalleryLimit) {
+        const firstUrl = await findViewerImage() || await clickModalPhoto();
+        if (firstUrl) {
+          let current = firstUrl;
+          for (let n = 0; n < requestedGalleryLimit && current; n++) {
+            const normalized = normalizeUrl(current);
+            if (!normalized || seen.has(normalized)) {
+              const nextAfterDuplicate = await clickNext(current);
+              if (!nextAfterDuplicate) break;
+              current = nextAfterDuplicate;
+              continue;
+            }
+            seen.add(normalized);
+            record.gallery.push({ url: normalized, order: record.gallery.length + 1 });
+            console.log("  gallery image", record.gallery.length);
+            const next = await clickNext(current);
+            if (!next) break;
+            current = next;
+          }
+        }
+      }
+      record.status = record.gallery.length
+        ? (directUrls.length ? "captured-popup-images" : "captured-viewer-sequence")
+        : "viewer-not-detected";
+      if (!record.gallery.length) console.warn("  No gallery image detected; no guessed files saved.");
 
       // Close the lightbox/modal before proceeding to the next card.
       await page.keyboard.press("Escape").catch(() => {});
