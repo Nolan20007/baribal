@@ -9,6 +9,7 @@ on:
     branches: [main]
     paths:
       - "maintenance/tools/diagnose-creatium-originals.mjs"
+      - "maintenance/gallery-batch.json"
       - ".github/workflows/diagnose-creatium-originals.yml"
   workflow_dispatch:
     inputs:
