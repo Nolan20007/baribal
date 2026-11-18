@@ -3,5 +3,5 @@
   "endCard": 8,
   "galleryLimit": 3,
   "requiredCardText": "Mercedes-Benz GLE Coupe",
-  "note": "Run single-project extraction: main image plus three additional full-size gallery originals for Mercedes-Benz GLE Coupe."
+  "note": "Run the network-response-based full-size viewer extraction for Mercedes-Benz GLE Coupe; require three distinct originals in addition to the card image."
 }
