@@ -21,10 +21,10 @@ page.setDefaultTimeout(9000);
 
 const cards = [];
 const failures = [];
-const requestedStart = Number(process.env.CARD_START || 8);
-const requestedEnd = Number(process.env.CARD_END || 8);
+const requestedStart = Number(process.env.CARD_START || 1);
+const requestedEnd = Number(process.env.CARD_END || requestedStart);
 const requestedGalleryLimit = Number(process.env.GALLERY_LIMIT || 120);
-const requiredCardText = String(process.env.REQUIRED_CARD_TEXT || "GLE Coupe").trim();
+const requiredCardText = String(process.env.REQUIRED_CARD_TEXT || "").trim();
 if (!Number.isInteger(requestedStart) || !Number.isInteger(requestedEnd) || requestedStart < 1 || requestedEnd < requestedStart) {
   throw new Error("CARD_START/CARD_END must be valid positive card indexes");
 }
