@@ -20,9 +20,9 @@ on:
         required: true
         default: "1"
       gallery_limit:
-        description: "Maximum additional gallery photos per card (120 = practical all-photos limit)"
+        description: "Maximum additional gallery photos per card (0 = all photos)"
         required: true
-        default: "120"
+        default: "0"
       required_card_text:
         description: "Optional text that must appear in the selected card (safety check)"
         required: false
