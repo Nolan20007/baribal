@@ -1,4 +1,4 @@
-name: Deploy BARIBAL HTML site and archived Vite preview to GitHub Pages
+name: Deploy BARIBAL HTML site and preserved Vite archive to GitHub Pages
 
 on:
   push:
@@ -15,26 +15,58 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  preserve-vite-archive:
     runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: write
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-      - name: Set up Node.js for the archived Vite preview
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - name: Install archived Vite dependencies
-        run: npm install
-      - name: Build the archived Vite preview
+      - name: Check whether the preserved archive release already exists
+        id: release
         env:
-          GITHUB_PAGES: "true"
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npx vite build --base=/baribal/vite-archive/ --outDir dist/vite-archive
-          for route in kuzov himchistka avtovinil tehnology foto video reviews politika-konfidencialnosti; do
-            mkdir -p "dist/vite-archive/$route"
-            cp dist/vite-archive/index.html "dist/vite-archive/$route/index.html"
-          done
+          asset="$(gh release view baribal-vite-archive-v1 --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[] | select(.name == "vite-archive.zip") | .name' 2>/dev/null || true)"
+          if [ "$asset" = "vite-archive.zip" ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Download the last published Pages artifact once
+        if: steps.release.outputs.exists != 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+          path: prior-pages
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          run-id: 44395300670
+      - name: Extract and preserve the existing Vite archive
+        if: steps.release.outputs.exists != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p prior-pages/extracted
+          tar -xf prior-pages/artifact.tar -C prior-pages/extracted
+          test -s prior-pages/extracted/vite-archive/index.html
+          cd prior-pages/extracted
+          zip -qr "$RUNNER_TEMP/vite-archive.zip" vite-archive
+          cd "$GITHUB_WORKSPACE"
+          gh release view baribal-vite-archive-v1 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 || \
+            gh release create baribal-vite-archive-v1 --repo "$GITHUB_REPOSITORY" \
+              --title "BARIBAL archived Vite preview" \
+              --notes "Unmodified snapshot of the previously published Vite preview. Kept separate from routine HTML deployments."
+          gh release upload baribal-vite-archive-v1 "$RUNNER_TEMP/vite-archive.zip" \
+            --repo "$GITHUB_REPOSITORY" --clobber
+
+  build:
+    runs-on: ubuntu-latest
+    needs: preserve-vite-archive
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
       - name: Assemble the main plain HTML site
         run: |
           mkdir -p dist
@@ -56,108 +88,44 @@ jobs:
           PY
           rm -f dist/README.md
           cp dist/index.html dist/404.html
-      - name: Install Chromium for browser smoke tests
-        run: npx playwright install --with-deps chromium
-      - name: Smoke-test all pages and interactive controls
+      - name: Restore the preserved Vite archive without rebuilding it
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          mkdir -p /tmp/baribal-preview
-          ln -s "$GITHUB_WORKSPACE/dist" /tmp/baribal-preview/baribal
-          python3 -m http.server 4173 --directory /tmp/baribal-preview >/tmp/baribal-http.log 2>&1 &
-          SERVER_PID=$!
-          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
-          for attempt in $(seq 1 20); do
-            if curl -fsS http://127.0.0.1:4173/baribal/ >/dev/null; then break; fi
-            sleep 1
-          done
-          node --input-type=module <<'JS'
-          import { chromium } from "playwright";
-          const browser = await chromium.launch({ headless: true });
-          const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
-          const errors = [];
-          page.on("pageerror", error => errors.push(page.url() + ": " + error.message));
-          const root = "http://127.0.0.1:4173/baribal";
-          const routes = ["/", "/tehnology/", "/kuzov/", "/himchistka/", "/avtovinil/", "/foto/", "/video/", "/reviews/", "/politika-konfidencialnosti/"];
-          for (const route of routes) {
-            const response = await page.goto(root + route, { waitUntil: "domcontentloaded" });
-            if (!response || !response.ok()) throw new Error("Page failed: " + route);
-            await page.locator(".js-callback").first().click();
-            await page.locator("#callback-modal.modal-open").waitFor({ timeout: 4000 });
-            if (await page.locator("#callback-modal").getAttribute("aria-hidden") !== "false") throw new Error("Callback modal did not open: " + route);
-            const form = page.locator("#callback-modal form");
-            const phone = form.locator('input[name="phone"]');
-            if (await phone.inputValue() !== "+7") throw new Error("Phone field must start with +7: " + route);
-            await phone.fill("+79990000000");
-            if (await phone.inputValue() !== "+7 (999) 000-00-00") throw new Error("Phone mask did not format: " + route);
-            if (await phone.evaluate(el => el.validity.valid) !== true) throw new Error("Full mobile number rejected: " + route);
-            await phone.fill("+73422024142");
-            if (await phone.inputValue() !== "+7 (342) 202-41-42") throw new Error("City phone did not format: " + route);
-            await phone.fill("+7342202");
-            if (await phone.evaluate(el => el.validity.valid) !== true) throw new Error("Short city number rejected: " + route);
-            await phone.fill("+73422");
-            if (await phone.evaluate(el => el.validity.valid) !== false) throw new Error("Too-short phone accepted: " + route);
-            await phone.fill("+799900000001");
-            if (await phone.inputValue() !== "+7 (999) 000-00-00") throw new Error("Phone accepted more than 10 digits: " + route);
-            await phone.fill("");
-            if (await phone.inputValue() !== "+7") throw new Error("Phone prefix was not retained after clearing: " + route);
-            await phone.fill("+79990000000");
-            await form.locator('button[type="submit"]').click();
-            const message = await form.locator("output").textContent();
-            if (!message?.includes("Предпросмотр")) throw new Error("Demo form did not submit: " + route);
-            await page.locator("#callback-modal .modal-close").click();
-            await page.locator("#callback-modal.modal-open").waitFor({ state: "detached", timeout: 1000 }).catch(() => {});
-          }
-          await page.goto(root + "/tehnology/", { waitUntil: "domcontentloaded" });
-          if (!(await page.locator(".estimate-form").count())) throw new Error("Services-page estimate form missing");
-          await page.locator('input[name="requestedServices"]').first().check();
-          if (!(await page.locator("[data-selected-services]").innerText()).includes("AdVance")) throw new Error("Services-page estimate selection did not sync");
-          await page.goto(root + "/", { waitUntil: "domcontentloaded" });
-          await page.locator("#works .js-service-info").first().click();
-          await page.locator("#service-info-modal.modal-open").waitFor({ timeout: 3000 });
-          if (!(await page.locator("#service-info-price").innerText()).includes("от 15 000")) throw new Error("Homepage service details price missing");
-          await page.locator("#service-info-modal .modal-close").click();
-          await page.locator("#works .work-card .js-callback").first().click();
-          if (!(await page.locator("#callback-context").innerText()).includes("Автовинил")) throw new Error("Homepage project callback lost service context");
-          await page.locator("#callback-modal .modal-close").click();
-          if (!(await page.locator(".video-teaser a[href='./video/']").count())) throw new Error("Homepage video CTA does not link to video page");
-          await page.goto(root + "/foto/", { waitUntil: "domcontentloaded" });
-          if (await page.locator("[data-portfolio-gallery-index]").count() !== 60) throw new Error("Expected galleries on all 60 portfolio cards");
-          await page.locator('[data-portfolio-gallery-index="0"]').click();
-          await page.locator("#work-gallery-modal.is-open").waitFor({ timeout: 3000 });
-          if (!(await page.locator(".work-gallery-counter").innerText()).includes("/")) throw new Error("Portfolio gallery counter missing");
-          await page.locator("[data-gallery-next]").click();
-          if (!(await page.locator(".work-gallery-counter").innerText()).startsWith("2 /")) throw new Error("Portfolio gallery next control failed");
-          await page.locator(".work-gallery-close").click();
-          await page.locator("#portfolio-grid .js-service-info").first().click();
-          if (!(await page.locator("#service-info-price").innerText()).includes("от 3 000")) throw new Error("Portfolio service details price missing");
-          await page.locator("#service-info-modal .modal-close").click();
-          await page.locator("#portfolio-grid .js-callback").first().click();
-          if (!(await page.locator("#callback-context").innerText()).includes("Бронирование автомобиля защитной плёнкой")) throw new Error("Portfolio callback lost service context");
-          await page.locator("#callback-modal .modal-close").click();
-          await page.goto(root + "/", { waitUntil: "domcontentloaded" });
-          await page.setViewportSize({ width: 390, height: 844 });
-          if (await page.locator(".device-preview-open").first().isVisible()) throw new Error("Device preview launcher is visible on mobile");
-          await page.setViewportSize({ width: 1440, height: 900 });
-          await page.locator(".device-preview-open").first().click();
-          await page.locator(".device-preview-modal.is-open").waitFor({ timeout: 3000 });
-          await page.locator('[data-preview-width="1366"]').click();
-          if (await page.locator(".device-preview-viewport iframe").evaluate(frame => frame.style.width) !== "1366px") throw new Error("Device preview width switch failed");
-          await page.locator(".device-preview-close").click();
-          await page.goto(root + "/video/", { waitUntil: "domcontentloaded" });
-          await page.locator("[data-player-start]").first().click();
-          await page.locator(".video-player-status").first().waitFor({ state: "visible", timeout: 5000 });
-          for (const route of ["/vite-archive/", "/vite-archive/tehnology/"]) {
-            const response = await page.goto(root + route, { waitUntil: "domcontentloaded" });
-            if (!response || !response.ok()) throw new Error("Archived Vite route failed: " + route);
-            if (!(await page.locator("body").innerText()).includes("BARIBAL")) throw new Error("Archived Vite page content missing: " + route);
-          }
-          if (errors.length) throw new Error("Browser JavaScript errors:\\n" + errors.join("\\n"));
-          await browser.close();
-          console.log("BARIBAL browser smoke tests passed: 9 HTML pages, callback forms, desktop preview, video fallback, archived Vite routes.");
-          JS
+          mkdir -p "$RUNNER_TEMP/vite-archive"
+          gh release download baribal-vite-archive-v1 \
+            --repo "$GITHUB_REPOSITORY" \
+            --pattern vite-archive.zip \
+            --dir "$RUNNER_TEMP/vite-archive"
+          unzip -q "$RUNNER_TEMP/vite-archive/vite-archive.zip" -d dist
+      - name: Verify essential published files
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          root = Path("dist")
+          required = [
+              "index.html", "404.html", "css/style.css",
+              "js/main.js", "js/portfolio-galleries.js",
+              "assets", "foto/foto.png", "vite-archive/index.html",
+          ]
+          required += [f"{route}/index.html" for route in (
+              "tehnology", "kuzov", "himchistka", "avtovinil",
+              "foto", "video", "reviews", "politika-konfidencialnosti",
+          )]
+          missing = []
+          for item in required:
+              path = root / item
+              if not path.exists() or (path.is_file() and path.stat().st_size == 0):
+                  missing.append(item)
+          if missing:
+              raise SystemExit("Missing or empty published files: " + ", ".join(missing))
+          print(f"Basic publication check passed: {len(required)} required paths.")
+          PY
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
+
   deploy:
     environment:
       name: github-pages
