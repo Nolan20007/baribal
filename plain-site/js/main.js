@@ -287,7 +287,7 @@ const closeCallback = () => {
 document.querySelectorAll(".js-callback").forEach((button) => {
   button.addEventListener("click", (event) => {
     event.preventDefault();
-    openCallback(button.dataset.workTitle || "", button.dataset.serviceTitle || "");
+    openCallback(button.dataset.workTitle || button.closest(".work-card")?.querySelector("h3")?.textContent.trim() || "", button.dataset.serviceTitle || "");
   });
 });
 
