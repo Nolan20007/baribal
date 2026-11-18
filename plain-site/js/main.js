@@ -373,7 +373,7 @@ if (portfolioGrid) {
   const categoryForCard = (card) => {
     const value = (card.textContent || "").toLowerCase();
     const categories = [];
-    if (/clearplex|лобов(ое|ого|ому)|стекл/.test(value)) categories.push("Защита стёкол");
+    if (/clearplex|лобов(ое|ого|ому)|ст[её]кл/.test(value)) categories.push("Защита стёкол");
     if (/химчист|детейлинг|полировк|предпродаж|салон/.test(value)) categories.push("Детейлинг и уход");
     if (/винил|стайлинг|рекламн|изменение цвета/.test(value)) categories.push("Оклейка и стайлинг");
     if (/бронир|защит|advance|кузов|пленк|плёнк|hexis|suntek/.test(value)) categories.push("Защита кузова");
@@ -389,7 +389,7 @@ if (portfolioGrid) {
     const actions = card.querySelector(".work-actions");
     if (actions && !actions.querySelector(".js-callback")) {
       const button = document.createElement("button");
-      button.type = "button"; button.className = "text-link js-callback"; button.textContent = "Хочу так же ↗";
+      button.type = "button"; button.className = "text-link js-callback"; button.textContent = "Хочу так же ↗"; button.dataset.workTitle = card.querySelector("h3")?.textContent.trim() || "";
       actions.replaceChildren(button);
       button.addEventListener("click", () => openCallback(card.querySelector("h3")?.textContent.trim() || ""));
     }
