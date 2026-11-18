@@ -137,7 +137,6 @@ const callback = () => `
   <div class="modal" id="callback-modal" aria-hidden="true"><div class="modal-backdrop js-close"></div><section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button class="modal-close js-close" aria-label="Закрыть">×</button><div class="callback-modal-heading"><img src="${contactWidgetImage}" alt=""><span class="eyebrow">BARIBAL · ПЕРМЬ</span></div><h2 id="modal-title">Мы вам перезвоним</h2><p id="callback-context">Оставьте номер — обсудим задачу и подберём решение для вашего автомобиля.</p><form class="lead-form demo-form"><input type="hidden" name="service" id="callback-service" value=""><label>Ваше имя<input name="name" placeholder="Как к вам обращаться" /></label><label>Телефон<input name="phone" type="tel" placeholder="+7 (___) ___-__-__" required /></label>${contactPreferences()}<button class="button" type="submit">Заказать консультацию</button><output></output></form></section></div>`;
 const demoWorkGalleries = [
   [
-    new URL("../assets/images/studio/760f52fe35ff8702c47501873ce0d7363d54895d149d5983acab9af632d1d8f7.jpg", import.meta.url).href,
     new URL("../assets/images/portfolio/galleries/d1c3405fac34ce652af2ca2e1443cb41b8798be0491419c24ec5e85aea36df23.jpg", import.meta.url).href,
     new URL("../assets/images/portfolio/galleries/e07619d016a9cf994c3a88f261b674ea13202d2a301cd032299eae535e0f1f59.jpg", import.meta.url).href
   ],
