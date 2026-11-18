@@ -3,6 +3,8 @@ name: Deploy BARIBAL HTML site and archived Vite preview to GitHub Pages
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -119,13 +121,39 @@ jobs:
           if (!(await page.locator("#callback-context").innerText()).includes("Автовинил")) throw new Error("Homepage project callback lost service context");
           await page.locator("#callback-modal .modal-close").click();
           if (!(await page.locator(".video-teaser a[href='./video/']").count())) throw new Error("Homepage video CTA does not link to video page");
+          await page.goto(root + "/", { waitUntil: "domcontentloaded" });
+          for (const [index, trigger] of (await page.locator("#works .work-image.js-open-work-gallery").all()).entries()) {
+            await trigger.click();
+            await page.locator("#work-gallery-modal.is-open").waitFor({ timeout: 3000 });
+            await page.waitForFunction(() => {
+              const image = document.querySelector(".work-gallery-image");
+              return image && image.complete && image.naturalWidth > 0;
+            }, { timeout: 5000 });
+            const counter = await page.locator(".work-gallery-counter").innerText();
+            if (!counter.startsWith("1 /")) throw new Error("Homepage gallery did not open at first image: " + index);
+            await page.locator(".work-gallery-close").click();
+          }
           await page.goto(root + "/foto/", { waitUntil: "domcontentloaded" });
           if (await page.locator("[data-portfolio-gallery-index]").count() !== 60) throw new Error("Expected galleries on all 60 portfolio cards");
+          for (let index = 0; index < 60; index++) {
+            const trigger = page.locator('.work-image.js-open-work-gallery[data-portfolio-gallery-index="' + index + '"]');
+            if (await trigger.count() !== 1) throw new Error("Portfolio cover trigger missing: " + index);
+            await trigger.click();
+            await page.locator("#work-gallery-modal.is-open").waitFor({ timeout: 3000 });
+            const counterText = await page.locator(".work-gallery-counter").innerText();
+            const total = Number(counterText.split("/")[1]?.trim());
+            if (!counterText.startsWith("1 /") || !Number.isInteger(total) || total < 1) throw new Error("Portfolio gallery failed to open: " + index);
+            for (let imageIndex = 0; imageIndex < total; imageIndex++) {
+              await page.waitForFunction(() => {
+                const image = document.querySelector(".work-gallery-image");
+                return image && image.complete && image.naturalWidth > 0;
+              }, { timeout: 5000 });
+              if (imageIndex + 1 < total) await page.locator("[data-gallery-next]").click();
+            }
+            await page.locator(".work-gallery-close").click();
+          }
           await page.locator('[data-portfolio-gallery-index="0"]').click();
           await page.locator("#work-gallery-modal.is-open").waitFor({ timeout: 3000 });
-          if (!(await page.locator(".work-gallery-counter").innerText()).includes("/")) throw new Error("Portfolio gallery counter missing");
-          await page.locator("[data-gallery-next]").click();
-          if (!(await page.locator(".work-gallery-counter").innerText()).startsWith("2 /")) throw new Error("Portfolio gallery next control failed");
           await page.locator(".work-gallery-close").click();
           await page.locator("#portfolio-grid .js-service-info").first().click();
           if (!(await page.locator("#service-info-price").innerText()).includes("от 3 000")) throw new Error("Portfolio service details price missing");
@@ -159,6 +187,7 @@ jobs:
         with:
           path: dist
   deploy:
+    if: github.event_name != 'pull_request'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
