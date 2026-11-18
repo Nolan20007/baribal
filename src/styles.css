@@ -1948,3 +1948,30 @@ html[data-design="4"] .estimate-selected-list .estimate-selected-empty{color:#70
 .callback-modal-heading>img{width:96px;height:96px;flex:0 0 96px;border-radius:50%;object-fit:cover;object-position:center 35%;border:2px solid var(--orange)}
 .callback-modal-heading .eyebrow{margin:0}
 @media(max-width:480px){.modal-card{padding:30px 22px}.callback-modal-heading>img{width:84px;height:84px;flex-basis:84px}}
+
+
+/* Temporary portfolio numbering: subtle, readable and independent of card content. */
+.portfolio-card .work-image {
+  position: relative;
+}
+.portfolio-card-number {
+  position: absolute;
+  z-index: 2;
+  top: 12px;
+  left: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  height: 26px;
+  padding: 0 8px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 6px;
+  background: rgba(15, 18, 22, 0.72);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+}
