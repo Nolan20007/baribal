@@ -1,12 +1,12 @@
 {
   "minGalleryImageBytes": 102400,
-  "generatedAt": "2026-11-18T06:46:55.903Z",
+  "generatedAt": "2026-11-18T08:01:05.743Z",
   "source": "https://baribal-studio.ru/",
   "cardCount": 25,
   "cardsWithMainImage": 25,
-  "additionalGalleryImages": 100,
-  "uniqueBytesAdded": 4424026,
-  "duplicateReferencesReused": 96,
+  "additionalGalleryImages": 101,
+  "uniqueBytesAdded": 0,
+  "duplicateReferencesReused": 3,
   "cards": [
     {
       "cardIndex": 1,
@@ -68,13 +68,19 @@
       "gallery": [
         {
           "order": 1,
+          "path": "assets/images/portfolio/galleries/e23e8e975be917631ab9209eccd6369d9de62e141bb2b6219db9b1b0334108b6.jpg",
+          "sha256": "e23e8e975be917631ab9209eccd6369d9de62e141bb2b6219db9b1b0334108b6",
+          "bytes": 280580
+        },
+        {
+          "order": 2,
           "path": "assets/images/portfolio/373fc89cebe2f66cde3be34be69fb7020db6ccb03af57f5b93d64ae9edfc7e4d.jpg",
           "sha256": "373fc89cebe2f66cde3be34be69fb7020db6ccb03af57f5b93d64ae9edfc7e4d",
           "bytes": 312007
         }
       ],
-      "galleryCountDetected": 1,
-      "galleryCountSaved": 1
+      "galleryCountDetected": 2,
+      "galleryCountSaved": 2
     },
     {
       "cardIndex": 3,
