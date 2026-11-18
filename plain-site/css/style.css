@@ -2065,3 +2065,8 @@ html[data-theme="light"] .estimate-form output{
   html[data-theme="light"] .estimate-form input,
   html[data-theme="light"] .contact-preference-list label{transition:none}
 }
+
+
+/* Neutral placeholders for archived portfolio entries without verified photos. */
+#portfolio-grid .work-image-placeholder{display:grid;place-items:center;box-sizing:border-box;padding:24px;background:#e8e5df;color:#777;text-align:center;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+#portfolio-grid .work-image-placeholder span{max-width:220px}
