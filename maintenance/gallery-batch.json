@@ -3,5 +3,5 @@
   "endCard": 8,
   "galleryLimit": 0,
   "requiredCardText": "Mercedes-Benz GLE Coupe",
-  "note": "Regression test for generalized extractor: card 8, all additional photos. Routine use: Actions > Extract and archive Creatium galleries > Run workflow."
+  "note": "Regression after fixing gallery selector: card 8 should extract only the 3 images inside the active card modal; cover is saved separately. Treat mismatch as failure."
 }
