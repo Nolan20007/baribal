@@ -4,10 +4,17 @@ on:
   push:
     branches: [main]
     paths:
-      - "maintenance/tools/extract-creatium-images.mjs"
-      - "maintenance/tools/normalize-creatium-galleries.mjs"
-      - ".github/workflows/extract-creatium-images.yml"
+      - "maintenance/gallery-batch.json"
   workflow_dispatch:
+    inputs:
+      start_card:
+        description: "First card to process"
+        required: true
+        default: "1"
+      end_card:
+        description: "Last card to process"
+        required: true
+        default: "154"
   schedule:
     - cron: "15 3 * * *"
 
@@ -33,6 +40,26 @@ jobs:
         run: |
           npm install --no-save playwright
           npx playwright install --with-deps chromium
+
+      - name: Choose card range
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_START: ${{ inputs.start_card }}
+          INPUT_END: ${{ inputs.end_card }}
+        run: |
+          if [ "$EVENT_NAME" = "push" ]; then
+            CARD_START=$(node -e "console.log(JSON.parse(require('fs').readFileSync('maintenance/gallery-batch.json','utf8')).startCard)")
+            CARD_END=$(node -e "console.log(JSON.parse(require('fs').readFileSync('maintenance/gallery-batch.json','utf8')).endCard)")
+          elif [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            CARD_START="$INPUT_START"
+            CARD_END="$INPUT_END"
+          else
+            CARD_START=1
+            CARD_END=154
+          fi
+          echo "CARD_START=$CARD_START" >> "$GITHUB_ENV"
+          echo "CARD_END=$CARD_END" >> "$GITHUB_ENV"
+          echo "Selected gallery cards: $CARD_START-$CARD_END"
 
       - name: Extract images from Creatium galleries
         env:
