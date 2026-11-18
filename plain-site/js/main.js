@@ -1,6 +1,6 @@
 import { portfolioGalleries } from "./portfolio-galleries.js";
 
-// BARIBAL — plain JavaScript. No framework, imports or build step.
+// BARIBAL — plain JavaScript, with a small data module for project galleries.
 "use strict";
 
 const menuButton = document.querySelector(".menu-toggle");
@@ -442,6 +442,23 @@ const serviceAliases = {
   "Бронирование плёнкой": "Бронирование автомобиля защитной плёнкой",
   "Бронирование лобового стекла": "Бронирование лобового стекла Quantum Anti-Skol"
 };
+const servicePrices = {
+  "AdVance": "от 15 000 ₽",
+  "Бронирование автомобиля защитной плёнкой": "от 3 000 ₽",
+  "BariGlass": "от 1 000 ₽",
+  "BariTools": "от 9 000 ₽",
+  "Химчистка салона": "от 2 000 ₽",
+  "Удаление вмятин без покраски": "от 500 ₽",
+  "Шумо-вибро-теплоизоляция": "от 30 000 ₽",
+  "Тонирование стёкол": "от 2 500 ₽",
+  "Предпродажная подготовка": "от 7 000 ₽",
+  "Ручная полировка": "от 5 000 ₽",
+  "Автовинил": "от 15 000 ₽",
+  "Ремонт сидений": "от 3 000 ₽",
+  "Бронирование лобового стекла Quantum Anti-Skol": "от 8 000 ₽",
+  "Полировка и защита фар": "3 000 ₽",
+  "Химчистка двигателя": "1 500 ₽"
+};
 const serviceTitleForCard = (card) => {
   const title = card.querySelector("h3")?.textContent.trim() || "";
   return serviceAliases[title] || title;
@@ -452,7 +469,7 @@ const openServiceInfo = (title, trigger) => {
   const details = serviceDetails[lookupTitle] || serviceDetails[title];
   if (!details) return;
   const card = [...document.querySelectorAll(".service-card")].find((item) => item.querySelector("h3")?.textContent.trim() === title || item.querySelector("h3")?.textContent.trim() === lookupTitle);
-  const price = card?.querySelector(".service-bottom b")?.textContent.trim() || "";
+  const price = card?.querySelector(".service-bottom b")?.textContent.trim() || servicePrices[lookupTitle] || servicePrices[title] || trigger?.dataset.servicePrice || "";
   infoModal.querySelector("#service-info-title").textContent = title;
   infoModal.querySelector("#service-info-lead").textContent = details.lead;
   infoModal.querySelector("#service-info-story").textContent = details.story;
@@ -582,6 +599,8 @@ if (portfolioGrid) {
       info.dataset.serviceTitle = title;
       info.addEventListener("click", () => openServiceInfo(title, info));
     }
+    const callbackButton = actions?.querySelector(".js-callback");
+    if (callbackButton && info?.dataset.serviceTitle) callbackButton.dataset.serviceTitle = info.dataset.serviceTitle;
   });
   let expanded = false;
   let activeFilter = "Все работы";
