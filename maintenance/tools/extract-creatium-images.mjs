@@ -389,6 +389,7 @@ try {
       status: "started"
     };
     console.log("\n[" + record.cardIndex + "/" + buttonCount + "]", label);
+    console.log("  cover root:", JSON.stringify(cardInfo.cardRoot), "| cover candidates:", JSON.stringify(cardInfo.mainImageCandidates || []));
 
     try {
       await button.scrollIntoViewIfNeeded();
