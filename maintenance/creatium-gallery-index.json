@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-18T01:18:05.677Z",
+  "generatedAt": "2026-11-18T01:35:56.119Z",
   "source": "https://baribal-studio.ru/foto",
   "cardCount": 154,
   "cardsWithMainImage": 0,
-  "additionalGalleryImages": 279,
-  "uniqueBytesAdded": 10517160,
-  "duplicateReferencesReused": 96,
+  "additionalGalleryImages": 480,
+  "uniqueBytesAdded": 8635854,
+  "duplicateReferencesReused": 167,
   "cards": [
     {
       "cardIndex": 1,
@@ -911,13 +911,37 @@
       "gallery": [
         {
           "order": 1,
-          "path": "assets/images/portfolio/galleries/b2c665a2033568993ee4f7e2aca36893a8b1324dfe58300e335131197166328f.jpg",
-          "sha256": "b2c665a2033568993ee4f7e2aca36893a8b1324dfe58300e335131197166328f",
-          "bytes": 8940
+          "path": "assets/images/portfolio/galleries/ab394098a7380a39187110e7923bac56cd58a6f1915fcd7b8c5e730681dab6ff.jpg",
+          "sha256": "ab394098a7380a39187110e7923bac56cd58a6f1915fcd7b8c5e730681dab6ff",
+          "bytes": 207899
+        },
+        {
+          "order": 2,
+          "path": "assets/images/portfolio/galleries/63f7ca1c920273c0e582f5c11b2b3992f97ff57ba6fd1d946904020f90666093.jpg",
+          "sha256": "63f7ca1c920273c0e582f5c11b2b3992f97ff57ba6fd1d946904020f90666093",
+          "bytes": 244892
+        },
+        {
+          "order": 3,
+          "path": "assets/images/portfolio/galleries/254c45626e89a8dd5b448538a6456b92a1058a1120f5461a86fd2877ab412e2d.jpg",
+          "sha256": "254c45626e89a8dd5b448538a6456b92a1058a1120f5461a86fd2877ab412e2d",
+          "bytes": 225267
+        },
+        {
+          "order": 4,
+          "path": "assets/images/portfolio/galleries/2a62762f329b0cd0b9982c80b3f92449230e39fa4508b3030c7ea1a9270da0c2.jpg",
+          "sha256": "2a62762f329b0cd0b9982c80b3f92449230e39fa4508b3030c7ea1a9270da0c2",
+          "bytes": 225367
+        },
+        {
+          "order": 5,
+          "path": "assets/images/portfolio/cb42231a233b675dacc33fa230eaf0ee18c0ec01c00181154dfa1cdce9948633.jpg",
+          "sha256": "cb42231a233b675dacc33fa230eaf0ee18c0ec01c00181154dfa1cdce9948633",
+          "bytes": 203211
         }
       ],
-      "galleryCountDetected": 1,
-      "galleryCountSaved": 1
+      "galleryCountDetected": 5,
+      "galleryCountSaved": 5
     },
     {
       "cardIndex": 10,
@@ -929,13 +953,67 @@
       "gallery": [
         {
           "order": 1,
-          "path": "assets/images/portfolio/galleries/ccdfe95c5583be149ee1a6555ebfbdcf6529176f623d85720318f14c110970fa.jpg",
-          "sha256": "ccdfe95c5583be149ee1a6555ebfbdcf6529176f623d85720318f14c110970fa",
-          "bytes": 6246
+          "path": "assets/images/portfolio/galleries/c4b926ba587fb38f008c630de12e3d605fa12718977b1444fe412132b955c5ac.jpg",
+          "sha256": "c4b926ba587fb38f008c630de12e3d605fa12718977b1444fe412132b955c5ac",
+          "bytes": 168651
+        },
+        {
+          "order": 2,
+          "path": "assets/images/portfolio/galleries/1f424855b4818b73b777db183dfd8be2996f43a7c88032c18809f04e580117c4.jpg",
+          "sha256": "1f424855b4818b73b777db183dfd8be2996f43a7c88032c18809f04e580117c4",
+          "bytes": 215888
+        },
+        {
+          "order": 3,
+          "path": "assets/images/portfolio/galleries/9d3cb77256371674b9503e90022dad49a42e7fa6163e0c338d0109df92869d7f.jpg",
+          "sha256": "9d3cb77256371674b9503e90022dad49a42e7fa6163e0c338d0109df92869d7f",
+          "bytes": 215430
+        },
+        {
+          "order": 4,
+          "path": "assets/images/portfolio/galleries/62a03624a21d3bbbb3ee8c1853184f2c31ebfa1bb3d0569a5753e22e00e3082a.jpg",
+          "sha256": "62a03624a21d3bbbb3ee8c1853184f2c31ebfa1bb3d0569a5753e22e00e3082a",
+          "bytes": 217269
+        },
+        {
+          "order": 5,
+          "path": "assets/images/portfolio/galleries/f76f03176c91ea37eb18695b6bef9f76106eabafabb97d7de4529a832726952e.jpg",
+          "sha256": "f76f03176c91ea37eb18695b6bef9f76106eabafabb97d7de4529a832726952e",
+          "bytes": 213074
+        },
+        {
+          "order": 6,
+          "path": "assets/images/portfolio/galleries/ab394098a7380a39187110e7923bac56cd58a6f1915fcd7b8c5e730681dab6ff.jpg",
+          "sha256": "ab394098a7380a39187110e7923bac56cd58a6f1915fcd7b8c5e730681dab6ff",
+          "bytes": 207899
+        },
+        {
+          "order": 7,
+          "path": "assets/images/portfolio/galleries/63f7ca1c920273c0e582f5c11b2b3992f97ff57ba6fd1d946904020f90666093.jpg",
+          "sha256": "63f7ca1c920273c0e582f5c11b2b3992f97ff57ba6fd1d946904020f90666093",
+          "bytes": 244892
+        },
+        {
+          "order": 8,
+          "path": "assets/images/portfolio/galleries/254c45626e89a8dd5b448538a6456b92a1058a1120f5461a86fd2877ab412e2d.jpg",
+          "sha256": "254c45626e89a8dd5b448538a6456b92a1058a1120f5461a86fd2877ab412e2d",
+          "bytes": 225267
+        },
+        {
+          "order": 9,
+          "path": "assets/images/portfolio/galleries/2a62762f329b0cd0b9982c80b3f92449230e39fa4508b3030c7ea1a9270da0c2.jpg",
+          "sha256": "2a62762f329b0cd0b9982c80b3f92449230e39fa4508b3030c7ea1a9270da0c2",
+          "bytes": 225367
+        },
+        {
+          "order": 10,
+          "path": "assets/images/portfolio/cb42231a233b675dacc33fa230eaf0ee18c0ec01c00181154dfa1cdce9948633.jpg",
+          "sha256": "cb42231a233b675dacc33fa230eaf0ee18c0ec01c00181154dfa1cdce9948633",
+          "bytes": 203211
         }
       ],
-      "galleryCountDetected": 1,
-      "galleryCountSaved": 1
+      "galleryCountDetected": 10,
+      "galleryCountSaved": 10
     },
     {
       "cardIndex": 11,
@@ -947,13 +1025,97 @@
       "gallery": [
         {
           "order": 1,
-          "path": "assets/images/portfolio/galleries/c8616e205e12df0fc091a2f221a755bf93a7251bef0f9cb85e63fa60e47678e4.jpg",
-          "sha256": "c8616e205e12df0fc091a2f221a755bf93a7251bef0f9cb85e63fa60e47678e4",
-          "bytes": 8182
+          "path": "assets/images/portfolio/galleries/463d090c8da2cac583be20ace8bb81521add6ae9dcfa306c8fa252b1e8f3c744.jpg",
+          "sha256": "463d090c8da2cac583be20ace8bb81521add6ae9dcfa306c8fa252b1e8f3c744",
+          "bytes": 219042
+        },
+        {
+          "order": 2,
+          "path": "assets/images/portfolio/galleries/9762ef127956d1f948a94492d981d3ecfd5a2022bb8483e397b5fa23af217392.jpg",
+          "sha256": "9762ef127956d1f948a94492d981d3ecfd5a2022bb8483e397b5fa23af217392",
+          "bytes": 224531
+        },
+        {
+          "order": 3,
+          "path": "assets/images/portfolio/galleries/85945e7e41eaa1a8a234e5f05a8133345ecc29afa61934d1ec9ea2dc349213dc.jpg",
+          "sha256": "85945e7e41eaa1a8a234e5f05a8133345ecc29afa61934d1ec9ea2dc349213dc",
+          "bytes": 233439
+        },
+        {
+          "order": 4,
+          "path": "assets/images/portfolio/galleries/5277ebd254bdb2166e2caee7efeb8f114e650152d098651c49613f39384e06b3.jpg",
+          "sha256": "5277ebd254bdb2166e2caee7efeb8f114e650152d098651c49613f39384e06b3",
+          "bytes": 197226
+        },
+        {
+          "order": 5,
+          "path": "assets/images/portfolio/galleries/433bdf077a45be1c1a47d3704b681c184b364130b81ffc7f6ba4b92c3faf798a.jpg",
+          "sha256": "433bdf077a45be1c1a47d3704b681c184b364130b81ffc7f6ba4b92c3faf798a",
+          "bytes": 219023
+        },
+        {
+          "order": 6,
+          "path": "assets/images/portfolio/galleries/ab394098a7380a39187110e7923bac56cd58a6f1915fcd7b8c5e730681dab6ff.jpg",
+          "sha256": "ab394098a7380a39187110e7923bac56cd58a6f1915fcd7b8c5e730681dab6ff",
+          "bytes": 207899
+        },
+        {
+          "order": 7,
+          "path": "assets/images/portfolio/galleries/63f7ca1c920273c0e582f5c11b2b3992f97ff57ba6fd1d946904020f90666093.jpg",
+          "sha256": "63f7ca1c920273c0e582f5c11b2b3992f97ff57ba6fd1d946904020f90666093",
+          "bytes": 244892
+        },
+        {
+          "order": 8,
+          "path": "assets/images/portfolio/galleries/254c45626e89a8dd5b448538a6456b92a1058a1120f5461a86fd2877ab412e2d.jpg",
+          "sha256": "254c45626e89a8dd5b448538a6456b92a1058a1120f5461a86fd2877ab412e2d",
+          "bytes": 225267
+        },
+        {
+          "order": 9,
+          "path": "assets/images/portfolio/galleries/2a62762f329b0cd0b9982c80b3f92449230e39fa4508b3030c7ea1a9270da0c2.jpg",
+          "sha256": "2a62762f329b0cd0b9982c80b3f92449230e39fa4508b3030c7ea1a9270da0c2",
+          "bytes": 225367
+        },
+        {
+          "order": 10,
+          "path": "assets/images/portfolio/cb42231a233b675dacc33fa230eaf0ee18c0ec01c00181154dfa1cdce9948633.jpg",
+          "sha256": "cb42231a233b675dacc33fa230eaf0ee18c0ec01c00181154dfa1cdce9948633",
+          "bytes": 203211
+        },
+        {
+          "order": 11,
+          "path": "assets/images/portfolio/galleries/c4b926ba587fb38f008c630de12e3d605fa12718977b1444fe412132b955c5ac.jpg",
+          "sha256": "c4b926ba587fb38f008c630de12e3d605fa12718977b1444fe412132b955c5ac",
+          "bytes": 168651
+        },
+        {
+          "order": 12,
+          "path": "assets/images/portfolio/galleries/1f424855b4818b73b777db183dfd8be2996f43a7c88032c18809f04e580117c4.jpg",
+          "sha256": "1f424855b4818b73b777db183dfd8be2996f43a7c88032c18809f04e580117c4",
+          "bytes": 215888
+        },
+        {
+          "order": 13,
+          "path": "assets/images/portfolio/galleries/9d3cb77256371674b9503e90022dad49a42e7fa6163e0c338d0109df92869d7f.jpg",
+          "sha256": "9d3cb77256371674b9503e90022dad49a42e7fa6163e0c338d0109df92869d7f",
+          "bytes": 215430
+        },
+        {
+          "order": 14,
+          "path": "assets/images/portfolio/galleries/62a03624a21d3bbbb3ee8c1853184f2c31ebfa1bb3d0569a5753e22e00e3082a.jpg",
+          "sha256": "62a03624a21d3bbbb3ee8c1853184f2c31ebfa1bb3d0569a5753e22e00e3082a",
+          "bytes": 217269
+        },
+        {
+          "order": 15,
+          "path": "assets/images/portfolio/galleries/f76f03176c91ea37eb18695b6bef9f76106eabafabb97d7de4529a832726952e.jpg",
+          "sha256": "f76f03176c91ea37eb18695b6bef9f76106eabafabb97d7de4529a832726952e",
+          "bytes": 213074
         }
       ],
-      "galleryCountDetected": 1,
-      "galleryCountSaved": 1
+      "galleryCountDetected": 15,
+      "galleryCountSaved": 15
     },
     {
       "cardIndex": 12,
@@ -965,13 +1127,115 @@
       "gallery": [
         {
           "order": 1,
-          "path": "assets/images/portfolio/galleries/99be251db59d8585e5364004df09e5102957010e1c648f8dd0907077431f9217.jpg",
-          "sha256": "99be251db59d8585e5364004df09e5102957010e1c648f8dd0907077431f9217",
-          "bytes": 8548
+          "path": "assets/images/portfolio/galleries/40ab6375d8042d02c8b3e1dc0e53d3ba884e948d913bf8b71ec418fcfb141fa0.jpg",
+          "sha256": "40ab6375d8042d02c8b3e1dc0e53d3ba884e948d913bf8b71ec418fcfb141fa0",
+          "bytes": 187853
+        },
+        {
+          "order": 2,
+          "path": "assets/images/portfolio/galleries/14c642cea56449897027bb54b30ff6c94aa4ebbb585b60a11b84ee81c0d0610a.jpg",
+          "sha256": "14c642cea56449897027bb54b30ff6c94aa4ebbb585b60a11b84ee81c0d0610a",
+          "bytes": 126895
+        },
+        {
+          "order": 3,
+          "path": "assets/images/portfolio/0c19e039a9f8b201b663411f4e0c93d6a758508610858b12cc2523374bb57b2f.jpg",
+          "sha256": "0c19e039a9f8b201b663411f4e0c93d6a758508610858b12cc2523374bb57b2f",
+          "bytes": 176698
+        },
+        {
+          "order": 4,
+          "path": "assets/images/portfolio/galleries/ab394098a7380a39187110e7923bac56cd58a6f1915fcd7b8c5e730681dab6ff.jpg",
+          "sha256": "ab394098a7380a39187110e7923bac56cd58a6f1915fcd7b8c5e730681dab6ff",
+          "bytes": 207899
+        },
+        {
+          "order": 5,
+          "path": "assets/images/portfolio/galleries/63f7ca1c920273c0e582f5c11b2b3992f97ff57ba6fd1d946904020f90666093.jpg",
+          "sha256": "63f7ca1c920273c0e582f5c11b2b3992f97ff57ba6fd1d946904020f90666093",
+          "bytes": 244892
+        },
+        {
+          "order": 6,
+          "path": "assets/images/portfolio/galleries/254c45626e89a8dd5b448538a6456b92a1058a1120f5461a86fd2877ab412e2d.jpg",
+          "sha256": "254c45626e89a8dd5b448538a6456b92a1058a1120f5461a86fd2877ab412e2d",
+          "bytes": 225267
+        },
+        {
+          "order": 7,
+          "path": "assets/images/portfolio/galleries/2a62762f329b0cd0b9982c80b3f92449230e39fa4508b3030c7ea1a9270da0c2.jpg",
+          "sha256": "2a62762f329b0cd0b9982c80b3f92449230e39fa4508b3030c7ea1a9270da0c2",
+          "bytes": 225367
+        },
+        {
+          "order": 8,
+          "path": "assets/images/portfolio/cb42231a233b675dacc33fa230eaf0ee18c0ec01c00181154dfa1cdce9948633.jpg",
+          "sha256": "cb42231a233b675dacc33fa230eaf0ee18c0ec01c00181154dfa1cdce9948633",
+          "bytes": 203211
+        },
+        {
+          "order": 9,
+          "path": "assets/images/portfolio/galleries/c4b926ba587fb38f008c630de12e3d605fa12718977b1444fe412132b955c5ac.jpg",
+          "sha256": "c4b926ba587fb38f008c630de12e3d605fa12718977b1444fe412132b955c5ac",
+          "bytes": 168651
+        },
+        {
+          "order": 10,
+          "path": "assets/images/portfolio/galleries/1f424855b4818b73b777db183dfd8be2996f43a7c88032c18809f04e580117c4.jpg",
+          "sha256": "1f424855b4818b73b777db183dfd8be2996f43a7c88032c18809f04e580117c4",
+          "bytes": 215888
+        },
+        {
+          "order": 11,
+          "path": "assets/images/portfolio/galleries/9d3cb77256371674b9503e90022dad49a42e7fa6163e0c338d0109df92869d7f.jpg",
+          "sha256": "9d3cb77256371674b9503e90022dad49a42e7fa6163e0c338d0109df92869d7f",
+          "bytes": 215430
+        },
+        {
+          "order": 12,
+          "path": "assets/images/portfolio/galleries/62a03624a21d3bbbb3ee8c1853184f2c31ebfa1bb3d0569a5753e22e00e3082a.jpg",
+          "sha256": "62a03624a21d3bbbb3ee8c1853184f2c31ebfa1bb3d0569a5753e22e00e3082a",
+          "bytes": 217269
+        },
+        {
+          "order": 13,
+          "path": "assets/images/portfolio/galleries/f76f03176c91ea37eb18695b6bef9f76106eabafabb97d7de4529a832726952e.jpg",
+          "sha256": "f76f03176c91ea37eb18695b6bef9f76106eabafabb97d7de4529a832726952e",
+          "bytes": 213074
+        },
+        {
+          "order": 14,
+          "path": "assets/images/portfolio/galleries/463d090c8da2cac583be20ace8bb81521add6ae9dcfa306c8fa252b1e8f3c744.jpg",
+          "sha256": "463d090c8da2cac583be20ace8bb81521add6ae9dcfa306c8fa252b1e8f3c744",
+          "bytes": 219042
+        },
+        {
+          "order": 15,
+          "path": "assets/images/portfolio/galleries/9762ef127956d1f948a94492d981d3ecfd5a2022bb8483e397b5fa23af217392.jpg",
+          "sha256": "9762ef127956d1f948a94492d981d3ecfd5a2022bb8483e397b5fa23af217392",
+          "bytes": 224531
+        },
+        {
+          "order": 16,
+          "path": "assets/images/portfolio/galleries/85945e7e41eaa1a8a234e5f05a8133345ecc29afa61934d1ec9ea2dc349213dc.jpg",
+          "sha256": "85945e7e41eaa1a8a234e5f05a8133345ecc29afa61934d1ec9ea2dc349213dc",
+          "bytes": 233439
+        },
+        {
+          "order": 17,
+          "path": "assets/images/portfolio/galleries/5277ebd254bdb2166e2caee7efeb8f114e650152d098651c49613f39384e06b3.jpg",
+          "sha256": "5277ebd254bdb2166e2caee7efeb8f114e650152d098651c49613f39384e06b3",
+          "bytes": 197226
+        },
+        {
+          "order": 18,
+          "path": "assets/images/portfolio/galleries/433bdf077a45be1c1a47d3704b681c184b364130b81ffc7f6ba4b92c3faf798a.jpg",
+          "sha256": "433bdf077a45be1c1a47d3704b681c184b364130b81ffc7f6ba4b92c3faf798a",
+          "bytes": 219023
         }
       ],
-      "galleryCountDetected": 1,
-      "galleryCountSaved": 1
+      "galleryCountDetected": 18,
+      "galleryCountSaved": 18
     },
     {
       "cardIndex": 13,
@@ -983,13 +1247,145 @@
       "gallery": [
         {
           "order": 1,
-          "path": "assets/images/portfolio/galleries/8547d25cb681306aec163beef6accdfa5bef93f699f5320c4cd6f889ea2de851.jpg",
-          "sha256": "8547d25cb681306aec163beef6accdfa5bef93f699f5320c4cd6f889ea2de851",
-          "bytes": 9492
+          "path": "assets/images/portfolio/galleries/f21d6993853c4e940978efc59a6cfa89f755f3e09d3d9150488356a4e5ac9d67.jpg",
+          "sha256": "f21d6993853c4e940978efc59a6cfa89f755f3e09d3d9150488356a4e5ac9d67",
+          "bytes": 232377
+        },
+        {
+          "order": 2,
+          "path": "assets/images/portfolio/galleries/14c8c965379e39ffdf82d1c5b97277e68e78d08d01f62b9955605b50485d9a41.jpg",
+          "sha256": "14c8c965379e39ffdf82d1c5b97277e68e78d08d01f62b9955605b50485d9a41",
+          "bytes": 266842
+        },
+        {
+          "order": 3,
+          "path": "assets/images/portfolio/galleries/73fe2d690b8271302a3658461dc3ad0a7b59dc4545088dcfe98803dfc2159dbb.jpg",
+          "sha256": "73fe2d690b8271302a3658461dc3ad0a7b59dc4545088dcfe98803dfc2159dbb",
+          "bytes": 150233
+        },
+        {
+          "order": 4,
+          "path": "assets/images/portfolio/galleries/224283009bb2c125368b2f962b2abd16f635e1fc8feb83d55c036cdebd6e62a2.jpg",
+          "sha256": "224283009bb2c125368b2f962b2abd16f635e1fc8feb83d55c036cdebd6e62a2",
+          "bytes": 247124
+        },
+        {
+          "order": 5,
+          "path": "assets/images/portfolio/galleries/6e0fed75bb47452444182ae40dc168be5f6ee57ab108b506f0887a63255284f5.jpg",
+          "sha256": "6e0fed75bb47452444182ae40dc168be5f6ee57ab108b506f0887a63255284f5",
+          "bytes": 201752
+        },
+        {
+          "order": 6,
+          "path": "assets/images/portfolio/galleries/ab394098a7380a39187110e7923bac56cd58a6f1915fcd7b8c5e730681dab6ff.jpg",
+          "sha256": "ab394098a7380a39187110e7923bac56cd58a6f1915fcd7b8c5e730681dab6ff",
+          "bytes": 207899
+        },
+        {
+          "order": 7,
+          "path": "assets/images/portfolio/galleries/63f7ca1c920273c0e582f5c11b2b3992f97ff57ba6fd1d946904020f90666093.jpg",
+          "sha256": "63f7ca1c920273c0e582f5c11b2b3992f97ff57ba6fd1d946904020f90666093",
+          "bytes": 244892
+        },
+        {
+          "order": 8,
+          "path": "assets/images/portfolio/galleries/254c45626e89a8dd5b448538a6456b92a1058a1120f5461a86fd2877ab412e2d.jpg",
+          "sha256": "254c45626e89a8dd5b448538a6456b92a1058a1120f5461a86fd2877ab412e2d",
+          "bytes": 225267
+        },
+        {
+          "order": 9,
+          "path": "assets/images/portfolio/galleries/2a62762f329b0cd0b9982c80b3f92449230e39fa4508b3030c7ea1a9270da0c2.jpg",
+          "sha256": "2a62762f329b0cd0b9982c80b3f92449230e39fa4508b3030c7ea1a9270da0c2",
+          "bytes": 225367
+        },
+        {
+          "order": 10,
+          "path": "assets/images/portfolio/cb42231a233b675dacc33fa230eaf0ee18c0ec01c00181154dfa1cdce9948633.jpg",
+          "sha256": "cb42231a233b675dacc33fa230eaf0ee18c0ec01c00181154dfa1cdce9948633",
+          "bytes": 203211
+        },
+        {
+          "order": 11,
+          "path": "assets/images/portfolio/galleries/c4b926ba587fb38f008c630de12e3d605fa12718977b1444fe412132b955c5ac.jpg",
+          "sha256": "c4b926ba587fb38f008c630de12e3d605fa12718977b1444fe412132b955c5ac",
+          "bytes": 168651
+        },
+        {
+          "order": 12,
+          "path": "assets/images/portfolio/galleries/1f424855b4818b73b777db183dfd8be2996f43a7c88032c18809f04e580117c4.jpg",
+          "sha256": "1f424855b4818b73b777db183dfd8be2996f43a7c88032c18809f04e580117c4",
+          "bytes": 215888
+        },
+        {
+          "order": 13,
+          "path": "assets/images/portfolio/galleries/9d3cb77256371674b9503e90022dad49a42e7fa6163e0c338d0109df92869d7f.jpg",
+          "sha256": "9d3cb77256371674b9503e90022dad49a42e7fa6163e0c338d0109df92869d7f",
+          "bytes": 215430
+        },
+        {
+          "order": 14,
+          "path": "assets/images/portfolio/galleries/62a03624a21d3bbbb3ee8c1853184f2c31ebfa1bb3d0569a5753e22e00e3082a.jpg",
+          "sha256": "62a03624a21d3bbbb3ee8c1853184f2c31ebfa1bb3d0569a5753e22e00e3082a",
+          "bytes": 217269
+        },
+        {
+          "order": 15,
+          "path": "assets/images/portfolio/galleries/f76f03176c91ea37eb18695b6bef9f76106eabafabb97d7de4529a832726952e.jpg",
+          "sha256": "f76f03176c91ea37eb18695b6bef9f76106eabafabb97d7de4529a832726952e",
+          "bytes": 213074
+        },
+        {
+          "order": 16,
+          "path": "assets/images/portfolio/galleries/463d090c8da2cac583be20ace8bb81521add6ae9dcfa306c8fa252b1e8f3c744.jpg",
+          "sha256": "463d090c8da2cac583be20ace8bb81521add6ae9dcfa306c8fa252b1e8f3c744",
+          "bytes": 219042
+        },
+        {
+          "order": 17,
+          "path": "assets/images/portfolio/galleries/9762ef127956d1f948a94492d981d3ecfd5a2022bb8483e397b5fa23af217392.jpg",
+          "sha256": "9762ef127956d1f948a94492d981d3ecfd5a2022bb8483e397b5fa23af217392",
+          "bytes": 224531
+        },
+        {
+          "order": 18,
+          "path": "assets/images/portfolio/galleries/85945e7e41eaa1a8a234e5f05a8133345ecc29afa61934d1ec9ea2dc349213dc.jpg",
+          "sha256": "85945e7e41eaa1a8a234e5f05a8133345ecc29afa61934d1ec9ea2dc349213dc",
+          "bytes": 233439
+        },
+        {
+          "order": 19,
+          "path": "assets/images/portfolio/galleries/5277ebd254bdb2166e2caee7efeb8f114e650152d098651c49613f39384e06b3.jpg",
+          "sha256": "5277ebd254bdb2166e2caee7efeb8f114e650152d098651c49613f39384e06b3",
+          "bytes": 197226
+        },
+        {
+          "order": 20,
+          "path": "assets/images/portfolio/galleries/433bdf077a45be1c1a47d3704b681c184b364130b81ffc7f6ba4b92c3faf798a.jpg",
+          "sha256": "433bdf077a45be1c1a47d3704b681c184b364130b81ffc7f6ba4b92c3faf798a",
+          "bytes": 219023
+        },
+        {
+          "order": 21,
+          "path": "assets/images/portfolio/galleries/40ab6375d8042d02c8b3e1dc0e53d3ba884e948d913bf8b71ec418fcfb141fa0.jpg",
+          "sha256": "40ab6375d8042d02c8b3e1dc0e53d3ba884e948d913bf8b71ec418fcfb141fa0",
+          "bytes": 187853
+        },
+        {
+          "order": 22,
+          "path": "assets/images/portfolio/galleries/14c642cea56449897027bb54b30ff6c94aa4ebbb585b60a11b84ee81c0d0610a.jpg",
+          "sha256": "14c642cea56449897027bb54b30ff6c94aa4ebbb585b60a11b84ee81c0d0610a",
+          "bytes": 126895
+        },
+        {
+          "order": 23,
+          "path": "assets/images/portfolio/0c19e039a9f8b201b663411f4e0c93d6a758508610858b12cc2523374bb57b2f.jpg",
+          "sha256": "0c19e039a9f8b201b663411f4e0c93d6a758508610858b12cc2523374bb57b2f",
+          "bytes": 176698
         }
       ],
-      "galleryCountDetected": 1,
-      "galleryCountSaved": 1
+      "galleryCountDetected": 23,
+      "galleryCountSaved": 23
     },
     {
       "cardIndex": 14,
@@ -1001,13 +1397,151 @@
       "gallery": [
         {
           "order": 1,
-          "path": "assets/images/portfolio/galleries/a9d7388f2137ff03b1098e3553915fb6f32841342452572c436820943e15b2c6.jpg",
-          "sha256": "a9d7388f2137ff03b1098e3553915fb6f32841342452572c436820943e15b2c6",
-          "bytes": 9096
+          "path": "assets/images/portfolio/galleries/be1cf885c40208b5e215225e199dad48bc75c0df7d81ab5df20df97ffbced63c.jpg",
+          "sha256": "be1cf885c40208b5e215225e199dad48bc75c0df7d81ab5df20df97ffbced63c",
+          "bytes": 195812
+        },
+        {
+          "order": 2,
+          "path": "assets/images/portfolio/galleries/ab394098a7380a39187110e7923bac56cd58a6f1915fcd7b8c5e730681dab6ff.jpg",
+          "sha256": "ab394098a7380a39187110e7923bac56cd58a6f1915fcd7b8c5e730681dab6ff",
+          "bytes": 207899
+        },
+        {
+          "order": 3,
+          "path": "assets/images/portfolio/galleries/63f7ca1c920273c0e582f5c11b2b3992f97ff57ba6fd1d946904020f90666093.jpg",
+          "sha256": "63f7ca1c920273c0e582f5c11b2b3992f97ff57ba6fd1d946904020f90666093",
+          "bytes": 244892
+        },
+        {
+          "order": 4,
+          "path": "assets/images/portfolio/galleries/254c45626e89a8dd5b448538a6456b92a1058a1120f5461a86fd2877ab412e2d.jpg",
+          "sha256": "254c45626e89a8dd5b448538a6456b92a1058a1120f5461a86fd2877ab412e2d",
+          "bytes": 225267
+        },
+        {
+          "order": 5,
+          "path": "assets/images/portfolio/galleries/2a62762f329b0cd0b9982c80b3f92449230e39fa4508b3030c7ea1a9270da0c2.jpg",
+          "sha256": "2a62762f329b0cd0b9982c80b3f92449230e39fa4508b3030c7ea1a9270da0c2",
+          "bytes": 225367
+        },
+        {
+          "order": 6,
+          "path": "assets/images/portfolio/cb42231a233b675dacc33fa230eaf0ee18c0ec01c00181154dfa1cdce9948633.jpg",
+          "sha256": "cb42231a233b675dacc33fa230eaf0ee18c0ec01c00181154dfa1cdce9948633",
+          "bytes": 203211
+        },
+        {
+          "order": 7,
+          "path": "assets/images/portfolio/galleries/c4b926ba587fb38f008c630de12e3d605fa12718977b1444fe412132b955c5ac.jpg",
+          "sha256": "c4b926ba587fb38f008c630de12e3d605fa12718977b1444fe412132b955c5ac",
+          "bytes": 168651
+        },
+        {
+          "order": 8,
+          "path": "assets/images/portfolio/galleries/1f424855b4818b73b777db183dfd8be2996f43a7c88032c18809f04e580117c4.jpg",
+          "sha256": "1f424855b4818b73b777db183dfd8be2996f43a7c88032c18809f04e580117c4",
+          "bytes": 215888
+        },
+        {
+          "order": 9,
+          "path": "assets/images/portfolio/galleries/9d3cb77256371674b9503e90022dad49a42e7fa6163e0c338d0109df92869d7f.jpg",
+          "sha256": "9d3cb77256371674b9503e90022dad49a42e7fa6163e0c338d0109df92869d7f",
+          "bytes": 215430
+        },
+        {
+          "order": 10,
+          "path": "assets/images/portfolio/galleries/62a03624a21d3bbbb3ee8c1853184f2c31ebfa1bb3d0569a5753e22e00e3082a.jpg",
+          "sha256": "62a03624a21d3bbbb3ee8c1853184f2c31ebfa1bb3d0569a5753e22e00e3082a",
+          "bytes": 217269
+        },
+        {
+          "order": 11,
+          "path": "assets/images/portfolio/galleries/f76f03176c91ea37eb18695b6bef9f76106eabafabb97d7de4529a832726952e.jpg",
+          "sha256": "f76f03176c91ea37eb18695b6bef9f76106eabafabb97d7de4529a832726952e",
+          "bytes": 213074
+        },
+        {
+          "order": 12,
+          "path": "assets/images/portfolio/galleries/463d090c8da2cac583be20ace8bb81521add6ae9dcfa306c8fa252b1e8f3c744.jpg",
+          "sha256": "463d090c8da2cac583be20ace8bb81521add6ae9dcfa306c8fa252b1e8f3c744",
+          "bytes": 219042
+        },
+        {
+          "order": 13,
+          "path": "assets/images/portfolio/galleries/9762ef127956d1f948a94492d981d3ecfd5a2022bb8483e397b5fa23af217392.jpg",
+          "sha256": "9762ef127956d1f948a94492d981d3ecfd5a2022bb8483e397b5fa23af217392",
+          "bytes": 224531
+        },
+        {
+          "order": 14,
+          "path": "assets/images/portfolio/galleries/85945e7e41eaa1a8a234e5f05a8133345ecc29afa61934d1ec9ea2dc349213dc.jpg",
+          "sha256": "85945e7e41eaa1a8a234e5f05a8133345ecc29afa61934d1ec9ea2dc349213dc",
+          "bytes": 233439
+        },
+        {
+          "order": 15,
+          "path": "assets/images/portfolio/galleries/5277ebd254bdb2166e2caee7efeb8f114e650152d098651c49613f39384e06b3.jpg",
+          "sha256": "5277ebd254bdb2166e2caee7efeb8f114e650152d098651c49613f39384e06b3",
+          "bytes": 197226
+        },
+        {
+          "order": 16,
+          "path": "assets/images/portfolio/galleries/433bdf077a45be1c1a47d3704b681c184b364130b81ffc7f6ba4b92c3faf798a.jpg",
+          "sha256": "433bdf077a45be1c1a47d3704b681c184b364130b81ffc7f6ba4b92c3faf798a",
+          "bytes": 219023
+        },
+        {
+          "order": 17,
+          "path": "assets/images/portfolio/galleries/40ab6375d8042d02c8b3e1dc0e53d3ba884e948d913bf8b71ec418fcfb141fa0.jpg",
+          "sha256": "40ab6375d8042d02c8b3e1dc0e53d3ba884e948d913bf8b71ec418fcfb141fa0",
+          "bytes": 187853
+        },
+        {
+          "order": 18,
+          "path": "assets/images/portfolio/galleries/14c642cea56449897027bb54b30ff6c94aa4ebbb585b60a11b84ee81c0d0610a.jpg",
+          "sha256": "14c642cea56449897027bb54b30ff6c94aa4ebbb585b60a11b84ee81c0d0610a",
+          "bytes": 126895
+        },
+        {
+          "order": 19,
+          "path": "assets/images/portfolio/0c19e039a9f8b201b663411f4e0c93d6a758508610858b12cc2523374bb57b2f.jpg",
+          "sha256": "0c19e039a9f8b201b663411f4e0c93d6a758508610858b12cc2523374bb57b2f",
+          "bytes": 176698
+        },
+        {
+          "order": 20,
+          "path": "assets/images/portfolio/galleries/f21d6993853c4e940978efc59a6cfa89f755f3e09d3d9150488356a4e5ac9d67.jpg",
+          "sha256": "f21d6993853c4e940978efc59a6cfa89f755f3e09d3d9150488356a4e5ac9d67",
+          "bytes": 232377
+        },
+        {
+          "order": 21,
+          "path": "assets/images/portfolio/galleries/14c8c965379e39ffdf82d1c5b97277e68e78d08d01f62b9955605b50485d9a41.jpg",
+          "sha256": "14c8c965379e39ffdf82d1c5b97277e68e78d08d01f62b9955605b50485d9a41",
+          "bytes": 266842
+        },
+        {
+          "order": 22,
+          "path": "assets/images/portfolio/galleries/73fe2d690b8271302a3658461dc3ad0a7b59dc4545088dcfe98803dfc2159dbb.jpg",
+          "sha256": "73fe2d690b8271302a3658461dc3ad0a7b59dc4545088dcfe98803dfc2159dbb",
+          "bytes": 150233
+        },
+        {
+          "order": 23,
+          "path": "assets/images/portfolio/galleries/224283009bb2c125368b2f962b2abd16f635e1fc8feb83d55c036cdebd6e62a2.jpg",
+          "sha256": "224283009bb2c125368b2f962b2abd16f635e1fc8feb83d55c036cdebd6e62a2",
+          "bytes": 247124
+        },
+        {
+          "order": 24,
+          "path": "assets/images/portfolio/galleries/6e0fed75bb47452444182ae40dc168be5f6ee57ab108b506f0887a63255284f5.jpg",
+          "sha256": "6e0fed75bb47452444182ae40dc168be5f6ee57ab108b506f0887a63255284f5",
+          "bytes": 201752
         }
       ],
-      "galleryCountDetected": 1,
-      "galleryCountSaved": 1
+      "galleryCountDetected": 24,
+      "galleryCountSaved": 24
     },
     {
       "cardIndex": 15,
@@ -1019,13 +1553,181 @@
       "gallery": [
         {
           "order": 1,
-          "path": "assets/images/portfolio/galleries/7bdac96c313381ef2a0d62f82c6e3a8d1ed4b36f47028f3c91d5f2b3f3195de6.jpg",
-          "sha256": "7bdac96c313381ef2a0d62f82c6e3a8d1ed4b36f47028f3c91d5f2b3f3195de6",
-          "bytes": 5713
+          "path": "assets/images/portfolio/galleries/154d001f3056f1af20336996627bba2baf94a2016c906d93378bb2fa2f1c1b1b.jpg",
+          "sha256": "154d001f3056f1af20336996627bba2baf94a2016c906d93378bb2fa2f1c1b1b",
+          "bytes": 115764
+        },
+        {
+          "order": 2,
+          "path": "assets/images/portfolio/galleries/ce048a3d61bc4117029b81929962590d2796ee8b26f38299e524e4ace0a6faba.jpg",
+          "sha256": "ce048a3d61bc4117029b81929962590d2796ee8b26f38299e524e4ace0a6faba",
+          "bytes": 120563
+        },
+        {
+          "order": 3,
+          "path": "assets/images/portfolio/galleries/64470ca9ed248120343f683a4f5266c34af6b2774d6a6b4fe16a17dabd15b2ae.jpg",
+          "sha256": "64470ca9ed248120343f683a4f5266c34af6b2774d6a6b4fe16a17dabd15b2ae",
+          "bytes": 176738
+        },
+        {
+          "order": 4,
+          "path": "assets/images/portfolio/galleries/0d1793858888d45df77aa37392c28627d42bfee0d124c9cefe79f830253d35ea.jpg",
+          "sha256": "0d1793858888d45df77aa37392c28627d42bfee0d124c9cefe79f830253d35ea",
+          "bytes": 180080
+        },
+        {
+          "order": 5,
+          "path": "assets/images/portfolio/galleries/7d18703a4ecfd5b6b89c2e2795b599ab2626b5a6c7c30e428d8f8c6a5a2c1ec6.jpg",
+          "sha256": "7d18703a4ecfd5b6b89c2e2795b599ab2626b5a6c7c30e428d8f8c6a5a2c1ec6",
+          "bytes": 160819
+        },
+        {
+          "order": 6,
+          "path": "assets/images/portfolio/galleries/ab394098a7380a39187110e7923bac56cd58a6f1915fcd7b8c5e730681dab6ff.jpg",
+          "sha256": "ab394098a7380a39187110e7923bac56cd58a6f1915fcd7b8c5e730681dab6ff",
+          "bytes": 207899
+        },
+        {
+          "order": 7,
+          "path": "assets/images/portfolio/galleries/63f7ca1c920273c0e582f5c11b2b3992f97ff57ba6fd1d946904020f90666093.jpg",
+          "sha256": "63f7ca1c920273c0e582f5c11b2b3992f97ff57ba6fd1d946904020f90666093",
+          "bytes": 244892
+        },
+        {
+          "order": 8,
+          "path": "assets/images/portfolio/galleries/254c45626e89a8dd5b448538a6456b92a1058a1120f5461a86fd2877ab412e2d.jpg",
+          "sha256": "254c45626e89a8dd5b448538a6456b92a1058a1120f5461a86fd2877ab412e2d",
+          "bytes": 225267
+        },
+        {
+          "order": 9,
+          "path": "assets/images/portfolio/galleries/2a62762f329b0cd0b9982c80b3f92449230e39fa4508b3030c7ea1a9270da0c2.jpg",
+          "sha256": "2a62762f329b0cd0b9982c80b3f92449230e39fa4508b3030c7ea1a9270da0c2",
+          "bytes": 225367
+        },
+        {
+          "order": 10,
+          "path": "assets/images/portfolio/cb42231a233b675dacc33fa230eaf0ee18c0ec01c00181154dfa1cdce9948633.jpg",
+          "sha256": "cb42231a233b675dacc33fa230eaf0ee18c0ec01c00181154dfa1cdce9948633",
+          "bytes": 203211
+        },
+        {
+          "order": 11,
+          "path": "assets/images/portfolio/galleries/c4b926ba587fb38f008c630de12e3d605fa12718977b1444fe412132b955c5ac.jpg",
+          "sha256": "c4b926ba587fb38f008c630de12e3d605fa12718977b1444fe412132b955c5ac",
+          "bytes": 168651
+        },
+        {
+          "order": 12,
+          "path": "assets/images/portfolio/galleries/1f424855b4818b73b777db183dfd8be2996f43a7c88032c18809f04e580117c4.jpg",
+          "sha256": "1f424855b4818b73b777db183dfd8be2996f43a7c88032c18809f04e580117c4",
+          "bytes": 215888
+        },
+        {
+          "order": 13,
+          "path": "assets/images/portfolio/galleries/9d3cb77256371674b9503e90022dad49a42e7fa6163e0c338d0109df92869d7f.jpg",
+          "sha256": "9d3cb77256371674b9503e90022dad49a42e7fa6163e0c338d0109df92869d7f",
+          "bytes": 215430
+        },
+        {
+          "order": 14,
+          "path": "assets/images/portfolio/galleries/62a03624a21d3bbbb3ee8c1853184f2c31ebfa1bb3d0569a5753e22e00e3082a.jpg",
+          "sha256": "62a03624a21d3bbbb3ee8c1853184f2c31ebfa1bb3d0569a5753e22e00e3082a",
+          "bytes": 217269
+        },
+        {
+          "order": 15,
+          "path": "assets/images/portfolio/galleries/f76f03176c91ea37eb18695b6bef9f76106eabafabb97d7de4529a832726952e.jpg",
+          "sha256": "f76f03176c91ea37eb18695b6bef9f76106eabafabb97d7de4529a832726952e",
+          "bytes": 213074
+        },
+        {
+          "order": 16,
+          "path": "assets/images/portfolio/galleries/463d090c8da2cac583be20ace8bb81521add6ae9dcfa306c8fa252b1e8f3c744.jpg",
+          "sha256": "463d090c8da2cac583be20ace8bb81521add6ae9dcfa306c8fa252b1e8f3c744",
+          "bytes": 219042
+        },
+        {
+          "order": 17,
+          "path": "assets/images/portfolio/galleries/9762ef127956d1f948a94492d981d3ecfd5a2022bb8483e397b5fa23af217392.jpg",
+          "sha256": "9762ef127956d1f948a94492d981d3ecfd5a2022bb8483e397b5fa23af217392",
+          "bytes": 224531
+        },
+        {
+          "order": 18,
+          "path": "assets/images/portfolio/galleries/85945e7e41eaa1a8a234e5f05a8133345ecc29afa61934d1ec9ea2dc349213dc.jpg",
+          "sha256": "85945e7e41eaa1a8a234e5f05a8133345ecc29afa61934d1ec9ea2dc349213dc",
+          "bytes": 233439
+        },
+        {
+          "order": 19,
+          "path": "assets/images/portfolio/galleries/5277ebd254bdb2166e2caee7efeb8f114e650152d098651c49613f39384e06b3.jpg",
+          "sha256": "5277ebd254bdb2166e2caee7efeb8f114e650152d098651c49613f39384e06b3",
+          "bytes": 197226
+        },
+        {
+          "order": 20,
+          "path": "assets/images/portfolio/galleries/433bdf077a45be1c1a47d3704b681c184b364130b81ffc7f6ba4b92c3faf798a.jpg",
+          "sha256": "433bdf077a45be1c1a47d3704b681c184b364130b81ffc7f6ba4b92c3faf798a",
+          "bytes": 219023
+        },
+        {
+          "order": 21,
+          "path": "assets/images/portfolio/galleries/40ab6375d8042d02c8b3e1dc0e53d3ba884e948d913bf8b71ec418fcfb141fa0.jpg",
+          "sha256": "40ab6375d8042d02c8b3e1dc0e53d3ba884e948d913bf8b71ec418fcfb141fa0",
+          "bytes": 187853
+        },
+        {
+          "order": 22,
+          "path": "assets/images/portfolio/galleries/14c642cea56449897027bb54b30ff6c94aa4ebbb585b60a11b84ee81c0d0610a.jpg",
+          "sha256": "14c642cea56449897027bb54b30ff6c94aa4ebbb585b60a11b84ee81c0d0610a",
+          "bytes": 126895
+        },
+        {
+          "order": 23,
+          "path": "assets/images/portfolio/0c19e039a9f8b201b663411f4e0c93d6a758508610858b12cc2523374bb57b2f.jpg",
+          "sha256": "0c19e039a9f8b201b663411f4e0c93d6a758508610858b12cc2523374bb57b2f",
+          "bytes": 176698
+        },
+        {
+          "order": 24,
+          "path": "assets/images/portfolio/galleries/f21d6993853c4e940978efc59a6cfa89f755f3e09d3d9150488356a4e5ac9d67.jpg",
+          "sha256": "f21d6993853c4e940978efc59a6cfa89f755f3e09d3d9150488356a4e5ac9d67",
+          "bytes": 232377
+        },
+        {
+          "order": 25,
+          "path": "assets/images/portfolio/galleries/14c8c965379e39ffdf82d1c5b97277e68e78d08d01f62b9955605b50485d9a41.jpg",
+          "sha256": "14c8c965379e39ffdf82d1c5b97277e68e78d08d01f62b9955605b50485d9a41",
+          "bytes": 266842
+        },
+        {
+          "order": 26,
+          "path": "assets/images/portfolio/galleries/73fe2d690b8271302a3658461dc3ad0a7b59dc4545088dcfe98803dfc2159dbb.jpg",
+          "sha256": "73fe2d690b8271302a3658461dc3ad0a7b59dc4545088dcfe98803dfc2159dbb",
+          "bytes": 150233
+        },
+        {
+          "order": 27,
+          "path": "assets/images/portfolio/galleries/224283009bb2c125368b2f962b2abd16f635e1fc8feb83d55c036cdebd6e62a2.jpg",
+          "sha256": "224283009bb2c125368b2f962b2abd16f635e1fc8feb83d55c036cdebd6e62a2",
+          "bytes": 247124
+        },
+        {
+          "order": 28,
+          "path": "assets/images/portfolio/galleries/6e0fed75bb47452444182ae40dc168be5f6ee57ab108b506f0887a63255284f5.jpg",
+          "sha256": "6e0fed75bb47452444182ae40dc168be5f6ee57ab108b506f0887a63255284f5",
+          "bytes": 201752
+        },
+        {
+          "order": 29,
+          "path": "assets/images/portfolio/galleries/be1cf885c40208b5e215225e199dad48bc75c0df7d81ab5df20df97ffbced63c.jpg",
+          "sha256": "be1cf885c40208b5e215225e199dad48bc75c0df7d81ab5df20df97ffbced63c",
+          "bytes": 195812
         }
       ],
-      "galleryCountDetected": 1,
-      "galleryCountSaved": 1
+      "galleryCountDetected": 29,
+      "galleryCountSaved": 29
     },
     {
       "cardIndex": 16,
@@ -1037,13 +1739,241 @@
       "gallery": [
         {
           "order": 1,
-          "path": "assets/images/portfolio/galleries/e57a60683e0b3b30ecec693dcc75ef257df2f8c97c3de6ffcd44ac16334354d8.jpg",
-          "sha256": "e57a60683e0b3b30ecec693dcc75ef257df2f8c97c3de6ffcd44ac16334354d8",
-          "bytes": 6140
+          "path": "assets/images/portfolio/galleries/dbba995f096761f522bbd60122cd590dd0ed98c524602df01dd0456cec9bf026.jpg",
+          "sha256": "dbba995f096761f522bbd60122cd590dd0ed98c524602df01dd0456cec9bf026",
+          "bytes": 158601
+        },
+        {
+          "order": 2,
+          "path": "assets/images/portfolio/galleries/46cdf8fd175042ca41402070f2968461055d209f1aadb8c58ba2e88f7b44bc9e.jpg",
+          "sha256": "46cdf8fd175042ca41402070f2968461055d209f1aadb8c58ba2e88f7b44bc9e",
+          "bytes": 139111
+        },
+        {
+          "order": 3,
+          "path": "assets/images/portfolio/galleries/430edac8c13e38119cb1b1c2e92838737e97c3f6afe4c3d5a07f112c3e3d8075.jpg",
+          "sha256": "430edac8c13e38119cb1b1c2e92838737e97c3f6afe4c3d5a07f112c3e3d8075",
+          "bytes": 175287
+        },
+        {
+          "order": 4,
+          "path": "assets/images/portfolio/galleries/dca0b9312ce400eac27e8cca4dbdcd64d3c8e6c041945eac2149873001ccd3f8.jpg",
+          "sha256": "dca0b9312ce400eac27e8cca4dbdcd64d3c8e6c041945eac2149873001ccd3f8",
+          "bytes": 159181
+        },
+        {
+          "order": 5,
+          "path": "assets/images/portfolio/galleries/12868295d239fe5b26661c13c8ff395b4a89871f26930159c0c542368305d406.jpg",
+          "sha256": "12868295d239fe5b26661c13c8ff395b4a89871f26930159c0c542368305d406",
+          "bytes": 169861
+        },
+        {
+          "order": 6,
+          "path": "assets/images/portfolio/galleries/06d31ee3813008fcab2faa5ee0bc2540450fd4bc0833b862d582ca3344358d77.jpg",
+          "sha256": "06d31ee3813008fcab2faa5ee0bc2540450fd4bc0833b862d582ca3344358d77",
+          "bytes": 161930
+        },
+        {
+          "order": 7,
+          "path": "assets/images/portfolio/galleries/abc901b15ca77ece0e4d84b0209ea3bcc7180a67f46448df4002830ff91feb32.jpg",
+          "sha256": "abc901b15ca77ece0e4d84b0209ea3bcc7180a67f46448df4002830ff91feb32",
+          "bytes": 162424
+        },
+        {
+          "order": 8,
+          "path": "assets/images/portfolio/galleries/41fe300c88d883ab65137be0f691222fcbf29debe532776c5d17e3497951440b.jpg",
+          "sha256": "41fe300c88d883ab65137be0f691222fcbf29debe532776c5d17e3497951440b",
+          "bytes": 194604
+        },
+        {
+          "order": 9,
+          "path": "assets/images/portfolio/galleries/63a5a05ee4971f8e8735865f4df65a5c08f008cab40b0290010a2e108458c5b7.jpg",
+          "sha256": "63a5a05ee4971f8e8735865f4df65a5c08f008cab40b0290010a2e108458c5b7",
+          "bytes": 166678
+        },
+        {
+          "order": 10,
+          "path": "assets/images/portfolio/galleries/bca2fdeeed27bf23f91686bb8a4a0b0f17476fbb3f378a1204e7a4b6abdcc859.jpg",
+          "sha256": "bca2fdeeed27bf23f91686bb8a4a0b0f17476fbb3f378a1204e7a4b6abdcc859",
+          "bytes": 116903
+        },
+        {
+          "order": 11,
+          "path": "assets/images/portfolio/galleries/ab394098a7380a39187110e7923bac56cd58a6f1915fcd7b8c5e730681dab6ff.jpg",
+          "sha256": "ab394098a7380a39187110e7923bac56cd58a6f1915fcd7b8c5e730681dab6ff",
+          "bytes": 207899
+        },
+        {
+          "order": 12,
+          "path": "assets/images/portfolio/galleries/63f7ca1c920273c0e582f5c11b2b3992f97ff57ba6fd1d946904020f90666093.jpg",
+          "sha256": "63f7ca1c920273c0e582f5c11b2b3992f97ff57ba6fd1d946904020f90666093",
+          "bytes": 244892
+        },
+        {
+          "order": 13,
+          "path": "assets/images/portfolio/galleries/254c45626e89a8dd5b448538a6456b92a1058a1120f5461a86fd2877ab412e2d.jpg",
+          "sha256": "254c45626e89a8dd5b448538a6456b92a1058a1120f5461a86fd2877ab412e2d",
+          "bytes": 225267
+        },
+        {
+          "order": 14,
+          "path": "assets/images/portfolio/galleries/2a62762f329b0cd0b9982c80b3f92449230e39fa4508b3030c7ea1a9270da0c2.jpg",
+          "sha256": "2a62762f329b0cd0b9982c80b3f92449230e39fa4508b3030c7ea1a9270da0c2",
+          "bytes": 225367
+        },
+        {
+          "order": 15,
+          "path": "assets/images/portfolio/cb42231a233b675dacc33fa230eaf0ee18c0ec01c00181154dfa1cdce9948633.jpg",
+          "sha256": "cb42231a233b675dacc33fa230eaf0ee18c0ec01c00181154dfa1cdce9948633",
+          "bytes": 203211
+        },
+        {
+          "order": 16,
+          "path": "assets/images/portfolio/galleries/c4b926ba587fb38f008c630de12e3d605fa12718977b1444fe412132b955c5ac.jpg",
+          "sha256": "c4b926ba587fb38f008c630de12e3d605fa12718977b1444fe412132b955c5ac",
+          "bytes": 168651
+        },
+        {
+          "order": 17,
+          "path": "assets/images/portfolio/galleries/1f424855b4818b73b777db183dfd8be2996f43a7c88032c18809f04e580117c4.jpg",
+          "sha256": "1f424855b4818b73b777db183dfd8be2996f43a7c88032c18809f04e580117c4",
+          "bytes": 215888
+        },
+        {
+          "order": 18,
+          "path": "assets/images/portfolio/galleries/9d3cb77256371674b9503e90022dad49a42e7fa6163e0c338d0109df92869d7f.jpg",
+          "sha256": "9d3cb77256371674b9503e90022dad49a42e7fa6163e0c338d0109df92869d7f",
+          "bytes": 215430
+        },
+        {
+          "order": 19,
+          "path": "assets/images/portfolio/galleries/62a03624a21d3bbbb3ee8c1853184f2c31ebfa1bb3d0569a5753e22e00e3082a.jpg",
+          "sha256": "62a03624a21d3bbbb3ee8c1853184f2c31ebfa1bb3d0569a5753e22e00e3082a",
+          "bytes": 217269
+        },
+        {
+          "order": 20,
+          "path": "assets/images/portfolio/galleries/f76f03176c91ea37eb18695b6bef9f76106eabafabb97d7de4529a832726952e.jpg",
+          "sha256": "f76f03176c91ea37eb18695b6bef9f76106eabafabb97d7de4529a832726952e",
+          "bytes": 213074
+        },
+        {
+          "order": 21,
+          "path": "assets/images/portfolio/galleries/463d090c8da2cac583be20ace8bb81521add6ae9dcfa306c8fa252b1e8f3c744.jpg",
+          "sha256": "463d090c8da2cac583be20ace8bb81521add6ae9dcfa306c8fa252b1e8f3c744",
+          "bytes": 219042
+        },
+        {
+          "order": 22,
+          "path": "assets/images/portfolio/galleries/9762ef127956d1f948a94492d981d3ecfd5a2022bb8483e397b5fa23af217392.jpg",
+          "sha256": "9762ef127956d1f948a94492d981d3ecfd5a2022bb8483e397b5fa23af217392",
+          "bytes": 224531
+        },
+        {
+          "order": 23,
+          "path": "assets/images/portfolio/galleries/85945e7e41eaa1a8a234e5f05a8133345ecc29afa61934d1ec9ea2dc349213dc.jpg",
+          "sha256": "85945e7e41eaa1a8a234e5f05a8133345ecc29afa61934d1ec9ea2dc349213dc",
+          "bytes": 233439
+        },
+        {
+          "order": 24,
+          "path": "assets/images/portfolio/galleries/5277ebd254bdb2166e2caee7efeb8f114e650152d098651c49613f39384e06b3.jpg",
+          "sha256": "5277ebd254bdb2166e2caee7efeb8f114e650152d098651c49613f39384e06b3",
+          "bytes": 197226
+        },
+        {
+          "order": 25,
+          "path": "assets/images/portfolio/galleries/433bdf077a45be1c1a47d3704b681c184b364130b81ffc7f6ba4b92c3faf798a.jpg",
+          "sha256": "433bdf077a45be1c1a47d3704b681c184b364130b81ffc7f6ba4b92c3faf798a",
+          "bytes": 219023
+        },
+        {
+          "order": 26,
+          "path": "assets/images/portfolio/galleries/40ab6375d8042d02c8b3e1dc0e53d3ba884e948d913bf8b71ec418fcfb141fa0.jpg",
+          "sha256": "40ab6375d8042d02c8b3e1dc0e53d3ba884e948d913bf8b71ec418fcfb141fa0",
+          "bytes": 187853
+        },
+        {
+          "order": 27,
+          "path": "assets/images/portfolio/galleries/14c642cea56449897027bb54b30ff6c94aa4ebbb585b60a11b84ee81c0d0610a.jpg",
+          "sha256": "14c642cea56449897027bb54b30ff6c94aa4ebbb585b60a11b84ee81c0d0610a",
+          "bytes": 126895
+        },
+        {
+          "order": 28,
+          "path": "assets/images/portfolio/0c19e039a9f8b201b663411f4e0c93d6a758508610858b12cc2523374bb57b2f.jpg",
+          "sha256": "0c19e039a9f8b201b663411f4e0c93d6a758508610858b12cc2523374bb57b2f",
+          "bytes": 176698
+        },
+        {
+          "order": 29,
+          "path": "assets/images/portfolio/galleries/f21d6993853c4e940978efc59a6cfa89f755f3e09d3d9150488356a4e5ac9d67.jpg",
+          "sha256": "f21d6993853c4e940978efc59a6cfa89f755f3e09d3d9150488356a4e5ac9d67",
+          "bytes": 232377
+        },
+        {
+          "order": 30,
+          "path": "assets/images/portfolio/galleries/14c8c965379e39ffdf82d1c5b97277e68e78d08d01f62b9955605b50485d9a41.jpg",
+          "sha256": "14c8c965379e39ffdf82d1c5b97277e68e78d08d01f62b9955605b50485d9a41",
+          "bytes": 266842
+        },
+        {
+          "order": 31,
+          "path": "assets/images/portfolio/galleries/73fe2d690b8271302a3658461dc3ad0a7b59dc4545088dcfe98803dfc2159dbb.jpg",
+          "sha256": "73fe2d690b8271302a3658461dc3ad0a7b59dc4545088dcfe98803dfc2159dbb",
+          "bytes": 150233
+        },
+        {
+          "order": 32,
+          "path": "assets/images/portfolio/galleries/224283009bb2c125368b2f962b2abd16f635e1fc8feb83d55c036cdebd6e62a2.jpg",
+          "sha256": "224283009bb2c125368b2f962b2abd16f635e1fc8feb83d55c036cdebd6e62a2",
+          "bytes": 247124
+        },
+        {
+          "order": 33,
+          "path": "assets/images/portfolio/galleries/6e0fed75bb47452444182ae40dc168be5f6ee57ab108b506f0887a63255284f5.jpg",
+          "sha256": "6e0fed75bb47452444182ae40dc168be5f6ee57ab108b506f0887a63255284f5",
+          "bytes": 201752
+        },
+        {
+          "order": 34,
+          "path": "assets/images/portfolio/galleries/be1cf885c40208b5e215225e199dad48bc75c0df7d81ab5df20df97ffbced63c.jpg",
+          "sha256": "be1cf885c40208b5e215225e199dad48bc75c0df7d81ab5df20df97ffbced63c",
+          "bytes": 195812
+        },
+        {
+          "order": 35,
+          "path": "assets/images/portfolio/galleries/154d001f3056f1af20336996627bba2baf94a2016c906d93378bb2fa2f1c1b1b.jpg",
+          "sha256": "154d001f3056f1af20336996627bba2baf94a2016c906d93378bb2fa2f1c1b1b",
+          "bytes": 115764
+        },
+        {
+          "order": 36,
+          "path": "assets/images/portfolio/galleries/ce048a3d61bc4117029b81929962590d2796ee8b26f38299e524e4ace0a6faba.jpg",
+          "sha256": "ce048a3d61bc4117029b81929962590d2796ee8b26f38299e524e4ace0a6faba",
+          "bytes": 120563
+        },
+        {
+          "order": 37,
+          "path": "assets/images/portfolio/galleries/64470ca9ed248120343f683a4f5266c34af6b2774d6a6b4fe16a17dabd15b2ae.jpg",
+          "sha256": "64470ca9ed248120343f683a4f5266c34af6b2774d6a6b4fe16a17dabd15b2ae",
+          "bytes": 176738
+        },
+        {
+          "order": 38,
+          "path": "assets/images/portfolio/galleries/0d1793858888d45df77aa37392c28627d42bfee0d124c9cefe79f830253d35ea.jpg",
+          "sha256": "0d1793858888d45df77aa37392c28627d42bfee0d124c9cefe79f830253d35ea",
+          "bytes": 180080
+        },
+        {
+          "order": 39,
+          "path": "assets/images/portfolio/galleries/7d18703a4ecfd5b6b89c2e2795b599ab2626b5a6c7c30e428d8f8c6a5a2c1ec6.jpg",
+          "sha256": "7d18703a4ecfd5b6b89c2e2795b599ab2626b5a6c7c30e428d8f8c6a5a2c1ec6",
+          "bytes": 160819
         }
       ],
-      "galleryCountDetected": 1,
-      "galleryCountSaved": 1
+      "galleryCountDetected": 39,
+      "galleryCountSaved": 39
     },
     {
       "cardIndex": 17,
@@ -1055,13 +1985,289 @@
       "gallery": [
         {
           "order": 1,
-          "path": "assets/images/portfolio/galleries/5edc63841d70c81084088266426c9090d7a68f7f16cd216a018f7bfe00a21c38.jpg",
-          "sha256": "5edc63841d70c81084088266426c9090d7a68f7f16cd216a018f7bfe00a21c38",
-          "bytes": 10701
+          "path": "assets/images/portfolio/galleries/cff32f122c14c4cdbe88ad3e525a6a4f105b1e1958a94e9af35e0fec85da2a5f.jpg",
+          "sha256": "cff32f122c14c4cdbe88ad3e525a6a4f105b1e1958a94e9af35e0fec85da2a5f",
+          "bytes": 251690
+        },
+        {
+          "order": 2,
+          "path": "assets/images/portfolio/galleries/a89606776529174e68a6af15bb44874dd2506a49bcf2fea65f9bf8c78e90bf50.jpg",
+          "sha256": "a89606776529174e68a6af15bb44874dd2506a49bcf2fea65f9bf8c78e90bf50",
+          "bytes": 231204
+        },
+        {
+          "order": 3,
+          "path": "assets/images/portfolio/galleries/39f70702a2c117c281c100e7ea2de107f3c63207cfd84a77614f6b3239be3ff0.jpg",
+          "sha256": "39f70702a2c117c281c100e7ea2de107f3c63207cfd84a77614f6b3239be3ff0",
+          "bytes": 244842
+        },
+        {
+          "order": 4,
+          "path": "assets/images/portfolio/galleries/d15f9bbeeb85a1de1978d4253cb79db5ae3d484ab701c3f4f05da3b25b057795.jpg",
+          "sha256": "d15f9bbeeb85a1de1978d4253cb79db5ae3d484ab701c3f4f05da3b25b057795",
+          "bytes": 237896
+        },
+        {
+          "order": 5,
+          "path": "assets/images/portfolio/galleries/d0ca526bb2d20f136ec3bcacbf5e4f868d20079b821e0ecabb8984c289830f83.jpg",
+          "sha256": "d0ca526bb2d20f136ec3bcacbf5e4f868d20079b821e0ecabb8984c289830f83",
+          "bytes": 216831
+        },
+        {
+          "order": 6,
+          "path": "assets/images/portfolio/0055b833544bd3550f1a90b3f038637a8d1b4a9a570018a5614231ed3ce1b0e9.jpg",
+          "sha256": "0055b833544bd3550f1a90b3f038637a8d1b4a9a570018a5614231ed3ce1b0e9",
+          "bytes": 179344
+        },
+        {
+          "order": 7,
+          "path": "assets/images/portfolio/galleries/8b38c795cdc4e514377b8cd91e136c6b4690f898ba8be350fb9577ca1a737c70.jpg",
+          "sha256": "8b38c795cdc4e514377b8cd91e136c6b4690f898ba8be350fb9577ca1a737c70",
+          "bytes": 236241
+        },
+        {
+          "order": 8,
+          "path": "assets/images/portfolio/galleries/b84d095c3ce078b54bbfd97dd68d542ed2f7d8eb993e3e24141c9355eaf99e8c.jpg",
+          "sha256": "b84d095c3ce078b54bbfd97dd68d542ed2f7d8eb993e3e24141c9355eaf99e8c",
+          "bytes": 222720
+        },
+        {
+          "order": 9,
+          "path": "assets/images/portfolio/galleries/ab394098a7380a39187110e7923bac56cd58a6f1915fcd7b8c5e730681dab6ff.jpg",
+          "sha256": "ab394098a7380a39187110e7923bac56cd58a6f1915fcd7b8c5e730681dab6ff",
+          "bytes": 207899
+        },
+        {
+          "order": 10,
+          "path": "assets/images/portfolio/galleries/63f7ca1c920273c0e582f5c11b2b3992f97ff57ba6fd1d946904020f90666093.jpg",
+          "sha256": "63f7ca1c920273c0e582f5c11b2b3992f97ff57ba6fd1d946904020f90666093",
+          "bytes": 244892
+        },
+        {
+          "order": 11,
+          "path": "assets/images/portfolio/galleries/254c45626e89a8dd5b448538a6456b92a1058a1120f5461a86fd2877ab412e2d.jpg",
+          "sha256": "254c45626e89a8dd5b448538a6456b92a1058a1120f5461a86fd2877ab412e2d",
+          "bytes": 225267
+        },
+        {
+          "order": 12,
+          "path": "assets/images/portfolio/galleries/2a62762f329b0cd0b9982c80b3f92449230e39fa4508b3030c7ea1a9270da0c2.jpg",
+          "sha256": "2a62762f329b0cd0b9982c80b3f92449230e39fa4508b3030c7ea1a9270da0c2",
+          "bytes": 225367
+        },
+        {
+          "order": 13,
+          "path": "assets/images/portfolio/cb42231a233b675dacc33fa230eaf0ee18c0ec01c00181154dfa1cdce9948633.jpg",
+          "sha256": "cb42231a233b675dacc33fa230eaf0ee18c0ec01c00181154dfa1cdce9948633",
+          "bytes": 203211
+        },
+        {
+          "order": 14,
+          "path": "assets/images/portfolio/galleries/c4b926ba587fb38f008c630de12e3d605fa12718977b1444fe412132b955c5ac.jpg",
+          "sha256": "c4b926ba587fb38f008c630de12e3d605fa12718977b1444fe412132b955c5ac",
+          "bytes": 168651
+        },
+        {
+          "order": 15,
+          "path": "assets/images/portfolio/galleries/1f424855b4818b73b777db183dfd8be2996f43a7c88032c18809f04e580117c4.jpg",
+          "sha256": "1f424855b4818b73b777db183dfd8be2996f43a7c88032c18809f04e580117c4",
+          "bytes": 215888
+        },
+        {
+          "order": 16,
+          "path": "assets/images/portfolio/galleries/9d3cb77256371674b9503e90022dad49a42e7fa6163e0c338d0109df92869d7f.jpg",
+          "sha256": "9d3cb77256371674b9503e90022dad49a42e7fa6163e0c338d0109df92869d7f",
+          "bytes": 215430
+        },
+        {
+          "order": 17,
+          "path": "assets/images/portfolio/galleries/62a03624a21d3bbbb3ee8c1853184f2c31ebfa1bb3d0569a5753e22e00e3082a.jpg",
+          "sha256": "62a03624a21d3bbbb3ee8c1853184f2c31ebfa1bb3d0569a5753e22e00e3082a",
+          "bytes": 217269
+        },
+        {
+          "order": 18,
+          "path": "assets/images/portfolio/galleries/f76f03176c91ea37eb18695b6bef9f76106eabafabb97d7de4529a832726952e.jpg",
+          "sha256": "f76f03176c91ea37eb18695b6bef9f76106eabafabb97d7de4529a832726952e",
+          "bytes": 213074
+        },
+        {
+          "order": 19,
+          "path": "assets/images/portfolio/galleries/463d090c8da2cac583be20ace8bb81521add6ae9dcfa306c8fa252b1e8f3c744.jpg",
+          "sha256": "463d090c8da2cac583be20ace8bb81521add6ae9dcfa306c8fa252b1e8f3c744",
+          "bytes": 219042
+        },
+        {
+          "order": 20,
+          "path": "assets/images/portfolio/galleries/9762ef127956d1f948a94492d981d3ecfd5a2022bb8483e397b5fa23af217392.jpg",
+          "sha256": "9762ef127956d1f948a94492d981d3ecfd5a2022bb8483e397b5fa23af217392",
+          "bytes": 224531
+        },
+        {
+          "order": 21,
+          "path": "assets/images/portfolio/galleries/85945e7e41eaa1a8a234e5f05a8133345ecc29afa61934d1ec9ea2dc349213dc.jpg",
+          "sha256": "85945e7e41eaa1a8a234e5f05a8133345ecc29afa61934d1ec9ea2dc349213dc",
+          "bytes": 233439
+        },
+        {
+          "order": 22,
+          "path": "assets/images/portfolio/galleries/5277ebd254bdb2166e2caee7efeb8f114e650152d098651c49613f39384e06b3.jpg",
+          "sha256": "5277ebd254bdb2166e2caee7efeb8f114e650152d098651c49613f39384e06b3",
+          "bytes": 197226
+        },
+        {
+          "order": 23,
+          "path": "assets/images/portfolio/galleries/433bdf077a45be1c1a47d3704b681c184b364130b81ffc7f6ba4b92c3faf798a.jpg",
+          "sha256": "433bdf077a45be1c1a47d3704b681c184b364130b81ffc7f6ba4b92c3faf798a",
+          "bytes": 219023
+        },
+        {
+          "order": 24,
+          "path": "assets/images/portfolio/galleries/40ab6375d8042d02c8b3e1dc0e53d3ba884e948d913bf8b71ec418fcfb141fa0.jpg",
+          "sha256": "40ab6375d8042d02c8b3e1dc0e53d3ba884e948d913bf8b71ec418fcfb141fa0",
+          "bytes": 187853
+        },
+        {
+          "order": 25,
+          "path": "assets/images/portfolio/galleries/14c642cea56449897027bb54b30ff6c94aa4ebbb585b60a11b84ee81c0d0610a.jpg",
+          "sha256": "14c642cea56449897027bb54b30ff6c94aa4ebbb585b60a11b84ee81c0d0610a",
+          "bytes": 126895
+        },
+        {
+          "order": 26,
+          "path": "assets/images/portfolio/0c19e039a9f8b201b663411f4e0c93d6a758508610858b12cc2523374bb57b2f.jpg",
+          "sha256": "0c19e039a9f8b201b663411f4e0c93d6a758508610858b12cc2523374bb57b2f",
+          "bytes": 176698
+        },
+        {
+          "order": 27,
+          "path": "assets/images/portfolio/galleries/f21d6993853c4e940978efc59a6cfa89f755f3e09d3d9150488356a4e5ac9d67.jpg",
+          "sha256": "f21d6993853c4e940978efc59a6cfa89f755f3e09d3d9150488356a4e5ac9d67",
+          "bytes": 232377
+        },
+        {
+          "order": 28,
+          "path": "assets/images/portfolio/galleries/14c8c965379e39ffdf82d1c5b97277e68e78d08d01f62b9955605b50485d9a41.jpg",
+          "sha256": "14c8c965379e39ffdf82d1c5b97277e68e78d08d01f62b9955605b50485d9a41",
+          "bytes": 266842
+        },
+        {
+          "order": 29,
+          "path": "assets/images/portfolio/galleries/73fe2d690b8271302a3658461dc3ad0a7b59dc4545088dcfe98803dfc2159dbb.jpg",
+          "sha256": "73fe2d690b8271302a3658461dc3ad0a7b59dc4545088dcfe98803dfc2159dbb",
+          "bytes": 150233
+        },
+        {
+          "order": 30,
+          "path": "assets/images/portfolio/galleries/224283009bb2c125368b2f962b2abd16f635e1fc8feb83d55c036cdebd6e62a2.jpg",
+          "sha256": "224283009bb2c125368b2f962b2abd16f635e1fc8feb83d55c036cdebd6e62a2",
+          "bytes": 247124
+        },
+        {
+          "order": 31,
+          "path": "assets/images/portfolio/galleries/6e0fed75bb47452444182ae40dc168be5f6ee57ab108b506f0887a63255284f5.jpg",
+          "sha256": "6e0fed75bb47452444182ae40dc168be5f6ee57ab108b506f0887a63255284f5",
+          "bytes": 201752
+        },
+        {
+          "order": 32,
+          "path": "assets/images/portfolio/galleries/be1cf885c40208b5e215225e199dad48bc75c0df7d81ab5df20df97ffbced63c.jpg",
+          "sha256": "be1cf885c40208b5e215225e199dad48bc75c0df7d81ab5df20df97ffbced63c",
+          "bytes": 195812
+        },
+        {
+          "order": 33,
+          "path": "assets/images/portfolio/galleries/154d001f3056f1af20336996627bba2baf94a2016c906d93378bb2fa2f1c1b1b.jpg",
+          "sha256": "154d001f3056f1af20336996627bba2baf94a2016c906d93378bb2fa2f1c1b1b",
+          "bytes": 115764
+        },
+        {
+          "order": 34,
+          "path": "assets/images/portfolio/galleries/ce048a3d61bc4117029b81929962590d2796ee8b26f38299e524e4ace0a6faba.jpg",
+          "sha256": "ce048a3d61bc4117029b81929962590d2796ee8b26f38299e524e4ace0a6faba",
+          "bytes": 120563
+        },
+        {
+          "order": 35,
+          "path": "assets/images/portfolio/galleries/64470ca9ed248120343f683a4f5266c34af6b2774d6a6b4fe16a17dabd15b2ae.jpg",
+          "sha256": "64470ca9ed248120343f683a4f5266c34af6b2774d6a6b4fe16a17dabd15b2ae",
+          "bytes": 176738
+        },
+        {
+          "order": 36,
+          "path": "assets/images/portfolio/galleries/0d1793858888d45df77aa37392c28627d42bfee0d124c9cefe79f830253d35ea.jpg",
+          "sha256": "0d1793858888d45df77aa37392c28627d42bfee0d124c9cefe79f830253d35ea",
+          "bytes": 180080
+        },
+        {
+          "order": 37,
+          "path": "assets/images/portfolio/galleries/7d18703a4ecfd5b6b89c2e2795b599ab2626b5a6c7c30e428d8f8c6a5a2c1ec6.jpg",
+          "sha256": "7d18703a4ecfd5b6b89c2e2795b599ab2626b5a6c7c30e428d8f8c6a5a2c1ec6",
+          "bytes": 160819
+        },
+        {
+          "order": 38,
+          "path": "assets/images/portfolio/galleries/dbba995f096761f522bbd60122cd590dd0ed98c524602df01dd0456cec9bf026.jpg",
+          "sha256": "dbba995f096761f522bbd60122cd590dd0ed98c524602df01dd0456cec9bf026",
+          "bytes": 158601
+        },
+        {
+          "order": 39,
+          "path": "assets/images/portfolio/galleries/46cdf8fd175042ca41402070f2968461055d209f1aadb8c58ba2e88f7b44bc9e.jpg",
+          "sha256": "46cdf8fd175042ca41402070f2968461055d209f1aadb8c58ba2e88f7b44bc9e",
+          "bytes": 139111
+        },
+        {
+          "order": 40,
+          "path": "assets/images/portfolio/galleries/430edac8c13e38119cb1b1c2e92838737e97c3f6afe4c3d5a07f112c3e3d8075.jpg",
+          "sha256": "430edac8c13e38119cb1b1c2e92838737e97c3f6afe4c3d5a07f112c3e3d8075",
+          "bytes": 175287
+        },
+        {
+          "order": 41,
+          "path": "assets/images/portfolio/galleries/dca0b9312ce400eac27e8cca4dbdcd64d3c8e6c041945eac2149873001ccd3f8.jpg",
+          "sha256": "dca0b9312ce400eac27e8cca4dbdcd64d3c8e6c041945eac2149873001ccd3f8",
+          "bytes": 159181
+        },
+        {
+          "order": 42,
+          "path": "assets/images/portfolio/galleries/12868295d239fe5b26661c13c8ff395b4a89871f26930159c0c542368305d406.jpg",
+          "sha256": "12868295d239fe5b26661c13c8ff395b4a89871f26930159c0c542368305d406",
+          "bytes": 169861
+        },
+        {
+          "order": 43,
+          "path": "assets/images/portfolio/galleries/06d31ee3813008fcab2faa5ee0bc2540450fd4bc0833b862d582ca3344358d77.jpg",
+          "sha256": "06d31ee3813008fcab2faa5ee0bc2540450fd4bc0833b862d582ca3344358d77",
+          "bytes": 161930
+        },
+        {
+          "order": 44,
+          "path": "assets/images/portfolio/galleries/abc901b15ca77ece0e4d84b0209ea3bcc7180a67f46448df4002830ff91feb32.jpg",
+          "sha256": "abc901b15ca77ece0e4d84b0209ea3bcc7180a67f46448df4002830ff91feb32",
+          "bytes": 162424
+        },
+        {
+          "order": 45,
+          "path": "assets/images/portfolio/galleries/41fe300c88d883ab65137be0f691222fcbf29debe532776c5d17e3497951440b.jpg",
+          "sha256": "41fe300c88d883ab65137be0f691222fcbf29debe532776c5d17e3497951440b",
+          "bytes": 194604
+        },
+        {
+          "order": 46,
+          "path": "assets/images/portfolio/galleries/63a5a05ee4971f8e8735865f4df65a5c08f008cab40b0290010a2e108458c5b7.jpg",
+          "sha256": "63a5a05ee4971f8e8735865f4df65a5c08f008cab40b0290010a2e108458c5b7",
+          "bytes": 166678
+        },
+        {
+          "order": 47,
+          "path": "assets/images/portfolio/galleries/bca2fdeeed27bf23f91686bb8a4a0b0f17476fbb3f378a1204e7a4b6abdcc859.jpg",
+          "sha256": "bca2fdeeed27bf23f91686bb8a4a0b0f17476fbb3f378a1204e7a4b6abdcc859",
+          "bytes": 116903
         }
       ],
-      "galleryCountDetected": 1,
-      "galleryCountSaved": 1
+      "galleryCountDetected": 47,
+      "galleryCountSaved": 47
     },
     {
       "cardIndex": 18,
