@@ -173,7 +173,7 @@ const estimateSection = (showSelectedSummary = false) => `<section class="estima
 
 const homePage = () => `
   <main>
-    <section class="hero"><div class="hero-shade"></div><div class="hero-test-controls"><button class="hero-photo-toggle" type="button" aria-label="Показать новую фотографию" aria-pressed="false">Сменить фото</button><div class="hero-design-control"><button class="hero-design-toggle" type="button" aria-label="Переключить оформление сайта">Сменить дизайн</button><span class="hero-design-name" aria-live="polite">Основной</span></div></div><div class="wrap hero-content"><span class="eyebrow">BARIBAL · СТУДИЯ ЗАЩИТНЫХ ТЕХНОЛОГИЙ</span><h1>Современные технологии<br /><em>защиты автомобиля</em><br />в Перми</h1><p>Профессиональный уход, защита кузова и интерьера<br class="desktop-only" /> с гарантией от 12 до 72 месяцев</p><div class="hero-actions"><button class="button js-callback">Записаться на обслуживание <span>↗</span></button><a class="button button-outline" href="#works">Наши работы</a></div><div class="hero-index"><img src="${logo}" alt="BARIBAL" /><span>ЗАЩИТА · УХОД · СТИЛЬ</span></div></div></section>
+    <section class="hero"><div class="hero-shade"></div><div class="hero-test-controls"><div class="hero-design-control"><button class="hero-design-toggle" type="button" aria-label="Переключить оформление сайта">Сменить дизайн</button><span class="hero-design-name" aria-live="polite">Основной</span></div></div><div class="wrap hero-content"><span class="eyebrow">BARIBAL · СТУДИЯ ЗАЩИТНЫХ ТЕХНОЛОГИЙ</span><h1>Современные технологии<br /><em>защиты автомобиля</em><br />в Перми</h1><p>Профессиональный уход, защита кузова и интерьера<br class="desktop-only" /> с гарантией от 12 до 72 месяцев</p><div class="hero-actions"><button class="button js-callback">Записаться на обслуживание <span>↗</span></button><a class="button button-outline" href="#works">Наши работы</a></div><div class="hero-index"><img src="${logo}" alt="BARIBAL" /><span>ЗАЩИТА · УХОД · СТИЛЬ</span></div></div></section>
     <section class="section works-section" id="works"><div class="wrap"><div class="section-heading"><div><span class="eyebrow">ПОРТФОЛИО</span><h2>Последние выполненные<br /><em>нами работы</em></h2></div><a class="text-link" href="#callback">Обсудить проект <span>↗</span></a></div><div class="work-grid">${workCards()}</div>${workGalleryModal()}<div class="center-action"><button class="button button-dark js-callback">Хочу такой же результат</button></div></div></section>
     ${estimateSection()}
     <section class="section services-section" id="services"><div class="wrap"><div class="section-heading"><div><span class="eyebrow">ЧТО МЫ ДЕЛАЕМ</span><h2>Услуги студии <em>BARIBAL</em></h2></div><p>Технологичные решения для сохранения внешнего вида и ценности вашего автомобиля.</p></div><div class="service-grid">${serviceCards()}</div></div></section>
@@ -432,12 +432,6 @@ previewButtons.forEach(button => button.addEventListener("click", () => setPrevi
 previewModal.querySelectorAll("[data-preview-close]").forEach(button => button.addEventListener("click", closePreview));
 document.addEventListener("keydown", event => {
   if (event.key === "Escape" && previewModal.classList.contains("is-open")) closePreview();
-});
-const heroPhotoToggle = document.querySelector(".hero-photo-toggle");
-heroPhotoToggle?.addEventListener("click", () => {
-  const showingNewPhoto = document.querySelector(".hero").classList.toggle("is-alt-photo");
-  heroPhotoToggle.setAttribute("aria-pressed", String(showingNewPhoto));
-  heroPhotoToggle.setAttribute("aria-label", showingNewPhoto ? "Показать старую фотографию" : "Показать новую фотографию");
 });
 const designToggle = document.querySelector(".hero-design-toggle");
 const designName = document.querySelector(".hero-design-name");
