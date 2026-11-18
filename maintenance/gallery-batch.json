@@ -1,7 +1,7 @@
 {
   "startCard": 8,
   "endCard": 8,
-  "galleryLimit": 120,
+  "galleryLimit": 0,
   "requiredCardText": "Mercedes-Benz GLE Coupe",
-  "note": "Regression test for the generalized extractor: card 8. Routine use: Actions > Extract and archive Creatium galleries > Run workflow."
+  "note": "Regression test for generalized extractor: card 8, all additional photos. Routine use: Actions > Extract and archive Creatium galleries > Run workflow."
 }
