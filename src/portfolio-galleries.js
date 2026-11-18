@@ -93,6 +93,61 @@ import image90 from "../assets/images/portfolio/galleries/4bee60bf86fcaa7044b238
 import image91 from "../assets/images/portfolio/galleries/2b1225193fe8b14432b19954b0f1cf1a61636ac6c68db2d1586d54df0f80c7d6.jpg";
 import image92 from "../assets/images/portfolio/galleries/e82286282233f10495faf9397b25bcf8d5dce6e546c89e29000de047350f9a7a.jpg";
 
+import image93 from "../assets/images/portfolio/galleries/ab394098a7380a39187110e7923bac56cd58a6f1915fcd7b8c5e730681dab6ff.jpg";
+import image94 from "../assets/images/portfolio/galleries/63f7ca1c920273c0e582f5c11b2b3992f97ff57ba6fd1d946904020f90666093.jpg";
+import image95 from "../assets/images/portfolio/galleries/254c45626e89a8dd5b448538a6456b92a1058a1120f5461a86fd2877ab412e2d.jpg";
+import image96 from "../assets/images/portfolio/galleries/2a62762f329b0cd0b9982c80b3f92449230e39fa4508b3030c7ea1a9270da0c2.jpg";
+import image97 from "../assets/images/portfolio/cb42231a233b675dacc33fa230eaf0ee18c0ec01c00181154dfa1cdce9948633.jpg";
+import image98 from "../assets/images/portfolio/galleries/c4b926ba587fb38f008c630de12e3d605fa12718977b1444fe412132b955c5ac.jpg";
+import image99 from "../assets/images/portfolio/galleries/1f424855b4818b73b777db183dfd8be2996f43a7c88032c18809f04e580117c4.jpg";
+import image100 from "../assets/images/portfolio/galleries/9d3cb77256371674b9503e90022dad49a42e7fa6163e0c338d0109df92869d7f.jpg";
+import image101 from "../assets/images/portfolio/galleries/62a03624a21d3bbbb3ee8c1853184f2c31ebfa1bb3d0569a5753e22e00e3082a.jpg";
+import image102 from "../assets/images/portfolio/galleries/f76f03176c91ea37eb18695b6bef9f76106eabafabb97d7de4529a832726952e.jpg";
+import image103 from "../assets/images/portfolio/galleries/463d090c8da2cac583be20ace8bb81521add6ae9dcfa306c8fa252b1e8f3c744.jpg";
+import image104 from "../assets/images/portfolio/galleries/85945e7e41eaa1a8a234e5f05a8133345ecc29afa61934d1ec9ea2dc349213dc.jpg";
+import image105 from "../assets/images/portfolio/galleries/5277ebd254bdb2166e2caee7efeb8f114e650152d098651c49613f39384e06b3.jpg";
+import image106 from "../assets/images/portfolio/galleries/433bdf077a45be1c1a47d3704b681c184b364130b81ffc7f6ba4b92c3faf798a.jpg";
+import image107 from "../assets/images/portfolio/galleries/40ab6375d8042d02c8b3e1dc0e53d3ba884e948d913bf8b71ec418fcfb141fa0.jpg";
+import image108 from "../assets/images/portfolio/galleries/14c642cea56449897027bb54b30ff6c94aa4ebbb585b60a11b84ee81c0d0610a.jpg";
+import image109 from "../assets/images/portfolio/0c19e039a9f8b201b663411f4e0c93d6a758508610858b12cc2523374bb57b2f.jpg";
+import image110 from "../assets/images/portfolio/galleries/f21d6993853c4e940978efc59a6cfa89f755f3e09d3d9150488356a4e5ac9d67.jpg";
+import image111 from "../assets/images/portfolio/galleries/73fe2d690b8271302a3658461dc3ad0a7b59dc4545088dcfe98803dfc2159dbb.jpg";
+import image112 from "../assets/images/portfolio/galleries/224283009bb2c125368b2f962b2abd16f635e1fc8feb83d55c036cdebd6e62a2.jpg";
+import image113 from "../assets/images/portfolio/galleries/6e0fed75bb47452444182ae40dc168be5f6ee57ab108b506f0887a63255284f5.jpg";
+import image114 from "../assets/images/portfolio/galleries/be1cf885c40208b5e215225e199dad48bc75c0df7d81ab5df20df97ffbced63c.jpg";
+import image115 from "../assets/images/portfolio/galleries/154d001f3056f1af20336996627bba2baf94a2016c906d93378bb2fa2f1c1b1b.jpg";
+import image116 from "../assets/images/portfolio/galleries/ce048a3d61bc4117029b81929962590d2796ee8b26f38299e524e4ace0a6faba.jpg";
+import image117 from "../assets/images/portfolio/galleries/64470ca9ed248120343f683a4f5266c34af6b2774d6a6b4fe16a17dabd15b2ae.jpg";
+import image118 from "../assets/images/portfolio/galleries/0d1793858888d45df77aa37392c28627d42bfee0d124c9cefe79f830253d35ea.jpg";
+import image119 from "../assets/images/portfolio/galleries/7d18703a4ecfd5b6b89c2e2795b599ab2626b5a6c7c30e428d8f8c6a5a2c1ec6.jpg";
+import image120 from "../assets/images/portfolio/galleries/dbba995f096761f522bbd60122cd590dd0ed98c524602df01dd0456cec9bf026.jpg";
+import image121 from "../assets/images/portfolio/galleries/46cdf8fd175042ca41402070f2968461055d209f1aadb8c58ba2e88f7b44bc9e.jpg";
+import image122 from "../assets/images/portfolio/galleries/430edac8c13e38119cb1b1c2e92838737e97c3f6afe4c3d5a07f112c3e3d8075.jpg";
+import image123 from "../assets/images/portfolio/galleries/dca0b9312ce400eac27e8cca4dbdcd64d3c8e6c041945eac2149873001ccd3f8.jpg";
+import image124 from "../assets/images/portfolio/galleries/12868295d239fe5b26661c13c8ff395b4a89871f26930159c0c542368305d406.jpg";
+import image125 from "../assets/images/portfolio/galleries/06d31ee3813008fcab2faa5ee0bc2540450fd4bc0833b862d582ca3344358d77.jpg";
+import image126 from "../assets/images/portfolio/galleries/abc901b15ca77ece0e4d84b0209ea3bcc7180a67f46448df4002830ff91feb32.jpg";
+import image127 from "../assets/images/portfolio/galleries/41fe300c88d883ab65137be0f691222fcbf29debe532776c5d17e3497951440b.jpg";
+import image128 from "../assets/images/portfolio/galleries/63a5a05ee4971f8e8735865f4df65a5c08f008cab40b0290010a2e108458c5b7.jpg";
+import image129 from "../assets/images/portfolio/galleries/bca2fdeeed27bf23f91686bb8a4a0b0f17476fbb3f378a1204e7a4b6abdcc859.jpg";
+import image130 from "../assets/images/portfolio/galleries/cff32f122c14c4cdbe88ad3e525a6a4f105b1e1958a94e9af35e0fec85da2a5f.jpg";
+import image131 from "../assets/images/portfolio/galleries/39f70702a2c117c281c100e7ea2de107f3c63207cfd84a77614f6b3239be3ff0.jpg";
+import image132 from "../assets/images/portfolio/galleries/d15f9bbeeb85a1de1978d4253cb79db5ae3d484ab701c3f4f05da3b25b057795.jpg";
+import image133 from "../assets/images/portfolio/galleries/d0ca526bb2d20f136ec3bcacbf5e4f868d20079b821e0ecabb8984c289830f83.jpg";
+import image134 from "../assets/images/portfolio/0055b833544bd3550f1a90b3f038637a8d1b4a9a570018a5614231ed3ce1b0e9.jpg";
+import image135 from "../assets/images/portfolio/galleries/8b38c795cdc4e514377b8cd91e136c6b4690f898ba8be350fb9577ca1a737c70.jpg";
+import image136 from "../assets/images/portfolio/galleries/b84d095c3ce078b54bbfd97dd68d542ed2f7d8eb993e3e24141c9355eaf99e8c.jpg";
+import image137 from "../assets/images/portfolio/galleries/7b54b4d00af13ee08fdbbe2de56159fa3255ffd0fcb164c4447074f221551e44.jpg";
+import image138 from "../assets/images/portfolio/galleries/6539f35b6f45d62037533394fabe4bbc316a451948fd95f1fb0986854d0e0d24.jpg";
+import image139 from "../assets/images/portfolio/galleries/418591cafea5667e490179cc791d299d95019377e3e38a30c11466613917462d.jpg";
+import image140 from "../assets/images/portfolio/galleries/ad96d812844c69d9c0cf9df58a6463f8175fc05c4eb0681bc642dc8b6ca005c5.jpg";
+import image141 from "../assets/images/portfolio/galleries/12477bdaeb27c054a5be55fcff366f09a5c17b9259b965ccb11f8988ae2c2e59.jpg";
+import image142 from "../assets/images/portfolio/galleries/ddc875729d68dbae45239655bc75eb467b36d2d56860dd9663bcb69f3c1b44b1.jpg";
+import image143 from "../assets/images/portfolio/galleries/94fe6b108b2157bbd3a7ba97857d0c709dc6e3d2117c8fe8545de06dba42fa72.jpg";
+import image144 from "../assets/images/portfolio/galleries/e9d0d02f42978c6b28cba733343dd050abc447af8d3ac5f3c93d2f419db9a421.jpg";
+import image145 from "../assets/images/portfolio/galleries/03a6bd7931f6b09034d2443c8a7bc44d4972ba5833a4280729b97ee064f59a30.jpg";
+import image146 from "../assets/images/portfolio/bf670c7abac755af4ae8389a60e8d9155bf6ba7a4e0b0dbad4cf4f7492b74809.jpg";
+
 export const portfolioGalleries = [
   { sourceCardIndex: 1, images: [image0, image1, image2, image3, image4] },
   { sourceCardIndex: 2, images: [image5, image6] },
@@ -102,15 +157,16 @@ export const portfolioGalleries = [
   { sourceCardIndex: 6, images: [image21, image22, image23, image24, image25, image26] },
   { sourceCardIndex: 7, images: [image27, image28, image29, image30, image31] },
   { sourceCardIndex: 8, images: [image32, image33, image34, image35, image36, image37, image38, image39, image40] },
-  { sourceCardIndex: 9, images: [image41] },
-  { sourceCardIndex: 10, images: [image42] },
-  { sourceCardIndex: 11, images: [image43] },
-  { sourceCardIndex: 13, images: [image44] },
-  { sourceCardIndex: 14, images: [image45] },
-  { sourceCardIndex: 15, images: [image46] },
-  { sourceCardIndex: 16, images: [image47] },
-  { sourceCardIndex: 17, images: [image48] },
-  { sourceCardIndex: 18, images: [image49] },
+  { sourceCardIndex: 9, images: [image93, image94, image95, image96, image97] },
+  { sourceCardIndex: 10, images: [image98, image99, image100, image101, image102] },
+  { sourceCardIndex: 11, images: [image103, image104, image105, image106] },
+  { sourceCardIndex: 12, images: [image107, image108, image109] },
+  { sourceCardIndex: 13, images: [image110, image111, image112, image113] },
+  { sourceCardIndex: 14, images: [image114] },
+  { sourceCardIndex: 15, images: [image115, image116, image117, image118, image119] },
+  { sourceCardIndex: 16, images: [image120, image121, image122, image123, image124, image125, image126, image127, image128, image129] },
+  { sourceCardIndex: 17, images: [image130, image131, image132, image133, image134, image135, image136] },
+  { sourceCardIndex: 18, images: [image137, image138, image139, image140, image141, image142, image143, image144, image145, image146] },
   { sourceCardIndex: 19, images: [image50] },
   { sourceCardIndex: 20, images: [image51] },
   { sourceCardIndex: 21, images: [image52] },
