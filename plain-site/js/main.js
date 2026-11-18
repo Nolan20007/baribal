@@ -22,6 +22,19 @@ if (menuButton && navigation) {
 
 document.documentElement.classList.add("js-ready");
 
+// Catch CTA clicks before page-specific scripts run. This also covers links rendered dynamically.
+document.addEventListener("click", (event) => {
+  const trigger = event.target.closest(".js-callback");
+  if (!trigger) return;
+  event.preventDefault();
+  event.stopPropagation();
+  openCallback(
+    trigger.dataset.workTitle || trigger.closest(".work-card")?.querySelector("h3")?.textContent.trim() || "",
+    trigger.dataset.serviceTitle || ""
+  );
+}, true);
+
+
 
 // Keep the estimate summary in sync with the selected services.
 const estimateForm = document.querySelector(".estimate-form");
@@ -132,6 +145,133 @@ const applyTheme = (theme) => {
 };
 applyTheme(document.documentElement.dataset.theme === "light" ? "light" : "dark");
 themeButton?.addEventListener("click", () => applyTheme(document.documentElement.dataset.theme === "light" ? "dark" : "light"));
+
+
+
+// BARIBAL branded video player. The original test MP4 is currently an empty file,
+// so the poster and controls remain visible and playback reports the missing media clearly.
+const formatPlayerTime = (seconds) => {
+  if (!Number.isFinite(seconds)) return "0:00";
+  const value = Math.floor(seconds);
+  return Math.floor(value / 60) + ":" + String(value % 60).padStart(2, "0");
+};
+document.querySelectorAll(".baribal-player").forEach((player) => {
+  const video = player.querySelector("video");
+  const poster = player.querySelector(".video-poster");
+  const controls = player.querySelector("[data-player-controls]");
+  const playButton = player.querySelector("[data-player-play]");
+  const progress = player.querySelector("[data-player-progress]");
+  const time = player.querySelector("[data-player-time]");
+  const muteButton = player.querySelector("[data-player-mute]");
+  const status = player.querySelector(".video-player-status");
+  if (!video || !poster || !controls || !playButton || !progress || !time || !muteButton) return;
+  const showUnavailable = () => {
+    poster.hidden = false;
+    controls.hidden = true;
+    if (status) { status.hidden = false; status.textContent = "Тестовый видеофайл пока не загружен"; }
+  };
+  const updatePlayState = () => {
+    playButton.textContent = video.paused ? "▶" : "Ⅱ";
+    playButton.setAttribute("aria-label", video.paused ? "Воспроизвести видео" : "Приостановить видео");
+  };
+  const updateProgress = () => {
+    const duration = Number.isFinite(video.duration) ? video.duration : 0;
+    const percent = duration ? video.currentTime / duration * 100 : 0;
+    progress.value = String(percent);
+    progress.style.setProperty("--player-progress", percent + "%");
+    time.textContent = formatPlayerTime(video.currentTime) + " / " + formatPlayerTime(duration);
+  };
+  const startVideo = () => {
+    if (status) status.hidden = true;
+    poster.hidden = true;
+    controls.hidden = false;
+    const result = video.play();
+    if (result && typeof result.catch === "function") result.catch(showUnavailable);
+  };
+  player.querySelector("[data-player-start]")?.addEventListener("click", startVideo);
+  playButton.addEventListener("click", () => {
+    if (video.paused) {
+      if (video.ended) video.currentTime = 0;
+      const result = video.play();
+      if (result && typeof result.catch === "function") result.catch(showUnavailable);
+    } else video.pause();
+  });
+  video.addEventListener("error", showUnavailable);
+  video.addEventListener("play", updatePlayState);
+  video.addEventListener("pause", updatePlayState);
+  video.addEventListener("timeupdate", updateProgress);
+  video.addEventListener("loadedmetadata", updateProgress);
+  video.addEventListener("ended", updatePlayState);
+  progress.addEventListener("input", () => {
+    if (Number.isFinite(video.duration)) video.currentTime = video.duration * Number(progress.value) / 100;
+  });
+  muteButton.addEventListener("click", () => {
+    video.muted = !video.muted;
+    muteButton.textContent = video.muted ? "×" : "♪";
+    muteButton.setAttribute("aria-label", video.muted ? "Включить звук" : "Выключить звук");
+  });
+  player.querySelector("[data-player-fullscreen]")?.addEventListener("click", () => {
+    if (document.fullscreenElement) document.exitFullscreen?.();
+    else player.requestFullscreen?.();
+  });
+  updatePlayState();
+  updateProgress();
+});
+
+// Desktop-only responsive test preview, restored without the removed design switcher.
+const previewLauncher = document.querySelector(".device-preview-open");
+if (previewLauncher) {
+  const previewModal = document.createElement("div");
+  previewModal.className = "device-preview-modal";
+  previewModal.id = "device-preview-modal";
+  previewModal.setAttribute("aria-hidden", "true");
+  previewModal.innerHTML = `
+    <div class="device-preview-backdrop" data-preview-close></div>
+    <section class="device-preview-dialog" role="dialog" aria-modal="true" aria-labelledby="device-preview-title">
+      <header class="device-preview-modal-head">
+        <div><span class="device-preview-modal-kicker">BARIBAL · АДАПТИВНОСТЬ</span><h2 id="device-preview-title">Предпросмотр сайта</h2></div>
+        <div class="device-preview-modal-actions">
+          <button class="device-preview-mode is-active" type="button" data-preview-width="390" aria-pressed="true">Телефон</button>
+          <button class="device-preview-mode" type="button" data-preview-width="1366" aria-pressed="false">Ноутбук</button>
+          <button class="device-preview-mode" type="button" data-preview-width="1920" aria-pressed="false">Широкий монитор</button>
+          <button class="device-preview-close" type="button" data-preview-close aria-label="Закрыть окно">×</button>
+        </div>
+      </header>
+      <div class="device-preview-viewport"><iframe title="Предпросмотр сайта BARIBAL" loading="lazy"></iframe></div>
+    </section>`;
+  document.body.append(previewModal);
+  const previewFrame = previewModal.querySelector("iframe");
+  const previewButtons = [...previewModal.querySelectorAll("[data-preview-width]")];
+  let previewLoaded = false;
+  const setPreviewWidth = (width) => {
+    previewFrame.style.width = width + "px";
+    previewButtons.forEach((button) => {
+      const active = Number(button.dataset.previewWidth) === width;
+      button.classList.toggle("is-active", active);
+      button.setAttribute("aria-pressed", String(active));
+    });
+  };
+  const openPreview = () => {
+    if (!previewLoaded) { previewFrame.src = location.href; previewLoaded = true; }
+    setPreviewWidth(390);
+    previewModal.classList.add("is-open");
+    previewModal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("device-preview-modal-open");
+    previewModal.querySelector(".device-preview-mode")?.focus();
+  };
+  const closePreview = () => {
+    previewModal.classList.remove("is-open");
+    previewModal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("device-preview-modal-open");
+    previewLauncher.focus();
+  };
+  previewLauncher.addEventListener("click", openPreview);
+  previewButtons.forEach((button) => button.addEventListener("click", () => setPreviewWidth(Number(button.dataset.previewWidth))));
+  previewModal.querySelectorAll("[data-preview-close]").forEach((button) => button.addEventListener("click", closePreview));
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && previewModal.classList.contains("is-open")) closePreview();
+  });
+}
 
 const backToTop = document.querySelector(".back-to-top");
 if (backToTop) {
@@ -284,12 +424,7 @@ const closeCallback = () => {
   document.body.classList.remove("no-scroll");
   if (lastModalTrigger && typeof lastModalTrigger.focus === "function") lastModalTrigger.focus();
 };
-document.querySelectorAll(".js-callback").forEach((button) => {
-  button.addEventListener("click", (event) => {
-    event.preventDefault();
-    openCallback(button.dataset.workTitle || button.closest(".work-card")?.querySelector("h3")?.textContent.trim() || "", button.dataset.serviceTitle || "");
-  });
-});
+// Callback buttons are handled by the early delegated listener above.
 
 const infoModal = document.querySelector("#service-info-modal");
 const closeInfoModal = () => {
