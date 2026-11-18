@@ -671,7 +671,7 @@ const workGallerySets = [
     "../assets/images/portfolio/galleries/c140984e92c2df675bed98df0a034876a5457c926d6a4efa70eb15f3030e5576.jpg",
     "../assets/images/portfolio/galleries/f10aeb6251c9d4f0f30ccf7730d150bd55a85d8c32f081914e3f32ab1e184431.jpg"
   ]
-];
+].map((set) => set.map((path) => new URL(path, import.meta.url).href));
 const workGallery = document.querySelector("#work-gallery-modal");
 if (workGallery) {
   const galleryImage = workGallery.querySelector(".work-gallery-image");
@@ -733,6 +733,14 @@ if (workGallery) {
       workGallery.setAttribute("aria-hidden", "false");
       document.body.classList.add("no-scroll");
       workGallery.querySelector(".work-gallery-close").focus();
+    });
+  });
+  document.querySelectorAll(".work-image.js-open-work-gallery").forEach((trigger) => {
+    trigger.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        trigger.click();
+      }
     });
   });
   workGallery.querySelectorAll("[data-gallery-close]").forEach((button) => button.addEventListener("click", closeGallery));

@@ -1986,3 +1986,7 @@ html[data-design="4"] .estimate-selected-list .estimate-selected-empty{color:#70
 
 .video-player-status{position:absolute;z-index:4;left:12px;right:12px;bottom:58px;margin:0;padding:9px 12px;background:rgba(10,11,12,.88);border:1px solid var(--orange);color:#fff;text-align:center;font-size:11px;line-height:1.4}
 .video-player-status[hidden]{display:none}
+
+/* Work-card covers open their matching gallery, just like the original Vite site. */
+.work-image.js-open-work-gallery{cursor:pointer}
+.work-image.js-open-work-gallery:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
