@@ -1941,3 +1941,10 @@ html[data-design="4"] .estimate-selected-list .estimate-selected-empty{color:#70
 
 /* Slightly smaller labels keep contact options aligned beside their icons. */
 .contact-preference-list label > span:not(.contact-option-icon){font-size:.7em!important}
+
+
+/* Shared photo for callback forms. */
+.callback-modal-heading{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.callback-modal-heading>img{width:64px;height:64px;flex:0 0 64px;border-radius:50%;object-fit:cover;object-position:center 35%;border:2px solid var(--orange)}
+.callback-modal-heading .eyebrow{margin:0}
+@media(max-width:480px){.modal-card{padding:30px 22px}.callback-modal-heading>img{width:56px;height:56px;flex-basis:56px}}
