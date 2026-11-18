@@ -121,11 +121,9 @@ const contactPreferences = () => `
   <fieldset class="contact-preferences">
     <legend>Как с вами связаться?</legend>
     <div class="contact-preference-list">
-      <label><input type="checkbox" name="contact_method" value="phone" checked><span>По телефону</span></label>
-      <label><input type="checkbox" name="contact_method" value="max"><span>MAX</span></label>
-      <label><input type="checkbox" name="contact_method" value="telegram"><span>Telegram</span></label>
-      <label><input type="checkbox" name="contact_method" value="whatsapp"><span>WhatsApp</span></label>
-      <label><input type="checkbox" name="contact_method" value="viber"><span>Viber</span></label>
+      <label><input type="checkbox" name="contact_method" value="phone" checked><span class="contact-option-icon contact-option-phone" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M5 3.8 8.2 3l2.1 5.1-2.1 1.7a15 15 0 0 0 6 6l1.7-2.1 5.1 2.1-.8 3.2a2 2 0 0 1-2.2 1.5A17 17 0 0 1 3.5 6a2 2 0 0 1 1.5-2.2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>По телефону</span></label>
+      <label><input type="checkbox" name="contact_method" value="max"><span class="contact-option-icon contact-option-max" aria-hidden="true">M</span><span>MAX</span></label>
+      <label><input type="checkbox" name="contact_method" value="telegram"><span class="contact-option-icon contact-option-telegram" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M21.7 4.4 18.5 20c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.3-8.4c.4-.4-.1-.6-.6-.2L6 13.5l-4.9-1.6c-1.1-.3-1.1-1.1.2-1.6L20.4 3c.9-.3 1.7.2 1.3 1.4Z"/></svg></span><span>Telegram</span></label>
       <label><input type="checkbox" name="contact_method" value="other" data-contact-other-toggle><span>Другой способ</span></label>
     </div>
     <div class="contact-other-details" hidden>
