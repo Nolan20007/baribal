@@ -176,7 +176,12 @@ const serviceForWork = item => {
   if (/clearplex|лобов(ое|ого|ому) стекл|защит(а|ы) ст[её]кол/.test(value)) return "Бронирование лобового стекла ClearPlex";
   if (/bariglass/.test(value)) return "BariGlass";
   if (/baritools/.test(value)) return "BariTools";
-  if (/химчист|детейлинг|салон/.test(value)) return "Химчистка салона";
+  if (/шумоизоляц/.test(value)) return "Шумоизоляция автомобиля";
+  if (/удален.*вмят|вмятин/.test(value)) return "Удаление вмятин без покраски";
+  if (/аудиосистем|установк.*аудио/.test(value)) return "Установка автомобильной аудиосистемы";
+  if (/химчист.*двигател|очистк.*двигател/.test(value)) return "Химчистка двигателя";
+  if (/химчист|детейлинг|салон|уход за интерьером/.test(value)) return "Химчистка салона";
+  if (/восстановлен.*винил/.test(value)) return "Восстановление виниловой плёнки";
   if (/полировк/.test(value)) return "Ручная полировка";
   if (/винил|стайлинг|рекламн|изменение цвета/.test(value)) return "Автовинил";
   if (/advance|защитное покрытие/.test(value)) return "AdVance";
