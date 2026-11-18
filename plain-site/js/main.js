@@ -563,7 +563,6 @@ document.querySelectorAll('input[type="tel"]').forEach((input) => {
 
 // The original portfolio filters and "show all" interaction.
 const portfolioGrid = document.querySelector("#portfolio-grid");
-const portfolioMore = document.querySelector("#portfolio-more");
 if (portfolioGrid) {
   const cards = [...portfolioGrid.querySelectorAll(".work-card")];
   const categoryForCard = (card) => {
@@ -606,26 +605,16 @@ if (portfolioGrid) {
     const callbackButton = actions?.querySelector(".js-callback");
     if (callbackButton && info?.dataset.serviceTitle) callbackButton.dataset.serviceTitle = info.dataset.serviceTitle;
   });
-  let expanded = false;
   let activeFilter = "Все работы";
   const updatePortfolio = () => {
     const filtered = cards.filter((card) => activeFilter === "Все работы" || card.dataset.categories.split("|").includes(activeFilter));
     cards.forEach((card) => {
-      const position = filtered.indexOf(card);
-      card.hidden = position < 0 || (!expanded && position >= 9);
-      card.classList.toggle("is-extra", position >= 9 && !expanded);
-      card.classList.toggle("is-visible", position >= 9 && expanded);
+      card.hidden = !filtered.includes(card);
+      card.classList.remove("is-extra", "is-visible");
     });
-    if (portfolioMore) {
-      portfolioMore.hidden = filtered.length <= 9;
-      portfolioMore.setAttribute("aria-expanded", String(expanded));
-      portfolioMore.textContent = expanded ? "Свернуть работы" : "Показать все работы (" + filtered.length + ")";
-    }
   };
-  portfolioMore?.addEventListener("click", () => { expanded = !expanded; updatePortfolio(); });
   document.querySelectorAll(".portfolio-filter").forEach((button) => button.addEventListener("click", () => {
     activeFilter = button.dataset.filter;
-    expanded = false;
     document.querySelectorAll(".portfolio-filter").forEach((item) => {
       const active = item === button;
       item.classList.toggle("is-active", active);
@@ -634,7 +623,6 @@ if (portfolioGrid) {
     updatePortfolio();
   }));
   updatePortfolio();
-}
 
 // Plain-JS work galleries. The first item is the same cover shown on each card.
 const workGallerySets = [
