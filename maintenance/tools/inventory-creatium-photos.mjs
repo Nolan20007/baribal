@@ -46,7 +46,7 @@ try {
       const images=nodes.map(n=>{
         const s=getComputedStyle(n), r=n.getBoundingClientRect();
         const bg=[...s.backgroundImage.matchAll(/url\(["']?(.*?)["']?\)/g)].map(m=>m[1]);
-        const urls=unique([n.currentSrc,n.getAttribute("src"),n.getAttribute("data-src"),n.getAttribute("data-original"),n.getAttribute("data-lazy-src"),...bg,...[...n.querySelectorAll?.("source")||[]].flatMap(x=>[x.src,x.srcset])]);
+        const urls=[...new Set([n.currentSrc,n.getAttribute("src"),n.getAttribute("data-src"),n.getAttribute("data-original"),n.getAttribute("data-lazy-src"),...bg,...[...n.querySelectorAll?.("source")||[]].flatMap(x=>[x.src,x.srcset])].filter(Boolean))];
         if(!urls.length)return null;
         return {tag:n.tagName,alt:n.getAttribute("alt")||"",href:n.closest("a")?.href||"",urls,srcset:n.getAttribute("srcset")||"",naturalWidth:n.naturalWidth||0,naturalHeight:n.naturalHeight||0,renderedWidth:Math.round(r.width),renderedHeight:Math.round(r.height),className:String(n.className||"").slice(0,200)};
       }).filter(Boolean);
