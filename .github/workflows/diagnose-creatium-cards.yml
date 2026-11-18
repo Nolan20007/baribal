@@ -31,7 +31,7 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Capture card internals
         env:
-          PAGE_URL: \${{ inputs.page_url }}
+          PAGE_URL: https://baribal-studio.ru/foto
         run: node maintenance/tools/diagnose-creatium-cards.mjs
       - name: Upload diagnostic report
         if: always()
