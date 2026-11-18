@@ -1979,3 +1979,7 @@ html[data-design="4"] .estimate-selected-list .estimate-selected-empty{color:#70
   color:#fff;font-size:11px;font-weight:800;line-height:1;
   background:linear-gradient(135deg,#397cf6 0%,#7356e8 100%);
 }
+
+
+/* Slightly smaller labels keep contact options aligned beside their icons. */
+.contact-preference-list label > span:not(.contact-option-icon){font-size:.7em!important}
