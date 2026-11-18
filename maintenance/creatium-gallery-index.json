@@ -1,11 +1,11 @@
 {
   "minGalleryImageBytes": 102400,
-  "generatedAt": "2026-11-18T03:38:41.436Z",
+  "generatedAt": "2026-11-18T04:17:18.292Z",
   "source": "https://baribal-studio.ru/",
   "cardCount": 18,
   "cardsWithMainImage": 0,
-  "additionalGalleryImages": 83,
-  "uniqueBytesAdded": 3403713,
+  "additionalGalleryImages": 81,
+  "uniqueBytesAdded": 0,
   "duplicateReferencesReused": 0,
   "cards": [
     {
@@ -259,22 +259,9 @@
       "cardText": "Оклейка Оклейка и изменение цвета из цветного полиуретана для Mercedes-Benz GLE Coupe. Все фото",
       "status": "captured-viewer-sequence",
       "mainImage": null,
-      "gallery": [
-        {
-          "order": 2,
-          "path": "assets/images/portfolio/galleries/89ee4c4f6289c7bd307e768dc92246a11143550b3026e1886dff4df82d6a8f05.jpg",
-          "sha256": "89ee4c4f6289c7bd307e768dc92246a11143550b3026e1886dff4df82d6a8f05",
-          "bytes": 220148
-        },
-        {
-          "order": 3,
-          "path": "assets/images/portfolio/galleries/e07619d016a9cf994c3a88f261b674ea13202d2a301cd032299eae535e0f1f59.jpg",
-          "sha256": "e07619d016a9cf994c3a88f261b674ea13202d2a301cd032299eae535e0f1f59",
-          "bytes": 201690
-        }
-      ],
-      "galleryCountDetected": 3,
-      "galleryCountSaved": 2
+      "gallery": [],
+      "galleryCountDetected": 1,
+      "galleryCountSaved": 0
     },
     {
       "cardIndex": 9,
