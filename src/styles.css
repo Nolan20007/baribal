@@ -1218,9 +1218,6 @@ html[data-theme="light"] .device-preview-close{color:#222;border-color:rgba(20,2
 }
 
 
-/* Temporary homepage hero photo switcher for visual comparison. */
-
-
 /* Four visual directions: content and layout stay shared; only presentation changes. */
 .hero-test-controls{
   position:absolute;
@@ -1232,7 +1229,6 @@ html[data-theme="light"] .device-preview-close{color:#222;border-color:rgba(20,2
   justify-content:flex-end;
   gap:7px;
 }
-.hero-test-controls .hero-photo-toggle,
 .hero-test-controls .hero-design-toggle{
   position:static;
   padding:7px 10px;
@@ -1247,8 +1243,6 @@ html[data-theme="light"] .device-preview-close{color:#222;border-color:rgba(20,2
   opacity:.82;
   transition:opacity .2s,background .2s,border-color .2s;
 }
-.hero-test-controls .hero-photo-toggle:hover,
-.hero-test-controls .hero-photo-toggle:focus-visible,
 .hero-test-controls .hero-design-toggle:hover,
 .hero-test-controls .hero-design-toggle:focus-visible{
   opacity:1;
@@ -1264,7 +1258,6 @@ html[data-theme="light"] .device-preview-close{color:#222;border-color:rgba(20,2
     bottom:auto;
     gap:5px;
   }
-  .hero-test-controls .hero-photo-toggle,
   .hero-test-controls .hero-design-toggle{
     padding:6px 7px;
     font-size:7px;
@@ -1313,7 +1306,6 @@ html[data-design="2"] .service-copy{padding:clamp(23px,2.2vw,32px)}
 html[data-design="2"] .studio-photo,
 html[data-design="2"] .studio-map-card,
 html[data-design="2"] .studio-address-card{border-color:rgba(255,255,255,.14)}
-html[data-design="2"] .hero-test-controls .hero-photo-toggle,
 html[data-design="2"] .hero-test-controls .hero-design-toggle{border-color:rgba(232,208,174,.5)}
 
 /* 3 — Modern technology: cool silver, crisp white and electric blue accents. */
@@ -1358,7 +1350,6 @@ html[data-design="3"] .video-card{border-radius:5px;overflow:hidden}
 html[data-design="3"] .studio-photo,
 html[data-design="3"] .studio-map-card,
 html[data-design="3"] .studio-address-card{border-radius:4px;overflow:hidden}
-html[data-design="3"] .hero-test-controls .hero-photo-toggle,
 html[data-design="3"] .hero-test-controls .hero-design-toggle{border-color:rgba(255,255,255,.5)}
 
 /* 4 — Editorial motorsport: ink-black surfaces, warm sand and copper details. */
@@ -1401,7 +1392,6 @@ html[data-design="4"] .service-card{box-shadow:8px 8px 0 rgba(20,25,23,.10)}
 html[data-design="4"] .studio-photo,
 html[data-design="4"] .studio-map-card,
 html[data-design="4"] .studio-address-card{border-color:rgba(210,138,84,.32)}
-html[data-design="4"] .hero-test-controls .hero-photo-toggle,
 html[data-design="4"] .hero-test-controls .hero-design-toggle{border-color:rgba(210,138,84,.62)}
 
 
