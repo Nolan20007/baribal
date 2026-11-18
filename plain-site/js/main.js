@@ -51,21 +51,7 @@ const closeCallback = () => {
   document.body.classList.remove("no-scroll");
   if (lastModalTrigger && typeof lastModalTrigger.focus === "function") lastModalTrigger.focus();
 };
-// Callback buttons are handled by the early delegated listener above.
-
-
-document.addEventListener("click", (event) => {
-  const trigger = event.target.closest(".js-callback");
-  if (!trigger) return;
-  event.preventDefault();
-  event.stopPropagation();
-  openCallback(
-    trigger.dataset.workTitle || trigger.closest(".work-card")?.querySelector("h3")?.textContent.trim() || "",
-    trigger.dataset.serviceTitle || ""
-  );
-}, true);
-
-
+// Callback buttons are handled by the independent callback-modal.js script.
 
 // Keep the estimate summary in sync with the selected services.
 const estimateForm = document.querySelector(".estimate-form");
