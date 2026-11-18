@@ -24,41 +24,38 @@ jobs:
         run: |
           python <<'PY'
           from pathlib import Path
-          import re
 
           root = Path("/tmp/vite-snapshot")
+          files = [p for p in root.rglob("*") if p.is_file()]
+          print("ARCHIVE CONTENTS:")
+          for p in files:
+              print(f"{p.relative_to(root)} ({p.stat().st_size} bytes)")
+
+          bundle = root / "vite-archive/assets/index-CMx3FcMX.js"
+          text = bundle.read_text(encoding="utf-8")
           terms = [
-              "Бронирование кузова плёнкой",
-              "Бронирование кузова пленкой",
-              "Бронирование автомобиля защитной пленкой",
-              "Бронирование автомобиля защитной плёнкой",
+              "Бронирование кузова",
               "Quantum Pro",
               "SunTek",
+              "Другие пленки по выбору",
+              "Другие плёнки по выбору",
+              "самовосстанавлива",
           ]
-          files = [p for p in root.rglob("*") if p.is_file() and p.suffix.lower() in {".html", ".js", ".jsx", ".ts", ".tsx", ".json", ".vue"}]
-          print(f"ARCHIVE FILE COUNT: {len(files)}")
-          print("\nFILES UNDER KUZOV:")
-          for p in files:
-              if "kuzov" in str(p).lower():
-                  print(p.relative_to(root))
-          print("\nMATCHES:")
-          found = 0
-          for p in files:
-              try:
-                  text = p.read_text(encoding="utf-8")
-              except UnicodeDecodeError:
-                  text = p.read_text(encoding="utf-8", errors="replace")
-              lines = text.splitlines()
-              hit_lines = [i for i, line in enumerate(lines) if any(term.casefold() in line.casefold() for term in terms)]
-              if not hit_lines:
-                  continue
-              found += 1
-              print(f"\n--- FILE: {p.relative_to(root)} ---")
-              emitted = set()
-              for i in hit_lines:
-                  for j in range(max(0, i-2), min(len(lines), i+4)):
-                      if j not in emitted:
-                          print(f"{j+1}: {lines[j][:1200]}")
-                          emitted.add(j)
-          print(f"\nFILES WITH MATCHES: {found}")
+          print(f"\nBUNDLE: {bundle.relative_to(root)}")
+          print(f"BUNDLE SIZE: {len(text)} characters")
+          for term in terms:
+              start = 0
+              count = 0
+              while True:
+                  pos = text.casefold().find(term.casefold(), start)
+                  if pos < 0:
+                      break
+                  count += 1
+                  if count <= 8:
+                      left, right = max(0, pos-900), min(len(text), pos+1500)
+                      print(f"\n--- {term!r} occurrence {count}, offset {pos} ---")
+                      print(text[left:right])
+                  start = pos + len(term)
+              if count:
+                  print(f"\nTOTAL {term!r}: {count}")
           PY
