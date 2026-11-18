@@ -68,7 +68,7 @@ jobs:
 
       - name: Extract images from Creatium galleries
         env:
-          PAGE_URL: https://baribal-studio.ru/foto
+          PAGE_URL: https://baribal-studio.ru/
         run: node maintenance/tools/extract-creatium-images.mjs
 
       - name: Deduplicate and index gallery photos
