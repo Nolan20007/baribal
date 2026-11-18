@@ -672,6 +672,7 @@ const workGallerySets = [
     "../assets/images/portfolio/galleries/f10aeb6251c9d4f0f30ccf7730d150bd55a85d8c32f081914e3f32ab1e184431.jpg"
   ]
 ];
+  ["../assets/images/portfolio/73b239e1305c79983656d7ede9857eb88ab3d3272fd164e798a9e8d47534ebd0.jpg", "../assets/images/portfolio/b07ab313fa12622258f6b4e104b8055387147efbcde98ba317a565937783e6cd.jpg"],
 const workGallery = document.querySelector("#work-gallery-modal");
 if (workGallery) {
   const galleryImage = workGallery.querySelector(".work-gallery-image");
