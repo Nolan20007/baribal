@@ -720,14 +720,41 @@ document.querySelector("#service-info-order").addEventListener("click", () => {
 });
 document.querySelectorAll(".js-close").forEach(button => button.addEventListener("click", () => { closeModal(); closeInfoModal(); }));
 document.addEventListener("keydown", event => { if (event.key === "Escape") { closeModal(); closeInfoModal(); } });
-document.querySelectorAll('input[type="tel"]').forEach(input => input.addEventListener("input", () => {
-  let digits = input.value.replace(/\D/g, "");
-  if (digits.startsWith("8")) digits = "7" + digits.slice(1);
-  if (digits.startsWith("7")) digits = digits.slice(1);
-  digits = digits.slice(0, 10);
-  const parts = [digits.slice(0, 3), digits.slice(3, 6), digits.slice(6, 8), digits.slice(8, 10)];
-  input.value = digits ? "+7" + (parts[0] ? " (" + parts[0] : "") + (parts[0]?.length === 3 ? ")" : "") + (parts[1] ? " " + parts[1] : "") + (parts[2] ? "-" + parts[2] : "") + (parts[3] ? "-" + parts[3] : "") : "";
-}));
+document.querySelectorAll('input[type="tel"]').forEach(input => {
+  const formatPhone = (value, cursor) => {
+    const prefixAlreadyPresent = /^\\+7/.test(value);
+    let digits = value.replace(/\\D/g, "");
+    let digitsBeforeCursor = value.slice(0, cursor).replace(/\\D/g, "").length;
+    if (prefixAlreadyPresent) {
+      digits = digits.slice(1);
+      digitsBeforeCursor = Math.max(0, digitsBeforeCursor - 1);
+    } else if (digits.startsWith("7") || digits.startsWith("8")) {
+      digits = digits.slice(1);
+      digitsBeforeCursor = Math.max(0, digitsBeforeCursor - 1);
+    }
+    digits = digits.slice(0, 10);
+    digitsBeforeCursor = Math.min(digitsBeforeCursor, digits.length);
+    if (!digits) return { value: "", cursor: 0 };
+    const parts = [digits.slice(0, 3), digits.slice(3, 6), digits.slice(6, 8), digits.slice(8, 10)];
+    const formatted = "+7" + (parts[0] ? " (" + parts[0] : "") + (parts[0]?.length === 3 ? ")" : "") + (parts[1] ? " " + parts[1] : "") + (parts[2] ? "-" + parts[2] : "") + (parts[3] ? "-" + parts[3] : "");
+    let nextCursor = 2;
+    if (digitsBeforeCursor > 0) {
+      const prefix = formatted.slice(2);
+      let seen = 0, offset = 0;
+      while (offset < prefix.length && seen < digitsBeforeCursor) {
+        if (/\\d/.test(prefix[offset])) seen++;
+        offset++;
+      }
+      nextCursor = 2 + offset;
+    }
+    return { value: formatted, cursor: nextCursor };
+  };
+  input.addEventListener("input", () => {
+    const result = formatPhone(input.value, input.selectionStart ?? input.value.length);
+    input.value = result.value;
+    input.setSelectionRange(result.cursor, result.cursor);
+  });
+});
 /* Keep the selected-services summary in sync with the checklist. */
 document.querySelectorAll(".estimate").forEach(section => {
   const checkboxes = [...section.querySelectorAll('.estimate-service-option input[type="checkbox"]')];
