@@ -40,3 +40,5 @@ for (const card of cards) {
 // Retry after fixing portfolio wiring.
 
 // Trigger final portfolio build verification.
+
+// Trigger retry with network backoff.
