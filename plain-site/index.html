@@ -85,14 +85,43 @@
           <p>Расскажите, что хотите защитить. Мы свяжемся с вами и сориентируем по стоимости.</p>
         </div>
         <div class="estimate-services">
-          <span class="estimate-services-title">Популярные услуги</span>
-          <p>AdVance — защитное покрытие кузова</p>
-          <p>Бронирование автомобиля плёнкой</p>
-          <p>BariGlass — защита стёкол авто</p>
-          <p>BariTools — обработка салона авто</p>
-          <p>Химчистка и детейлинг</p>
-          <a class="button" href="tel:+73422024142">Позвонить и узнать стоимость</a>
+          <span class="estimate-services-title">Выберите услуги</span>
+          <label class="estimate-service-option"><input type="checkbox" name="requestedServices" value="AdVance — защитное покрытие кузова"><span>AdVance — защитное покрытие кузова</span></label>
+          <label class="estimate-service-option"><input type="checkbox" name="requestedServices" value="Бронирование автомобиля плёнкой"><span>Бронирование автомобиля плёнкой</span></label>
+          <label class="estimate-service-option"><input type="checkbox" name="requestedServices" value="BariGlass — защита стёкол авто"><span>BariGlass — защита стёкол авто</span></label>
+          <label class="estimate-service-option"><input type="checkbox" name="requestedServices" value="BariTools — обработка салона авто"><span>BariTools — обработка салона авто</span></label>
+          <label class="estimate-service-option"><input type="checkbox" name="requestedServices" value="Химчистка салона автомобиля"><span>Химчистка салона автомобиля</span></label>
+          <label class="estimate-service-option"><input type="checkbox" name="requestedServices" value="Удаление вмятин без покраски"><span>Удаление вмятин без покраски</span></label>
+          <label class="estimate-service-option"><input type="checkbox" name="requestedServices" value="Шумо-вибро-теплоизоляция"><span>Шумо-вибро-теплоизоляция</span></label>
+          <label class="estimate-service-option"><input type="checkbox" name="requestedServices" value="Тонирование стёкол"><span>Тонирование стёкол</span></label>
+          <label class="estimate-service-option"><input type="checkbox" name="requestedServices" value="Предпродажная подготовка автомобиля"><span>Предпродажная подготовка автомобиля</span></label>
+          <label class="estimate-service-option"><input type="checkbox" name="requestedServices" value="Ручная полировка"><span>Ручная полировка</span></label>
+          <label class="estimate-service-option"><input type="checkbox" name="requestedServices" value="Автовинил — стайлинг плёнкой"><span>Автовинил — стайлинг плёнкой</span></label>
+          <label class="estimate-service-option"><input type="checkbox" name="requestedServices" value="Ремонт сидений автомобиля"><span>Ремонт сидений автомобиля</span></label>
+          <label class="estimate-service-option"><input type="checkbox" name="requestedServices" value="Бронирование лобового стекла Quantum Anti-Skol"><span>Бронирование лобового стекла Quantum Anti-Skol</span></label>
+          <label class="estimate-service-option"><input type="checkbox" name="requestedServices" value="Полировка и защитная обработка фар"><span>Полировка и защитная обработка фар</span></label>
+          <label class="estimate-service-option"><input type="checkbox" name="requestedServices" value="Профессиональная химчистка двигателя"><span>Профессиональная химчистка двигателя</span></label>
         </div>
+        <form class="estimate-form demo-form">
+          <label>Ваш автомобиль<input name="car" placeholder="Марка и модель"></label>
+          <div class="estimate-selected">
+            <div class="estimate-selected-heading"><span>Выбранные услуги</span><b data-selected-count>0</b></div>
+            <ul class="estimate-selected-list" data-selected-services><li class="estimate-selected-empty">Пока ничего не выбрано</li></ul>
+            <input type="hidden" name="selected_services" data-selected-value value="">
+          </div>
+          <label>Телефон<input name="phone" type="tel" placeholder="+7 (___) ___-__-__" required></label>
+          <fieldset class="contact-preferences">
+            <legend>Как с вами связаться?</legend>
+            <div class="contact-preference-list">
+              <label><input type="checkbox" name="contact_method" value="phone" checked><span>По телефону</span></label>
+              <label><input type="checkbox" name="contact_method" value="max"><span>MAX</span></label>
+              <label><input type="checkbox" name="contact_method" value="telegram"><span>Telegram</span></label>
+              <label><input type="checkbox" name="contact_method" value="other"><span>Другой способ</span></label>
+            </div>
+          </fieldset>
+          <button class="button" type="submit">Отправить на расчёт <span>↗</span></button>
+          <output aria-live="polite"></output>
+        </form>
       </div>
     </section>
 
