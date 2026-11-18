@@ -670,9 +670,19 @@ const workGallerySets = [
     "../assets/images/portfolio/89aa4c603c5fe509040b7999422cd307e8aea34d9ce8fcd7862940961bd39ffa.jpg",
     "../assets/images/portfolio/galleries/c140984e92c2df675bed98df0a034876a5457c926d6a4efa70eb15f3030e5576.jpg",
     "../assets/images/portfolio/galleries/f10aeb6251c9d4f0f30ccf7730d150bd55a85d8c32f081914e3f32ab1e184431.jpg"
+  ],
+  [
+    "../assets/images/portfolio/73b239e1305c79983656d7ede9857eb88ab3d3272fd164e798a9e8d47534ebd0.jpg",
+    "../assets/images/portfolio/b07ab313fa12622258f6b4e104b8055387147efbcde98ba317a565937783e6cd.jpg"
+  ],
+  [
+    "../assets/images/portfolio/8bfc9a70f703dc3d73c4b6f620023c70a22a64e1b48d4aa3de5b8d49fe3e8b47.jpg",
+    "../assets/images/portfolio/fd19178423f242ab3e160a14836e831d495088ce0d8719f6d46ee9c7ff6031c5.jpg",
+    "../assets/images/portfolio/3837ffd66fe11fdb2a4e0f5c04afb22d0c35b31722fec43a2e04d5a1e9846bf5.jpg",
+    "../assets/images/portfolio/0fcede994e06190cb659c0bd80f574a4bef9771dd09d664a1a429ea84f48f32b.jpg",
+    "../assets/images/portfolio/87759269073dad0537555a4515cafa1e9061bafc182396d8eb97b82c82cb5fd7.jpg"
   ]
 ];
-  ["../assets/images/portfolio/73b239e1305c79983656d7ede9857eb88ab3d3272fd164e798a9e8d47534ebd0.jpg", "../assets/images/portfolio/b07ab313fa12622258f6b4e104b8055387147efbcde98ba317a565937783e6cd.jpg"],
 const workGallery = document.querySelector("#work-gallery-modal");
 if (workGallery) {
   const galleryImage = workGallery.querySelector(".work-gallery-image");
