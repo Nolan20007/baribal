@@ -1986,3 +1986,82 @@ html[data-design="4"] .estimate-selected-list .estimate-selected-empty{color:#70
 
 .video-player-status{position:absolute;z-index:4;left:12px;right:12px;bottom:58px;margin:0;padding:9px 12px;background:rgba(10,11,12,.88);border:1px solid var(--orange);color:#fff;text-align:center;font-size:11px;line-height:1.4}
 .video-player-status[hidden]{display:none}
+
+
+/* Light theme: make the estimate calculator readable and cohesive. */
+html[data-theme="light"] .estimate{
+  background:#eeece6;
+  color:#202123;
+  border-top:1px solid rgba(32,33,35,.08);
+  border-bottom:1px solid rgba(32,33,35,.08);
+}
+html[data-theme="light"] .estimate h2,
+html[data-theme="light"] .estimate-intro .eyebrow{
+  color:#202123;
+}
+html[data-theme="light"] .estimate h2 em{
+  color:#b8752f;
+}
+html[data-theme="light"] .estimate-inner>div>p{
+  color:#62635f;
+}
+html[data-theme="light"] .estimate-services{
+  background:#fff;
+  border-color:#d5d2c9;
+  box-shadow:0 8px 24px rgba(32,33,35,.045);
+}
+html[data-theme="light"] .estimate-services-title,
+html[data-theme="light"] .estimate-service-option{
+  color:#343530;
+}
+html[data-theme="light"] .estimate-service-option input{
+  accent-color:var(--orange);
+}
+html[data-theme="light"] .estimate-form label,
+html[data-theme="light"] .estimate-form .contact-preferences legend{
+  color:#454641;
+}
+html[data-theme="light"] .estimate-form input:not([type="checkbox"]),
+html[data-theme="light"] .estimate-form select,
+html[data-theme="light"] .estimate-form textarea{
+  background:#fff;
+  border-color:#d1d0c9;
+  color:#202123;
+}
+html[data-theme="light"] .estimate-form input::placeholder,
+html[data-theme="light"] .estimate-form textarea::placeholder{
+  color:#92928b;
+}
+html[data-theme="light"] .estimate-selected{
+  background:#fff;
+  border-color:#d5d2c9;
+}
+html[data-theme="light"] .estimate-selected-heading{
+  color:#55564f;
+}
+html[data-theme="light"] .estimate-selected-list{
+  color:#343530;
+}
+html[data-theme="light"] .estimate-selected-list .estimate-selected-empty{
+  color:#777871;
+}
+html[data-theme="light"] .estimate-selected-list::-webkit-scrollbar-track{
+  background:#eeece6;
+}
+html[data-theme="light"] .contact-preference-list label{
+  background:#f7f6f2;
+  border-color:#d8d6cf;
+  color:#343530;
+}
+html[data-theme="light"] .contact-preference-list label:has(input:checked){
+  background:rgba(214,137,55,.12);
+  border-color:var(--orange);
+}
+html[data-theme="light"] .estimate-form output{
+  color:#9c6127;
+}
+@media(prefers-reduced-motion:reduce){
+  html[data-theme="light"] .estimate-services,
+  html[data-theme="light"] .estimate-form input,
+  html[data-theme="light"] .contact-preference-list label{transition:none}
+}
