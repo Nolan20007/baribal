@@ -1,7 +1,8 @@
 {
-  "startCard": 8,
-  "endCard": 8,
+  "startCard": 9,
+  "endCard": 16,
   "galleryLimit": 0,
-  "requiredCardText": "Mercedes-Benz GLE Coupe",
-  "note": "Regression after fixing gallery selector: card 8 should extract only the 3 images inside the active card modal; cover is saved separately. Treat mismatch as failure."
+  "requiredCardText": "",
+  "pageUrl": "https://baribal-studio.ru/foto",
+  "note": "Test extraction for cards 9-16 from the dedicated /foto page. Save all additional photos; verify each downloaded image visually before using it."
 }
