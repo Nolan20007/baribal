@@ -101,7 +101,7 @@ jobs:
           await page.locator("#service-info-modal.modal-open").waitFor({ timeout: 3000 });
           if (!(await page.locator("#service-info-price").innerText()).includes("от 15 000")) throw new Error("Homepage service details price missing");
           await page.locator("#service-info-modal .modal-close").click();
-          await page.locator("#works .js-callback").first().click();
+          await page.locator("#works .work-card .js-callback").first().click();
           if (!(await page.locator("#callback-context").innerText()).includes("Автовинил")) throw new Error("Homepage project callback lost service context");
           await page.locator("#callback-modal .modal-close").click();
           if (!(await page.locator(".video-teaser a[href='./video/']").count())) throw new Error("Homepage video CTA does not link to video page");
