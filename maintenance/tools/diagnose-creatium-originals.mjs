@@ -218,102 +218,62 @@ async function clickModalPhoto() {
 }
 
 async function extractOriginalsByClickingThumbnails(limit) {
-  // Creatium's "All photos" popup uses Fancybox links. The thumbnail itself
-  // can be a transparent GIF; the real image is exposed only after clicking
-  // the anchor. Group anchors by their common popup/gallery ancestor.
-  const discover = () => page.evaluate(() => {
+  // The popup anchors already point to the full-size Creatium image URLs.
+  // Measure those exact hrefs directly. Clicking them advances Fancybox to
+  // the next slide in this gallery, which caused a one-image offset in reports.
+  const found = await page.evaluate(() => {
     const visible = el => {
-      const r=el.getBoundingClientRect(),s=getComputedStyle(el);
-      return r.width>0&&r.height>0&&s.display!=="none"&&s.visibility!=="hidden"&&Number(s.opacity||1)>0;
+      const r = el.getBoundingClientRect(), s = getComputedStyle(el);
+      return r.width > 0 && r.height > 0 && s.display !== "none" &&
+        s.visibility !== "hidden" && Number(s.opacity || 1) > 0;
     };
-    const activeRoots=[...document.querySelectorAll(".modal0-root.is-active,[role='dialog'][aria-modal='true'],.fancybox__container.is-open,.fancybox-container[aria-modal='true']")].filter(visible);
-    const modal=activeRoots.sort((a,b)=>(Number.parseInt(getComputedStyle(b).zIndex,10)||0)-(Number.parseInt(getComputedStyle(a).zIndex,10)||0))[0]||null;
-    const scope=modal||document;
-    const anchors=[...scope.querySelectorAll("a.fancybox[href],a[data-fancybox][href],a[class*='fancybox'][href]")]
-      .filter(visible).map((a,index)=>({a,index,href:a.href,rect:(()=>{const r=a.getBoundingClientRect();return{x:r.x,y:r.y,width:r.width,height:r.height};})()}));
-    const groups=new Map();
-    for(const item of anchors){
-      let p=item.a;
-      for(let depth=0;p&&depth<10;depth++,p=p.parentElement){
-        if(modal&&!modal.contains(p))break;
-        if(!groups.has(p))groups.set(p,{root:p,items:[],depth});
-        groups.get(p).items.push(item);
+    const roots = [...document.querySelectorAll(
+      ".modal0-root.is-active,[role='dialog'][aria-modal='true'],.fancybox__container.is-open,.fancybox-container[aria-modal='true']"
+    )].filter(visible);
+    const modal = roots.sort((a,b) =>
+      (Number.parseInt(getComputedStyle(b).zIndex,10)||0) -
+      (Number.parseInt(getComputedStyle(a).zIndex,10)||0))[0] || null;
+    const scope = modal || document;
+    const anchors = [...scope.querySelectorAll(
+      "a.fancybox[href],a[data-fancybox][href],a[class*='fancybox'][href]"
+    )].filter(visible);
+    const groups = new Map();
+    for (const anchor of anchors) {
+      let root = anchor;
+      for (let depth=0; root && depth<10; depth++, root=root.parentElement) {
+        if (modal && !modal.contains(root)) break;
+        if (!groups.has(root)) groups.set(root, []);
+        groups.get(root).push(anchor.href);
       }
     }
-    const ranked=[...groups.values()].filter(g=>g.items.length>=2).map(g=>{
-      const r=g.root.getBoundingClientRect(),s=getComputedStyle(g.root),cls=String(g.root.className||"");
-      const semantic=/popup|modal|gallery|photo|fancybox|swiper|lightbox/i.test(cls)||
-        g.root.matches("[role='dialog'],[aria-modal='true']");
-      const fixed=s.position==="fixed",area=r.width*r.height;
-      return {...g,score:g.items.length*1000+Number(semantic)*300+Number(fixed)*200-
-        Math.max(0,area-innerWidth*innerHeight)*0.0001-g.depth*2,
-        meta:{tag:g.root.tagName,id:g.root.id,cls:cls.slice(0,220),depth:g.depth,
-          position:s.position,zIndex:s.zIndex,rect:{x:r.x,y:r.y,width:r.width,height:r.height}}};
-    }).sort((a,b)=>b.score-a.score);
-    const best=ranked[0];
-    return {scope:modal?{tag:modal.tagName,id:modal.id,cls:String(modal.className||"")}:null,anchorCount:anchors.length,groups:ranked.slice(0,12).map(g=>({...g.meta,count:g.items.length,
-      links:g.items.slice(0,30).map(x=>({href:x.href,rect:x.rect,cls:String(x.a.className||"").slice(0,100)}))})),
-      chosen:best?{...best.meta,links:best.items.map(x=>x.href)}:null};
+    const ranked = [...groups.values()].filter(x=>x.length>=2)
+      .sort((a,b)=>b.length-a.length);
+    const links = [...new Set(ranked[0] || anchors.map(a=>a.href))];
+    return { anchorCount: anchors.length, links };
   });
-  const found=await discover();
-  console.log("  Active gallery scope:",JSON.stringify(found.scope),"| scoped Fancybox anchors:",found.anchorCount,"| ancestor groups:",JSON.stringify(found.groups));
-  if(!found.chosen?.links?.length)return [];
-  const allLinks=[...new Set(found.chosen.links)];
-  const links=limit===0?allLinks:allLinks.slice(0,limit);
-  const results=[],seen=new Set(),imageResponses=[];
-  const onResponse=response=>{
-    try{
-      const h=response.headers(),type=String(h["content-type"]||"").split(";")[0].toLowerCase(),url=response.url();
-      if(type.startsWith("image/")&&response.status()>=200&&response.status()<300&&
-        !/yandex|metrika|analytics|pixel|tracking|clmap/i.test(url))
-        imageResponses.push({url,type,status:response.status()});
-    }catch{}
-  };
-  page.on("response",onResponse);
-  try{
-    for(let i=0;i<links.length;i++){
-      const href=links[i],before=imageResponses.length;
-      const clicked=await page.evaluate(url=>{
-        const scope=document.querySelector(".modal0-root.is-active,[role='dialog'][aria-modal='true'],.fancybox__container.is-open,.fancybox-container[aria-modal='true']")||document;
-        const a=[...scope.querySelectorAll("a.fancybox[href],a[data-fancybox][href],a[class*='fancybox'][href]")]
-          .find(x=>x.href===url);
-        if(!a)return false;
-        a.scrollIntoView({block:"center"});a.click();return true;
-      },href);
-      console.log("  Fancybox click",i+1,clicked,href);
-      if(!clicked)continue;
-      await page.waitForTimeout(1300);
-      const dom=await page.evaluate(()=>{
-        const sels=[".fancybox__image",".fancybox-image",".fancybox-container img",
-          ".fancybox-stage img",".pswp__img","[class*='lightbox'] img","[class*='viewer'] img"];
-        const out=[];
-        for(const sel of sels)for(const img of document.querySelectorAll(sel)){
-          const r=img.getBoundingClientRect(),s=getComputedStyle(img);
-          if(r.width>100&&r.height>80&&s.display!=="none"&&s.visibility!=="hidden"){
-            const url=img.currentSrc||img.src||img.getAttribute("data-src")||"";
-            if(url&&!out.some(x=>x.url===url))out.push({url,width:img.naturalWidth||0,height:img.naturalHeight||0});
-          }
-        }
-        return out;
-      });
-      const urls=[...new Set([...imageResponses.slice(before).map(x=>x.url),...dom.map(x=>x.url)])]
-        .filter(u=>u&&!seen.has(u));
-      const measured=await page.evaluate(async urls=>Promise.all(urls.map(url=>new Promise(resolve=>{
-        const img=new Image(),timer=setTimeout(()=>resolve({url,width:0,height:0}),5000);
-        img.onload=()=>{clearTimeout(timer);resolve({url,width:img.naturalWidth,height:img.naturalHeight});};
-        img.onerror=()=>{clearTimeout(timer);resolve({url,width:0,height:0});};img.src=url;
-      }))),urls);
-      const best=measured.filter(x=>x.width>=500&&x.height>=300)
-        .sort((a,b)=>b.width*b.height-a.width*a.height)[0];
-      if(best){seen.add(best.url);results.push({url:best.url,naturalWidth:best.width,naturalHeight:best.height});
-        console.log("  => ORIGINAL",best.width+"x"+best.height,best.url);}
-      else console.log("  => no original; viewer:",JSON.stringify(dom),
-        "| image responses:",JSON.stringify(imageResponses.slice(before)));
-      await page.keyboard.press("Escape").catch(()=>{});
-      await page.waitForTimeout(500);
-    }
-  }finally{page.off("response",onResponse);}
-  console.log("  saved original candidates:",results.length,"of",links.length);
+  console.log("  Gallery anchors:", found.anchorCount, "| direct full-size URL candidates:", found.links.length);
+  const links = limit === 0 ? found.links : found.links.slice(0, limit);
+  const measured = await page.evaluate(async urls => Promise.all(urls.map(url =>
+    new Promise(resolve => {
+      const img = new Image();
+      const timer = setTimeout(() => resolve({url,width:0,height:0,error:"timeout"}), 12000);
+      img.onload = () => {
+        clearTimeout(timer);
+        resolve({url,width:img.naturalWidth,height:img.naturalHeight});
+      };
+      img.onerror = () => {
+        clearTimeout(timer);
+        resolve({url,width:0,height:0,error:"image-load-failed"});
+      };
+      img.src = url;
+    })
+  )), links);
+  const results = measured.filter(x => x.width >= 500 && x.height >= 300)
+    .map(x => ({url:x.url,naturalWidth:x.width,naturalHeight:x.height}));
+  for (const item of results) console.log("  => ORIGINAL",item.naturalWidth+"x"+item.naturalHeight,item.url);
+  for (const item of measured.filter(x=>x.width<500||x.height<300))
+    console.log("  => REJECTED",JSON.stringify(item));
+  console.log("  verified original URLs:",results.length,"of",links.length);
   return results;
 }
 
@@ -415,7 +375,7 @@ try {
 
     // Диагностика: сохраняем только URL и размеры, сами изображения не скачиваем.
     cards.push(record);
-    console.log("  saved gallery images:", record.gallery.filter(x => x.file).length, "| status:", record.status);
+    console.log("  saved gallery images:", record.gallery.length, "| status:", record.status);
   }
 
   const report = {
@@ -423,7 +383,7 @@ try {
     cardCount: cards.length,
     requestedRange: { start: startCard, end: endCard },
     requestedGalleryLimit,
-    totalAdditionalGalleryImages: cards.reduce((sum, card) => sum + card.gallery.filter(x => x.file).length, 0),
+    totalAdditionalGalleryImages: cards.reduce((sum, card) => sum + card.gallery.length, 0),
     cards: cards.map(card => ({
       cardIndex: card.cardIndex, description: card.description, status: card.status,
       mainImageUrl: card.mainImageUrl, galleryDetected: card.gallery.length,
