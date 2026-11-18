@@ -16,7 +16,7 @@ export const portfolioArchive = [
   { image: null, type: "Защитное покрытие AdVance", title: "Audi Q5 — покрытие AdVance", text: "Нанесение защитного покрытия AdVance на кузов Audi Q5." },
   { image: null, type: "Бронирование и AdVance", title: "Audi Q7 — защита капота", text: "Бронирование капота и защитная обработка кузова по технологии AdVance." },
   { image: null, type: "Защитное покрытие AdVance", title: "Porsche Cayenne — покрытие AdVance", text: "Нанесение защитного покрытия AdVance на кузов Porsche Cayenne." },
-  { image: null, type: "Защитное покрытие AdVance", title: "Chevrolet — покрытие AdVance", text: "Защитная обработка кузова автомобиля по технологии AdVance." },
+  { image: null, type: "Защитное покрытие AdVance", title: "Chevrolet Signature — покрытие AdVance", text: "Защитная обработка кузова автомобиля по технологии AdVance." },
   { image: null, type: "Бронирование и защита", title: "Volkswagen Touareg — защита передней части", text: "Бронирование капота и бампера с дополнительной защитной обработкой кузова." },
   { image: null, type: "Бронирование плёнкой", title: "Volkswagen Touareg — бронирование элементов", text: "Бронирование капота, бампера и передних крыльев антигравийной плёнкой." },
   { image: null, type: "Бронирование плёнкой", title: "Mercedes GL — защита передней части", text: "Бронирование капота и бампера Mercedes-Benz GL защитной плёнкой." },
