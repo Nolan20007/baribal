@@ -202,7 +202,7 @@ const homePage = () => `
 const videoPage = () => `
   <main><section class="page-hero"><div class="wrap"><span class="eyebrow">BARIBAL · ВИДЕО</span><h1>Наши <em>видео</em></h1><p>Знакомьтесь с технологиями, процессами и результатами нашей работы.</p></div></section><section class="section video-section"><div class="wrap"><div class="video-grid">${videos.map((id, i) => `<article class="video-card"><div class="video-frame">${videoPlayer(portfolio[i].image, `BARIBAL — тестовое видео ${i + 1}`)}</div><div class="video-label"><span>0${i + 1}</span><h3>Видео ${i + 1}</h3></div></article>`).join("")}</div></div></section></main>`;
 
-const basePath = "/baribal";
+const basePath = location.pathname.startsWith("/baribal/vite-archive") ? "/baribal/vite-archive" : "/baribal";
 const contactWidgetImage = new URL("../foto/foto.png", import.meta.url).href;
 const cleanPath = location.pathname.startsWith(basePath) ? location.pathname.slice(basePath.length) : location.pathname;
 const path = cleanPath.replace(/\/$/, "") || "/";
