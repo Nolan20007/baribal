@@ -1,12 +1,12 @@
 {
   "minGalleryImageBytes": 102400,
-  "generatedAt": "2026-11-18T06:34:56.952Z",
+  "generatedAt": "2026-11-18T06:46:55.903Z",
   "source": "https://baribal-studio.ru/",
-  "cardCount": 18,
-  "cardsWithMainImage": 16,
-  "additionalGalleryImages": 80,
-  "uniqueBytesAdded": 309641,
-  "duplicateReferencesReused": 42,
+  "cardCount": 25,
+  "cardsWithMainImage": 25,
+  "additionalGalleryImages": 100,
+  "uniqueBytesAdded": 4424026,
+  "duplicateReferencesReused": 96,
   "cards": [
     {
       "cardIndex": 1,
@@ -40,13 +40,19 @@
         },
         {
           "order": 4,
+          "path": "assets/images/portfolio/galleries/4aea6d3ab9409e56019e40eea8143387a4cf80eb70ff484c6940dc2ead773a37.png",
+          "sha256": "4aea6d3ab9409e56019e40eea8143387a4cf80eb70ff484c6940dc2ead773a37",
+          "bytes": 248071
+        },
+        {
+          "order": 5,
           "path": "assets/images/portfolio/galleries/30d047e83ed0ee8ae3bf12f3da0fd114dbd27807b241785c90836137ffa5e4a0.png",
           "sha256": "30d047e83ed0ee8ae3bf12f3da0fd114dbd27807b241785c90836137ffa5e4a0",
           "bytes": 319002
         }
       ],
-      "galleryCountDetected": 4,
-      "galleryCountSaved": 4
+      "galleryCountDetected": 5,
+      "galleryCountSaved": 5
     },
     {
       "cardIndex": 2,
@@ -84,9 +90,9 @@
       "gallery": [
         {
           "order": 1,
-          "path": "assets/images/portfolio/galleries/7430c82f5bd439793a9d5ee1c7044474884720a553db20a72878b49c99d3b69b.jpg",
-          "sha256": "7430c82f5bd439793a9d5ee1c7044474884720a553db20a72878b49c99d3b69b",
-          "bytes": 267839
+          "path": "assets/images/portfolio/galleries/93b12803c96fd400cc389aac558c0003530b52ba861c8493b82d505c9368c302.jpg",
+          "sha256": "93b12803c96fd400cc389aac558c0003530b52ba861c8493b82d505c9368c302",
+          "bytes": 248966
         },
         {
           "order": 2,
@@ -129,10 +135,16 @@
           "path": "assets/images/portfolio/galleries/25779c31906a527f5be17e99dddd6291965bc9fbb1fb30fa1c525d7ee905c3f0.jpg",
           "sha256": "25779c31906a527f5be17e99dddd6291965bc9fbb1fb30fa1c525d7ee905c3f0",
           "bytes": 217863
+        },
+        {
+          "order": 9,
+          "path": "assets/images/portfolio/galleries/7430c82f5bd439793a9d5ee1c7044474884720a553db20a72878b49c99d3b69b.jpg",
+          "sha256": "7430c82f5bd439793a9d5ee1c7044474884720a553db20a72878b49c99d3b69b",
+          "bytes": 267839
         }
       ],
-      "galleryCountDetected": 8,
-      "galleryCountSaved": 8
+      "galleryCountDetected": 9,
+      "galleryCountSaved": 9
     },
     {
       "cardIndex": 4,
@@ -148,19 +160,13 @@
       "gallery": [
         {
           "order": 1,
-          "path": "assets/images/portfolio/galleries/693414ad9360e657d6fd0752426fe58bdddc0341b17a6ce1ab4ce36b12c11c5d.jpg",
-          "sha256": "693414ad9360e657d6fd0752426fe58bdddc0341b17a6ce1ab4ce36b12c11c5d",
-          "bytes": 295804
-        },
-        {
-          "order": 2,
           "path": "assets/images/portfolio/66c9faaf6e1bae4279f4744709f6b84e9704eee35396645de8ebe1ee68666ea0.jpg",
           "sha256": "66c9faaf6e1bae4279f4744709f6b84e9704eee35396645de8ebe1ee68666ea0",
           "bytes": 314845
         }
       ],
-      "galleryCountDetected": 2,
-      "galleryCountSaved": 2
+      "galleryCountDetected": 1,
+      "galleryCountSaved": 1
     },
     {
       "cardIndex": 5,
@@ -265,16 +271,10 @@
           "path": "assets/images/portfolio/galleries/7553d65dc3823179bc70c85277fb1245913987f9078da001135643e8950e0320.jpg",
           "sha256": "7553d65dc3823179bc70c85277fb1245913987f9078da001135643e8950e0320",
           "bytes": 239316
-        },
-        {
-          "order": 4,
-          "path": "assets/images/portfolio/galleries/f4c403f15ed47f1111c5b61f0706adf36cd4d6f835419a55ff5549037c5cb29e.jpg",
-          "sha256": "f4c403f15ed47f1111c5b61f0706adf36cd4d6f835419a55ff5549037c5cb29e",
-          "bytes": 230513
         }
       ],
-      "galleryCountDetected": 4,
-      "galleryCountSaved": 4
+      "galleryCountDetected": 3,
+      "galleryCountSaved": 3
     },
     {
       "cardIndex": 8,
@@ -388,9 +388,9 @@
       "gallery": [
         {
           "order": 1,
-          "path": "assets/images/portfolio/galleries/f76f03176c91ea37eb18695b6bef9f76106eabafabb97d7de4529a832726952e.jpg",
-          "sha256": "f76f03176c91ea37eb18695b6bef9f76106eabafabb97d7de4529a832726952e",
-          "bytes": 213074
+          "path": "assets/images/portfolio/galleries/c4b926ba587fb38f008c630de12e3d605fa12718977b1444fe412132b955c5ac.jpg",
+          "sha256": "c4b926ba587fb38f008c630de12e3d605fa12718977b1444fe412132b955c5ac",
+          "bytes": 168651
         },
         {
           "order": 2,
@@ -403,10 +403,16 @@
           "path": "assets/images/portfolio/galleries/62a03624a21d3bbbb3ee8c1853184f2c31ebfa1bb3d0569a5753e22e00e3082a.jpg",
           "sha256": "62a03624a21d3bbbb3ee8c1853184f2c31ebfa1bb3d0569a5753e22e00e3082a",
           "bytes": 217269
+        },
+        {
+          "order": 4,
+          "path": "assets/images/portfolio/galleries/f76f03176c91ea37eb18695b6bef9f76106eabafabb97d7de4529a832726952e.jpg",
+          "sha256": "f76f03176c91ea37eb18695b6bef9f76106eabafabb97d7de4529a832726952e",
+          "bytes": 213074
         }
       ],
-      "galleryCountDetected": 3,
-      "galleryCountSaved": 3
+      "galleryCountDetected": 4,
+      "galleryCountSaved": 4
     },
     {
       "cardIndex": 11,
@@ -490,9 +496,9 @@
       "gallery": [
         {
           "order": 1,
-          "path": "assets/images/portfolio/galleries/f21d6993853c4e940978efc59a6cfa89f755f3e09d3d9150488356a4e5ac9d67.jpg",
-          "sha256": "f21d6993853c4e940978efc59a6cfa89f755f3e09d3d9150488356a4e5ac9d67",
-          "bytes": 232377
+          "path": "assets/images/portfolio/galleries/14c8c965379e39ffdf82d1c5b97277e68e78d08d01f62b9955605b50485d9a41.jpg",
+          "sha256": "14c8c965379e39ffdf82d1c5b97277e68e78d08d01f62b9955605b50485d9a41",
+          "bytes": 266842
         },
         {
           "order": 2,
@@ -545,9 +551,9 @@
       "gallery": [
         {
           "order": 1,
-          "path": "assets/images/portfolio/galleries/154d001f3056f1af20336996627bba2baf94a2016c906d93378bb2fa2f1c1b1b.jpg",
-          "sha256": "154d001f3056f1af20336996627bba2baf94a2016c906d93378bb2fa2f1c1b1b",
-          "bytes": 115764
+          "path": "assets/images/portfolio/galleries/ce048a3d61bc4117029b81929962590d2796ee8b26f38299e524e4ace0a6faba.jpg",
+          "sha256": "ce048a3d61bc4117029b81929962590d2796ee8b26f38299e524e4ace0a6faba",
+          "bytes": 120563
         },
         {
           "order": 2,
@@ -585,9 +591,9 @@
       "gallery": [
         {
           "order": 1,
-          "path": "assets/images/portfolio/galleries/dbba995f096761f522bbd60122cd590dd0ed98c524602df01dd0456cec9bf026.jpg",
-          "sha256": "dbba995f096761f522bbd60122cd590dd0ed98c524602df01dd0456cec9bf026",
-          "bytes": 158601
+          "path": "assets/images/portfolio/galleries/46cdf8fd175042ca41402070f2968461055d209f1aadb8c58ba2e88f7b44bc9e.jpg",
+          "sha256": "46cdf8fd175042ca41402070f2968461055d209f1aadb8c58ba2e88f7b44bc9e",
+          "bytes": 139111
         },
         {
           "order": 2,
@@ -636,24 +642,34 @@
           "path": "assets/images/portfolio/galleries/bca2fdeeed27bf23f91686bb8a4a0b0f17476fbb3f378a1204e7a4b6abdcc859.jpg",
           "sha256": "bca2fdeeed27bf23f91686bb8a4a0b0f17476fbb3f378a1204e7a4b6abdcc859",
           "bytes": 116903
+        },
+        {
+          "order": 10,
+          "path": "assets/images/portfolio/galleries/dbba995f096761f522bbd60122cd590dd0ed98c524602df01dd0456cec9bf026.jpg",
+          "sha256": "dbba995f096761f522bbd60122cd590dd0ed98c524602df01dd0456cec9bf026",
+          "bytes": 158601
         }
       ],
-      "galleryCountDetected": 9,
-      "galleryCountSaved": 9
+      "galleryCountDetected": 10,
+      "galleryCountSaved": 10
     },
     {
       "cardIndex": 17,
       "folder": "017-бронирование-и-защита-бронь-капот-крылья-фары-стоики-бампера-пере",
       "description": "Бронирование и защита Бронь: капот, крылья, фары, стойки, бампера, передняя часть крыши. Бронь лобового стекла Clear Plex. Кузов покрытие Эдванс",
       "cardText": "Бронирование и защита Бронь: капот, крылья, фары, стойки, бампера, передняя часть крыши. Бронь лобового стекла Clear Plex. Кузов покрытие Эдванс Все фото",
-      "status": "captured-viewer-sequence",
-      "mainImage": null,
+      "status": "captured-by-clicking-thumbnails",
+      "mainImage": {
+        "path": "assets/images/portfolio/galleries/948c84683b925048558d71083d0ba39889737a7b70a62e25b2cc7c011989bc7b.jpg",
+        "sha256": "948c84683b925048558d71083d0ba39889737a7b70a62e25b2cc7c011989bc7b",
+        "bytes": 11359
+      },
       "gallery": [
         {
           "order": 1,
-          "path": "assets/images/portfolio/galleries/cff32f122c14c4cdbe88ad3e525a6a4f105b1e1958a94e9af35e0fec85da2a5f.jpg",
-          "sha256": "cff32f122c14c4cdbe88ad3e525a6a4f105b1e1958a94e9af35e0fec85da2a5f",
-          "bytes": 251690
+          "path": "assets/images/portfolio/galleries/b84d095c3ce078b54bbfd97dd68d542ed2f7d8eb993e3e24141c9355eaf99e8c.jpg",
+          "sha256": "b84d095c3ce078b54bbfd97dd68d542ed2f7d8eb993e3e24141c9355eaf99e8c",
+          "bytes": 222720
         },
         {
           "order": 2,
@@ -687,12 +703,12 @@
         },
         {
           "order": 7,
-          "path": "assets/images/portfolio/galleries/b84d095c3ce078b54bbfd97dd68d542ed2f7d8eb993e3e24141c9355eaf99e8c.jpg",
-          "sha256": "b84d095c3ce078b54bbfd97dd68d542ed2f7d8eb993e3e24141c9355eaf99e8c",
-          "bytes": 222720
+          "path": "assets/images/portfolio/galleries/cff32f122c14c4cdbe88ad3e525a6a4f105b1e1958a94e9af35e0fec85da2a5f.jpg",
+          "sha256": "cff32f122c14c4cdbe88ad3e525a6a4f105b1e1958a94e9af35e0fec85da2a5f",
+          "bytes": 251690
         }
       ],
-      "galleryCountDetected": 8,
+      "galleryCountDetected": 7,
       "galleryCountSaved": 7
     },
     {
@@ -700,72 +716,296 @@
       "folder": "018-полныи-комплекс-сделали-бронирование-капота-пленкои-hexis-тониров",
       "description": "Полный комплекс Сделали бронирование капота пленкой HEXIS, тонирование, защитное покрытие кузова покрытием Эдванс для TOYOTA Camry",
       "cardText": "Полный комплекс Сделали бронирование капота пленкой HEXIS, тонирование, защитное покрытие кузова покрытием Эдванс для TOYOTA Camry Все фото",
-      "status": "captured-viewer-sequence",
-      "mainImage": null,
+      "status": "captured-by-clicking-thumbnails",
+      "mainImage": {
+        "path": "assets/images/portfolio/galleries/9727377e0987f57afb9832701364b00f40ad42d6b5d560e6214138d6309a5734.jpg",
+        "sha256": "9727377e0987f57afb9832701364b00f40ad42d6b5d560e6214138d6309a5734",
+        "bytes": 14872
+      },
       "gallery": [
         {
           "order": 1,
-          "path": "assets/images/portfolio/galleries/7b54b4d00af13ee08fdbbe2de56159fa3255ffd0fcb164c4447074f221551e44.jpg",
-          "sha256": "7b54b4d00af13ee08fdbbe2de56159fa3255ffd0fcb164c4447074f221551e44",
-          "bytes": 159285
+          "path": "assets/images/portfolio/bf670c7abac755af4ae8389a60e8d9155bf6ba7a4e0b0dbad4cf4f7492b74809.jpg",
+          "sha256": "bf670c7abac755af4ae8389a60e8d9155bf6ba7a4e0b0dbad4cf4f7492b74809",
+          "bytes": 248014
         },
         {
           "order": 2,
-          "path": "assets/images/portfolio/galleries/6539f35b6f45d62037533394fabe4bbc316a451948fd95f1fb0986854d0e0d24.jpg",
-          "sha256": "6539f35b6f45d62037533394fabe4bbc316a451948fd95f1fb0986854d0e0d24",
-          "bytes": 249022
-        },
-        {
-          "order": 3,
           "path": "assets/images/portfolio/galleries/418591cafea5667e490179cc791d299d95019377e3e38a30c11466613917462d.jpg",
           "sha256": "418591cafea5667e490179cc791d299d95019377e3e38a30c11466613917462d",
           "bytes": 230158
         },
         {
-          "order": 4,
+          "order": 3,
           "path": "assets/images/portfolio/galleries/ad96d812844c69d9c0cf9df58a6463f8175fc05c4eb0681bc642dc8b6ca005c5.jpg",
           "sha256": "ad96d812844c69d9c0cf9df58a6463f8175fc05c4eb0681bc642dc8b6ca005c5",
           "bytes": 219134
         },
         {
-          "order": 5,
+          "order": 4,
           "path": "assets/images/portfolio/galleries/12477bdaeb27c054a5be55fcff366f09a5c17b9259b965ccb11f8988ae2c2e59.jpg",
           "sha256": "12477bdaeb27c054a5be55fcff366f09a5c17b9259b965ccb11f8988ae2c2e59",
           "bytes": 180768
         },
         {
-          "order": 6,
+          "order": 5,
           "path": "assets/images/portfolio/galleries/ddc875729d68dbae45239655bc75eb467b36d2d56860dd9663bcb69f3c1b44b1.jpg",
           "sha256": "ddc875729d68dbae45239655bc75eb467b36d2d56860dd9663bcb69f3c1b44b1",
           "bytes": 232789
         },
         {
-          "order": 7,
+          "order": 6,
           "path": "assets/images/portfolio/galleries/94fe6b108b2157bbd3a7ba97857d0c709dc6e3d2117c8fe8545de06dba42fa72.jpg",
           "sha256": "94fe6b108b2157bbd3a7ba97857d0c709dc6e3d2117c8fe8545de06dba42fa72",
           "bytes": 209735
         },
         {
-          "order": 8,
+          "order": 7,
           "path": "assets/images/portfolio/galleries/e9d0d02f42978c6b28cba733343dd050abc447af8d3ac5f3c93d2f419db9a421.jpg",
           "sha256": "e9d0d02f42978c6b28cba733343dd050abc447af8d3ac5f3c93d2f419db9a421",
           "bytes": 237108
         },
         {
-          "order": 9,
+          "order": 8,
           "path": "assets/images/portfolio/galleries/03a6bd7931f6b09034d2443c8a7bc44d4972ba5833a4280729b97ee064f59a30.jpg",
           "sha256": "03a6bd7931f6b09034d2443c8a7bc44d4972ba5833a4280729b97ee064f59a30",
           "bytes": 203143
-        },
-        {
-          "order": 10,
-          "path": "assets/images/portfolio/bf670c7abac755af4ae8389a60e8d9155bf6ba7a4e0b0dbad4cf4f7492b74809.jpg",
-          "sha256": "bf670c7abac755af4ae8389a60e8d9155bf6ba7a4e0b0dbad4cf4f7492b74809",
-          "bytes": 248014
         }
       ],
-      "galleryCountDetected": 10,
-      "galleryCountSaved": 10
+      "galleryCountDetected": 8,
+      "galleryCountSaved": 8
+    },
+    {
+      "cardIndex": 19,
+      "folder": "019-бронирование-пленкои-сделали-быстрое-и-качественное-бронирование-",
+      "description": "Бронирование пленкой Сделали быстрое и качественное бронирование капота пленкой HEXIS для нового автомобиля TOYOTA RAV-4",
+      "cardText": "Бронирование пленкой Сделали быстрое и качественное бронирование капота пленкой HEXIS для нового автомобиля TOYOTA RAV-4 Все фото",
+      "status": "captured-by-clicking-thumbnails",
+      "mainImage": {
+        "path": "assets/images/portfolio/galleries/aad942b76d7d7d151926339ec060be9feaae6db2871bb5a973887439764f9355.jpg",
+        "sha256": "aad942b76d7d7d151926339ec060be9feaae6db2871bb5a973887439764f9355",
+        "bytes": 15269
+      },
+      "gallery": [
+        {
+          "order": 1,
+          "path": "assets/images/portfolio/galleries/a32b05309ea2fde843b11f4c94a5382ed19ea8d6e610b99c32aaaee1e49414f7.jpg",
+          "sha256": "a32b05309ea2fde843b11f4c94a5382ed19ea8d6e610b99c32aaaee1e49414f7",
+          "bytes": 201617
+        },
+        {
+          "order": 2,
+          "path": "assets/images/portfolio/galleries/77ee701d681e1182b4b5ba2481672523f895c4df07d347ad63bd5dad373f9532.jpg",
+          "sha256": "77ee701d681e1182b4b5ba2481672523f895c4df07d347ad63bd5dad373f9532",
+          "bytes": 237130
+        }
+      ],
+      "galleryCountDetected": 2,
+      "galleryCountSaved": 2
+    },
+    {
+      "cardIndex": 20,
+      "folder": "020-бронирование-пленкои-сделали-качественное-бронирование-пленкои-he",
+      "description": "Бронирование пленкой Сделали качественное бронирование пленкой HEXIS капота и фар для автомобиля TOYOTA FORTUNER",
+      "cardText": "Бронирование пленкой Сделали качественное бронирование пленкой HEXIS капота и фар для автомобиля TOYOTA FORTUNER Все фото",
+      "status": "captured-by-clicking-thumbnails",
+      "mainImage": {
+        "path": "assets/images/portfolio/galleries/7e7913cf54c7b07a04e0efafa6ab81c96c92a8ca4c01de9df20e59cef1b89b9a.jpg",
+        "sha256": "7e7913cf54c7b07a04e0efafa6ab81c96c92a8ca4c01de9df20e59cef1b89b9a",
+        "bytes": 12431
+      },
+      "gallery": [
+        {
+          "order": 1,
+          "path": "assets/images/portfolio/galleries/f27e2177c88ec4acde3c40415b80ed2fdeab386713bb47789a05cffd7f999e51.jpg",
+          "sha256": "f27e2177c88ec4acde3c40415b80ed2fdeab386713bb47789a05cffd7f999e51",
+          "bytes": 223566
+        },
+        {
+          "order": 2,
+          "path": "assets/images/portfolio/galleries/893fed5b3f13e792d5ca3940561423795598dac7f12ec283505393edeefeb421.jpg",
+          "sha256": "893fed5b3f13e792d5ca3940561423795598dac7f12ec283505393edeefeb421",
+          "bytes": 231669
+        }
+      ],
+      "galleryCountDetected": 2,
+      "galleryCountSaved": 2
+    },
+    {
+      "cardIndex": 21,
+      "folder": "021-оклеика-винилом-сделали-оклеику-виниловои-пленкои-кузова-для-рекл",
+      "description": "Оклейка винилом Сделали оклейку виниловой пленкой кузова для рекламы на транспорте от дилера компании Hyundai автомобиля Santa Fe",
+      "cardText": "Оклейка винилом Сделали оклейку виниловой пленкой кузова для рекламы на транспорте от дилера компании Hyundai автомобиля Santa Fe Все фото",
+      "status": "captured-by-clicking-thumbnails",
+      "mainImage": {
+        "path": "assets/images/portfolio/galleries/7b0cbd1fe7ef662e460aaf6401fda38f45f700da1173f26b3ada2fec4d3aee9e.jpg",
+        "sha256": "7b0cbd1fe7ef662e460aaf6401fda38f45f700da1173f26b3ada2fec4d3aee9e",
+        "bytes": 11988
+      },
+      "gallery": [
+        {
+          "order": 1,
+          "path": "assets/images/portfolio/galleries/0cc8ee675937a4cd776bfcba1a2d5ff7001786aaef6ad2c3dc66e2828321c229.jpg",
+          "sha256": "0cc8ee675937a4cd776bfcba1a2d5ff7001786aaef6ad2c3dc66e2828321c229",
+          "bytes": 179687
+        }
+      ],
+      "galleryCountDetected": 1,
+      "galleryCountSaved": 1
+    },
+    {
+      "cardIndex": 22,
+      "folder": "022-бронирование-и-химчистка-сделали-качественную-полировку-всех-дета",
+      "description": "Бронирование и химчистка Сделали качественную полировку всех деталей кузова и полную бережную химчистку салона для автомобиля Toyota Camry",
+      "cardText": "Бронирование и химчистка Сделали качественную полировку всех деталей кузова и полную бережную химчистку салона для автомобиля Toyota Camry Все фото",
+      "status": "captured-by-clicking-thumbnails",
+      "mainImage": {
+        "path": "assets/images/portfolio/galleries/6c3e644bf938711aec599947fb918ff840caf416640d23632000ec8e73e1fe01.jpg",
+        "sha256": "6c3e644bf938711aec599947fb918ff840caf416640d23632000ec8e73e1fe01",
+        "bytes": 14316
+      },
+      "gallery": [
+        {
+          "order": 1,
+          "path": "assets/images/portfolio/galleries/fdcff673c8418a1a5434f7b387e092d9a9a1d3ccf073a44edfa747b0a3e2b257.jpg",
+          "sha256": "fdcff673c8418a1a5434f7b387e092d9a9a1d3ccf073a44edfa747b0a3e2b257",
+          "bytes": 206823
+        },
+        {
+          "order": 2,
+          "path": "assets/images/portfolio/c8062d3ff75c11dbd475011ab459ebcfe06764fa722d252bcc9f0d787ed2fa64.jpg",
+          "sha256": "c8062d3ff75c11dbd475011ab459ebcfe06764fa722d252bcc9f0d787ed2fa64",
+          "bytes": 213788
+        },
+        {
+          "order": 3,
+          "path": "assets/images/portfolio/galleries/97fca7187c13d05a8589c8fe6d994f107698da1c7bc76d60084ca9f1f157cf90.jpg",
+          "sha256": "97fca7187c13d05a8589c8fe6d994f107698da1c7bc76d60084ca9f1f157cf90",
+          "bytes": 168516
+        },
+        {
+          "order": 4,
+          "path": "assets/images/portfolio/galleries/14d8eeab8098dd623355bde30c276f1428edbbf763b56ec44d87eb9041fd92db.jpg",
+          "sha256": "14d8eeab8098dd623355bde30c276f1428edbbf763b56ec44d87eb9041fd92db",
+          "bytes": 200940
+        },
+        {
+          "order": 5,
+          "path": "assets/images/portfolio/galleries/70c7c5b1e3e226171402c28607f07697a56613ea7c1dffffe98b191929503cc9.jpg",
+          "sha256": "70c7c5b1e3e226171402c28607f07697a56613ea7c1dffffe98b191929503cc9",
+          "bytes": 230915
+        },
+        {
+          "order": 6,
+          "path": "assets/images/portfolio/galleries/7daad5ae8c4a95468399bf32d7553da1a0b657d92233046c875a6c32c02b011e.jpg",
+          "sha256": "7daad5ae8c4a95468399bf32d7553da1a0b657d92233046c875a6c32c02b011e",
+          "bytes": 235725
+        },
+        {
+          "order": 7,
+          "path": "assets/images/portfolio/galleries/c331b9c1d42fb7561718be31f4c277ffd6f323efa5804de84173ec55a318f6f3.jpg",
+          "sha256": "c331b9c1d42fb7561718be31f4c277ffd6f323efa5804de84173ec55a318f6f3",
+          "bytes": 237862
+        },
+        {
+          "order": 8,
+          "path": "assets/images/portfolio/galleries/3f9754f0489a74993fcaa1d9d942eb08ce4a7abb072133b3fc863769cf38b411.jpg",
+          "sha256": "3f9754f0489a74993fcaa1d9d942eb08ce4a7abb072133b3fc863769cf38b411",
+          "bytes": 161039
+        },
+        {
+          "order": 9,
+          "path": "assets/images/portfolio/galleries/8896b6da7bcaea198e610384b889dfc5e849b76ab0605f9ebeaca9abc5f3dd3c.jpg",
+          "sha256": "8896b6da7bcaea198e610384b889dfc5e849b76ab0605f9ebeaca9abc5f3dd3c",
+          "bytes": 239330
+        }
+      ],
+      "galleryCountDetected": 9,
+      "galleryCountSaved": 9
+    },
+    {
+      "cardIndex": 23,
+      "folder": "023-бронирование-и-защита-сделали-бронирование-капота-и-пленкои-hexis",
+      "description": "Бронирование и защита Сделали бронирование капота и пленкой HEXIS и обработку кузова покрытием Advance для автомобиля Hyundai Santa Fe",
+      "cardText": "Бронирование и защита Сделали бронирование капота и пленкой HEXIS и обработку кузова покрытием Advance для автомобиля Hyundai Santa Fe Все фото",
+      "status": "captured-by-clicking-thumbnails",
+      "mainImage": {
+        "path": "assets/images/portfolio/galleries/5c4762ef3aa8510fdcfa3623e457167d45615045fd7bedda17590605592a6a28.jpg",
+        "sha256": "5c4762ef3aa8510fdcfa3623e457167d45615045fd7bedda17590605592a6a28",
+        "bytes": 14577
+      },
+      "gallery": [
+        {
+          "order": 1,
+          "path": "assets/images/portfolio/galleries/2ab08493e7abe3fadadf280962eda1477bda2b3a8f0ccad0717d22e97ad7c9dc.jpg",
+          "sha256": "2ab08493e7abe3fadadf280962eda1477bda2b3a8f0ccad0717d22e97ad7c9dc",
+          "bytes": 150630
+        },
+        {
+          "order": 2,
+          "path": "assets/images/portfolio/galleries/2111d7e736f7b0331eb7aaebcf6171740e577dc70329698cf6417afa38df8428.jpg",
+          "sha256": "2111d7e736f7b0331eb7aaebcf6171740e577dc70329698cf6417afa38df8428",
+          "bytes": 224454
+        }
+      ],
+      "galleryCountDetected": 2,
+      "galleryCountSaved": 2
+    },
+    {
+      "cardIndex": 24,
+      "folder": "024-бронирование-и-защита-бронирование-капота-и-бампера-пленкои-hexis",
+      "description": "Бронирование и защита Бронирование капота и бампера пленкой HEXIS, лобового стекла пленкой ClearPlex. Обработка кузова покрытием Advance",
+      "cardText": "Бронирование и защита Бронирование капота и бампера пленкой HEXIS, лобового стекла пленкой ClearPlex. Обработка кузова покрытием Advance Все фото",
+      "status": "captured-by-clicking-thumbnails",
+      "mainImage": {
+        "path": "assets/images/portfolio/galleries/d8f157a9ec1c440b49e0fb78dc6bf81a55db45da003a12e06c54cc8708912706.jpg",
+        "sha256": "d8f157a9ec1c440b49e0fb78dc6bf81a55db45da003a12e06c54cc8708912706",
+        "bytes": 12476
+      },
+      "gallery": [
+        {
+          "order": 1,
+          "path": "assets/images/portfolio/galleries/af5511021fc0f3e8895e680f065625b6c107c5bec4b309a13cdc6f416347bc70.jpg",
+          "sha256": "af5511021fc0f3e8895e680f065625b6c107c5bec4b309a13cdc6f416347bc70",
+          "bytes": 225251
+        }
+      ],
+      "galleryCountDetected": 1,
+      "galleryCountSaved": 1
+    },
+    {
+      "cardIndex": 25,
+      "folder": "025-бронирование-пленкои-сделали-бронирование-капота-бампера-и-фар-пл",
+      "description": "Бронирование пленкой Сделали бронирование капота, бампера и фар пленкой HEXIS для единственного в Пермском крае автомобиля BMW X7",
+      "cardText": "Бронирование пленкой Сделали бронирование капота, бампера и фар пленкой HEXIS для единственного в Пермском крае автомобиля BMW X7 Все фото",
+      "status": "captured-by-clicking-thumbnails",
+      "mainImage": {
+        "path": "assets/images/portfolio/galleries/2ba3ec6a32a9e297efa73e2bf6bf0f5cf8da1aa5fbc1fedd6b05a3d679f0a7b5.jpg",
+        "sha256": "2ba3ec6a32a9e297efa73e2bf6bf0f5cf8da1aa5fbc1fedd6b05a3d679f0a7b5",
+        "bytes": 14365
+      },
+      "gallery": [
+        {
+          "order": 1,
+          "path": "assets/images/portfolio/galleries/334a1f781dd241e7d70fb6f73130c65b1394f91d1a951839fb674ae0130d71df.jpg",
+          "sha256": "334a1f781dd241e7d70fb6f73130c65b1394f91d1a951839fb674ae0130d71df",
+          "bytes": 240136
+        },
+        {
+          "order": 2,
+          "path": "assets/images/portfolio/galleries/734aa9545cb28cb4ee084630f9aadfec7c220c792061106a177dbde4e521a0e1.jpg",
+          "sha256": "734aa9545cb28cb4ee084630f9aadfec7c220c792061106a177dbde4e521a0e1",
+          "bytes": 225996
+        },
+        {
+          "order": 3,
+          "path": "assets/images/portfolio/galleries/77419f8bc6a8bc07d1cc00558b07e9f81883b578f328b393b36abdfcaec9aa21.jpg",
+          "sha256": "77419f8bc6a8bc07d1cc00558b07e9f81883b578f328b393b36abdfcaec9aa21",
+          "bytes": 214245
+        }
+      ],
+      "galleryCountDetected": 3,
+      "galleryCountSaved": 3
     }
   ]
 }
