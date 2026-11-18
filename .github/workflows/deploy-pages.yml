@@ -112,7 +112,7 @@ jobs:
           if (!(await page.locator(".work-gallery-counter").innerText()).includes("/")) throw new Error("Portfolio gallery counter missing");
           await page.locator("[data-gallery-next]").click();
           if (!(await page.locator(".work-gallery-counter").innerText()).startsWith("2 /")) throw new Error("Portfolio gallery next control failed");
-          await page.locator("[data-gallery-close]").first().click();
+          await page.locator(".work-gallery-close").click();
           await page.locator("#portfolio-grid .js-service-info").first().click();
           if (!(await page.locator("#service-info-price").innerText()).includes("от 3 000")) throw new Error("Portfolio service details price missing");
           await page.locator("#service-info-modal .modal-close").click();
