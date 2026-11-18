@@ -1,4 +1,4 @@
-name: Deploy BARIBAL HTML site and preserved Vite archive to GitHub Pages
+name: Deploy BARIBAL plain HTML site to GitHub Pages
 
 on:
   push:
@@ -15,55 +15,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  preserve-vite-archive:
-    runs-on: ubuntu-latest
-    permissions:
-      actions: read
-      contents: write
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-      - name: Check whether the preserved archive release already exists
-        id: release
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          asset="$(gh release view baribal-vite-archive-v1 --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[] | select(.name == "vite-archive.zip") | .name' 2>/dev/null || true)"
-          if [ "$asset" = "vite-archive.zip" ]; then
-            echo "exists=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "exists=false" >> "$GITHUB_OUTPUT"
-          fi
-      - name: Download the last published Pages artifact once
-        if: steps.release.outputs.exists != 'true'
-        uses: actions/download-artifact@v4
-        with:
-          name: github-pages
-          path: prior-pages
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          repository: ${{ github.repository }}
-          run-id: 44395300670
-      - name: Extract and preserve the existing Vite archive
-        if: steps.release.outputs.exists != 'true'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          mkdir -p prior-pages/extracted
-          tar -xf prior-pages/artifact.tar -C prior-pages/extracted
-          test -s prior-pages/extracted/vite-archive/index.html
-          cd prior-pages/extracted
-          zip -qr "$RUNNER_TEMP/vite-archive.zip" vite-archive
-          cd "$GITHUB_WORKSPACE"
-          gh release view baribal-vite-archive-v1 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 || \
-            gh release create baribal-vite-archive-v1 --repo "$GITHUB_REPOSITORY" \
-              --title "BARIBAL archived Vite preview" \
-              --notes "Unmodified snapshot of the previously published Vite preview. Kept separate from routine HTML deployments."
-          gh release upload baribal-vite-archive-v1 "$RUNNER_TEMP/vite-archive.zip" \
-            --repo "$GITHUB_REPOSITORY" --clobber
-
   build:
     runs-on: ubuntu-latest
-    needs: preserve-vite-archive
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -88,16 +41,6 @@ jobs:
           PY
           rm -f dist/README.md
           cp dist/index.html dist/404.html
-      - name: Restore the preserved Vite archive without rebuilding it
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          mkdir -p "$RUNNER_TEMP/vite-archive"
-          gh release download baribal-vite-archive-v1 \
-            --repo "$GITHUB_REPOSITORY" \
-            --pattern vite-archive.zip \
-            --dir "$RUNNER_TEMP/vite-archive"
-          unzip -q "$RUNNER_TEMP/vite-archive/vite-archive.zip" -d dist
       - name: Verify essential published files
         run: |
           python - <<'PY'
@@ -106,7 +49,7 @@ jobs:
           required = [
               "index.html", "404.html", "css/style.css",
               "js/main.js", "js/portfolio-galleries.js",
-              "assets", "foto/foto.png", "vite-archive/index.html",
+              "assets", "foto/foto.png",
           ]
           required += [f"{route}/index.html" for route in (
               "tehnology", "kuzov", "himchistka", "avtovinil",
@@ -119,7 +62,7 @@ jobs:
                   missing.append(item)
           if missing:
               raise SystemExit("Missing or empty published files: " + ", ".join(missing))
-          print(f"Basic publication check passed: {len(required)} required paths.")
+          print(f"Plain HTML publication check passed: {len(required)} required paths.")
           PY
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
