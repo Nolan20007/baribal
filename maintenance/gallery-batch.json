@@ -1,7 +1,7 @@
 {
   "startCard": 8,
   "endCard": 8,
-  "galleryLimit": 3,
+  "galleryLimit": 120,
   "requiredCardText": "Mercedes-Benz GLE Coupe",
-  "note": "Deploy after card 8 cover image and three gallery originals were archived."
+  "note": "Regression run for the frozen reusable extractor. For routine work, use Actions > Extract and archive Creatium galleries > Run workflow and set the card number."
 }
