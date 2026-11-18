@@ -94,19 +94,25 @@ for (const folder of cardFolders) {
   });
 }
 
+const previousIndex = await exists(indexPath) ? JSON.parse(await readFile(indexPath, "utf8")) : { cards: [] };
+const mergedCards = new Map((previousIndex.cards || []).map(card => [card.cardIndex, card]));
+for (const card of cards) mergedCards.set(card.cardIndex, card);
+const allCards = [...mergedCards.values()].sort((a, b) => a.cardIndex - b.cardIndex);
+
 const index = {
   generatedAt: new Date().toISOString(),
   source: "https://baribal-studio.ru/foto",
-  cardCount: cards.length,
-  cardsWithMainImage: cards.filter(card => card.mainImage).length,
-  additionalGalleryImages: cards.reduce((sum, card) => sum + card.galleryCountSaved, 0),
+  cardCount: allCards.length,
+  cardsWithMainImage: allCards.filter(card => card.mainImage).length,
+  additionalGalleryImages: allCards.reduce((sum, card) => sum + card.galleryCountSaved, 0),
   uniqueBytesAdded,
   duplicateReferencesReused: duplicateCount,
-  cards
+  cards: allCards
 };
 await writeFile(indexPath, JSON.stringify(index, null, 2) + "\n", "utf8");
 console.log(JSON.stringify({
-  cards: index.cardCount,
+  cardsProcessed: cards.length,
+  cardsInIndex: index.cardCount,
   cardsWithMainImage: index.cardsWithMainImage,
   additionalGalleryImages: index.additionalGalleryImages,
   uniqueBytesAdded,
