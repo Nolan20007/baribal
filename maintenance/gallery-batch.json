@@ -1,5 +1,7 @@
 {
-  "startCard": 4,
+  "startCard": 8,
   "endCard": 8,
-  "note": "homepage cards 4-8: locate Mercedes GLE, BMW 8 and Lexus RX"
+  "galleryLimit": 3,
+  "requiredCardText": "Mercedes-Benz GLE Coupe",
+  "note": "Single-project test: extract the main image and exactly the first three additional gallery images from the Mercedes-Benz GLE Coupe homepage card."
 }

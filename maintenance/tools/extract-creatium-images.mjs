@@ -23,8 +23,13 @@ const cards = [];
 const failures = [];
 const requestedStart = Number(process.env.CARD_START || 1);
 const requestedEnd = Number(process.env.CARD_END || 154);
+const requestedGalleryLimit = Number(process.env.GALLERY_LIMIT || 120);
+const requiredCardText = String(process.env.REQUIRED_CARD_TEXT || "").trim();
 if (!Number.isInteger(requestedStart) || !Number.isInteger(requestedEnd) || requestedStart < 1 || requestedEnd < requestedStart) {
   throw new Error("CARD_START/CARD_END must be valid positive card indexes");
+}
+if (!Number.isInteger(requestedGalleryLimit) || requestedGalleryLimit < 1 || requestedGalleryLimit > 120) {
+  throw new Error("GALLERY_LIMIT must be an integer between 1 and 120");
 }
 const pageAssets = new Map();
 
@@ -195,6 +200,9 @@ try {
     const button = buttons.nth(i);
     const cardInfo = await readCard(button, i + 1).catch(() => ({ description: "", mainImage: "", cardText: "" }));
     const label = cardInfo.description || "card-" + (i + 1);
+    if (requiredCardText && !cardInfo.cardText.toLowerCase().includes(requiredCardText.toLowerCase())) {
+      throw new Error("Target card text was not found in card " + (i + 1) + "; refusing to extract a different project.");
+    }
     const folder = String(i + 1).padStart(3, "0") + "-" + slug(label);
     const dir = path.join(cardsDir, folder);
     const galleryDir = path.join(dir, "gallery");
@@ -219,7 +227,7 @@ try {
       } else {
         const seen = new Set();
         let current = firstUrl;
-        for (let n = 0; n < 120 && current; n++) {
+        for (let n = 0; n < requestedGalleryLimit && current; n++) {
           const normalized = normalizeUrl(current);
           if (!normalized || seen.has(normalized)) break;
           seen.add(normalized);
@@ -287,6 +295,7 @@ try {
     pageUrl, scannedAt: new Date().toISOString(),
     cardCount: cards.length,
     requestedRange: { start: startCard, end: endCard },
+    requestedGalleryLimit,
     totalAdditionalGalleryImages: cards.reduce((sum, card) => sum + card.gallery.filter(x => x.file).length, 0),
     cards: cards.map(card => ({
       cardIndex: card.cardIndex, description: card.description, folder: card.folder,
@@ -307,6 +316,7 @@ try {
   console.log("\nFinished:", JSON.stringify({
     cards: cards.length,
     requestedRange: { start: startCard, end: endCard },
+    requestedGalleryLimit,
     additionalGalleryImages: report.totalAdditionalGalleryImages,
     cardsWithGallery: cards.filter(c => c.gallery.length).length,
     failures: failures.length,
