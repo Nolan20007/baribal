@@ -185,6 +185,12 @@ try {
   console.log("Processing card range:", startCard + "-" + endCard);
 
   for (let i = startCard - 1; i < endCard; i++) {
+    // Rebuild the page between cards so no previous modal/viewer can leak images into the next project.
+    if (i > startCard - 1) {
+      await page.goto(pageUrl, { waitUntil: "domcontentloaded", timeout: 60000 });
+      await page.waitForTimeout(1800);
+      await scrollPage();
+    }
     const buttons = page.getByText("Все фото", { exact: true });
     const button = buttons.nth(i);
     const cardInfo = await readCard(button, i + 1).catch(() => ({ description: "", mainImage: "", cardText: "" }));
