@@ -1975,3 +1975,10 @@ html[data-design="4"] .estimate-selected-list .estimate-selected-empty{color:#70
   letter-spacing: 0.02em;
   pointer-events: none;
 }
+
+
+/* Honest empty state until actual video files are added. */
+.video-unavailable{max-width:780px;margin:0 auto;padding:clamp(28px,5vw,56px);background:#202123;border-left:3px solid var(--orange)}
+.video-unavailable h2{margin:0 0 14px;font:500 clamp(26px,4vw,38px)/1.2 Oswald,sans-serif;text-transform:uppercase}
+.video-unavailable p{max-width:620px;margin:0 0 24px;color:#c9c8c3;font-size:13px;line-height:1.8}
+@media(max-width:760px){.video-unavailable{padding:26px 22px}.video-unavailable h2{font-size:27px}}
