@@ -35,3 +35,5 @@ for (const card of cards) {
 }
 
 // Trigger the isolated two-card publishing workflow.
+
+// Retry after fixing portfolio wiring.
