@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { access, copyFile, mkdir, readFile, readdir, writeFile } from "node:fs/promises";
+import { access, copyFile, mkdir, readFile, readdir, unlink, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const root = process.cwd();
@@ -110,6 +110,24 @@ const index = {
   cards: allCards
 };
 await writeFile(indexPath, JSON.stringify(index, null, 2) + "\n", "utf8");
+
+// Remove archived gallery files that are no longer referenced by any indexed card.
+const referencedPaths = new Set();
+for (const card of allCards) {
+  if (card.mainImage?.path) referencedPaths.add(card.mainImage.path);
+  for (const image of card.gallery || []) {
+    if (image.path) referencedPaths.add(image.path);
+  }
+}
+let orphanFilesRemoved = 0;
+for (const file of await walkImages(destinationRoot)) {
+  const relative = path.relative(root, file).split(path.sep).join("/");
+  if (!referencedPaths.has(relative)) {
+    await unlink(file);
+    orphanFilesRemoved++;
+  }
+}
+
 console.log(JSON.stringify({
   cardsProcessed: cards.length,
   cardsInIndex: index.cardCount,
