@@ -11,7 +11,7 @@ const cards = [
     "b1c840637ddb95d3e3d4addd951121aa.jpg","926ec0d2dda49374fa2f1c7bfc80489f.jpg","499cb05e66c0cb2b9b47f93cb7ce49af.jpg","31afe50b1fd7b0da477482e626dfc0bb.jpg","743cdf4b21a5c6b6f449b390ceaa9a98.jpg"
   ]}
 ];
-const root = "output/creatium-download-test";
+const root = "output/creatium-download-test"; // isolated verification run
 await mkdir(root, { recursive: true });
 const results = [];
 for (const card of cards) {
