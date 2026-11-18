@@ -69,28 +69,57 @@ async function scrollPage() {
 
 async function readCard(button, index) {
   return button.evaluate((el, index) => {
-    let root = el;
-    let best = null;
-    for (let depth = 0; root && depth < 9; depth++, root = root.parentElement) {
-      const text = (root.innerText || "").replace(/\s+/g, " ").trim();
-      const imgs = [...root.querySelectorAll("img")].filter(img => {
-        const r = img.getBoundingClientRect();
-        return r.width > 80 && r.height > 60;
-      });
-      if (text.length > 10 && text.length < 1800 && imgs.length) {
-        best = { root, text, imgs };
-        if (depth >= 2) break;
+    const visible = node => {
+      const r=node.getBoundingClientRect(), st=getComputedStyle(node);
+      return r.width>40&&r.height>40&&st.display!=="none"&&st.visibility!=="hidden"&&Number(st.opacity||1)>0;
+    };
+    const candidates=[];
+    let chosenRoot=null, chosenText="";
+    // Walk outward from the "All photos" control. The card often stores its
+    // cover as CSS background-image, not as an <img>.
+    let root=el;
+    for(let depth=0;root&&depth<12;depth++,root=root.parentElement){
+      const text=(root.innerText||"").replace(/\s+/g," ").trim();
+      if(text.length>10&&text.length<2200&&/Все фото/i.test(text)&&/Mercedes-Benz\s+GLE\s+Coupe/i.test(text)){
+        const local=[];
+        for(const node of [root,...root.querySelectorAll("*")]){
+          if(!visible(node))continue;
+          const r=node.getBoundingClientRect();
+          if(r.width<100||r.height<80)continue;
+          const bg=getComputedStyle(node).backgroundImage;
+          if(bg&&bg!=="none"){
+            for(const m of bg.matchAll(/url\(["']?(.*?)["']?\)/g)){
+              const url=m[1];
+              if(/^https?:/i.test(url))local.push({url,source:"css-background",area:r.width*r.height,
+                width:r.width,height:r.height,tag:node.tagName,cls:String(node.className||"").slice(0,140)});
+            }
+          }
+          if(node.tagName==="IMG"){
+            const url=node.currentSrc||node.src||node.getAttribute("data-src")||"";
+            if(url)local.push({url,source:"img",area:r.width*r.height,width:r.width,height:r.height,
+              naturalWidth:node.naturalWidth||0,naturalHeight:node.naturalHeight||0,
+              tag:node.tagName,cls:String(node.className||"").slice(0,140)});
+          }
+          if(node.tagName==="SOURCE"){
+            const url=node.srcset?.split(",")[0]?.trim().split(/\s+/)[0];
+            if(url)local.push({url,source:"picture-source",area:r.width*r.height,width:r.width,height:r.height});
+          }
+        }
+        if(local.length){
+          chosenRoot={tag:root.tagName,cls:String(root.className||"").slice(0,180),depth,
+            rect:(()=>{const r=root.getBoundingClientRect();return{x:r.x,y:r.y,width:r.width,height:r.height};})()};
+          chosenText=text;candidates.push(...local);break;
+        }
       }
     }
-    if (!best) return { description: "", mainImage: "", cardText: "" };
-    const heading = best.root.querySelector("h1,h2,h3,h4,[class*='title'],[class*='name']");
-    const description = (heading?.innerText || best.text.split(/Все фото/i)[0] || "").replace(/\s+/g, " ").trim();
-    const img = best.imgs.sort((a,b) => {
-      const ar = a.getBoundingClientRect(), br = b.getBoundingClientRect();
-      return (br.width * br.height) - (ar.width * ar.height);
-    })[0];
-    const mainImage = img ? (img.currentSrc || img.src || img.getAttribute("data-src") || "") : "";
-    return { description: description.slice(0, 500), mainImage, cardText: best.text.slice(0, 1800) };
+    const unique=[];
+    for(const c of candidates)if(!unique.some(x=>x.url===c.url))unique.push(c);
+    unique.sort((a,b)=>b.area-a.area);
+    const best=unique[0];
+    const heading=el.closest("h1,h2,h3,h4")||el.parentElement?.querySelector("h1,h2,h3,h4");
+    const description=(heading?.innerText||chosenText.split(/Все фото/i)[0]||"").replace(/\s+/g," ").trim();
+    return {description:description.slice(0,500),mainImage:best?.url||"",
+      cardText:chosenText.slice(0,1800),mainImageCandidates:unique.slice(0,12),cardRoot:chosenRoot};
   }, index);
 }
 
