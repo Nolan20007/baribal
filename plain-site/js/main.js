@@ -22,7 +22,36 @@ if (menuButton && navigation) {
 
 document.documentElement.classList.add("js-ready");
 
-// Catch CTA clicks before page-specific scripts run. This also covers links rendered dynamically.
+const callbackModal = document.querySelector("#callback-modal");
+let lastModalTrigger = null;
+const openCallback = (workTitle = "", serviceTitle = "") => {
+  if (!callbackModal) return;
+  lastModalTrigger = document.activeElement;
+  const title = callbackModal.querySelector("#modal-title");
+  const context = callbackModal.querySelector("#callback-context");
+  const serviceField = callbackModal.querySelector("#callback-service");
+  title.textContent = serviceTitle ? "Заказать услугу" : "Мы вам перезвоним";
+  serviceField.value = serviceTitle || "";
+  context.textContent = serviceTitle
+    ? `Вы выбрали «${serviceTitle}». Оставьте телефон — мы свяжемся с вами, ответим на вопросы и согласуем удобное время.`
+    : workTitle
+      ? `Вы выбрали работу «${workTitle}». Оставьте телефон — обсудим похожее решение для вашего автомобиля.`
+      : "Оставьте номер — обсудим задачу и подберём решение для вашего автомобиля.";
+  callbackModal.classList.add("modal-open");
+  callbackModal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("no-scroll");
+  callbackModal.querySelector('input[name="phone"]')?.focus();
+};
+const closeCallback = () => {
+  if (!callbackModal) return;
+  callbackModal.classList.remove("modal-open");
+  callbackModal.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("no-scroll");
+  if (lastModalTrigger && typeof lastModalTrigger.focus === "function") lastModalTrigger.focus();
+};
+// Callback buttons are handled by the early delegated listener above.
+
+
 document.addEventListener("click", (event) => {
   const trigger = event.target.closest(".js-callback");
   if (!trigger) return;
@@ -397,35 +426,6 @@ const serviceDetails = {
     fit: "Тем, кто хочет привести моторный отсек в порядок перед продажей, после длительной эксплуатации или для поддержания общего ухоженного состояния автомобиля."
   }
 }
-
-const callbackModal = document.querySelector("#callback-modal");
-let lastModalTrigger = null;
-const openCallback = (workTitle = "", serviceTitle = "") => {
-  if (!callbackModal) return;
-  lastModalTrigger = document.activeElement;
-  const title = callbackModal.querySelector("#modal-title");
-  const context = callbackModal.querySelector("#callback-context");
-  const serviceField = callbackModal.querySelector("#callback-service");
-  title.textContent = serviceTitle ? "Заказать услугу" : "Мы вам перезвоним";
-  serviceField.value = serviceTitle || "";
-  context.textContent = serviceTitle
-    ? `Вы выбрали «${serviceTitle}». Оставьте телефон — мы свяжемся с вами, ответим на вопросы и согласуем удобное время.`
-    : workTitle
-      ? `Вы выбрали работу «${workTitle}». Оставьте телефон — обсудим похожее решение для вашего автомобиля.`
-      : "Оставьте номер — обсудим задачу и подберём решение для вашего автомобиля.";
-  callbackModal.classList.add("modal-open");
-  callbackModal.setAttribute("aria-hidden", "false");
-  document.body.classList.add("no-scroll");
-  callbackModal.querySelector('input[name="phone"]')?.focus();
-};
-const closeCallback = () => {
-  if (!callbackModal) return;
-  callbackModal.classList.remove("modal-open");
-  callbackModal.setAttribute("aria-hidden", "true");
-  document.body.classList.remove("no-scroll");
-  if (lastModalTrigger && typeof lastModalTrigger.focus === "function") lastModalTrigger.focus();
-};
-// Callback buttons are handled by the early delegated listener above.
 
 const infoModal = document.querySelector("#service-info-modal");
 const closeInfoModal = () => {
