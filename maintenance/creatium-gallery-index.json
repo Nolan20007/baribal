@@ -1,12 +1,12 @@
 {
   "minGalleryImageBytes": 102400,
-  "generatedAt": "2026-11-18T05:05:46.562Z",
+  "generatedAt": "2026-11-18T05:23:06.345Z",
   "source": "https://baribal-studio.ru/",
   "cardCount": 18,
-  "cardsWithMainImage": 1,
-  "additionalGalleryImages": 84,
-  "uniqueBytesAdded": 225081,
-  "duplicateReferencesReused": 3,
+  "cardsWithMainImage": 9,
+  "additionalGalleryImages": 77,
+  "uniqueBytesAdded": 104554,
+  "duplicateReferencesReused": 30,
   "cards": [
     {
       "cardIndex": 1,
@@ -291,92 +291,86 @@
       "folder": "009-защитное-покрытие-нанесли-защитное-покрытие-для-кузова-эдванс",
       "description": "Защитное покрытие Нанесли защитное покрытие для кузова Эдванс",
       "cardText": "Защитное покрытие Нанесли защитное покрытие для кузова Эдванс Все фото",
-      "status": "captured-viewer-sequence",
-      "mainImage": null,
+      "status": "captured-by-clicking-thumbnails",
+      "mainImage": {
+        "path": "assets/images/portfolio/galleries/a3acaf24d28586f1d46f4d2967bd7f0280702a78b1fb1fd6e3b22efa74c9a606.jpg",
+        "sha256": "a3acaf24d28586f1d46f4d2967bd7f0280702a78b1fb1fd6e3b22efa74c9a606",
+        "bytes": 13817
+      },
       "gallery": [
         {
           "order": 1,
-          "path": "assets/images/portfolio/galleries/ab394098a7380a39187110e7923bac56cd58a6f1915fcd7b8c5e730681dab6ff.jpg",
-          "sha256": "ab394098a7380a39187110e7923bac56cd58a6f1915fcd7b8c5e730681dab6ff",
-          "bytes": 207899
-        },
-        {
-          "order": 2,
           "path": "assets/images/portfolio/galleries/63f7ca1c920273c0e582f5c11b2b3992f97ff57ba6fd1d946904020f90666093.jpg",
           "sha256": "63f7ca1c920273c0e582f5c11b2b3992f97ff57ba6fd1d946904020f90666093",
           "bytes": 244892
         },
         {
-          "order": 3,
+          "order": 2,
           "path": "assets/images/portfolio/galleries/254c45626e89a8dd5b448538a6456b92a1058a1120f5461a86fd2877ab412e2d.jpg",
           "sha256": "254c45626e89a8dd5b448538a6456b92a1058a1120f5461a86fd2877ab412e2d",
           "bytes": 225267
         },
         {
-          "order": 4,
+          "order": 3,
           "path": "assets/images/portfolio/galleries/2a62762f329b0cd0b9982c80b3f92449230e39fa4508b3030c7ea1a9270da0c2.jpg",
           "sha256": "2a62762f329b0cd0b9982c80b3f92449230e39fa4508b3030c7ea1a9270da0c2",
           "bytes": 225367
         },
         {
-          "order": 5,
+          "order": 4,
           "path": "assets/images/portfolio/cb42231a233b675dacc33fa230eaf0ee18c0ec01c00181154dfa1cdce9948633.jpg",
           "sha256": "cb42231a233b675dacc33fa230eaf0ee18c0ec01c00181154dfa1cdce9948633",
           "bytes": 203211
         }
       ],
-      "galleryCountDetected": 5,
-      "galleryCountSaved": 5
+      "galleryCountDetected": 4,
+      "galleryCountSaved": 4
     },
     {
       "cardIndex": 10,
       "folder": "010-защитное-покрытие-нанесли-защитное-покрытие-для-кузова-эдванс",
       "description": "Защитное покрытие Нанесли защитное покрытие для кузова Эдванс",
       "cardText": "Защитное покрытие Нанесли защитное покрытие для кузова Эдванс Все фото",
-      "status": "captured-viewer-sequence",
-      "mainImage": null,
+      "status": "captured-by-clicking-thumbnails",
+      "mainImage": {
+        "path": "assets/images/portfolio/galleries/6687f58a86c7000c0e1cf1739124e0ea60f2d21085cbb80ac7dcf93008497e29.jpg",
+        "sha256": "6687f58a86c7000c0e1cf1739124e0ea60f2d21085cbb80ac7dcf93008497e29",
+        "bytes": 12410
+      },
       "gallery": [
         {
           "order": 1,
-          "path": "assets/images/portfolio/galleries/c4b926ba587fb38f008c630de12e3d605fa12718977b1444fe412132b955c5ac.jpg",
-          "sha256": "c4b926ba587fb38f008c630de12e3d605fa12718977b1444fe412132b955c5ac",
-          "bytes": 168651
+          "path": "assets/images/portfolio/galleries/f76f03176c91ea37eb18695b6bef9f76106eabafabb97d7de4529a832726952e.jpg",
+          "sha256": "f76f03176c91ea37eb18695b6bef9f76106eabafabb97d7de4529a832726952e",
+          "bytes": 213074
         },
         {
           "order": 2,
-          "path": "assets/images/portfolio/galleries/1f424855b4818b73b777db183dfd8be2996f43a7c88032c18809f04e580117c4.jpg",
-          "sha256": "1f424855b4818b73b777db183dfd8be2996f43a7c88032c18809f04e580117c4",
-          "bytes": 215888
-        },
-        {
-          "order": 3,
           "path": "assets/images/portfolio/galleries/9d3cb77256371674b9503e90022dad49a42e7fa6163e0c338d0109df92869d7f.jpg",
           "sha256": "9d3cb77256371674b9503e90022dad49a42e7fa6163e0c338d0109df92869d7f",
           "bytes": 215430
         },
         {
-          "order": 4,
+          "order": 3,
           "path": "assets/images/portfolio/galleries/62a03624a21d3bbbb3ee8c1853184f2c31ebfa1bb3d0569a5753e22e00e3082a.jpg",
           "sha256": "62a03624a21d3bbbb3ee8c1853184f2c31ebfa1bb3d0569a5753e22e00e3082a",
           "bytes": 217269
-        },
-        {
-          "order": 5,
-          "path": "assets/images/portfolio/galleries/f76f03176c91ea37eb18695b6bef9f76106eabafabb97d7de4529a832726952e.jpg",
-          "sha256": "f76f03176c91ea37eb18695b6bef9f76106eabafabb97d7de4529a832726952e",
-          "bytes": 213074
         }
       ],
-      "galleryCountDetected": 5,
-      "galleryCountSaved": 5
+      "galleryCountDetected": 3,
+      "galleryCountSaved": 3
     },
     {
       "cardIndex": 11,
       "folder": "011-бронирование-пленкои-сделали-бронирование-переднеи-части-кузова-п",
       "description": "Бронирование пленкой Сделали бронирование передней части кузова пленкой HEXIS",
       "cardText": "Бронирование пленкой Сделали бронирование передней части кузова пленкой HEXIS Все фото",
-      "status": "captured-viewer-sequence",
-      "mainImage": null,
+      "status": "captured-by-clicking-thumbnails",
+      "mainImage": {
+        "path": "assets/images/portfolio/galleries/9e042ee3c6dd211a8f9ffedc97b12eb3e745f39ef81b51b4d7976f495fe8481a.jpg",
+        "sha256": "9e042ee3c6dd211a8f9ffedc97b12eb3e745f39ef81b51b4d7976f495fe8481a",
+        "bytes": 11876
+      },
       "gallery": [
         {
           "order": 1,
@@ -403,7 +397,7 @@
           "bytes": 219023
         }
       ],
-      "galleryCountDetected": 5,
+      "galleryCountDetected": 4,
       "galleryCountSaved": 4
     },
     {
@@ -411,38 +405,40 @@
       "folder": "012-бронирование-пленкои-сделали-бронирование-переднеи-части-кузова-п",
       "description": "Бронирование пленкой Сделали бронирование передней части кузова пленкой HEXIS",
       "cardText": "Бронирование пленкой Сделали бронирование передней части кузова пленкой HEXIS Все фото",
-      "status": "captured-viewer-sequence",
-      "mainImage": null,
+      "status": "captured-by-clicking-thumbnails",
+      "mainImage": {
+        "path": "assets/images/portfolio/galleries/c672d3bd7f966e6b6b009af088414d375513026ee70dc2d06a78a6640161aed2.jpg",
+        "sha256": "c672d3bd7f966e6b6b009af088414d375513026ee70dc2d06a78a6640161aed2",
+        "bytes": 12729
+      },
       "gallery": [
         {
           "order": 1,
-          "path": "assets/images/portfolio/galleries/40ab6375d8042d02c8b3e1dc0e53d3ba884e948d913bf8b71ec418fcfb141fa0.jpg",
-          "sha256": "40ab6375d8042d02c8b3e1dc0e53d3ba884e948d913bf8b71ec418fcfb141fa0",
-          "bytes": 187853
+          "path": "assets/images/portfolio/0c19e039a9f8b201b663411f4e0c93d6a758508610858b12cc2523374bb57b2f.jpg",
+          "sha256": "0c19e039a9f8b201b663411f4e0c93d6a758508610858b12cc2523374bb57b2f",
+          "bytes": 176698
         },
         {
           "order": 2,
           "path": "assets/images/portfolio/galleries/14c642cea56449897027bb54b30ff6c94aa4ebbb585b60a11b84ee81c0d0610a.jpg",
           "sha256": "14c642cea56449897027bb54b30ff6c94aa4ebbb585b60a11b84ee81c0d0610a",
           "bytes": 126895
-        },
-        {
-          "order": 3,
-          "path": "assets/images/portfolio/0c19e039a9f8b201b663411f4e0c93d6a758508610858b12cc2523374bb57b2f.jpg",
-          "sha256": "0c19e039a9f8b201b663411f4e0c93d6a758508610858b12cc2523374bb57b2f",
-          "bytes": 176698
         }
       ],
-      "galleryCountDetected": 3,
-      "galleryCountSaved": 3
+      "galleryCountDetected": 2,
+      "galleryCountSaved": 2
     },
     {
       "cardIndex": 13,
       "folder": "013-бронирование-пленкои-сделали-бронирование-переднеи-части-кузова-п",
       "description": "Бронирование пленкой Сделали бронирование передней части кузова пленкой HEXIS, и лобового стекла пленкой Clear Plex",
       "cardText": "Бронирование пленкой Сделали бронирование передней части кузова пленкой HEXIS, и лобового стекла пленкой Clear Plex Все фото",
-      "status": "captured-viewer-sequence",
-      "mainImage": null,
+      "status": "captured-by-clicking-thumbnails",
+      "mainImage": {
+        "path": "assets/images/portfolio/galleries/fb6d94cfbcaa1ab162650da467d545fec09d984fdacc2a5206710550d99052bb.jpg",
+        "sha256": "fb6d94cfbcaa1ab162650da467d545fec09d984fdacc2a5206710550d99052bb",
+        "bytes": 13998
+      },
       "gallery": [
         {
           "order": 1,
@@ -469,7 +465,7 @@
           "bytes": 201752
         }
       ],
-      "galleryCountDetected": 5,
+      "galleryCountDetected": 4,
       "galleryCountSaved": 4
     },
     {
@@ -477,26 +473,27 @@
       "folder": "014-бронирование-пленкои-сделали-бронирование-пленкои-капота-и-крылье",
       "description": "Бронирование пленкой Сделали бронирование пленкой капота и крыльев",
       "cardText": "Бронирование пленкой Сделали бронирование пленкой капота и крыльев Все фото",
-      "status": "captured-viewer-sequence",
-      "mainImage": null,
-      "gallery": [
-        {
-          "order": 1,
-          "path": "assets/images/portfolio/galleries/be1cf885c40208b5e215225e199dad48bc75c0df7d81ab5df20df97ffbced63c.jpg",
-          "sha256": "be1cf885c40208b5e215225e199dad48bc75c0df7d81ab5df20df97ffbced63c",
-          "bytes": 195812
-        }
-      ],
-      "galleryCountDetected": 1,
-      "galleryCountSaved": 1
+      "status": "original-image-not-detected",
+      "mainImage": {
+        "path": "assets/images/portfolio/galleries/336fed44488c02fab9b4b92d9e98a25d2c415b830f5880ec78cd75f6eec3b8c9.jpg",
+        "sha256": "336fed44488c02fab9b4b92d9e98a25d2c415b830f5880ec78cd75f6eec3b8c9",
+        "bytes": 13662
+      },
+      "gallery": [],
+      "galleryCountDetected": 0,
+      "galleryCountSaved": 0
     },
     {
       "cardIndex": 15,
       "folder": "015-бронирование-и-защита-сделали-бронирование-капота-пленкои-нанесли",
       "description": "Бронирование и защита Сделали бронирование капота пленкой. Нанесли защитное покрытие кузова Эдванс",
       "cardText": "Бронирование и защита Сделали бронирование капота пленкой. Нанесли защитное покрытие кузова Эдванс Все фото",
-      "status": "captured-viewer-sequence",
-      "mainImage": null,
+      "status": "captured-by-clicking-thumbnails",
+      "mainImage": {
+        "path": "assets/images/portfolio/galleries/91694ed78b8e10f2c6722fc2ab7d5958f6585b90fb4580bf752e6d7803f7aeca.jpg",
+        "sha256": "91694ed78b8e10f2c6722fc2ab7d5958f6585b90fb4580bf752e6d7803f7aeca",
+        "bytes": 13860
+      },
       "gallery": [
         {
           "order": 1,
@@ -506,39 +503,37 @@
         },
         {
           "order": 2,
-          "path": "assets/images/portfolio/galleries/ce048a3d61bc4117029b81929962590d2796ee8b26f38299e524e4ace0a6faba.jpg",
-          "sha256": "ce048a3d61bc4117029b81929962590d2796ee8b26f38299e524e4ace0a6faba",
-          "bytes": 120563
-        },
-        {
-          "order": 3,
           "path": "assets/images/portfolio/galleries/64470ca9ed248120343f683a4f5266c34af6b2774d6a6b4fe16a17dabd15b2ae.jpg",
           "sha256": "64470ca9ed248120343f683a4f5266c34af6b2774d6a6b4fe16a17dabd15b2ae",
           "bytes": 176738
         },
         {
-          "order": 4,
+          "order": 3,
           "path": "assets/images/portfolio/galleries/0d1793858888d45df77aa37392c28627d42bfee0d124c9cefe79f830253d35ea.jpg",
           "sha256": "0d1793858888d45df77aa37392c28627d42bfee0d124c9cefe79f830253d35ea",
           "bytes": 180080
         },
         {
-          "order": 5,
+          "order": 4,
           "path": "assets/images/portfolio/galleries/7d18703a4ecfd5b6b89c2e2795b599ab2626b5a6c7c30e428d8f8c6a5a2c1ec6.jpg",
           "sha256": "7d18703a4ecfd5b6b89c2e2795b599ab2626b5a6c7c30e428d8f8c6a5a2c1ec6",
           "bytes": 160819
         }
       ],
-      "galleryCountDetected": 5,
-      "galleryCountSaved": 5
+      "galleryCountDetected": 4,
+      "galleryCountSaved": 4
     },
     {
       "cardIndex": 16,
       "folder": "016-бронирование-пленкои-сделали-бронирование-кузова-пленкои-hexis",
       "description": "Бронирование пленкой Сделали бронирование кузова пленкой HEXIS",
       "cardText": "Бронирование пленкой Сделали бронирование кузова пленкой HEXIS Все фото",
-      "status": "captured-viewer-sequence",
-      "mainImage": null,
+      "status": "captured-by-clicking-thumbnails",
+      "mainImage": {
+        "path": "assets/images/portfolio/galleries/101dff71521ad99b5ea418a38813e0b7ea122e003a5be0c7328fba27224b5ef0.jpg",
+        "sha256": "101dff71521ad99b5ea418a38813e0b7ea122e003a5be0c7328fba27224b5ef0",
+        "bytes": 12202
+      },
       "gallery": [
         {
           "order": 1,
@@ -548,61 +543,55 @@
         },
         {
           "order": 2,
-          "path": "assets/images/portfolio/galleries/46cdf8fd175042ca41402070f2968461055d209f1aadb8c58ba2e88f7b44bc9e.jpg",
-          "sha256": "46cdf8fd175042ca41402070f2968461055d209f1aadb8c58ba2e88f7b44bc9e",
-          "bytes": 139111
-        },
-        {
-          "order": 3,
           "path": "assets/images/portfolio/galleries/430edac8c13e38119cb1b1c2e92838737e97c3f6afe4c3d5a07f112c3e3d8075.jpg",
           "sha256": "430edac8c13e38119cb1b1c2e92838737e97c3f6afe4c3d5a07f112c3e3d8075",
           "bytes": 175287
         },
         {
-          "order": 4,
+          "order": 3,
           "path": "assets/images/portfolio/galleries/dca0b9312ce400eac27e8cca4dbdcd64d3c8e6c041945eac2149873001ccd3f8.jpg",
           "sha256": "dca0b9312ce400eac27e8cca4dbdcd64d3c8e6c041945eac2149873001ccd3f8",
           "bytes": 159181
         },
         {
-          "order": 5,
+          "order": 4,
           "path": "assets/images/portfolio/galleries/12868295d239fe5b26661c13c8ff395b4a89871f26930159c0c542368305d406.jpg",
           "sha256": "12868295d239fe5b26661c13c8ff395b4a89871f26930159c0c542368305d406",
           "bytes": 169861
         },
         {
-          "order": 6,
+          "order": 5,
           "path": "assets/images/portfolio/galleries/06d31ee3813008fcab2faa5ee0bc2540450fd4bc0833b862d582ca3344358d77.jpg",
           "sha256": "06d31ee3813008fcab2faa5ee0bc2540450fd4bc0833b862d582ca3344358d77",
           "bytes": 161930
         },
         {
-          "order": 7,
+          "order": 6,
           "path": "assets/images/portfolio/galleries/abc901b15ca77ece0e4d84b0209ea3bcc7180a67f46448df4002830ff91feb32.jpg",
           "sha256": "abc901b15ca77ece0e4d84b0209ea3bcc7180a67f46448df4002830ff91feb32",
           "bytes": 162424
         },
         {
-          "order": 8,
+          "order": 7,
           "path": "assets/images/portfolio/galleries/41fe300c88d883ab65137be0f691222fcbf29debe532776c5d17e3497951440b.jpg",
           "sha256": "41fe300c88d883ab65137be0f691222fcbf29debe532776c5d17e3497951440b",
           "bytes": 194604
         },
         {
-          "order": 9,
+          "order": 8,
           "path": "assets/images/portfolio/galleries/63a5a05ee4971f8e8735865f4df65a5c08f008cab40b0290010a2e108458c5b7.jpg",
           "sha256": "63a5a05ee4971f8e8735865f4df65a5c08f008cab40b0290010a2e108458c5b7",
           "bytes": 166678
         },
         {
-          "order": 10,
+          "order": 9,
           "path": "assets/images/portfolio/galleries/bca2fdeeed27bf23f91686bb8a4a0b0f17476fbb3f378a1204e7a4b6abdcc859.jpg",
           "sha256": "bca2fdeeed27bf23f91686bb8a4a0b0f17476fbb3f378a1204e7a4b6abdcc859",
           "bytes": 116903
         }
       ],
-      "galleryCountDetected": 10,
-      "galleryCountSaved": 10
+      "galleryCountDetected": 9,
+      "galleryCountSaved": 9
     },
     {
       "cardIndex": 17,
