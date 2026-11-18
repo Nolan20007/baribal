@@ -30,7 +30,7 @@ jobs:
       - name: Extract images
         env:
           PAGE_URL: https://baribal-studio.ru/foto
-        run: node tools/extract-creatium-images.mjs
+        run: node maintenance/tools/extract-creatium-images.mjs
 
       - name: Upload images and report
         if: always()
