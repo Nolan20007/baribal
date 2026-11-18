@@ -6,7 +6,6 @@ on:
     paths:
       - "maintenance/creatium-image-inventory.json"
       - "maintenance/tools/localize-creatium-assets.mjs"
-      - ".github/workflows/localize-creatium-assets.yml"
   workflow_dispatch:
 
 permissions:
@@ -40,6 +39,7 @@ jobs:
             echo "No changes to commit."
           else
             git commit -m "Localize and deduplicate Creatium image assets"
+            git pull --rebase origin main
             git push
           fi
 
