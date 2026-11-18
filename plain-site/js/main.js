@@ -523,39 +523,57 @@ document.querySelectorAll(".contact-preferences").forEach((group) => {
 });
 
 
- // Restore the Russian phone-number mask used in the original version.
- document.querySelectorAll('input[type="tel"]').forEach((input) => {
-   const formatPhone = (value, cursor) => {
-     const prefixAlreadyPresent = /^\+7/.test(value);
-     let digits = value.replace(/\D/g, "");
-     let digitsBeforeCursor = value.slice(0, cursor).replace(/\D/g, "").length;
-     if (prefixAlreadyPresent) {
-       digits = digits.slice(1);
-       digitsBeforeCursor = Math.max(0, digitsBeforeCursor - 1);
-     } else if (digits.startsWith("7") || digits.startsWith("8")) {
-       digits = digits.slice(1);
-       digitsBeforeCursor = Math.max(0, digitsBeforeCursor - 1);
-     }
-     digits = digits.slice(0, 10);
-     digitsBeforeCursor = Math.min(digitsBeforeCursor, digits.length);
-     if (!digits) return { value: "", cursor: 0 };
-     const parts = [digits.slice(0, 3), digits.slice(3, 6), digits.slice(6, 8), digits.slice(8, 10)];
-     const formatted = "+7" + (parts[0] ? " (" + parts[0] : "") + (parts[0]?.length === 3 ? ")" : "") + (parts[1] ? " " + parts[1] : "") + (parts[2] ? "-" + parts[2] : "") + (parts[3] ? "-" + parts[3] : "");
-     let nextCursor = 2;
-     if (digitsBeforeCursor > 0) {
-       const prefix = formatted.slice(2);
-       let seen = 0, offset = 0;
-       while (offset < prefix.length && seen < digitsBeforeCursor) { if (/\d/.test(prefix[offset])) seen++; offset++; }
-       nextCursor = 2 + offset;
-     }
-     return { value: formatted, cursor: nextCursor };
-   };
-   input.addEventListener("input", () => {
-     const result = formatPhone(input.value, input.selectionStart ?? input.value.length);
-     input.value = result.value;
-     input.setSelectionRange(result.cursor, result.cursor);
-   });
- });
+// One consistent Russian phone input for every callback and estimate form.
+document.querySelectorAll('input[type="tel"]').forEach((input) => {
+  const formatPhone = (value, cursor) => {
+    let digits = value.replace(/\D/g, "");
+    let digitsBeforeCursor = value.slice(0, cursor).replace(/\D/g, "").length;
+    if (digits.startsWith("7") || digits.startsWith("8")) {
+      digits = digits.slice(1);
+      digitsBeforeCursor = Math.max(0, digitsBeforeCursor - 1);
+    }
+    digits = digits.slice(0, 10);
+    digitsBeforeCursor = Math.min(digitsBeforeCursor, digits.length);
+
+    const area = digits.slice(0, 3);
+    const subscriber = digits.slice(3, 6);
+    const firstPair = digits.slice(6, 8);
+    const secondPair = digits.slice(8, 10);
+    let formatted = "+7";
+    if (area) formatted += " (" + area;
+    if (area.length === 3) formatted += ")";
+    if (subscriber) formatted += " " + subscriber;
+    if (firstPair) formatted += "-" + firstPair;
+    if (secondPair) formatted += "-" + secondPair;
+
+    let nextCursor = 2;
+    if (digitsBeforeCursor > 0) {
+      let seen = 0;
+      while (nextCursor < formatted.length && seen < digitsBeforeCursor) {
+        if (/\d/.test(formatted[nextCursor])) seen++;
+        nextCursor++;
+      }
+    }
+    return { value: formatted, cursor: nextCursor, digitCount: digits.length };
+  };
+
+  const updatePhone = () => {
+    const result = formatPhone(input.value, input.selectionStart ?? input.value.length);
+    input.value = result.value;
+    input.setSelectionRange(result.cursor, result.cursor);
+    input.setCustomValidity(
+      result.digitCount < 6
+        ? "Введите не менее 6 цифр номера после +7 (для полного номера — 10)."
+        : ""
+    );
+  };
+
+  input.setAttribute("inputmode", "numeric");
+  input.setAttribute("autocomplete", "tel");
+  if (!input.value) input.value = "+7";
+  updatePhone();
+  input.addEventListener("input", updatePhone);
+});
 
 // The original portfolio filters and "show all" interaction.
 const portfolioGrid = document.querySelector("#portfolio-grid");
