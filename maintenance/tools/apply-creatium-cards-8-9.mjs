@@ -29,6 +29,6 @@ const mainPath="src/main.js";
 let main=await readFile(mainPath,"utf8");
 const old8='d92cd7473a1cf5344c429921e20b4ae153959d2ab69275714f02c97d0f855a3f.jpg';
 const old9='a3acaf24d28586f1d46f4d2967bd7f0280702a78b1fb1fd6e3b22efa74c9a606.jpg';
-main=main.replace(old8,cards[0].mainImage.path.split("/").pop()).replace(old9,cards[1].mainImage.path.split("/").pop());
+main=main.replace(old8,cards[0].mainImage.path.replace("assets/images/portfolio/","")).replace(old9,cards[1].mainImage.path.replace("assets/images/portfolio/",""));
 await writeFile(mainPath,main);
 console.log("UPDATED_PORTFOLIO",JSON.stringify(cards.map(c=>({card:c.cardIndex,cover:c.mainImage.path,gallery:c.gallery.length}))));
