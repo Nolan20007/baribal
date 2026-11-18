@@ -3,5 +3,5 @@
   "endCard": 8,
   "galleryLimit": 3,
   "requiredCardText": "Mercedes-Benz GLE Coupe",
-  "note": "Extract card 8 primary cover before opening the gallery; inspect img and CSS background URLs, while retaining gallery originals."
+  "note": "Deploy after card 8 cover image and three gallery originals were archived."
 }
