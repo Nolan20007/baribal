@@ -6,6 +6,7 @@ const root = process.cwd();
 const cardsRoot = path.join(root, "output/creatium-images/cards");
 const destinationRoot = path.join(root, "assets/images/portfolio/galleries");
 const indexPath = path.join(root, "maintenance/creatium-gallery-index.json");
+const MIN_GALLERY_IMAGE_BYTES = 100 * 1024; // Ignore small preview thumbnails.
 
 async function exists(file) {
   try { await access(file); return true; } catch { return false; }
@@ -77,6 +78,8 @@ for (const folder of cardFolders) {
   const gallery = [];
   for (const item of info.gallery || []) {
     if (!item.file) continue;
+    const sourceFile = path.join(dir, "gallery", item.file);
+    if (!await exists(sourceFile) || (await readFile(sourceFile)).length < MIN_GALLERY_IMAGE_BYTES) continue;
     const local = await localize(path.join("gallery", item.file));
     if (local) gallery.push({ order: item.order, ...local });
   }
@@ -100,6 +103,7 @@ for (const card of cards) mergedCards.set(card.cardIndex, card);
 const allCards = [...mergedCards.values()].sort((a, b) => a.cardIndex - b.cardIndex);
 
 const index = {
+  minGalleryImageBytes: MIN_GALLERY_IMAGE_BYTES,
   generatedAt: new Date().toISOString(),
   source: "https://baribal-studio.ru/foto",
   cardCount: allCards.length,
@@ -111,22 +115,8 @@ const index = {
 };
 await writeFile(indexPath, JSON.stringify(index, null, 2) + "\n", "utf8");
 
-// Remove archived gallery files that are no longer referenced by any indexed card.
-const referencedPaths = new Set();
-for (const card of allCards) {
-  if (card.mainImage?.path) referencedPaths.add(card.mainImage.path);
-  for (const image of card.gallery || []) {
-    if (image.path) referencedPaths.add(image.path);
-  }
-}
-let orphanFilesRemoved = 0;
-for (const file of await walkImages(destinationRoot)) {
-  const relative = path.relative(root, file).split(path.sep).join("/");
-  if (!referencedPaths.has(relative)) {
-    await unlink(file);
-    orphanFilesRemoved++;
-  }
-}
+// Do not delete unreferenced files automatically; audit source references before cleanup.
+const orphanFilesRemoved = 0;
 
 console.log(JSON.stringify({
   cardsProcessed: cards.length,
