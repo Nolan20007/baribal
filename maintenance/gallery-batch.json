@@ -3,5 +3,5 @@
   "endCard": 8,
   "galleryLimit": 3,
   "requiredCardText": "Mercedes-Benz GLE Coupe",
-  "note": "Run the network-response-based full-size viewer extraction for Mercedes-Benz GLE Coupe; require three distinct originals in addition to the card image."
+  "note": "Retry card 8 using modal-only popup targeting, clickable thumbnail ancestors, and per-thumbnail DOM/network diagnostics."
 }
