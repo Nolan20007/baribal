@@ -1,0 +1,109 @@
+name: Diagnose originals using proven Creatium extractor
+
+concurrency:
+  group: creatium-originals-diagnostic
+  cancel-in-progress: true
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "maintenance/tools/diagnose-creatium-originals.mjs"
+      - ".github/workflows/diagnose-creatium-originals.yml"
+  workflow_dispatch:
+    inputs:
+      start_card:
+        description: "First card to process"
+        required: true
+        default: "1"
+      end_card:
+        description: "Last card to process"
+        required: true
+        default: "1"
+      gallery_limit:
+        description: "Maximum additional gallery photos per card (0 = all photos)"
+        required: true
+        default: "0"
+      required_card_text:
+        description: "Optional text that must appear in the selected card (safety check)"
+        required: false
+        default: ""
+      page_url:
+        description: "Source page URL containing the project cards"
+        required: true
+        default: "https://baribal-studio.ru/foto"
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install Playwright
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+
+      - name: Choose card range
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_START: ${{ inputs.start_card }}
+          INPUT_END: ${{ inputs.end_card }}
+          INPUT_GALLERY_LIMIT: ${{ inputs.gallery_limit }}
+          INPUT_REQUIRED_CARD_TEXT: ${{ inputs.required_card_text }}
+          INPUT_PAGE_URL: ${{ inputs.page_url }}
+        run: |
+          if [ "$EVENT_NAME" = "push" ]; then
+            CARD_START=$(node -e "console.log(JSON.parse(require('fs').readFileSync('maintenance/gallery-batch.json','utf8')).startCard)")
+            CARD_END=$(node -e "console.log(JSON.parse(require('fs').readFileSync('maintenance/gallery-batch.json','utf8')).endCard)")
+            GALLERY_LIMIT=$(node -e "console.log(JSON.parse(require('fs').readFileSync('maintenance/gallery-batch.json','utf8')).galleryLimit)")
+            REQUIRED_CARD_TEXT=$(node -e "const x=JSON.parse(require('fs').readFileSync('maintenance/gallery-batch.json','utf8')); console.log(x.requiredCardText || '')")
+            PAGE_URL=$(node -e "const x=JSON.parse(require('fs').readFileSync('maintenance/gallery-batch.json','utf8')); console.log(x.pageUrl || 'https://baribal-studio.ru/foto')")
+          elif [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            CARD_START="$INPUT_START"
+            CARD_END="$INPUT_END"
+            GALLERY_LIMIT="$INPUT_GALLERY_LIMIT"
+            REQUIRED_CARD_TEXT="$INPUT_REQUIRED_CARD_TEXT"
+            PAGE_URL="$INPUT_PAGE_URL"
+          else
+            CARD_START=1
+            CARD_END=154
+            GALLERY_LIMIT=120
+            REQUIRED_CARD_TEXT=""
+          fi
+          echo "CARD_START=$CARD_START" >> "$GITHUB_ENV"
+          echo "CARD_END=$CARD_END" >> "$GITHUB_ENV"
+          echo "GALLERY_LIMIT=$GALLERY_LIMIT" >> "$GITHUB_ENV"
+          echo "REQUIRED_CARD_TEXT=$REQUIRED_CARD_TEXT" >> "$GITHUB_ENV"
+          echo "PAGE_URL=$PAGE_URL" >> "$GITHUB_ENV"
+          echo "Selected gallery cards: $CARD_START-$CARD_END"
+
+      - name: Inspect originals using proven gallery-click logic
+        env:
+          PAGE_URL: ${{ env.PAGE_URL }}
+          CARD_START: ${{ env.CARD_START }}
+          CARD_END: ${{ env.CARD_END }}
+          GALLERY_LIMIT: ${{ env.GALLERY_LIMIT }}
+          REQUIRED_CARD_TEXT: ${{ env.REQUIRED_CARD_TEXT }}
+        run: node maintenance/tools/diagnose-creatium-originals.mjs
+
+      - name: Upload raw extraction and report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: creatium-originals-diagnostic
+          path: output/creatium-originals-diagnostic/
+          if-no-files-found: warn
+          retention-days: 14
