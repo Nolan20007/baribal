@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-11-18T02:30:57.139Z",
+  "generatedAt": "2026-11-18T02:31:14.132Z",
   "source": "https://baribal-studio.ru/foto",
   "cardCount": 18,
   "cardsWithMainImage": 0,
-  "additionalGalleryImages": 190,
+  "additionalGalleryImages": 187,
   "uniqueBytesAdded": 0,
   "duplicateReferencesReused": 1,
   "cards": [
@@ -995,37 +995,31 @@
       "gallery": [
         {
           "order": 1,
-          "path": "assets/images/portfolio/galleries/c8616e205e12df0fc091a2f221a755bf93a7251bef0f9cb85e63fa60e47678e4.jpg",
-          "sha256": "c8616e205e12df0fc091a2f221a755bf93a7251bef0f9cb85e63fa60e47678e4",
-          "bytes": 8182
-        },
-        {
-          "order": 2,
           "path": "assets/images/portfolio/galleries/463d090c8da2cac583be20ace8bb81521add6ae9dcfa306c8fa252b1e8f3c744.jpg",
           "sha256": "463d090c8da2cac583be20ace8bb81521add6ae9dcfa306c8fa252b1e8f3c744",
           "bytes": 219042
         },
         {
-          "order": 3,
+          "order": 2,
           "path": "assets/images/portfolio/galleries/85945e7e41eaa1a8a234e5f05a8133345ecc29afa61934d1ec9ea2dc349213dc.jpg",
           "sha256": "85945e7e41eaa1a8a234e5f05a8133345ecc29afa61934d1ec9ea2dc349213dc",
           "bytes": 233439
         },
         {
-          "order": 4,
+          "order": 3,
           "path": "assets/images/portfolio/galleries/5277ebd254bdb2166e2caee7efeb8f114e650152d098651c49613f39384e06b3.jpg",
           "sha256": "5277ebd254bdb2166e2caee7efeb8f114e650152d098651c49613f39384e06b3",
           "bytes": 197226
         },
         {
-          "order": 5,
+          "order": 4,
           "path": "assets/images/portfolio/galleries/433bdf077a45be1c1a47d3704b681c184b364130b81ffc7f6ba4b92c3faf798a.jpg",
           "sha256": "433bdf077a45be1c1a47d3704b681c184b364130b81ffc7f6ba4b92c3faf798a",
           "bytes": 219023
         }
       ],
       "galleryCountDetected": 5,
-      "galleryCountSaved": 5
+      "galleryCountSaved": 4
     },
     {
       "cardIndex": 12,
@@ -1067,37 +1061,31 @@
       "gallery": [
         {
           "order": 1,
-          "path": "assets/images/portfolio/galleries/8547d25cb681306aec163beef6accdfa5bef93f699f5320c4cd6f889ea2de851.jpg",
-          "sha256": "8547d25cb681306aec163beef6accdfa5bef93f699f5320c4cd6f889ea2de851",
-          "bytes": 9492
-        },
-        {
-          "order": 2,
           "path": "assets/images/portfolio/galleries/f21d6993853c4e940978efc59a6cfa89f755f3e09d3d9150488356a4e5ac9d67.jpg",
           "sha256": "f21d6993853c4e940978efc59a6cfa89f755f3e09d3d9150488356a4e5ac9d67",
           "bytes": 232377
         },
         {
-          "order": 3,
+          "order": 2,
           "path": "assets/images/portfolio/galleries/73fe2d690b8271302a3658461dc3ad0a7b59dc4545088dcfe98803dfc2159dbb.jpg",
           "sha256": "73fe2d690b8271302a3658461dc3ad0a7b59dc4545088dcfe98803dfc2159dbb",
           "bytes": 150233
         },
         {
-          "order": 4,
+          "order": 3,
           "path": "assets/images/portfolio/galleries/224283009bb2c125368b2f962b2abd16f635e1fc8feb83d55c036cdebd6e62a2.jpg",
           "sha256": "224283009bb2c125368b2f962b2abd16f635e1fc8feb83d55c036cdebd6e62a2",
           "bytes": 247124
         },
         {
-          "order": 5,
+          "order": 4,
           "path": "assets/images/portfolio/galleries/6e0fed75bb47452444182ae40dc168be5f6ee57ab108b506f0887a63255284f5.jpg",
           "sha256": "6e0fed75bb47452444182ae40dc168be5f6ee57ab108b506f0887a63255284f5",
           "bytes": 201752
         }
       ],
       "galleryCountDetected": 5,
-      "galleryCountSaved": 5
+      "galleryCountSaved": 4
     },
     {
       "cardIndex": 14,
@@ -1241,55 +1229,49 @@
       "gallery": [
         {
           "order": 1,
-          "path": "assets/images/portfolio/galleries/5edc63841d70c81084088266426c9090d7a68f7f16cd216a018f7bfe00a21c38.jpg",
-          "sha256": "5edc63841d70c81084088266426c9090d7a68f7f16cd216a018f7bfe00a21c38",
-          "bytes": 10701
-        },
-        {
-          "order": 2,
           "path": "assets/images/portfolio/galleries/cff32f122c14c4cdbe88ad3e525a6a4f105b1e1958a94e9af35e0fec85da2a5f.jpg",
           "sha256": "cff32f122c14c4cdbe88ad3e525a6a4f105b1e1958a94e9af35e0fec85da2a5f",
           "bytes": 251690
         },
         {
-          "order": 3,
+          "order": 2,
           "path": "assets/images/portfolio/galleries/39f70702a2c117c281c100e7ea2de107f3c63207cfd84a77614f6b3239be3ff0.jpg",
           "sha256": "39f70702a2c117c281c100e7ea2de107f3c63207cfd84a77614f6b3239be3ff0",
           "bytes": 244842
         },
         {
-          "order": 4,
+          "order": 3,
           "path": "assets/images/portfolio/galleries/d15f9bbeeb85a1de1978d4253cb79db5ae3d484ab701c3f4f05da3b25b057795.jpg",
           "sha256": "d15f9bbeeb85a1de1978d4253cb79db5ae3d484ab701c3f4f05da3b25b057795",
           "bytes": 237896
         },
         {
-          "order": 5,
+          "order": 4,
           "path": "assets/images/portfolio/galleries/d0ca526bb2d20f136ec3bcacbf5e4f868d20079b821e0ecabb8984c289830f83.jpg",
           "sha256": "d0ca526bb2d20f136ec3bcacbf5e4f868d20079b821e0ecabb8984c289830f83",
           "bytes": 216831
         },
         {
-          "order": 6,
+          "order": 5,
           "path": "assets/images/portfolio/0055b833544bd3550f1a90b3f038637a8d1b4a9a570018a5614231ed3ce1b0e9.jpg",
           "sha256": "0055b833544bd3550f1a90b3f038637a8d1b4a9a570018a5614231ed3ce1b0e9",
           "bytes": 179344
         },
         {
-          "order": 7,
+          "order": 6,
           "path": "assets/images/portfolio/galleries/8b38c795cdc4e514377b8cd91e136c6b4690f898ba8be350fb9577ca1a737c70.jpg",
           "sha256": "8b38c795cdc4e514377b8cd91e136c6b4690f898ba8be350fb9577ca1a737c70",
           "bytes": 236241
         },
         {
-          "order": 8,
+          "order": 7,
           "path": "assets/images/portfolio/galleries/b84d095c3ce078b54bbfd97dd68d542ed2f7d8eb993e3e24141c9355eaf99e8c.jpg",
           "sha256": "b84d095c3ce078b54bbfd97dd68d542ed2f7d8eb993e3e24141c9355eaf99e8c",
           "bytes": 222720
         }
       ],
       "galleryCountDetected": 8,
-      "galleryCountSaved": 8
+      "galleryCountSaved": 7
     },
     {
       "cardIndex": 18,
