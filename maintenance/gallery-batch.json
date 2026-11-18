@@ -1,8 +1,8 @@
 {
   "startCard": 1,
-  "endCard": 10,
+  "endCard": 25,
   "galleryLimit": 0,
   "requiredCardText": "",
   "pageUrl": "https://baribal-studio.ru/foto",
-  "note": "Fresh full extraction of original Creatium cards 1-10; ignore current new-site card text and cover images. Verify downloaded covers and gallery photos visually before use."
+  "note": "Fresh full extraction of original Creatium cards 1-25; old Creatium page is the factual source of truth. Verify downloaded covers and gallery photos visually before updating portfolio."
 }
