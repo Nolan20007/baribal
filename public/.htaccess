@@ -1,0 +1,10 @@
+Options -MultiViews
+RewriteEngine On
+
+# Keep existing files and directories available as-is.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Send application routes (for example /video and /foto) to the Vite entry point.
+RewriteRule ^ index.html [L]
