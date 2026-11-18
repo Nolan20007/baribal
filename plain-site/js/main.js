@@ -623,6 +623,7 @@ if (portfolioGrid) {
     updatePortfolio();
   }));
   updatePortfolio();
+}
 
 // Plain-JS work galleries. The first item is the same cover shown on each card.
 const workGallerySets = [
