@@ -1,8 +1,8 @@
 {
-  "startCard": 1,
-  "endCard": 1,
+  "startCard": 8,
+  "endCard": 9,
   "galleryLimit": 0,
   "requiredCardText": "",
   "pageUrl": "https://baribal-studio.ru/foto",
-  "note": "Diagnostic re-extraction of card 1 only."
+  "note": "Targeted diagnostic for cards 8-9, where original extraction has been failing."
 }
