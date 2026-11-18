@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { access, mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const root = process.cwd();
@@ -8,8 +8,11 @@ const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
 const mainPath = path.join(root, "src/main.js");
 const cssPath = path.join(root, "src/styles.css");
 const reportPath = path.join(root, "maintenance/creatium-localization-report.json");
+let previousReport = { assets: [] };
+try { previousReport = JSON.parse(await readFile(reportPath, "utf8")); } catch {}
+const previousByUrl = new Map((previousReport.assets || []).map(item => [item.sourceUrl, item]));
 
-function categoryFor(asset, mainLines, cssLines) {
+function categoryFor(asset, mainLines) {
   const location = asset.locations?.[0];
   if (!location) return "misc";
   if (location.file.endsWith(".css")) return "interface";
@@ -128,27 +131,30 @@ function replaceJsAssetUrls(source, mapping) {
 const mainSource = await readFile(mainPath, "utf8");
 const cssSource = await readFile(cssPath, "utf8");
 const mainLines = mainSource.split("\n");
-const cssLines = cssSource.split("\n");
 const assets = manifest.assets || [];
 if (!assets.length) throw new Error("The Creatium asset inventory is empty.");
 
 const hashToPath = new Map();
 const urlToLocalPath = new Map();
 const results = await mapLimit(assets, 4, async asset => {
-  const category = categoryFor(asset, mainLines, cssLines);
+  const category = categoryFor(asset, mainLines);
   const { body, ext, contentType } = await fetchImage(asset.url);
   const sha256 = createHash("sha256").update(body).digest("hex");
   let localPath = hashToPath.get(sha256);
   const duplicate = Boolean(localPath);
-  if (!localPath) {
-    localPath = "assets/images/" + category + "/" + sha256 + "." + ext;
-    const absolutePath = path.join(root, localPath);
-    await mkdir(path.dirname(absolutePath), { recursive: true });
-    await writeFile(absolutePath, body, { flag: "wx" }).catch(async error => {
+  const previous = previousByUrl.get(asset.url);
+  if (!localPath && previous?.sha256 === sha256) localPath = previous.localPath;
+  if (!localPath) localPath = "assets/images/" + category + "/" + sha256 + "." + ext;
+  const absolutePath = path.join(root, localPath);
+  await mkdir(path.dirname(absolutePath), { recursive: true });
+  try {
+    await access(absolutePath);
+  } catch {
+    await writeFile(absolutePath, body, { flag: "wx" }).catch(error => {
       if (error.code !== "EEXIST") throw error;
     });
-    hashToPath.set(sha256, localPath);
   }
+  hashToPath.set(sha256, localPath);
   urlToLocalPath.set(asset.url, localPath);
   return {
     sourceUrl: asset.url,
