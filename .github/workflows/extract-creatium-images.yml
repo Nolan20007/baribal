@@ -20,9 +20,13 @@ on:
         required: true
         default: "8"
       gallery_limit:
-        description: "Maximum additional gallery photos per card"
+        description: "Maximum additional gallery photos per card (120 = practical all-photos limit)"
         required: true
-        default: "3"
+        default: "120"
+      required_card_text:
+        description: "Optional text that must appear in the selected card (safety check)"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -53,17 +57,18 @@ jobs:
           INPUT_START: ${{ inputs.start_card }}
           INPUT_END: ${{ inputs.end_card }}
           INPUT_GALLERY_LIMIT: ${{ inputs.gallery_limit }}
+          INPUT_REQUIRED_CARD_TEXT: ${{ inputs.required_card_text }}
         run: |
           if [ "$EVENT_NAME" = "push" ]; then
             CARD_START=$(node -e "console.log(JSON.parse(require('fs').readFileSync('maintenance/gallery-batch.json','utf8')).startCard)")
             CARD_END=$(node -e "console.log(JSON.parse(require('fs').readFileSync('maintenance/gallery-batch.json','utf8')).endCard)")
             GALLERY_LIMIT=$(node -e "console.log(JSON.parse(require('fs').readFileSync('maintenance/gallery-batch.json','utf8')).galleryLimit)")
-            REQUIRED_CARD_TEXT=$(node -e "console.log(JSON.parse(require('fs').readFileSync('maintenance/gallery-batch.json','utf8')).requiredCardText)")
+            REQUIRED_CARD_TEXT=$(node -e "const x=JSON.parse(require('fs').readFileSync('maintenance/gallery-batch.json','utf8')); console.log(x.requiredCardText || '')")
           elif [ "$EVENT_NAME" = "workflow_dispatch" ]; then
             CARD_START="$INPUT_START"
             CARD_END="$INPUT_END"
             GALLERY_LIMIT="$INPUT_GALLERY_LIMIT"
-            REQUIRED_CARD_TEXT="Mercedes-Benz GLE Coupe"
+            REQUIRED_CARD_TEXT="$INPUT_REQUIRED_CARD_TEXT"
           else
             CARD_START=1
             CARD_END=154
