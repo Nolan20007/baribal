@@ -1,0 +1,38 @@
+name: Diagnose Creatium cards 1 and 2
+
+on:
+  workflow_dispatch:
+    inputs:
+      page_url:
+        description: "Creatium page to inspect"
+        required: true
+        default: "https://baribal-studio.ru/foto"
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install Playwright and Chromium
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Capture card internals
+        env:
+          PAGE_URL: \${{ inputs.page_url }}
+        run: node maintenance/tools/diagnose-creatium-cards.mjs
+      - name: Upload diagnostic report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: creatium-cards-1-2-diagnostic
+          path: output/creatium-card-diagnostic/
+          if-no-files-found: warn
+          retention-days: 14
