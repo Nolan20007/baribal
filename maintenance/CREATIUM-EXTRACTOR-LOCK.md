@@ -28,7 +28,7 @@ GitHub → Actions → **Extract and archive Creatium galleries** → Run workfl
 
 - First card to process: номер карточки.
 - Last card to process: тот же номер для одной карточки; диапазон — для нескольких.
-- Maximum additional gallery photos per card: **120**.
+- Maximum additional gallery photos per card: **0** (meaning every discovered gallery photo; positive values set an optional cap).
 - Optional text check: пусто либо уникальная строка из нужной карточки.
 
 Workflow запускает Playwright/Chromium, скачивает главное изображение и дополнительные оригиналы, выполняет дедупликацию SHA-256, обновляет индекс и коммитит новые ресурсы. Скачанные исходные результаты доступны в артефакте `creatium-gallery-source`.
@@ -38,7 +38,7 @@ Workflow запускает Playwright/Chromium, скачивает главно
 ```bash
 npm install
 npx playwright install chromium
-PAGE_URL=https://baribal-studio.ru/ CARD_START=8 CARD_END=8 GALLERY_LIMIT=120 node maintenance/tools/extract-creatium-images.mjs
+PAGE_URL=https://baribal-studio.ru/ CARD_START=8 CARD_END=8 GALLERY_LIMIT=0 node maintenance/tools/extract-creatium-images.mjs
 node maintenance/tools/normalize-creatium-galleries.mjs
 ```
 
