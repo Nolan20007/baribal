@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "extract:creatium": "node tools/extract-creatium-images.mjs"
+    "extract:creatium": "node maintenance/tools/extract-creatium-images.mjs"
   },
   "devDependencies": {
     "vite": "^6.0.0",
