@@ -56,6 +56,62 @@ jobs:
           PY
           rm -f dist/README.md
           cp dist/index.html dist/404.html
+      - name: Install Chromium for browser smoke tests
+        run: npx playwright install --with-deps chromium
+      - name: Smoke-test all pages and interactive controls
+        run: |
+          mkdir -p /tmp/baribal-preview
+          ln -s "$GITHUB_WORKSPACE/dist" /tmp/baribal-preview/baribal
+          python3 -m http.server 4173 --directory /tmp/baribal-preview >/tmp/baribal-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 20); do
+            if curl -fsS http://127.0.0.1:4173/baribal/ >/dev/null; then break; fi
+            sleep 1
+          done
+          node --input-type=module <<'JS'
+          import { chromium } from "playwright";
+          const browser = await chromium.launch({ headless: true });
+          const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+          const errors = [];
+          page.on("pageerror", error => errors.push(page.url() + ": " + error.message));
+          const root = "http://127.0.0.1:4173/baribal";
+          const routes = ["/", "/tehnology/", "/kuzov/", "/himchistka/", "/avtovinil/", "/foto/", "/video/", "/reviews/", "/politika-konfidencialnosti/"];
+          for (const route of routes) {
+            const response = await page.goto(root + route, { waitUntil: "domcontentloaded" });
+            if (!response || !response.ok()) throw new Error("Page failed: " + route);
+            await page.locator(".js-callback").first().click();
+            await page.locator("#callback-modal.modal-open").waitFor({ timeout: 4000 });
+            if (await page.locator("#callback-modal").getAttribute("aria-hidden") !== "false") throw new Error("Callback modal did not open: " + route);
+            const form = page.locator("#callback-modal form");
+            await form.locator('input[name="phone"]').fill("+79990000000");
+            await form.locator('button[type="submit"]').click();
+            const message = await form.locator("output").textContent();
+            if (!message?.includes("Предпросмотр")) throw new Error("Demo form did not submit: " + route);
+            await page.locator("#callback-modal .modal-close").click();
+            await page.locator("#callback-modal.modal-open").waitFor({ state: "detached", timeout: 1000 }).catch(() => {});
+          }
+          await page.goto(root + "/", { waitUntil: "domcontentloaded" });
+          await page.setViewportSize({ width: 390, height: 844 });
+          if (await page.locator(".device-preview-open").first().isVisible()) throw new Error("Device preview launcher is visible on mobile");
+          await page.setViewportSize({ width: 1440, height: 900 });
+          await page.locator(".device-preview-open").first().click();
+          await page.locator(".device-preview-modal.is-open").waitFor({ timeout: 3000 });
+          await page.locator('[data-preview-width="1366"]').click();
+          if (await page.locator(".device-preview-viewport iframe").evaluate(frame => frame.style.width) !== "1366px") throw new Error("Device preview width switch failed");
+          await page.locator(".device-preview-close").click();
+          await page.goto(root + "/video/", { waitUntil: "domcontentloaded" });
+          await page.locator("[data-player-start]").first().click();
+          await page.locator(".video-player-status").first().waitFor({ state: "visible", timeout: 5000 });
+          for (const route of ["/vite-archive/", "/vite-archive/tehnology/"]) {
+            const response = await page.goto(root + route, { waitUntil: "domcontentloaded" });
+            if (!response || !response.ok()) throw new Error("Archived Vite route failed: " + route);
+            if (!(await page.locator("body").innerText()).includes("BARIBAL")) throw new Error("Archived Vite page content missing: " + route);
+          }
+          if (errors.length) throw new Error("Browser JavaScript errors:\\n" + errors.join("\\n"));
+          await browser.close();
+          console.log("BARIBAL browser smoke tests passed: 9 HTML pages, callback forms, desktop preview, video fallback, archived Vite routes.");
+          JS
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
