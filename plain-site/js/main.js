@@ -396,7 +396,9 @@ if (portfolioGrid) {
     const info = actions?.querySelector(".js-service-info");
     if (info) {
       const text = card.textContent.toLowerCase();
-      const title = /clearplex|лобов|стекл/.test(text) ? "Бронирование лобового стекла Quantum Anti-Skol"
+      const title = /bariglass/.test(text) ? "BariGlass"
+        : /baritools/.test(text) ? "BariTools"
+        : /clearplex|лобов|ст[её]кл/.test(text) ? "Бронирование лобового стекла Quantum Anti-Skol"
         : /химчист|детейлинг|салон/.test(text) ? "Химчистка салона"
         : /полировк/.test(text) ? "Ручная полировка"
         : /винил|стайлинг|рекламн|изменение цвета/.test(text) ? "Автовинил"
