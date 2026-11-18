@@ -1,0 +1,28 @@
+name: Download test for Creatium cards 8-9
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "maintenance/tools/download-creatium-cards-8-9.mjs"
+
+permissions:
+  contents: read
+
+jobs:
+  download-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Download and verify 14 gallery originals
+        run: node maintenance/tools/download-creatium-cards-8-9.mjs
+      - name: Upload downloaded files and report
+        uses: actions/upload-artifact@v4
+        with:
+          name: creatium-cards-8-9-download-test
+          path: output/creatium-download-test/
+          retention-days: 14
