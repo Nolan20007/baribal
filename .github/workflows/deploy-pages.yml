@@ -134,7 +134,8 @@ jobs:
             await page.locator(".work-gallery-close").click();
           }
           await page.goto(root + "/foto/", { waitUntil: "domcontentloaded" });
-          if (await page.locator("[data-portfolio-gallery-index]").count() !== 60) throw new Error("Expected galleries on all 60 portfolio cards");
+          if (await page.locator("#portfolio-grid .work-card").count() !== 60) throw new Error("Expected all 60 portfolio cards");
+          if (await page.locator("#portfolio-grid .work-image.js-open-work-gallery[data-portfolio-gallery-index]").count() !== 60) throw new Error("Expected one gallery cover trigger on each of 60 portfolio cards");
           for (let index = 0; index < 60; index++) {
             const trigger = page.locator('.work-image.js-open-work-gallery[data-portfolio-gallery-index="' + index + '"]');
             if (await trigger.count() !== 1) throw new Error("Portfolio cover trigger missing: " + index);
