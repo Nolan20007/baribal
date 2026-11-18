@@ -3,7 +3,7 @@ import { portfolioGalleries } from "./portfolio-galleries.js";
 try { const savedTheme = localStorage.getItem("baribal-theme"); if (savedTheme === "light" || savedTheme === "dark") document.documentElement.dataset.theme = savedTheme; } catch {}
 const logo = new URL("../assets/images/brand/ca257917ad27e3cc4c7f0e446bc6d0bfdc1cb9d92bc77c476dde83c5275612f5.png", import.meta.url).href;
 const work = [
-  { image: "https://img1.creatium.ru/disk2/f4/88/f4/273b6de1a542dab6b467ca8b3816bd2714/1.jpg", type: "Оклейка", title: "Оклейка и изменение цвета из цветного полиуретана на Mercedes-Benz GLE Coupe", text: "Изменение цвета кузова и защита автомобиля цветным полиуретаном." },
+  { image: new URL("../assets/images/portfolio/galleries/89ee4c4f6289c7bd307e768dc92246a11143550b3026e1886dff4df82d6a8f05.jpg", import.meta.url).href, type: "Оклейка", title: "Оклейка и изменение цвета из цветного полиуретана на Mercedes-Benz GLE", text: "Изменение цвета кузова и защита автомобиля цветным полиуретаном." },
   { image: new URL("../assets/images/portfolio/edb1f571acdac6f0a9bc76b7bdcff548467bed7c317eac3fbbbbe6e41cd3430c.jpg", import.meta.url).href, type: "Бронирование", title: "Защита BMW 8", text: "Бронирование передней части автомобиля и лобового стекла." },
   { image: new URL("../assets/images/portfolio/89aa4c603c5fe509040b7999422cd307e8aea34d9ce8fcd7862940961bd39ffa.jpg", import.meta.url).href, type: "Бронирование", title: "Защита Lexus", text: "Оклейка передней части кузова защитной полиуретановой плёнкой." }
 ];
@@ -136,9 +136,24 @@ const contactPreferences = () => `
 const callback = () => `
   <div class="modal" id="callback-modal" aria-hidden="true"><div class="modal-backdrop js-close"></div><section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button class="modal-close js-close" aria-label="Закрыть">×</button><div class="callback-modal-heading"><img src="${contactWidgetImage}" alt=""><span class="eyebrow">BARIBAL · ПЕРМЬ</span></div><h2 id="modal-title">Мы вам перезвоним</h2><p id="callback-context">Оставьте номер — обсудим задачу и подберём решение для вашего автомобиля.</p><form class="lead-form demo-form"><input type="hidden" name="service" id="callback-service" value=""><label>Ваше имя<input name="name" placeholder="Как к вам обращаться" /></label><label>Телефон<input name="phone" type="tel" placeholder="+7 (___) ___-__-__" required /></label>${contactPreferences()}<button class="button" type="submit">Заказать консультацию</button><output></output></form></section></div>`;
 const demoWorkGalleries = [
-  ["https://img1.creatium.ru/disk2/f4/88/f4/273b6de1a542dab6b467ca8b3816bd2714/1.jpg"],
-  [new URL("../assets/images/portfolio/edb1f571acdac6f0a9bc76b7bdcff548467bed7c317eac3fbbbbe6e41cd3430c.jpg", import.meta.url).href],
-  [new URL("../assets/images/portfolio/89aa4c603c5fe509040b7999422cd307e8aea34d9ce8fcd7862940961bd39ffa.jpg", import.meta.url).href],
+  [
+    new URL("../assets/images/portfolio/galleries/89ee4c4f6289c7bd307e768dc92246a11143550b3026e1886dff4df82d6a8f05.jpg", import.meta.url).href,
+    new URL("../assets/images/portfolio/galleries/e07619d016a9cf994c3a88f261b674ea13202d2a301cd032299eae535e0f1f59.jpg", import.meta.url).href
+  ],
+  [
+    new URL("../assets/images/portfolio/edb1f571acdac6f0a9bc76b7bdcff548467bed7c317eac3fbbbbe6e41cd3430c.jpg", import.meta.url).href,
+    new URL("../assets/images/portfolio/galleries/2e02a5330abbecb7b2cae81331597c3b2c8c50031e576b549f4cefecda4f53d8.jpg", import.meta.url).href,
+    new URL("../assets/images/portfolio/galleries/4afed0612adc54eb4225d7a5272eee876bcd2c059e623d25767a7e7e63d9e2a6.jpg", import.meta.url).href,
+    new URL("../assets/images/portfolio/galleries/aa23627731b6586bb88ad6ad6c9fc104b778da3eaedc9bd5ca45fa4f02eb85bc.jpg", import.meta.url).href,
+    new URL("../assets/images/portfolio/galleries/1cb1beba1256ced2924f78f6a5de57dce733b941e6589a10f4a808062d9a3d03.jpg", import.meta.url).href,
+    new URL("../assets/images/portfolio/galleries/8ac2c68ec165ee773d64db3e8f98266f5c53001d1ba2cd6d865081f4cac4fd87.jpg", import.meta.url).href,
+    new URL("../assets/images/portfolio/galleries/a39e23a4659c26b5e17e14e9b9e1e5dc1698bc9340b700412c29f236eef4e96e.jpg", import.meta.url).href
+  ],
+  [
+    new URL("../assets/images/portfolio/89aa4c603c5fe509040b7999422cd307e8aea34d9ce8fcd7862940961bd39ffa.jpg", import.meta.url).href,
+    new URL("../assets/images/portfolio/galleries/c140984e92c2df675bed98df0a034876a5457c926d6a4efa70eb15f3030e5576.jpg", import.meta.url).href,
+    new URL("../assets/images/portfolio/galleries/f10aeb6251c9d4f0f30ccf7730d150bd55a85d8c32f081914e3f32ab1e184431.jpg", import.meta.url).href
+  ],
   [new URL("../assets/images/portfolio/73b239e1305c79983656d7ede9857eb88ab3d3272fd164e798a9e8d47534ebd0.jpg", import.meta.url).href,new URL("../assets/images/portfolio/b07ab313fa12622258f6b4e104b8055387147efbcde98ba317a565937783e6cd.jpg", import.meta.url).href],
   [new URL("../assets/images/portfolio/8bfc9a70f703dc3d73c4b6f620023c70a22a64e1b48d4aa3de5b8d49fe3e8b47.jpg", import.meta.url).href,new URL("../assets/images/portfolio/fd19178423f242ab3e160a14836e831d495088ce0d8719f6d46ee9c7ff6031c5.jpg", import.meta.url).href,new URL("../assets/images/portfolio/3837ffd66fe11fdb2a4e0f5c04afb22d0c35b31722fec43a2e04d5a1e9846bf5.jpg", import.meta.url).href,new URL("../assets/images/portfolio/0fcede994e06190cb659c0bd80f574a4bef9771dd09d664a1a429ea84f48f32b.jpg", import.meta.url).href,new URL("../assets/images/portfolio/87759269073dad0537555a4515cafa1e9061bafc182396d8eb97b82c82cb5fd7.jpg", import.meta.url).href]
 ];
