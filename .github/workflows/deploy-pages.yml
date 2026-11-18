@@ -1,4 +1,4 @@
-name: Deploy BARIBAL HTML site to GitHub Pages
+name: Deploy BARIBAL HTML site and archived Vite preview to GitHub Pages
 
 on:
   push:
@@ -20,21 +20,35 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-      - name: Assemble static HTML site
+      - name: Set up Node.js for the archived Vite preview
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install archived Vite dependencies
+        run: npm install
+      - name: Build the archived Vite preview
+        env:
+          GITHUB_PAGES: "true"
+        run: npx vite build --base=/baribal/vite-archive/ --outDir dist/vite-archive
+      - name: Assemble the main plain HTML site
         run: |
-          rm -rf dist
           mkdir -p dist
           cp -R plain-site/. dist/
           mkdir -p dist/assets
           cp -R assets/. dist/assets/
           mkdir -p dist/foto
           cp foto/foto.png dist/foto/foto.png
-          # Home page paths are one level shallower after publication.
-          sed -i 's#../assets/#./assets/#g; s#../foto/#./foto/#g' dist/index.html
-          # Internal pages live in one-level subdirectories.
-          find dist -mindepth 2 -type f -name '*.html' -exec sed -i 's#../../assets/#../assets/#g; s#../../foto/#../foto/#g' {} +
-          # CSS is served from /css/, so assets are one level above it.
-          sed -i 's#../../assets/#../assets/#g' dist/css/style.css
+          python - <<'PY'
+          from pathlib import Path
+          root = Path("dist")
+          home = root / "index.html"
+          home.write_text(home.read_text().replace("../assets/", "./assets/").replace("../foto/", "./foto/"))
+          for folder in ("tehnology", "kuzov", "himchistka", "avtovinil", "foto", "video", "reviews", "politika-konfidencialnosti"):
+              page = root / folder / "index.html"
+              page.write_text(page.read_text().replace("../../assets/", "../assets/").replace("../../foto/", "../foto/"))
+          css = root / "css" / "style.css"
+          css.write_text(css.read_text().replace("../../assets/", "../assets/"))
+          PY
           cp dist/index.html dist/404.html
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
