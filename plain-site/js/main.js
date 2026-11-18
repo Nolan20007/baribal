@@ -234,6 +234,7 @@ if (previewLauncher) {
           <button class="device-preview-mode is-active" type="button" data-preview-width="390" aria-pressed="true">Телефон</button>
           <button class="device-preview-mode" type="button" data-preview-width="1366" aria-pressed="false">Ноутбук</button>
           <button class="device-preview-mode" type="button" data-preview-width="1920" aria-pressed="false">Широкий монитор</button>
+          <a class="device-preview-mode" href="/baribal/vite-archive/" target="_blank" rel="noopener noreferrer">Старая версия Vite</a>
           <button class="device-preview-close" type="button" data-preview-close aria-label="Закрыть окно">×</button>
         </div>
       </header>
