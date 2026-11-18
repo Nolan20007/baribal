@@ -103,10 +103,18 @@ async function readGalleryImages() {
       return style.display !== "none" && style.visibility !== "hidden" &&
         Number(style.opacity || 1) > 0 && r.width > 0 && r.height > 0;
     };
-    const overlayPattern = /modal|popup|gallery|fancybox|lightbox|swiper|slick|fotorama|viewer|overlay|photo/i;
+    const overlayPattern = /modal|popup|fancybox|lightbox|viewer|overlay/i;
     const roots = [...document.querySelectorAll(
       "[role='dialog'],[aria-modal='true'],[class*='modal'],[class*='popup'],[class*='gallery'],[class*='fancybox'],[class*='lightbox'],[class*='swiper'],[class*='slick'],[class*='fotorama'],[class*='viewer'],[class*='overlay']"
-    )].filter(root => visible(root) && overlayPattern.test(String(root.className || "") + " " + root.getAttribute("role")));
+    )].filter(root => {
+      if (!visible(root)) return false;
+      const style = getComputedStyle(root);
+      const zIndex = Number.parseInt(style.zIndex, 10) || 0;
+      const semanticOverlay = root.getAttribute("role") === "dialog" ||
+        root.getAttribute("aria-modal") === "true" ||
+        overlayPattern.test(String(root.className || ""));
+      return semanticOverlay || (style.position === "fixed" && zIndex > 5);
+    });
     const urls = [];
     const add = value => {
       if (!value) return;
