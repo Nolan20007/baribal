@@ -1,8 +1,8 @@
 {
-  "startCard": 2,
-  "endCard": 2,
+  "startCard": 1,
+  "endCard": 1,
   "galleryLimit": 0,
   "requiredCardText": "",
   "pageUrl": "https://baribal-studio.ru/foto",
-  "note": "Diagnostic re-extraction of card 2 only to compare cover image selection with single-card extraction."
+  "note": "Diagnostic re-extraction of card 1 only."
 }
