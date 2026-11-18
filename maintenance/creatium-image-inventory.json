@@ -1,0 +1,1069 @@
+{
+  "generatedFrom": [
+    "src/main.js",
+    "src/styles.css"
+  ],
+  "note": "Creatium-hosted image/resource URLs referenced by the current source. Download and verify these before retiring the old Creatium hosting. Repeated references are intentional usage occurrences, not proof of duplicate files.",
+  "uniqueCreatiumUrls": 91,
+  "totalReferences": 128,
+  "assets": [
+    {
+      "url": "https://i.1.creatium.io/plp/u1.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/04afce45398da01fc7f7df45a26a77b8.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 30
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u1.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/0c8eaf73f65a5818d561422b30272862.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 39
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u1.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/0d48cc9a7bf83b6120229b4891b2aae7.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 37
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u1.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/29461bdf067af92fd645ec0d8f429732.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 32
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u1.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/48c17908208bbb503add303b0563a8a4.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 41
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u1.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/49e6ea0c7e4f85447a41d1a7867892de.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 40
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u1.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/52391e2f066ecb0ddb48c6513426c2c0.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 31
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u1.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/64ae5e93ad68cadd0dfb37277679e28b.jpg",
+      "occurrences": 2,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 46
+        },
+        {
+          "file": "src/main.js",
+          "line": 142
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u1.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/7069eadb3d82a4725e6cdd50d4567417.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 34
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u1.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/7232dd017dd22e80c31b37a5c7c03d6b.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 43
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u1.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/76ed393fa302bad1970cb0a789fdaa5f.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 36
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u1.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/77c4576a0805a73ad0ffb1cc56f6af19.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 47
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u1.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/9aea36833a4913d8b6f61dad1f101302.jpg",
+      "occurrences": 2,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 42
+        },
+        {
+          "file": "src/main.js",
+          "line": 142
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u1.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/9c7d5e932d3544bdd15b7568e2e5018d.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 35
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u1.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/a2758dc9d8510f1ea47218cb06f652db.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 33
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u1.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/ad0c37ea213ecb062ef35d4e27a142bc.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 38
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u1.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/c72ef3f7aa0f0dcdc08540ec4a25f68c.jpg",
+      "occurrences": 2,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 44
+        },
+        {
+          "file": "src/main.js",
+          "line": 142
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u1.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/d07ac3d3b0041833d8337e1815830e71.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 48
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u1.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/ee632ea92877f6cc0c078c03a704b700.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 49
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u1.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/f48bc45abe31219e98a95ea7c6f5e712.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 45
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u20.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/0e5184c2d802a7a100feb91ce2abfff1.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 20
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u20.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/269f2a45aa3af6ba2d6dce3a97708424.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 23
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u20.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/437541f7c4719e625bda5a164bf62945.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 24
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u20.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/467ae06547d65bf51338a8b2e5fbd71d.jpg",
+      "occurrences": 2,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 11
+        },
+        {
+          "file": "src/main.js",
+          "line": 138
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u20.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/4936c597274e5848db9fcb8145fe45fb.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 27
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u20.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/54e17fb6c7ef3a8d832c962b017422c9.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 22
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u20.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/6840a8eecb4636bece9fbf09584163f1.jpg",
+      "occurrences": 3,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 14
+        },
+        {
+          "file": "src/main.js",
+          "line": 138
+        },
+        {
+          "file": "src/main.js",
+          "line": 142
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u20.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/6d0cf28054a7eb2100945ab72e9f8713.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 28
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u20.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/743cdf4b21a5c6b6f449b390ceaa9a98.jpg",
+      "occurrences": 2,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 18
+        },
+        {
+          "file": "src/main.js",
+          "line": 139
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u20.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/7b6ed580923a10658f79d89a25b5cbd2.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 25
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u20.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/85217f2d2a6845fe27e15fd62c9206eb.jpg",
+      "occurrences": 2,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 12
+        },
+        {
+          "file": "src/main.js",
+          "line": 138
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u20.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/8c91fa2b6fb74932a6a4463df778e4db.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 19
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u20.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/c43db8de69deb66bf35f3f40be2ed93f.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 21
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u20.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/d3d3b30082bdcf5ad8fe6cc088c3b0f9.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 26
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u20.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/d44e2de30289b2c485b8acddd093e385.jpg",
+      "occurrences": 2,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 29
+        },
+        {
+          "file": "src/main.js",
+          "line": 142
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u20.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/d8dda45fa03603508519b27f3032c7c6.jpg",
+      "occurrences": 2,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 17
+        },
+        {
+          "file": "src/main.js",
+          "line": 139
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u20.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/dabf547cf6e4e32efa87794a144a793a.jpg",
+      "occurrences": 2,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 13
+        },
+        {
+          "file": "src/main.js",
+          "line": 138
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u20.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/ebe468efd593a38848c0988c3d2cf44c.jpg",
+      "occurrences": 2,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 16
+        },
+        {
+          "file": "src/main.js",
+          "line": 139
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u20.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/f51495a97ca9a4e66158ab61688e3e54.jpg",
+      "occurrences": 2,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 15
+        },
+        {
+          "file": "src/main.js",
+          "line": 139
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u21.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/7ab8d1717c459b9fcc44c1af91c91aa0.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 181
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u21.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/a9956d63b09e5fbef3f76be971ecb4c5.jpg",
+      "occurrences": 2,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 6
+        },
+        {
+          "file": "src/main.js",
+          "line": 139
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u21.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/b0d8da0f788fb697ef85e2876f2e2d8a.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 181
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u21.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/da220dd7b47feb810724df41a5ca515e.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 181
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/1454bf4370c656c6c5a401dcc442b7f6.jpg",
+      "occurrences": 4,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 218
+        },
+        {
+          "file": "src/main.js",
+          "line": 222
+        },
+        {
+          "file": "src/main.js",
+          "line": 366
+        },
+        {
+          "file": "src/main.js",
+          "line": 367
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/1561362c75f97cc1dcfe72f6a57528b5.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 63
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/16a3ac3b0d610d95cd054254f8dd82d6.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 182
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/20b3a3c6c3e5a50ad030e4a641df61a2.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 223
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/287c37f0e852494cc33facdd7b26cbc0.jpg",
+      "occurrences": 2,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 60
+        },
+        {
+          "file": "src/main.js",
+          "line": 141
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/30bd7e7bc274390942dffc1aec658d56.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 52
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/3744fed85fc8e32b710fac51b32342e9.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 221
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/3cb42adbe082d65c4765f1b6af1d38ec.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 182
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/3d70846270b5fa3cde2c77979087cd00.jpg",
+      "occurrences": 2,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 214
+        },
+        {
+          "file": "src/main.js",
+          "line": 365
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/3d8df7015a244f7cecebe1bab38eddca.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 182
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/42ba1e9075f9df940966c38ee71645a6.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 65
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/49e6ea0c7e4f85447a41d1a7867892de.jpg",
+      "occurrences": 3,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 73
+        },
+        {
+          "file": "src/main.js",
+          "line": 210
+        },
+        {
+          "file": "src/main.js",
+          "line": 364
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/4b5f58279e7a750381ae4ee669310e73.jpg",
+      "occurrences": 2,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 74
+        },
+        {
+          "file": "src/main.js",
+          "line": 211
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/4c36baefbeedbad198ccb5f84131fc18.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 182
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/4f3a5b41e9f61356456e9e435b11afb6.jpg",
+      "occurrences": 2,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 56
+        },
+        {
+          "file": "src/main.js",
+          "line": 140
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/55100add09475d0b079eef90c70b5b6b.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 182
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/551044fdde0f96bd733e015140ed3e64.jpg",
+      "occurrences": 2,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 219
+        },
+        {
+          "file": "src/main.js",
+          "line": 368
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/58ceeb4741a0b1531b073e50938d21b2.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 67
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/69101b61bb09aaec23d6acbe5c0f5d9b.png",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 213
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/6b08ceda3bd32c48c12d04db86cee3a3.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 51
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/6bdb39c8b7baf9828f59dca37b5b1d61.jpg",
+      "occurrences": 2,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 55
+        },
+        {
+          "file": "src/main.js",
+          "line": 140
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/7181e175d5cff2eaad187d7f7f47a3c6.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 182
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/782db70e51f020993a061ed742fe6c55.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 58
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/7a1ddbeb7c441bf94297bb7019a3a42e.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 182
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/7ff6e80e18fd3a420ca7df3318bd5ec3.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 61
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/82031b3ffe2183130159dd523661a4ef.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 69
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/8bb21f4a0da4db874c7e611c55e2d572.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 57
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/ad35e11d587c8670ef976b507cfe8459.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 62
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/b36cac3c5862459f5281da3849444fec.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 68
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/b55e74547638791bcbf6d727dd1dade4.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 182
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/bddc8d74db7b26ec53ec68c422ae3559.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 216
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/bec077765443f6253661a0dd04c7e48a.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 182
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/c2d8bf6b6f8e8cdd6e21617c92f6d618.jpg",
+      "occurrences": 5,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 7
+        },
+        {
+          "file": "src/main.js",
+          "line": 72
+        },
+        {
+          "file": "src/main.js",
+          "line": 140
+        },
+        {
+          "file": "src/main.js",
+          "line": 209
+        },
+        {
+          "file": "src/main.js",
+          "line": 363
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/ca8599bb03bcfe269f262f2080156461.jpg",
+      "occurrences": 2,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 53
+        },
+        {
+          "file": "src/main.js",
+          "line": 140
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/cf150dc64b42e3951da00c9ff4e7fb6e.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 66
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/d9662f8bbb5e51010f2d3e964d9c184e.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 50
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/daadf6c993fa258204d2de1b3142b951.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 182
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/dec8114f9b6c7e5f9554f686986a9fa3.jpg",
+      "occurrences": 2,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 76
+        },
+        {
+          "file": "src/main.js",
+          "line": 217
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/e8009f2131c81b988fc3b123f04d4797.jpg",
+      "occurrences": 2,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 54
+        },
+        {
+          "file": "src/main.js",
+          "line": 140
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/ecf5c275ca7d90525ddb346743a18d2d.jpg",
+      "occurrences": 4,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 75
+        },
+        {
+          "file": "src/main.js",
+          "line": 141
+        },
+        {
+          "file": "src/main.js",
+          "line": 212
+        },
+        {
+          "file": "src/main.js",
+          "line": 372
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/f055b8b248f6e844ebf90239d4536b94.png",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 3
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/f8c076634d6a4476bf1b1a09e1c9afd8.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 182
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/f98931e55d941bc1c48e598fb91d3f0d.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 59
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/f9d4fe0800d0d05ce535a71589489a80.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 220
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/fdb11f33900bb35cbaf8ea240168a58b.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 64
+        }
+      ]
+    },
+    {
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/fdf81ced0c7433c9daa696e726bd80d6.jpg",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 215
+        }
+      ]
+    },
+    {
+      "url": "https://img1.creatium.ru/bf/2a/19/74285428ae252f0b4501cbea631e585284/1.png",
+      "occurrences": 1,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 10
+        }
+      ]
+    },
+    {
+      "url": "https://img1.creatium.ru/disk2/d8/42/1a/7a83075790fe329feddf15ee2582b4adb2/1.jpg",
+      "occurrences": 3,
+      "locations": [
+        {
+          "file": "src/main.js",
+          "line": 5
+        },
+        {
+          "file": "src/main.js",
+          "line": 138
+        },
+        {
+          "file": "src/styles.css",
+          "line": 4
+        }
+      ]
+    }
+  ]
+}
