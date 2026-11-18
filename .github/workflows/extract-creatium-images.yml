@@ -18,7 +18,11 @@ on:
       end_card:
         description: "Last card to process"
         required: true
-        default: "154"
+        default: "8"
+      gallery_limit:
+        description: "Maximum additional gallery photos per card"
+        required: true
+        default: "3"
 
 permissions:
   contents: write
@@ -48,19 +52,28 @@ jobs:
           EVENT_NAME: ${{ github.event_name }}
           INPUT_START: ${{ inputs.start_card }}
           INPUT_END: ${{ inputs.end_card }}
+          INPUT_GALLERY_LIMIT: ${{ inputs.gallery_limit }}
         run: |
           if [ "$EVENT_NAME" = "push" ]; then
             CARD_START=$(node -e "console.log(JSON.parse(require('fs').readFileSync('maintenance/gallery-batch.json','utf8')).startCard)")
             CARD_END=$(node -e "console.log(JSON.parse(require('fs').readFileSync('maintenance/gallery-batch.json','utf8')).endCard)")
+            GALLERY_LIMIT=$(node -e "console.log(JSON.parse(require('fs').readFileSync('maintenance/gallery-batch.json','utf8')).galleryLimit)")
+            REQUIRED_CARD_TEXT=$(node -e "console.log(JSON.parse(require('fs').readFileSync('maintenance/gallery-batch.json','utf8')).requiredCardText)")
           elif [ "$EVENT_NAME" = "workflow_dispatch" ]; then
             CARD_START="$INPUT_START"
             CARD_END="$INPUT_END"
+            GALLERY_LIMIT="$INPUT_GALLERY_LIMIT"
+            REQUIRED_CARD_TEXT="Mercedes-Benz GLE Coupe"
           else
             CARD_START=1
             CARD_END=154
+            GALLERY_LIMIT=120
+            REQUIRED_CARD_TEXT=""
           fi
           echo "CARD_START=$CARD_START" >> "$GITHUB_ENV"
           echo "CARD_END=$CARD_END" >> "$GITHUB_ENV"
+          echo "GALLERY_LIMIT=$GALLERY_LIMIT" >> "$GITHUB_ENV"
+          echo "REQUIRED_CARD_TEXT=$REQUIRED_CARD_TEXT" >> "$GITHUB_ENV"
           echo "Selected gallery cards: $CARD_START-$CARD_END"
 
       - name: Start with an empty extraction workspace
@@ -69,6 +82,8 @@ jobs:
       - name: Extract images from Creatium galleries
         env:
           PAGE_URL: https://baribal-studio.ru/
+          GALLERY_LIMIT: ${{ env.GALLERY_LIMIT }}
+          REQUIRED_CARD_TEXT: ${{ env.REQUIRED_CARD_TEXT }}
         run: node maintenance/tools/extract-creatium-images.mjs
 
       - name: Deduplicate and index gallery photos
