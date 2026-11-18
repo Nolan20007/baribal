@@ -37,7 +37,6 @@ function normalizeUrl(value) {
   try {
     const u = new URL(value, pageUrl);
     if (!["http:", "https:"].includes(u.protocol)) return "";
-    if (!/\.(?:svg|png|jpe?g|webp|gif|avif|bmp|tiff?)(?:$|[?#])/i.test(u.href)) return "";
     return u.href;
   } catch { return ""; }
 }
@@ -193,67 +192,143 @@ async function clickModalPhoto() {
 }
 
 async function extractOriginalsByClickingThumbnails(limit) {
-  const thumbnails = await page.evaluate(() => {
+  // Creatium's popup contains thumbnails; clicking one opens a separate full-size
+  // viewer. Capture both the viewer DOM and image network responses so we do not
+  // mistake the card image or a thumbnail for the original.
+  const rootSelectors = [
+    "[role='dialog']", "[aria-modal='true']", "[class*='t-popup']",
+    "[class*='t-modal']", "[class*='modal']", "[class*='popup']",
+    "[class*='gallery']", "[class*='fancybox']", "[class*='lightbox']",
+    "[class*='swiper']", "[class*='fotorama']", "[class*='viewer']"
+  ];
+  const snapshot = async () => page.evaluate(selectors => {
     const visible = el => {
-      const r = el.getBoundingClientRect(), st = getComputedStyle(el);
-      return r.width > 35 && r.height > 35 && st.display !== "none" &&
-        st.visibility !== "hidden" && Number(st.opacity || 1) > 0;
+      const r = el.getBoundingClientRect(), s = getComputedStyle(el);
+      return r.width > 0 && r.height > 0 && s.display !== "none" &&
+        s.visibility !== "hidden" && Number(s.opacity || 1) > 0;
     };
-    const roots = [...document.querySelectorAll(
-      "[role='dialog'],[aria-modal='true'],[class*='modal'],[class*='popup'],[class*='gallery'],[class*='swiper'],[class*='fotorama']"
-    )].filter(visible);
-    const root = roots.sort((a,b) => a.querySelectorAll("img").length - b.querySelectorAll("img").length)
-      .find(el => el.querySelectorAll("img").length > 0);
-    if (!root) return [];
-    return [...root.querySelectorAll("img")].filter(visible).map((img,index) => ({
-      index, src: img.currentSrc || img.src || img.getAttribute("data-src") || "",
-      width: img.naturalWidth || 0, height: img.naturalHeight || 0,
-      rectWidth: img.getBoundingClientRect().width, rectHeight: img.getBoundingClientRect().height
-    }));
-  });
-  if (!thumbnails.length) return [];
+    const roots = [...document.querySelectorAll(selectors.join(","))].filter(visible);
+    const ranked = roots.map(root => ({
+      root,
+      imgs: [...root.querySelectorAll("img")].filter(img => {
+        const r = img.getBoundingClientRect();
+        return visible(img) && r.width > 35 && r.height > 35;
+      })
+    })).filter(x => x.imgs.length).sort((a,b) => b.imgs.length-a.imgs.length);
+    const chosen = ranked[0];
+    if (!chosen) return { thumbnails: [], rootCount: roots.length };
+    return {
+      rootCount: roots.length,
+      thumbnails: chosen.imgs.map((img,index) => ({
+        index, url: img.currentSrc || img.src || img.getAttribute("data-src") || "",
+        width: img.naturalWidth || 0, height: img.naturalHeight || 0
+      }))
+    };
+  }, rootSelectors);
+  const initial = await snapshot();
+  console.log("  popup roots:", initial.rootCount, "| visible thumbnails:", initial.thumbnails.length);
+  if (!initial.thumbnails.length) return [];
+
+  const networkImages = [];
+  const onResponse = async response => {
+    try {
+      const headers = response.headers();
+      const type = String(headers["content-type"] || "").split(";")[0].toLowerCase();
+      if (type.startsWith("image/") && response.status() >= 200 && response.status() < 300) {
+        networkImages.push({ url: response.url(), type, status: response.status(),
+          bytes: Number(headers["content-length"] || 0) });
+      }
+    } catch {}
+  };
+  page.on("response", onResponse);
   const results = [];
-  const seen = new Set();
-  for (const thumb of thumbnails) {
-    if (results.length >= limit) break;
-    const before = await page.evaluate(() => [...document.images].map(img => img.currentSrc || img.src).filter(Boolean));
-    await page.evaluate(index => {
-      const visible = el => {
-        const r = el.getBoundingClientRect(), st = getComputedStyle(el);
-        return r.width > 35 && r.height > 35 && st.display !== "none" && st.visibility !== "hidden";
-      };
-      const roots = [...document.querySelectorAll(
-        "[role='dialog'],[aria-modal='true'],[class*='modal'],[class*='popup'],[class*='gallery'],[class*='swiper'],[class*='fotorama']"
-      )].filter(visible);
-      const root = roots.sort((a,b) => a.querySelectorAll("img").length - b.querySelectorAll("img").length)
-        .find(el => el.querySelectorAll("img").length > 0);
-      const imgs = root ? [...root.querySelectorAll("img")].filter(visible) : [];
-      imgs[index]?.click();
-    }, thumb.index);
-    await page.waitForTimeout(900);
-    // The clicked thumbnail must open a distinct large image. Never save the thumbnail URL.
-    const candidates = await page.evaluate(beforeUrls => {
-      const before = new Set(beforeUrls);
-      return [...document.images].map(img => {
-        const r = img.getBoundingClientRect(), st = getComputedStyle(img);
-        return { url: img.currentSrc || img.src || "", naturalWidth: img.naturalWidth,
-          naturalHeight: img.naturalHeight, area: r.width * r.height,
-          visible: r.width > 160 && r.height > 120 && st.display !== "none" &&
-            st.visibility !== "hidden" && Number(st.opacity || 1) > 0,
-          changed: !before.has(img.currentSrc || img.src || "") };
-      }).filter(x => x.url && x.visible && x.naturalWidth >= 500 && x.naturalHeight >= 300)
-        .sort((a,b) => (Number(b.changed) - Number(a.changed)) || (b.area-a.area) || (b.naturalWidth*b.naturalHeight-a.naturalWidth*a.naturalHeight));
-    }, before);
-    const best = candidates.find(x => !seen.has(x.url));
-    if (best) {
-      seen.add(best.url);
-      results.push({url:best.url, naturalWidth:best.naturalWidth, naturalHeight:best.naturalHeight});
-      console.log("  clicked thumbnail", thumb.index + 1, "=> original", best.naturalWidth + "x" + best.naturalHeight);
+  const seen = new Set(initial.thumbnails.map(x => x.url).filter(Boolean));
+
+  try {
+    for (const thumb of initial.thumbnails) {
+      if (results.length >= limit) break;
+      const responseStart = networkImages.length;
+      // Re-resolve the popup root for each click; the lightbox may add/remove
+      // DOM nodes, so stale element handles and old image indexes are unsafe.
+      const clicked = await page.evaluate(({selectors,index}) => {
+        const visible = el => {
+          const r = el.getBoundingClientRect(), s = getComputedStyle(el);
+          return r.width > 0 && r.height > 0 && s.display !== "none" &&
+            s.visibility !== "hidden" && Number(s.opacity || 1) > 0;
+        };
+        const roots = [...document.querySelectorAll(selectors.join(","))].filter(visible);
+        const ranked = roots.map(root => ({
+          root, imgs: [...root.querySelectorAll("img")].filter(img => {
+            const r = img.getBoundingClientRect();
+            return visible(img) && r.width > 35 && r.height > 35;
+          })
+        })).filter(x => x.imgs.length).sort((a,b) => b.imgs.length-a.imgs.length);
+        const img = ranked[0]?.imgs[index];
+        if (!img) return false;
+        img.click();
+        return true;
+      }, { selectors: rootSelectors, index: thumb.index });
+      if (!clicked) {
+        console.log("  thumbnail", thumb.index + 1, "could not be clicked after popup refresh");
+        continue;
+      }
+      await page.waitForTimeout(1400);
+
+      const freshNetwork = networkImages.slice(responseStart).map(x => x.url);
+      const domUrls = await page.evaluate(() => {
+        const visible = el => {
+          const r = el.getBoundingClientRect(), s = getComputedStyle(el);
+          return r.width > 120 && r.height > 90 && s.display !== "none" &&
+            s.visibility !== "hidden" && Number(s.opacity || 1) > 0;
+        };
+        const selectors = [
+          ".fancybox__image", ".fancybox-image", ".glightbox-container img",
+          ".pswp__img", "[class*='lightbox'] img", "[class*='viewer'] img",
+          "[role='dialog'] img", "[class*='modal'] img", "[class*='popup'] img",
+          "[class*='swiper'] img", "[class*='fotorama'] img"
+        ];
+        const found = new Set();
+        for (const selector of selectors) for (const img of document.querySelectorAll(selector)) {
+          if (visible(img)) {
+            const url = img.currentSrc || img.src || img.getAttribute("data-src") || "";
+            if (url) found.add(url);
+          }
+        }
+        return [...found];
+      });
+      const candidates = [...new Set([...freshNetwork, ...domUrls])]
+        .filter(url => url && !seen.has(url));
+      const measured = await page.evaluate(async urls => {
+        const load = url => new Promise(resolve => {
+          const img = new Image();
+          const timer = setTimeout(() => resolve({url,width:0,height:0}), 5000);
+          img.onload = () => { clearTimeout(timer); resolve({url,width:img.naturalWidth,height:img.naturalHeight}); };
+          img.onerror = () => { clearTimeout(timer); resolve({url,width:0,height:0}); };
+          img.src = url;
+        });
+        return Promise.all(urls.map(load));
+      }, candidates);
+      const valid = measured.filter(x => x.width >= 500 && x.height >= 300)
+        .sort((a,b) => (b.width*b.height)-(a.width*a.height));
+      const best = valid[0];
+      if (best) {
+        seen.add(best.url);
+        results.push({ url: best.url, naturalWidth: best.width, naturalHeight: best.height });
+        const meta = networkImages.find(x => x.url === best.url);
+        console.log("  thumbnail", thumb.index + 1, "=> ORIGINAL", best.width+"x"+best.height,
+          "|", meta?.type || "DOM image", "|", best.url);
+      } else {
+        console.log("  thumbnail", thumb.index + 1, "=> no original identified;",
+          "new image responses:", JSON.stringify(networkImages.slice(responseStart)));
+      }
+      // Escape closes the image viewer while preserving the thumbnail popup.
+      await page.keyboard.press("Escape").catch(() => {});
+      await page.waitForTimeout(450);
     }
-    // Close the full-size viewer (if one opened) before selecting the next thumbnail.
-    await page.keyboard.press("Escape").catch(() => {});
-    await page.waitForTimeout(300);
+  } finally {
+    page.off("response", onResponse);
   }
+  console.log("  verified distinct originals:", results.length, "of", initial.thumbnails.length);
   return results;
 }
 
