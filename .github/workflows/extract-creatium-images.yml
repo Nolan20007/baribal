@@ -18,7 +18,7 @@ on:
       end_card:
         description: "Last card to process"
         required: true
-        default: "8"
+        default: "1"
       gallery_limit:
         description: "Maximum additional gallery photos per card (120 = practical all-photos limit)"
         required: true
