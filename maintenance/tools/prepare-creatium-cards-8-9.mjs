@@ -33,3 +33,5 @@ for (const card of cards) {
   },null,2)+"\n");
   console.log("CARD_READY",card.cardIndex,"gallery",gallery.length);
 }
+
+// Trigger the isolated two-card publishing workflow.
