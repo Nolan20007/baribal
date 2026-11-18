@@ -3,5 +3,5 @@
   "endCard": 8,
   "galleryLimit": 3,
   "requiredCardText": "Mercedes-Benz GLE Coupe",
-  "note": "Retry card 8 by grouping visible Fancybox image links under their shared gallery ancestor and clicking each original link."
+  "note": "Extract card 8 primary cover before opening the gallery; inspect img and CSS background URLs, while retaining gallery originals."
 }
