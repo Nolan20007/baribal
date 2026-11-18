@@ -250,6 +250,9 @@ async function extractOriginalsByClickingThumbnails(limit) {
       results.push({url:best.url, naturalWidth:best.naturalWidth, naturalHeight:best.naturalHeight});
       console.log("  clicked thumbnail", thumb.index + 1, "=> original", best.naturalWidth + "x" + best.naturalHeight);
     }
+    // Close the full-size viewer (if one opened) before selecting the next thumbnail.
+    await page.keyboard.press("Escape").catch(() => {});
+    await page.waitForTimeout(300);
   }
   return results;
 }
