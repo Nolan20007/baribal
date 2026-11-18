@@ -278,7 +278,7 @@ try {
         }
       }
 
-      if (record.gallery.length < requestedGalleryLimit) {
+      if (record.gallery.length <= 1 && record.gallery.length < requestedGalleryLimit) {
         const firstUrl = await findViewerImage() || await clickModalPhoto();
         if (firstUrl) {
           let current = firstUrl;
