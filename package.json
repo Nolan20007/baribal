@@ -1,16 +1,12 @@
 {
-  "name": "baribal-site",
+  "name": "baribal-site-tools",
   "private": true,
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
     "extract:creatium": "node maintenance/tools/extract-creatium-images.mjs"
   },
   "devDependencies": {
-    "vite": "^6.0.0",
     "playwright": "^1.56.0"
   }
 }

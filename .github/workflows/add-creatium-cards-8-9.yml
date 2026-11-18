@@ -1,4 +1,4 @@
-name: Add verified Creatium cards 8 and 9
+name: Prepare verified Creatium photos for cards 8 and 9
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 jobs:
-  add-two-cards:
+  prepare-two-cards:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -18,18 +18,18 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - name: Download verified originals into extractor format
+      - name: Prepare verified originals in extractor format
         run: node maintenance/tools/prepare-creatium-cards-8-9.mjs
       - name: Normalize images and update gallery index
         run: node maintenance/tools/normalize-creatium-galleries.mjs
-      - name: Wire cards into portfolio and galleries
-        run: node maintenance/tools/apply-creatium-cards-8-9.mjs
-      - name: Build site
-        run: npm install && npm run build
-      - name: Commit two cards and their photos
+      - name: Commit verified photos and index (HTML catalog integration is separate)
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/images/portfolio/galleries src/portfolio-galleries.js src/main.js maintenance/creatium-gallery-index.json output/creatium-images/cards
-          git commit -m "Add verified portfolio cards 8 and 9"
-          git push
+          git add assets/images/portfolio/galleries maintenance/creatium-gallery-index.json output/creatium-images/cards
+          if git diff --cached --quiet; then
+            echo "No new verified photos to commit."
+          else
+            git commit -m "Archive verified photos for portfolio cards 8 and 9"
+            git push
+          fi
