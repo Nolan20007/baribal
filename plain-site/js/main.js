@@ -148,8 +148,34 @@ if (workGallery) {
   }, { passive: true });
   document.addEventListener("keydown", (event) => {
     if (!workGallery.classList.contains("is-open")) return;
-    if (event.key === "Escape") closeGallery();
-    if (event.key === "ArrowLeft") showGallery(galleryIndex - 1);
-    if (event.key === "ArrowRight") showGallery(galleryIndex + 1);
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeGallery();
+      return;
+    }
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      showGallery(galleryIndex - 1);
+      return;
+    }
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      showGallery(galleryIndex + 1);
+      return;
+    }
+    if (event.key === "Tab") {
+      const focusable = [...workGallery.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), [tabindex]:not([tabindex="-1"])')]
+        .filter((element) => !element.hidden && element.getAttribute("aria-hidden") !== "true");
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
   });
 }
