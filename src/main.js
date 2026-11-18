@@ -76,7 +76,7 @@ const services = [
   { title: "Предпродажная подготовка", subtitle: "Подготовка автомобиля к продаже", text: "Комплексная подготовка, чтобы автомобиль выглядел ухоженно и производил правильное впечатление.", price: "от 7 000 ₽", image: "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/dec8114f9b6c7e5f9554f686986a9fa3.jpg" }
 ];
 const videos = [1, 2, 3, 4];
-const localVideo = new URL("../1.mp4", import.meta.url).href;
+const localVideo = new URL("../assets/video/studio.mp4", import.meta.url).href;
 const videoPlayer = (poster, label) => `
   <div class="baribal-player">
     <video playsinline preload="metadata" aria-label="${label}">
@@ -187,7 +187,7 @@ const videoPage = () => `
   <main><section class="page-hero"><div class="wrap"><span class="eyebrow">BARIBAL · ВИДЕО</span><h1>Наши <em>видео</em></h1><p>Знакомьтесь с технологиями, процессами и результатами нашей работы.</p></div></section><section class="section video-section"><div class="wrap"><div class="video-grid">${videos.map((id, i) => `<article class="video-card"><div class="video-frame">${videoPlayer(portfolio[i].image, `BARIBAL — тестовое видео ${i + 1}`)}</div><div class="video-label"><span>0${i + 1}</span><h3>Видео ${i + 1}</h3></div></article>`).join("")}</div></div></section></main>`;
 
 const basePath = "/baribal";
-const contactWidgetImage = new URL("../3.png", import.meta.url).href;
+const contactWidgetImage = new URL("../assets/images/interface/contact-widget.png", import.meta.url).href;
 const cleanPath = location.pathname.startsWith(basePath) ? location.pathname.slice(basePath.length) : location.pathname;
 const path = cleanPath.replace(/\/$/, "") || "/";
 const pageTitles = {
