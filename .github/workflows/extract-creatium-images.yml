@@ -1,5 +1,9 @@
 name: Extract and archive Creatium galleries
 
+concurrency:
+  group: creatium-gallery-extraction
+  cancel-in-progress: true
+
 on:
   push:
     branches: [main]
@@ -15,8 +19,6 @@ on:
         description: "Last card to process"
         required: true
         default: "154"
-  schedule:
-    - cron: "15 3 * * *"
 
 permissions:
   contents: write
@@ -60,6 +62,9 @@ jobs:
           echo "CARD_START=$CARD_START" >> "$GITHUB_ENV"
           echo "CARD_END=$CARD_END" >> "$GITHUB_ENV"
           echo "Selected gallery cards: $CARD_START-$CARD_END"
+
+      - name: Start with an empty extraction workspace
+        run: rm -rf output/creatium-images
 
       - name: Extract images from Creatium galleries
         env:
