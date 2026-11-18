@@ -1,4 +1,4 @@
-name: Deploy BARIBAL preview to GitHub Pages
+name: Deploy BARIBAL HTML site to GitHub Pages
 
 on:
   push:
@@ -20,18 +20,22 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - name: Install dependencies
-        run: npm install
-      - name: Build website
-        env:
-          GITHUB_PAGES: "true"
-        run: npm run build
-      - name: Add SPA fallback
-        run: cp dist/index.html dist/404.html
+      - name: Assemble static HTML site
+        run: |
+          rm -rf dist
+          mkdir -p dist
+          cp -R plain-site/. dist/
+          mkdir -p dist/assets
+          cp -R assets/. dist/assets/
+          mkdir -p dist/foto
+          cp foto/foto.png dist/foto/foto.png
+          # Home page paths are one level shallower after publication.
+          sed -i 's#../assets/#./assets/#g; s#../foto/#./foto/#g' dist/index.html
+          # Internal pages live in one-level subdirectories.
+          find dist -mindepth 2 -type f -name '*.html' -exec sed -i 's#../../assets/#../assets/#g; s#../../foto/#../foto/#g' {} +
+          # CSS is served from /css/, so assets are one level above it.
+          sed -i 's#../../assets/#../assets/#g' dist/css/style.css
+          cp dist/index.html dist/404.html
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -46,5 +50,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
-# Trigger a fresh Pages deployment after the verified portfolio image correction.
