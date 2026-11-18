@@ -110,15 +110,15 @@ jobs:
           await page.locator('[data-portfolio-gallery-index="0"]').click();
           await page.locator("#work-gallery-modal.is-open").waitFor({ timeout: 3000 });
           if (!(await page.locator(".work-gallery-counter").innerText()).includes("/")) throw new Error("Portfolio gallery counter missing");
+          await page.locator("[data-gallery-next]").click();
+          if (!(await page.locator(".work-gallery-counter").innerText()).startsWith("2 /")) throw new Error("Portfolio gallery next control failed");
+          await page.locator("[data-gallery-close]").first().click();
           await page.locator("#portfolio-grid .js-service-info").first().click();
           if (!(await page.locator("#service-info-price").innerText()).includes("от 3 000")) throw new Error("Portfolio service details price missing");
           await page.locator("#service-info-modal .modal-close").click();
           await page.locator("#portfolio-grid .js-callback").first().click();
           if (!(await page.locator("#callback-context").innerText()).includes("Бронирование автомобиля защитной плёнкой")) throw new Error("Portfolio callback lost service context");
           await page.locator("#callback-modal .modal-close").click();
-          await page.locator("[data-gallery-next]").click();
-          if (!(await page.locator(".work-gallery-counter").innerText()).startsWith("2 /")) throw new Error("Portfolio gallery next control failed");
-          await page.locator("[data-gallery-close]").first().click();
           await page.goto(root + "/", { waitUntil: "domcontentloaded" });
           await page.setViewportSize({ width: 390, height: 844 });
           if (await page.locator(".device-preview-open").first().isVisible()) throw new Error("Device preview launcher is visible on mobile");
