@@ -1,12 +1,12 @@
 {
   "minGalleryImageBytes": 102400,
-  "generatedAt": "2026-11-18T05:02:41.519Z",
+  "generatedAt": "2026-11-18T05:05:46.562Z",
   "source": "https://baribal-studio.ru/",
   "cardCount": 18,
   "cardsWithMainImage": 1,
-  "additionalGalleryImages": 89,
-  "uniqueBytesAdded": 0,
-  "duplicateReferencesReused": 9,
+  "additionalGalleryImages": 84,
+  "uniqueBytesAdded": 225081,
+  "duplicateReferencesReused": 3,
   "cards": [
     {
       "cardIndex": 1,
@@ -266,55 +266,25 @@
       "gallery": [
         {
           "order": 1,
-          "path": "assets/images/studio/a28375f952d247ef3101e3722439b46b3de14b9c91487f876babea2ef3452db0.jpg",
-          "sha256": "a28375f952d247ef3101e3722439b46b3de14b9c91487f876babea2ef3452db0",
-          "bytes": 206076
+          "path": "assets/images/studio/760f52fe35ff8702c47501873ce0d7363d54895d149d5983acab9af632d1d8f7.jpg",
+          "sha256": "760f52fe35ff8702c47501873ce0d7363d54895d149d5983acab9af632d1d8f7",
+          "bytes": 234398
         },
         {
           "order": 2,
-          "path": "assets/images/portfolio/edb1f571acdac6f0a9bc76b7bdcff548467bed7c317eac3fbbbbe6e41cd3430c.jpg",
-          "sha256": "edb1f571acdac6f0a9bc76b7bdcff548467bed7c317eac3fbbbbe6e41cd3430c",
-          "bytes": 308251
+          "path": "assets/images/portfolio/galleries/d1c3405fac34ce652af2ca2e1443cb41b8798be0491419c24ec5e85aea36df23.jpg",
+          "sha256": "d1c3405fac34ce652af2ca2e1443cb41b8798be0491419c24ec5e85aea36df23",
+          "bytes": 225081
         },
         {
           "order": 3,
-          "path": "assets/images/portfolio/galleries/1953f391436dda97e0c2ce66f22c07008df16495a86223f4a7eb13cc008c3ac0.jpg",
-          "sha256": "1953f391436dda97e0c2ce66f22c07008df16495a86223f4a7eb13cc008c3ac0",
-          "bytes": 272509
-        },
-        {
-          "order": 4,
-          "path": "assets/images/portfolio/galleries/7f9e9622ca035801f1c1eb2cbd549581c8c1697130a8609620425d39b89c03f6.jpg",
-          "sha256": "7f9e9622ca035801f1c1eb2cbd549581c8c1697130a8609620425d39b89c03f6",
-          "bytes": 234601
-        },
-        {
-          "order": 5,
-          "path": "assets/images/portfolio/galleries/9d2135342c02aa26f6b04431a2044cfa71aedb715ea3e228ac44bf71df63b07a.jpg",
-          "sha256": "9d2135342c02aa26f6b04431a2044cfa71aedb715ea3e228ac44bf71df63b07a",
-          "bytes": 258496
-        },
-        {
-          "order": 6,
-          "path": "assets/images/portfolio/galleries/abcc0161e7d81cd1b8a31e2ecb5921eeb4598c8584f67f3b919130a52ee1df1c.jpg",
-          "sha256": "abcc0161e7d81cd1b8a31e2ecb5921eeb4598c8584f67f3b919130a52ee1df1c",
-          "bytes": 295201
-        },
-        {
-          "order": 7,
-          "path": "assets/images/portfolio/galleries/9483ea82cf76ec0afd21f6611ae60cb79a0796901f00a1088e3f4f8312b0a19c.jpg",
-          "sha256": "9483ea82cf76ec0afd21f6611ae60cb79a0796901f00a1088e3f4f8312b0a19c",
-          "bytes": 279465
-        },
-        {
-          "order": 8,
-          "path": "assets/images/portfolio/galleries/a58165e7f70299a15a7ca5f55c623020b4190ebe69f09d124ab5bdd9d3eae3b8.jpg",
-          "sha256": "a58165e7f70299a15a7ca5f55c623020b4190ebe69f09d124ab5bdd9d3eae3b8",
-          "bytes": 212208
+          "path": "assets/images/portfolio/galleries/e07619d016a9cf994c3a88f261b674ea13202d2a301cd032299eae535e0f1f59.jpg",
+          "sha256": "e07619d016a9cf994c3a88f261b674ea13202d2a301cd032299eae535e0f1f59",
+          "bytes": 201690
         }
       ],
-      "galleryCountDetected": 8,
-      "galleryCountSaved": 8
+      "galleryCountDetected": 3,
+      "galleryCountSaved": 3
     },
     {
       "cardIndex": 9,
