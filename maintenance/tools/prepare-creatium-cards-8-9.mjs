@@ -7,13 +7,14 @@ const cards = [
   { cardIndex:9, folder:"009-защитное-покрытие-нанесли-защитное-покрытие-для-кузова-эдванс", description:"Защитное покрытие Нанесли защитное покрытие для кузова Эдванс", cover:"743cdf4b21a5c6b6f449b390ceaa9a98.jpg", images:["b1c840637ddb95d3e3d4addd951121aa.jpg","926ec0d2dda49374fa2f1c7bfc80489f.jpg","499cb05e66c0cb2b9b47f93cb7ce49af.jpg","31afe50b1fd7b0da477482e626dfc0bb.jpg","743cdf4b21a5c6b6f449b390ceaa9a98.jpg"] }
 ];
 const root = "output/creatium-images/cards";
+async function fetchRetry(url) { let error; for (let attempt=1; attempt<=5; attempt++) { try { const response=await fetch(url,{signal:AbortSignal.timeout(30000)}); if (response.ok) return response; error=new Error("HTTP "+response.status+" "+url); } catch(e) { error=e; } await new Promise(r=>setTimeout(r,attempt*3000)); } throw error; }
 for (const card of cards) {
   const dir = path.join(root, card.folder);
   await mkdir(path.join(dir,"gallery"), {recursive:true});
   const unique = [...new Set([card.cover,...card.images])];
   const local = new Map();
   for (const name of unique) {
-    const response = await fetch(base+name);
+    const response = await fetchRetry(base+name);
     if (!response.ok) throw new Error("HTTP "+response.status+" for "+name);
     const bytes = Buffer.from(await response.arrayBuffer());
     if ((response.headers.get("content-type")||"").toLowerCase().split(";")[0] !== "image/jpeg" || bytes.length < 100000) throw new Error("Invalid original "+name);
