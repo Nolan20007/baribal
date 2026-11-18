@@ -14,7 +14,7 @@ on:
       start_card:
         description: "First card to process"
         required: true
-        default: "1"
+        default: "8"
       end_card:
         description: "Last card to process"
         required: true
