@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-18T02:31:14.132Z",
+  "generatedAt": "2026-11-18T02:34:18.057Z",
   "source": "https://baribal-studio.ru/foto",
   "cardCount": 18,
   "cardsWithMainImage": 0,
@@ -1345,5 +1345,6 @@
       "galleryCountDetected": 10,
       "galleryCountSaved": 10
     }
-  ]
+  ],
+  "minGalleryImageBytes": 102400
 }
