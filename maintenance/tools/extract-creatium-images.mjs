@@ -111,7 +111,7 @@ async function readGalleryImages() {
     const add = value => {
       if (!value) return;
       const url = String(value).trim();
-      if (/^https?:\\/\\//i.test(url) && /\\.(?:svg|png|jpe?g|webp|gif|avif|bmp|tiff?)(?:$|[?#])/i.test(url) && !urls.includes(url)) urls.push(url);
+      if (/^https?:\/\//i.test(url) && /\.(?:svg|png|jpe?g|webp|gif|avif|bmp|tiff?)(?:$|[?#])/i.test(url) && !urls.includes(url)) urls.push(url);
     };
     for (const root of roots) {
       for (const img of root.querySelectorAll("img")) {
@@ -122,13 +122,13 @@ async function readGalleryImages() {
         add(img.getAttribute("data-src")); add(img.getAttribute("data-original"));
         add(img.getAttribute("data-lazy-src")); add(img.getAttribute("data-image"));
         const source = img.closest("picture")?.querySelector("source[srcset]");
-        if (source) add(source.srcset.split(",")[0].trim().split(/\\s+/)[0]);
+        if (source) add(source.srcset.split(",")[0].trim().split(/\s+/)[0]);
       }
       for (const link of root.querySelectorAll("a[href]")) add(link.href);
       for (const el of root.querySelectorAll("*")) {
         const bg = getComputedStyle(el).backgroundImage;
         if (bg && bg !== "none") {
-          for (const match of bg.matchAll(/url\\(["']?(.*?)["']?\\)/g)) add(match[1]);
+          for (const match of bg.matchAll(/url\(["']?(.*?)["']?\)/g)) add(match[1]);
         }
       }
     }
