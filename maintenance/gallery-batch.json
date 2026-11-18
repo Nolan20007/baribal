@@ -1,8 +1,8 @@
 {
-  "startCard": 9,
-  "endCard": 16,
+  "startCard": 1,
+  "endCard": 10,
   "galleryLimit": 0,
   "requiredCardText": "",
   "pageUrl": "https://baribal-studio.ru/foto",
-  "note": "Test extraction for cards 9-16 from the dedicated /foto page. Save all additional photos; verify each downloaded image visually before using it."
+  "note": "Fresh full extraction of original Creatium cards 1-10; ignore current new-site card text and cover images. Verify downloaded covers and gallery photos visually before use."
 }
