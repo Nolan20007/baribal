@@ -1,221 +1,137 @@
 {
-  "generatedAt": "2026-11-18T02:34:18.057Z",
+  "minGalleryImageBytes": 102400,
+  "generatedAt": "2026-11-18T03:11:50.378Z",
   "source": "https://baribal-studio.ru/foto",
   "cardCount": 18,
   "cardsWithMainImage": 0,
-  "additionalGalleryImages": 187,
-  "uniqueBytesAdded": 0,
-  "duplicateReferencesReused": 1,
+  "additionalGalleryImages": 173,
+  "uniqueBytesAdded": 4675651,
+  "duplicateReferencesReused": 0,
   "cards": [
     {
       "cardIndex": 1,
-      "folder": "001-бронирование-сделали-бронирование-всеи-переднеи-части-автомобиля-",
-      "description": "Бронирование Сделали бронирование всей передней части автомобиля PORSCHE",
-      "cardText": "Бронирование Сделали бронирование всей передней части автомобиля PORSCHE Все фото",
+      "folder": "001-оклеика-оклеика-land-cruiser-в-матовыи-полиуретан-отличная-защита",
+      "description": "Оклейка Оклейка LAND CRUISER в матовый полиуретан. Отличная защита и дизайн.",
+      "cardText": "Оклейка Оклейка LAND CRUISER в матовый полиуретан. Отличная защита и дизайн. Все фото",
       "status": "captured-viewer-sequence",
       "mainImage": null,
-      "gallery": [
-        {
-          "order": 1,
-          "path": "assets/images/portfolio/galleries/30d047e83ed0ee8ae3bf12f3da0fd114dbd27807b241785c90836137ffa5e4a0.png",
-          "sha256": "30d047e83ed0ee8ae3bf12f3da0fd114dbd27807b241785c90836137ffa5e4a0",
-          "bytes": 319002
-        },
-        {
-          "order": 2,
-          "path": "assets/images/portfolio/galleries/473723a6e845ae6279f3863685b14746fd448cee930b967a2ef29001b3c009b4.png",
-          "sha256": "473723a6e845ae6279f3863685b14746fd448cee930b967a2ef29001b3c009b4",
-          "bytes": 335742
-        },
-        {
-          "order": 3,
-          "path": "assets/images/portfolio/galleries/5f2dbff91b3865cdf771daea769538ad2372060a68c0132a3f20876842aee490.png",
-          "sha256": "5f2dbff91b3865cdf771daea769538ad2372060a68c0132a3f20876842aee490",
-          "bytes": 325524
-        },
-        {
-          "order": 4,
-          "path": "assets/images/portfolio/galleries/78a333bd8eef7f71224ddcdcc6d378d6f05e6a1c6734412a9e860d063dc92057.png",
-          "sha256": "78a333bd8eef7f71224ddcdcc6d378d6f05e6a1c6734412a9e860d063dc92057",
-          "bytes": 319371
-        },
-        {
-          "order": 5,
-          "path": "assets/images/portfolio/galleries/4aea6d3ab9409e56019e40eea8143387a4cf80eb70ff484c6940dc2ead773a37.png",
-          "sha256": "4aea6d3ab9409e56019e40eea8143387a4cf80eb70ff484c6940dc2ead773a37",
-          "bytes": 248071
-        }
-      ],
-      "galleryCountDetected": 5,
-      "galleryCountSaved": 5
+      "gallery": [],
+      "galleryCountDetected": 1,
+      "galleryCountSaved": 0
     },
     {
       "cardIndex": 2,
-      "folder": "002-бронирование-сделали-бронирование-кузова-для-автомобиля-kia-soren",
-      "description": "Бронирование Сделали бронирование кузова для автомобиля KIA SORENTO",
-      "cardText": "Бронирование Сделали бронирование кузова для автомобиля KIA SORENTO Все фото",
+      "folder": "002-бронирование-бронирование-всеи-переднеи-части-и-лобового-стекла-п",
+      "description": "Бронирование Бронирование всей передней части и лобового стекла пленкой для BMW 8.",
+      "cardText": "Бронирование Бронирование всей передней части и лобового стекла пленкой для BMW 8. Все фото",
       "status": "captured-viewer-sequence",
       "mainImage": null,
       "gallery": [
         {
-          "order": 1,
-          "path": "assets/images/portfolio/galleries/e23e8e975be917631ab9209eccd6369d9de62e141bb2b6219db9b1b0334108b6.jpg",
-          "sha256": "e23e8e975be917631ab9209eccd6369d9de62e141bb2b6219db9b1b0334108b6",
-          "bytes": 280580
-        },
-        {
           "order": 2,
-          "path": "assets/images/portfolio/373fc89cebe2f66cde3be34be69fb7020db6ccb03af57f5b93d64ae9edfc7e4d.jpg",
-          "sha256": "373fc89cebe2f66cde3be34be69fb7020db6ccb03af57f5b93d64ae9edfc7e4d",
-          "bytes": 312007
+          "path": "assets/images/portfolio/galleries/2e02a5330abbecb7b2cae81331597c3b2c8c50031e576b549f4cefecda4f53d8.jpg",
+          "sha256": "2e02a5330abbecb7b2cae81331597c3b2c8c50031e576b549f4cefecda4f53d8",
+          "bytes": 296680
         },
         {
           "order": 3,
-          "path": "assets/images/portfolio/galleries/30d047e83ed0ee8ae3bf12f3da0fd114dbd27807b241785c90836137ffa5e4a0.png",
-          "sha256": "30d047e83ed0ee8ae3bf12f3da0fd114dbd27807b241785c90836137ffa5e4a0",
-          "bytes": 319002
+          "path": "assets/images/portfolio/galleries/4afed0612adc54eb4225d7a5272eee876bcd2c059e623d25767a7e7e63d9e2a6.jpg",
+          "sha256": "4afed0612adc54eb4225d7a5272eee876bcd2c059e623d25767a7e7e63d9e2a6",
+          "bytes": 451600
         },
         {
           "order": 4,
-          "path": "assets/images/portfolio/galleries/473723a6e845ae6279f3863685b14746fd448cee930b967a2ef29001b3c009b4.png",
-          "sha256": "473723a6e845ae6279f3863685b14746fd448cee930b967a2ef29001b3c009b4",
-          "bytes": 335742
+          "path": "assets/images/portfolio/galleries/aa23627731b6586bb88ad6ad6c9fc104b778da3eaedc9bd5ca45fa4f02eb85bc.jpg",
+          "sha256": "aa23627731b6586bb88ad6ad6c9fc104b778da3eaedc9bd5ca45fa4f02eb85bc",
+          "bytes": 265659
         },
         {
           "order": 5,
-          "path": "assets/images/portfolio/galleries/5f2dbff91b3865cdf771daea769538ad2372060a68c0132a3f20876842aee490.png",
-          "sha256": "5f2dbff91b3865cdf771daea769538ad2372060a68c0132a3f20876842aee490",
-          "bytes": 325524
+          "path": "assets/images/portfolio/galleries/1cb1beba1256ced2924f78f6a5de57dce733b941e6589a10f4a808062d9a3d03.jpg",
+          "sha256": "1cb1beba1256ced2924f78f6a5de57dce733b941e6589a10f4a808062d9a3d03",
+          "bytes": 277688
         },
         {
           "order": 6,
-          "path": "assets/images/portfolio/galleries/78a333bd8eef7f71224ddcdcc6d378d6f05e6a1c6734412a9e860d063dc92057.png",
-          "sha256": "78a333bd8eef7f71224ddcdcc6d378d6f05e6a1c6734412a9e860d063dc92057",
-          "bytes": 319371
+          "path": "assets/images/portfolio/galleries/8ac2c68ec165ee773d64db3e8f98266f5c53001d1ba2cd6d865081f4cac4fd87.jpg",
+          "sha256": "8ac2c68ec165ee773d64db3e8f98266f5c53001d1ba2cd6d865081f4cac4fd87",
+          "bytes": 347509
         },
         {
           "order": 7,
-          "path": "assets/images/portfolio/galleries/4aea6d3ab9409e56019e40eea8143387a4cf80eb70ff484c6940dc2ead773a37.png",
-          "sha256": "4aea6d3ab9409e56019e40eea8143387a4cf80eb70ff484c6940dc2ead773a37",
-          "bytes": 248071
+          "path": "assets/images/portfolio/galleries/a39e23a4659c26b5e17e14e9b9e1e5dc1698bc9340b700412c29f236eef4e96e.jpg",
+          "sha256": "a39e23a4659c26b5e17e14e9b9e1e5dc1698bc9340b700412c29f236eef4e96e",
+          "bytes": 267765
         }
       ],
       "galleryCountDetected": 7,
-      "galleryCountSaved": 7
+      "galleryCountSaved": 6
     },
     {
       "cardIndex": 3,
-      "folder": "003-бронирование-сделали-бронирование-кузова-для-автомобиля-mercedes-",
-      "description": "Бронирование Сделали бронирование кузова для автомобиля MERCEDES GLS 400d",
-      "cardText": "Бронирование Сделали бронирование кузова для автомобиля MERCEDES GLS 400d Все фото",
+      "folder": "003-бронирование-бронирование-всеи-переднеи-части-пленкои-хексис-на-a",
+      "description": "Бронирование Бронирование всей передней части пленкой Хексис на Audi Q7.",
+      "cardText": "Бронирование Бронирование всей передней части пленкой Хексис на Audi Q7. Все фото",
       "status": "captured-viewer-sequence",
       "mainImage": null,
       "gallery": [
         {
-          "order": 1,
-          "path": "assets/images/portfolio/galleries/7430c82f5bd439793a9d5ee1c7044474884720a553db20a72878b49c99d3b69b.jpg",
-          "sha256": "7430c82f5bd439793a9d5ee1c7044474884720a553db20a72878b49c99d3b69b",
-          "bytes": 267839
-        },
-        {
           "order": 2,
-          "path": "assets/images/portfolio/galleries/93b12803c96fd400cc389aac558c0003530b52ba861c8493b82d505c9368c302.jpg",
-          "sha256": "93b12803c96fd400cc389aac558c0003530b52ba861c8493b82d505c9368c302",
-          "bytes": 248966
+          "path": "assets/images/portfolio/galleries/d7fa73e1cd8d544a607c40f09f023271fe2b49e46d2fe18bc89253bda6f8e300.jpg",
+          "sha256": "d7fa73e1cd8d544a607c40f09f023271fe2b49e46d2fe18bc89253bda6f8e300",
+          "bytes": 352986
         },
         {
           "order": 3,
-          "path": "assets/images/portfolio/galleries/7105c69e6161a7c8b4d1c126ca4ec8f64c1fe1e2f75b0eff617bd53cef03da6d.jpg",
-          "sha256": "7105c69e6161a7c8b4d1c126ca4ec8f64c1fe1e2f75b0eff617bd53cef03da6d",
-          "bytes": 266466
+          "path": "assets/images/portfolio/galleries/c7a4d8e0b2c1d689f4249686f23eedd5868b8f5f0fc3a4d8531dc3cb0a952b8f.jpg",
+          "sha256": "c7a4d8e0b2c1d689f4249686f23eedd5868b8f5f0fc3a4d8531dc3cb0a952b8f",
+          "bytes": 343195
         },
         {
           "order": 4,
-          "path": "assets/images/portfolio/galleries/951ea6ef114b14caf7dde02ec49a7037f69c58cf969e99af03a4bd90eb4d59fb.jpg",
-          "sha256": "951ea6ef114b14caf7dde02ec49a7037f69c58cf969e99af03a4bd90eb4d59fb",
-          "bytes": 250083
+          "path": "assets/images/portfolio/galleries/a41b66c40734018f069a6e823c29faa81fc9268c9df262a850f38d555b68812f.jpg",
+          "sha256": "a41b66c40734018f069a6e823c29faa81fc9268c9df262a850f38d555b68812f",
+          "bytes": 369161
         },
         {
           "order": 5,
-          "path": "assets/images/portfolio/galleries/2ef16ec0e2961fadd9f516969dd192faada23c4c0dfecefab383989afda37b85.jpg",
-          "sha256": "2ef16ec0e2961fadd9f516969dd192faada23c4c0dfecefab383989afda37b85",
-          "bytes": 253149
+          "path": "assets/images/portfolio/galleries/6a9a5a88086b279e93e2c8edfccdc8a7c1c1359bdb2e8a9f13d64f1d03b0d550.jpg",
+          "sha256": "6a9a5a88086b279e93e2c8edfccdc8a7c1c1359bdb2e8a9f13d64f1d03b0d550",
+          "bytes": 213487
         },
         {
           "order": 6,
-          "path": "assets/images/portfolio/f36c80712078ed5ca1ce65228e701b98b882b331ae9441a7036b338e62779802.jpg",
-          "sha256": "f36c80712078ed5ca1ce65228e701b98b882b331ae9441a7036b338e62779802",
-          "bytes": 270324
+          "path": "assets/images/portfolio/galleries/929c74860c1440d107ce71245ce2c119d2313b2e2933d979c6257c929a6ff518.jpg",
+          "sha256": "929c74860c1440d107ce71245ce2c119d2313b2e2933d979c6257c929a6ff518",
+          "bytes": 275976
         },
         {
           "order": 7,
-          "path": "assets/images/portfolio/galleries/4367fa9bbd2778a5b58a363367512e8a0060a8f2da9d8bb50a240191385b3edf.jpg",
-          "sha256": "4367fa9bbd2778a5b58a363367512e8a0060a8f2da9d8bb50a240191385b3edf",
-          "bytes": 262485
+          "path": "assets/images/portfolio/galleries/4c48af231531d4cae59510a8958a2825f00b01df3371369550dda51885113f4f.jpg",
+          "sha256": "4c48af231531d4cae59510a8958a2825f00b01df3371369550dda51885113f4f",
+          "bytes": 341804
         },
         {
           "order": 8,
-          "path": "assets/images/portfolio/galleries/486d61bc38260acf634639d6d91c6bef994c69396533dba955407541b51e974a.jpg",
-          "sha256": "486d61bc38260acf634639d6d91c6bef994c69396533dba955407541b51e974a",
-          "bytes": 228500
+          "path": "assets/images/portfolio/galleries/6416b9762d2b94d4b1ed39b0ef3437353eaab785ea99235ff7bda9b702a5c6a4.jpg",
+          "sha256": "6416b9762d2b94d4b1ed39b0ef3437353eaab785ea99235ff7bda9b702a5c6a4",
+          "bytes": 262901
         },
         {
           "order": 9,
-          "path": "assets/images/portfolio/galleries/6b8614ce3c88f96e16ab1e0803ae9a75bbd450a13e20ba1bf6cdb41c8d125d67.jpg",
-          "sha256": "6b8614ce3c88f96e16ab1e0803ae9a75bbd450a13e20ba1bf6cdb41c8d125d67",
-          "bytes": 243797
+          "path": "assets/images/portfolio/galleries/cfa42838e7b6ac1c4750097f8619875b13acf39485d1b8de8eab4aea48f709c9.jpg",
+          "sha256": "cfa42838e7b6ac1c4750097f8619875b13acf39485d1b8de8eab4aea48f709c9",
+          "bytes": 207755
         },
         {
           "order": 10,
-          "path": "assets/images/portfolio/galleries/25779c31906a527f5be17e99dddd6291965bc9fbb1fb30fa1c525d7ee905c3f0.jpg",
-          "sha256": "25779c31906a527f5be17e99dddd6291965bc9fbb1fb30fa1c525d7ee905c3f0",
-          "bytes": 217863
-        },
-        {
-          "order": 11,
-          "path": "assets/images/portfolio/galleries/30d047e83ed0ee8ae3bf12f3da0fd114dbd27807b241785c90836137ffa5e4a0.png",
-          "sha256": "30d047e83ed0ee8ae3bf12f3da0fd114dbd27807b241785c90836137ffa5e4a0",
-          "bytes": 319002
-        },
-        {
-          "order": 12,
-          "path": "assets/images/portfolio/galleries/473723a6e845ae6279f3863685b14746fd448cee930b967a2ef29001b3c009b4.png",
-          "sha256": "473723a6e845ae6279f3863685b14746fd448cee930b967a2ef29001b3c009b4",
-          "bytes": 335742
-        },
-        {
-          "order": 13,
-          "path": "assets/images/portfolio/galleries/5f2dbff91b3865cdf771daea769538ad2372060a68c0132a3f20876842aee490.png",
-          "sha256": "5f2dbff91b3865cdf771daea769538ad2372060a68c0132a3f20876842aee490",
-          "bytes": 325524
-        },
-        {
-          "order": 14,
-          "path": "assets/images/portfolio/galleries/78a333bd8eef7f71224ddcdcc6d378d6f05e6a1c6734412a9e860d063dc92057.png",
-          "sha256": "78a333bd8eef7f71224ddcdcc6d378d6f05e6a1c6734412a9e860d063dc92057",
-          "bytes": 319371
-        },
-        {
-          "order": 15,
-          "path": "assets/images/portfolio/galleries/4aea6d3ab9409e56019e40eea8143387a4cf80eb70ff484c6940dc2ead773a37.png",
-          "sha256": "4aea6d3ab9409e56019e40eea8143387a4cf80eb70ff484c6940dc2ead773a37",
-          "bytes": 248071
-        },
-        {
-          "order": 16,
-          "path": "assets/images/portfolio/galleries/e23e8e975be917631ab9209eccd6369d9de62e141bb2b6219db9b1b0334108b6.jpg",
-          "sha256": "e23e8e975be917631ab9209eccd6369d9de62e141bb2b6219db9b1b0334108b6",
-          "bytes": 280580
-        },
-        {
-          "order": 17,
-          "path": "assets/images/portfolio/373fc89cebe2f66cde3be34be69fb7020db6ccb03af57f5b93d64ae9edfc7e4d.jpg",
-          "sha256": "373fc89cebe2f66cde3be34be69fb7020db6ccb03af57f5b93d64ae9edfc7e4d",
-          "bytes": 312007
+          "path": "assets/images/portfolio/galleries/558f93d3bcef3e41f28c4cca8891a11a583078273f847acfd27db4caa6ddc6e5.jpg",
+          "sha256": "558f93d3bcef3e41f28c4cca8891a11a583078273f847acfd27db4caa6ddc6e5",
+          "bytes": 401485
         }
       ],
-      "galleryCountDetected": 17,
-      "galleryCountSaved": 17
+      "galleryCountDetected": 10,
+      "galleryCountSaved": 9
     },
     {
       "cardIndex": 4,
@@ -1345,6 +1261,5 @@
       "galleryCountDetected": 10,
       "galleryCountSaved": 10
     }
-  ],
-  "minGalleryImageBytes": 102400
+  ]
 }
