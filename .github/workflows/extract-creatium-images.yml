@@ -1,21 +1,28 @@
-name: Extract Creatium page images
+name: Extract and archive Creatium galleries
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - "maintenance/tools/extract-creatium-images.mjs"
+      - "maintenance/tools/normalize-creatium-galleries.mjs"
+      - ".github/workflows/extract-creatium-images.yml"
   workflow_dispatch:
-  # Keep the currently targeted BARIBAL gallery fresh without a manual button press.
   schedule:
     - cron: "15 3 * * *"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   extract:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -27,16 +34,32 @@ jobs:
           npm install --no-save playwright
           npx playwright install --with-deps chromium
 
-      - name: Extract images
+      - name: Extract images from Creatium galleries
         env:
           PAGE_URL: https://baribal-studio.ru/foto
         run: node maintenance/tools/extract-creatium-images.mjs
 
-      - name: Upload images and report
+      - name: Deduplicate and index gallery photos
+        run: node maintenance/tools/normalize-creatium-galleries.mjs
+
+      - name: Commit archived gallery assets
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/images/portfolio/galleries maintenance/creatium-gallery-index.json
+          if git diff --cached --quiet; then
+            echo "No new gallery assets to commit."
+          else
+            git commit -m "Archive and deduplicate Creatium project galleries"
+            git pull --rebase origin main
+            git push
+          fi
+
+      - name: Upload raw extraction and report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: creatium-images
+          name: creatium-gallery-source
           path: output/creatium-images/
           if-no-files-found: warn
           retention-days: 14
