@@ -1,0 +1,43 @@
+name: Full Creatium photo inventory
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "maintenance/tools/inventory-creatium-photos.mjs"
+      - ".github/workflows/inventory-creatium-photos.yml"
+  workflow_dispatch:
+    inputs:
+      page_url:
+        description: "Creatium page to inspect"
+        required: true
+        default: "https://baribal-studio.ru/foto"
+
+permissions:
+  contents: read
+
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install Playwright and Chromium
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Inventory every card and gallery
+        env:
+          PAGE_URL: ${{ github.event.inputs.page_url || 'https://baribal-studio.ru/foto' }}
+        run: node maintenance/tools/inventory-creatium-photos.mjs
+      - name: Upload full inventory
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: creatium-full-photo-inventory
+          path: output/creatium-full-inventory/
+          if-no-files-found: warn
+          retention-days: 14
