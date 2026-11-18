@@ -4,7 +4,7 @@ const cards = [8,9].map(n=>index.cards.find(c=>c.cardIndex===n));
 if (cards.some(c=>!c?.mainImage?.path || !c.gallery?.length)) throw new Error("Normalized cards 8/9 incomplete");
 const modulePath="src/portfolio-galleries.js";
 let source=await readFile(modulePath,"utf8");
-const used=[...source.matchAll(/import image(\\d+) from/g)].map(m=>Number(m[1]));
+const used=[...source.matchAll(new RegExp("import image([0-9]+) from","g"))].map(m=>Number(m[1]));
 let next=Math.max(...used)+1;
 const newImports=[];
 const refs={};
