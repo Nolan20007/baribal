@@ -68,7 +68,7 @@ async function scrollPage() {
 }
 
 async function readCard(button, index) {
-  return button.evaluate((el, index) => {
+  return button.evaluate((el, requiredCardText) => {
     const visible = node => {
       const r=node.getBoundingClientRect(), st=getComputedStyle(node);
       return r.width>40&&r.height>40&&st.display!=="none"&&st.visibility!=="hidden"&&Number(st.opacity||1)>0;
@@ -80,7 +80,7 @@ async function readCard(button, index) {
     let root=el;
     for(let depth=0;root&&depth<12;depth++,root=root.parentElement){
       const text=(root.innerText||"").replace(/\s+/g," ").trim();
-      if(text.length>10&&text.length<2200&&/Все фото/i.test(text)&&/Mercedes-Benz\s+GLE\s+Coupe/i.test(text)){
+      if(text.length>10&&text.length<2200&&/Все фото/i.test(text)&&(!requiredCardText||text.toLowerCase().includes(requiredCardText.toLowerCase()))){
         const local=[];
         for(const node of [root,...root.querySelectorAll("*")]){
           if(!visible(node))continue;
@@ -120,7 +120,7 @@ async function readCard(button, index) {
     const description=(heading?.innerText||chosenText.split(/Все фото/i)[0]||"").replace(/\s+/g," ").trim();
     return {description:description.slice(0,500),mainImage:best?.url||"",
       cardText:chosenText.slice(0,1800),mainImageCandidates:unique.slice(0,12),cardRoot:chosenRoot};
-  }, index);
+  }, requiredCardText);
 }
 
 async function readGalleryImages() {
