@@ -1,3 +1,5 @@
+import { portfolioGalleries } from "./portfolio-galleries.js";
+
 // BARIBAL — plain JavaScript. No framework, imports or build step.
 "use strict";
 
@@ -475,6 +477,7 @@ document.querySelectorAll(".service-card").forEach((card) => {
   if (orderButton) orderButton.dataset.serviceTitle = title;
   detailsButton?.addEventListener("click", () => openServiceInfo(title, detailsButton));
 });
+document.querySelectorAll("#works .work-card .js-service-info").forEach((button) => button.addEventListener("click", () => openServiceInfo(button.dataset.serviceTitle, button)));
 document.querySelector("#service-info-order")?.addEventListener("click", (event) => {
   const title = event.currentTarget.dataset.serviceTitle || "";
   closeInfoModal();
@@ -501,6 +504,41 @@ document.querySelectorAll(".contact-preferences").forEach((group) => {
   toggle.addEventListener("change", sync);
   sync();
 });
+
+
+ // Restore the Russian phone-number mask used in the original version.
+ document.querySelectorAll('input[type="tel"]').forEach((input) => {
+   const formatPhone = (value, cursor) => {
+     const prefixAlreadyPresent = /^\+7/.test(value);
+     let digits = value.replace(/\D/g, "");
+     let digitsBeforeCursor = value.slice(0, cursor).replace(/\D/g, "").length;
+     if (prefixAlreadyPresent) {
+       digits = digits.slice(1);
+       digitsBeforeCursor = Math.max(0, digitsBeforeCursor - 1);
+     } else if (digits.startsWith("7") || digits.startsWith("8")) {
+       digits = digits.slice(1);
+       digitsBeforeCursor = Math.max(0, digitsBeforeCursor - 1);
+     }
+     digits = digits.slice(0, 10);
+     digitsBeforeCursor = Math.min(digitsBeforeCursor, digits.length);
+     if (!digits) return { value: "", cursor: 0 };
+     const parts = [digits.slice(0, 3), digits.slice(3, 6), digits.slice(6, 8), digits.slice(8, 10)];
+     const formatted = "+7" + (parts[0] ? " (" + parts[0] : "") + (parts[0]?.length === 3 ? ")" : "") + (parts[1] ? " " + parts[1] : "") + (parts[2] ? "-" + parts[2] : "") + (parts[3] ? "-" + parts[3] : "");
+     let nextCursor = 2;
+     if (digitsBeforeCursor > 0) {
+       const prefix = formatted.slice(2);
+       let seen = 0, offset = 0;
+       while (offset < prefix.length && seen < digitsBeforeCursor) { if (/\d/.test(prefix[offset])) seen++; offset++; }
+       nextCursor = 2 + offset;
+     }
+     return { value: formatted, cursor: nextCursor };
+   };
+   input.addEventListener("input", () => {
+     const result = formatPhone(input.value, input.selectionStart ?? input.value.length);
+     input.value = result.value;
+     input.setSelectionRange(result.cursor, result.cursor);
+   });
+ });
 
 // The original portfolio filters and "show all" interaction.
 const portfolioGrid = document.querySelector("#portfolio-grid");
@@ -641,7 +679,15 @@ if (workGallery) {
   document.querySelectorAll(".js-open-work-gallery").forEach((button) => {
     button.addEventListener("click", () => {
       const index = Number(button.dataset.galleryIndex);
-      galleryItems = workGallerySets[index] || [];
+      const portfolioIndex = button.dataset.portfolioGalleryIndex;
+      if (portfolioIndex !== undefined) {
+        const card = button.closest(".work-card");
+        const mainImage = card?.querySelector(".work-image img")?.src;
+        const additionalImages = portfolioGalleries[Number(portfolioIndex)]?.images || [];
+        galleryItems = [mainImage, ...additionalImages.filter((image) => image !== mainImage)].filter(Boolean);
+      } else {
+        galleryItems = workGallerySets[index] || [];
+      }
       if (!galleryItems.length) return;
       lastGalleryTrigger = button;
       galleryTitle.textContent = button.dataset.galleryTitle || "Фотографии работы";
