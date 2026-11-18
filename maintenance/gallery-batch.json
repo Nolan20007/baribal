@@ -1,4 +1,5 @@
 {
   "startCard": 9,
-  "endCard": 18
+  "endCard": 18,
+  "note": "clean isolated rerun after extractor reset"
 }
