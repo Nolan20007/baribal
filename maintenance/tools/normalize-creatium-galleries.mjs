@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { access, copyFile, mkdir, readFile, readdir, unlink, writeFile } from "node:fs/promises";
+import { access, copyFile, mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const root = process.cwd();
@@ -115,8 +115,7 @@ const index = {
 };
 await writeFile(indexPath, JSON.stringify(index, null, 2) + "\n", "utf8");
 
-// Do not delete unreferenced files automatically; audit source references before cleanup.
-const orphanFilesRemoved = 0;
+// Gallery assets are append-only here: never delete physical image files automatically.
 
 console.log(JSON.stringify({
   cardsProcessed: cards.length,
