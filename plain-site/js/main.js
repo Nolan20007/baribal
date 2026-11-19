@@ -1,5 +1,3 @@
-import { portfolioGalleries } from "./portfolio-galleries.js";
-
 // BARIBAL — plain JavaScript, with a small data module for project galleries.
 "use strict";
 
@@ -702,15 +700,7 @@ if (workGallery) {
   document.querySelectorAll(".js-open-work-gallery").forEach((button) => {
     button.addEventListener("click", () => {
       const index = Number(button.dataset.galleryIndex);
-      const portfolioIndex = button.dataset.portfolioGalleryIndex;
-      if (portfolioIndex !== undefined) {
-        const card = button.closest(".work-card");
-        const mainImage = card?.querySelector(".work-image img")?.src;
-        const additionalImages = portfolioGalleries[Number(portfolioIndex)]?.images || [];
-        galleryItems = [mainImage, ...additionalImages.filter((image) => image !== mainImage)].filter(Boolean);
-      } else {
-        galleryItems = workGallerySets[index] || [];
-      }
+      galleryItems = workGallerySets[index] || [];
       if (!galleryItems.length) return;
       lastGalleryTrigger = button;
       galleryTitle.textContent = button.dataset.galleryTitle || "Фотографии работы";
