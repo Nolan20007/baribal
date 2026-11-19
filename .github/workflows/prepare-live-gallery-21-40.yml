@@ -1,0 +1,83 @@
+name: Prepare fresh gallery originals 21-40
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/prepare-live-gallery-21-40.yml"
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Download fresh live extraction report
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p output/diag output/gallery
+          gh run download 44472805387 --repo "${GITHUB_REPOSITORY}" --name live-creatium-galleries-21-40 --dir output/diag
+          test -s output/diag/report.json
+      - name: Install image processing
+        run: npm install --no-save sharp
+      - name: Download and validate gallery originals; exclude exact cover duplicates
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import crypto from 'node:crypto';
+          import sharp from 'sharp';
+          const report=JSON.parse(await fs.readFile('output/diag/report.json','utf8'));
+          if(report.requestedRange?.start!==21||report.requestedRange?.end!==40||report.cardCount!==20||report.failures?.length) throw new Error('Fresh diagnostic report range/status invalid');
+          const html=await fs.readFile('plain-site/foto/index.html','utf8');
+          const cards=[]; let cursor=0;
+          while(true){const start=html.indexOf('<article class="work-card"',cursor);if(start<0)break;const bodyStart=html.indexOf('>',start)+1;const end=html.indexOf('</article>',bodyStart);if(bodyStart===0||end<0)throw new Error('Malformed work-card HTML');cards.push(html.slice(bodyStart,end));cursor=end+10;}
+          if(cards.length!==154) throw new Error('Expected 154 portfolio cards, found '+cards.length);
+          const hash=b=>crypto.createHash('sha256').update(b).digest('hex');
+          const files=[], summaries=[];
+          for(const c of report.cards){
+            if(c.status!=='captured-by-clicking-thumbnails') throw new Error('Unverified card '+c.cardIndex);
+            const block=cards[c.cardIndex-1]; const imgStart=block?.indexOf('<img');
+            const srcStart=imgStart>=0?block.indexOf('src="',imgStart):-1;
+            const srcEnd=srcStart>=0?block.indexOf('"',srcStart+5):-1;
+            const src=srcStart>=0&&srcEnd>srcStart?block.slice(srcStart+5,srcEnd):null;
+            if(!src) throw new Error('Missing cover path for '+c.cardIndex);
+            const coverPath=new URL(src,'file://'+process.cwd()+'/plain-site/foto/index.html').pathname;
+            const cover=await fs.readFile(coverPath);
+            const coverHash=hash(cover), seen=new Set(), accepted=[];
+            for(let i=0;i<c.galleryOriginals.length;i++){
+              const item=c.galleryOriginals[i]; if(seen.has(item.url)) continue; seen.add(item.url);
+              if(!item.url.startsWith('https://i.1.creatium.io/')&&!item.url.startsWith('https://img1.creatium.ru/')) throw new Error('Unexpected image host for card '+c.cardIndex);
+              const res=await fetch(item.url,{signal:AbortSignal.timeout(30000)});
+              if(!res.ok) throw new Error('HTTP '+res.status+' card '+c.cardIndex+' image '+(i+1));
+              const bytes=Buffer.from(await res.arrayBuffer()), meta=await sharp(bytes).metadata();
+              if(!['jpeg','png','webp'].includes(meta.format)||meta.width<500||meta.height<300||bytes.length<100000) { console.log('REJECT_SIZE_FORMAT',c.cardIndex,i+1,meta,bytes.length); continue; }
+              const digest=hash(bytes);
+              if(digest===coverHash){console.log('SKIP_EXACT_COVER_DUPLICATE',c.cardIndex,i+1);continue;}
+              if(accepted.some(x=>x.sha256===digest)){console.log('SKIP_WITHIN_CARD_DUPLICATE',c.cardIndex,i+1);continue;}
+              const ext=meta.format==='png'?'png':meta.format==='webp'?'webp':'jpg';
+              const name=String(c.cardIndex).padStart(3,'0')+'-'+String(i+1).padStart(2,'0')+'.'+ext;
+              await fs.writeFile('output/gallery/'+name,bytes);
+              accepted.push({name,sha256:digest,width:meta.width,height:meta.height,bytes:bytes.length,source:item.url});
+              files.push({cardIndex:c.cardIndex,...accepted.at(-1)});
+            }
+            summaries.push({cardIndex:c.cardIndex,description:c.description,detected:c.galleryDetected,accepted});
+          }
+          await fs.writeFile('output/gallery/summary.json',JSON.stringify({range:[21,40],cards:summaries,files},null,2));
+          const tiles=[];
+          for(const f of files){const b=await fs.readFile('output/gallery/'+f.name);tiles.push({input:await sharp(b).resize(240,150,{fit:'inside'}).jpeg().toBuffer(),left:(tiles.length%4)*250,top:Math.floor(tiles.length/4)*180});}
+          if(tiles.length){const sheet=await sharp({create:{width:1000,height:Math.ceil(tiles.length/4)*180,channels:3,background:'#eeeeee'}}).composite(tiles).jpeg({quality:85}).toBuffer();await fs.writeFile('output/gallery/contact-sheet.jpg',sheet);}
+          console.log('GALLERY_PREPARED',JSON.stringify({cards:summaries.length,additionalPhotos:files.length,byCard:summaries.map(x=>[x.cardIndex,x.accepted.length])}));
+          NODE
+      - uses: actions/upload-artifact@v4
+        with:
+          name: live-gallery-21-40-review
+          path: output/gallery/
+          retention-days: 7
