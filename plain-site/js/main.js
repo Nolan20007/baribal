@@ -785,6 +785,7 @@ if (workGallery) {
     if (number <= 80) return "work-galleries-61-80.json";
     if (number <= 100) return "work-galleries-81-100.json";
     if (number <= 120) return "work-galleries-101-120.json";
+    if (number <= 140) return "work-galleries-121-140.json";
     if (number >= 141 && number <= 154) return "work-galleries-141-154.json";
     return null;
   };
