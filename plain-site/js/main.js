@@ -734,6 +734,8 @@ if (portfolioGrid) {
   };
   const eligibleImage = (img) => {
     if (!img || !img.getAttribute("src")) return false;
+    // Empty alt marks an image as decorative; do not turn it into a focusable lightbox control.
+    if (!img.alt || !img.alt.trim()) return false;
     if (img.closest(".brand, .video-poster, .project-modal, .work-gallery-modal, .verified-gallery, .contact-widget, #callback-modal, #device-preview-modal")) return false;
     if (img.closest("a, button")) return false;
     if (img.closest("#portfolio-grid")) return false;
