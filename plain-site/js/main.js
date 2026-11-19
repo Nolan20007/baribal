@@ -1,4 +1,4 @@
-// BARIBAL — plain JavaScript, with a small data module for project galleries.
+// BRIBAL — plain JavaScript, with a small data module for project galleries.
 // Gallery batch 121-140 publication trigger: data and image assets are committed.
 "use strict";
 
@@ -821,3 +821,5 @@ if (workGallery) {
   image.addEventListener("touchstart",e=>{touchX=e.changedTouches[0].clientX;},{passive:true});image.addEventListener("touchend",e=>{const d=e.changedTouches[0].clientX-touchX;if(Math.abs(d)>45)move(d<0?1:-1);},{passive:true});
   document.addEventListener("keydown",e=>{if(!modal.classList.contains("is-open"))return;if(e.key==="Escape")close();if(e.key==="ArrowLeft")move(-1);if(e.key==="ArrowRight")move(1);});
 })();
+
+// WebP copies are generated separately; original image paths remain active until verification.
