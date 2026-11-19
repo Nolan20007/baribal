@@ -473,13 +473,6 @@ const openServiceInfo = (title, trigger) => {
   const price = card?.querySelector(".service-bottom b")?.textContent.trim() || servicePrices[lookupTitle] || servicePrices[title] || trigger?.dataset.servicePrice || "";
   infoModal.querySelector("#service-info-title").textContent = title;
   infoModal.querySelector("#service-info-lead").textContent = details.lead;
-  const serviceGallery = infoModal.querySelector("#service-info-gallery");
-  if (serviceGallery) {
-    const normalizedTitle = lookupTitle.toLocaleLowerCase("ru").replaceAll("ё", "е");
-    const showBookingGallery = normalizedTitle.includes("бронирование") &&
-      (normalizedTitle.includes("защитной пленкой") || normalizedTitle.includes("кузова пленкой"));
-    serviceGallery.hidden = !showBookingGallery;
-  }
   infoModal.querySelector("#service-info-story").textContent = details.story;
   const benefits = infoModal.querySelector("#service-info-benefits");
   benefits.replaceChildren();
