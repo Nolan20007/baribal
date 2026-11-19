@@ -1,8 +1,8 @@
 {
-  "startCard": 61,
-  "endCard": 80,
+  "startCard": 81,
+  "endCard": 100,
   "galleryLimit": 0,
   "requiredCardText": "",
   "pageUrl": "https://baribal-studio.ru/foto",
-  "note": "Batch 61-80: run proven originals diagnostic only; manually verify before download or publication."
+  "note": "Next batch 81-100. Keep existing homepage cover downloads; process gallery originals without manual visual review of every file. Skip card 75 from batch 61-80 for later because no reliable cover candidate was found; do not block remaining cards."
 }
