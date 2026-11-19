@@ -625,37 +625,12 @@ if (portfolioGrid) {
 }
 
 // Plain-JS work galleries. The first item is the same cover shown on each card.
+// Homepage galleries: use only the three verified cover images.
+// Paths are relative to the published site root (the homepage), not /assets at the domain root.
 const workGallerySets = [
-  [
-    "../assets/images/portfolio/galleries/a58165e7f70299a15a7ca5f55c623020b4190ebe69f09d124ab5bdd9d3eae3b8.webp",
-    "../assets/images/portfolio/galleries/d1c3405fac34ce652af2ca2e1443cb41b8798be0491419c24ec5e85aea36df23.jpg",
-    "../assets/images/portfolio/galleries/e07619d016a9cf994c3a88f261b674ea13202d2a301cd032299eae535e0f1f59.jpg"
-  ],
-  [
-    "../assets/images/portfolio/edb1f571acdac6f0a9bc76b7bdcff548467bed7c317eac3fbbbbe6e41cd3430c.webp",
-    "../assets/images/portfolio/galleries/2e02a5330abbecb7b2cae81331597c3b2c8c50031e576b549f4cefecda4f53d8.jpg",
-    "../assets/images/portfolio/galleries/4afed0612adc54eb4225d7a5272eee876bcd2c059e623d25767a7e7e63d9e2a6.jpg",
-    "../assets/images/portfolio/galleries/aa23627731b6586bb88ad6ad6c9fc104b778da3eaedc9bd5ca45fa4f02eb85bc.jpg",
-    "../assets/images/portfolio/galleries/1cb1beba1256ced2924f78f6a5de57dce733b941e6589a10f4a808062d9a3d03.jpg",
-    "../assets/images/portfolio/galleries/8ac2c68ec165ee773d64db3e8f98266f5c53001d1ba2cd6d865081f4cac4fd87.jpg",
-    "../assets/images/portfolio/galleries/a39e23a4659c26b5e17e14e9b9e1e5dc1698bc9340b700412c29f236eef4e96e.jpg"
-  ],
-  [
-    "../assets/images/portfolio/89aa4c603c5fe509040b7999422cd307e8aea34d9ce8fcd7862940961bd39ffa.webp",
-    "../assets/images/portfolio/galleries/c140984e92c2df675bed98df0a034876a5457c926d6a4efa70eb15f3030e5576.jpg",
-    "../assets/images/portfolio/galleries/f10aeb6251c9d4f0f30ccf7730d150bd55a85d8c32f081914e3f32ab1e184431.jpg"
-  ],
-  [
-    "../assets/images/portfolio/73b239e1305c79983656d7ede9857eb88ab3d3272fd164e798a9e8d47534ebd0.webp",
-    "../assets/images/portfolio/b07ab313fa12622258f6b4e104b8055387147efbcde98ba317a565937783e6cd.webp"
-  ],
-  [
-    "../assets/images/portfolio/8bfc9a70f703dc3d73c4b6f620023c70a22a64e1b48d4aa3de5b8d49fe3e8b47.webp",
-    "../assets/images/portfolio/fd19178423f242ab3e160a14836e831d495088ce0d8719f6d46ee9c7ff6031c5.webp",
-    "../assets/images/portfolio/3837ffd66fe11fdb2a4e0f5c04afb22d0c35b31722fec43a2e04d5a1e9846bf5.webp",
-    "../assets/images/portfolio/0fcede994e06190cb659c0bd80f574a4bef9771dd09d664a1a429ea84f48f32b.webp",
-    "../assets/images/portfolio/87759269073dad0537555a4515cafa1e9061bafc182396d8eb97b82c82cb5fd7.webp"
-  ]
+  ["./assets/images/pages/home/portfolio/galleries/a58165e7f70299a15a7ca5f55c623020b4190ebe69f09d124ab5bdd9d3eae3b8.webp"],
+  ["./assets/images/pages/home/portfolio/edb1f571acdac6f0a9bc76b7bdcff548467bed7c317eac3fbbbbe6e41cd3430c.webp"],
+  ["./assets/images/pages/home/portfolio/89aa4c603c5fe509040b7999422cd307e8aea34d9ce8fcd7862940961bd39ffa.webp"]
 ];
 const workGallery = document.querySelector("#work-gallery-modal");
 if (workGallery) {
