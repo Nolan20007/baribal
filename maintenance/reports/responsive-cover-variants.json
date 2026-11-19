@@ -1,0 +1,158 @@
+{
+  "sourceDirectory": "assets/images/pages/foto",
+  "outputDirectory": "assets/images/pages/foto/responsive",
+  "requestedWidths": [
+    400,
+    900,
+    1600
+  ],
+  "quality": 82,
+  "limit": 5,
+  "sourceCount": 5,
+  "processed": 5,
+  "variantsCreated": 15,
+  "skippedExisting": 0,
+  "failures": [],
+  "files": [
+    {
+      "source": "01-porsche.png",
+      "sourceWidth": 934,
+      "sourceHeight": 693,
+      "variants": [
+        {
+          "file": "01-porsche-400.webp",
+          "width": 400,
+          "height": 297,
+          "bytes": 30808,
+          "status": "created"
+        },
+        {
+          "file": "01-porsche-900.webp",
+          "width": 900,
+          "height": 668,
+          "bytes": 138868,
+          "status": "created"
+        },
+        {
+          "file": "01-porsche-934.webp",
+          "width": 934,
+          "height": 693,
+          "bytes": 167040,
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "source": "02-kia-sorento.jpg",
+      "sourceWidth": 1600,
+      "sourceHeight": 1200,
+      "variants": [
+        {
+          "file": "02-kia-sorento-400.webp",
+          "width": 400,
+          "height": 300,
+          "bytes": 25616,
+          "status": "created"
+        },
+        {
+          "file": "02-kia-sorento-900.webp",
+          "width": 900,
+          "height": 675,
+          "bytes": 95568,
+          "status": "created"
+        },
+        {
+          "file": "02-kia-sorento-1600.webp",
+          "width": 1600,
+          "height": 1200,
+          "bytes": 203490,
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "source": "03-mercedes-gls.jpg",
+      "sourceWidth": 1600,
+      "sourceHeight": 1200,
+      "variants": [
+        {
+          "file": "03-mercedes-gls-400.webp",
+          "width": 400,
+          "height": 300,
+          "bytes": 22128,
+          "status": "created"
+        },
+        {
+          "file": "03-mercedes-gls-900.webp",
+          "width": 900,
+          "height": 675,
+          "bytes": 76770,
+          "status": "created"
+        },
+        {
+          "file": "03-mercedes-gls-1600.webp",
+          "width": 1600,
+          "height": 1200,
+          "bytes": 165330,
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "source": "04-toyota-prado.jpg",
+      "sourceWidth": 1600,
+      "sourceHeight": 1200,
+      "variants": [
+        {
+          "file": "04-toyota-prado-400.webp",
+          "width": 400,
+          "height": 300,
+          "bytes": 24538,
+          "status": "created"
+        },
+        {
+          "file": "04-toyota-prado-900.webp",
+          "width": 900,
+          "height": 675,
+          "bytes": 91908,
+          "status": "created"
+        },
+        {
+          "file": "04-toyota-prado-1600.webp",
+          "width": 1600,
+          "height": 1200,
+          "bytes": 201030,
+          "status": "created"
+        }
+      ]
+    },
+    {
+      "source": "05-toyota-rav4.jpg",
+      "sourceWidth": 1600,
+      "sourceHeight": 1200,
+      "variants": [
+        {
+          "file": "05-toyota-rav4-400.webp",
+          "width": 400,
+          "height": 300,
+          "bytes": 14314,
+          "status": "created"
+        },
+        {
+          "file": "05-toyota-rav4-900.webp",
+          "width": 900,
+          "height": 675,
+          "bytes": 46166,
+          "status": "created"
+        },
+        {
+          "file": "05-toyota-rav4-1600.webp",
+          "width": 1600,
+          "height": 1200,
+          "bytes": 98672,
+          "status": "created"
+        }
+      ]
+    }
+  ]
+}
