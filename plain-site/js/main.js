@@ -432,13 +432,6 @@ const serviceDetails = {
 }
 
 const infoModal = document.querySelector("#service-info-modal");
-const serviceInfoGalleryImages = [
-  { src: "../assets/images/pages/home/booking/booking-01.webp", srcset: "../assets/images/pages/home/booking/responsive/booking-01-400.webp 400w, ../assets/images/pages/home/booking/responsive/booking-01-900.webp 900w, ../assets/images/pages/home/booking/responsive/booking-01-1280.webp 1280w", alt: "Mercedes SL — общий вид кузова после бронирования" },
-  { src: "../assets/images/pages/home/booking/booking-02.webp", alt: "Детали полной защиты кузова Mercedes SL — фото 2" },
-  { src: "../assets/images/pages/home/booking/booking-03.webp", alt: "Детали полной защиты кузова Mercedes SL — фото 3" },
-  { src: "../assets/images/pages/home/booking/booking-04.webp", alt: "Детали полной защиты кузова Mercedes SL — фото 4" },
-  { src: "../assets/images/pages/home/booking/booking-05.webp", alt: "Детали полной защиты кузова Mercedes SL — фото 5" }
-].map((photo) => ({ ...photo, src: new URL(photo.src, import.meta.url).href, srcset: photo.srcset ? photo.srcset.split(", ").map((part) => { const [path, size] = part.split(" "); return `${new URL(path, import.meta.url).href} ${size}`; }).join(", ") : "" }));
 const closeInfoModal = () => {
   if (!infoModal) return;
   infoModal.classList.remove("modal-open");
@@ -487,21 +480,7 @@ const openServiceInfo = (title, trigger) => {
     const showBookingGallery = normalizedTitle.includes("бронирование") &&
       (normalizedTitle.includes("защитной пленкой") || normalizedTitle.includes("кузова пленкой"));
     serviceGallery.hidden = !showBookingGallery;
-    if (showBookingGallery) {
-      serviceInfoGalleryImages.forEach((photo) => {
-        const image = document.createElement("img");
-        image.src = photo.src;
-        if (photo.srcset) image.srcset = photo.srcset;
-        if (photo.srcset) image.sizes = "(max-width: 520px) 100vw, (max-width: 760px) 50vw, 220px";
-        image.alt = photo.alt;
-        image.loading = "eager";
-        image.decoding = "async";
-        image.fetchPriority = "high";
-        serviceGallery.append(image);
-      });
-      serviceGallery.hidden = false;
-      serviceGallery.dataset.imageCount = String(serviceInfoGalleryImages.length);
-    }
+    serviceGallery.hidden = !showBookingGallery;
   }
   infoModal.querySelector("#service-info-story").textContent = details.story;
   const benefits = infoModal.querySelector("#service-info-benefits");
