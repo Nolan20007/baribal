@@ -1,0 +1,67 @@
+from pathlib import Path
+import re
+
+ROOT = Path("dist")
+COMPONENTS = ROOT / "components"
+widget = (COMPONENTS / "contact-widget.html").read_text(encoding="utf-8").strip()
+modal = (COMPONENTS / "callback-modal.html").read_text(encoding="utf-8").strip()
+
+def extract_outer(html, tag, predicate):
+    pattern = re.compile(r"<" + tag + r"\\b[^>]*>", re.I)
+    for match in pattern.finditer(html):
+        if not predicate(match.group(0)):
+            continue
+        token = re.compile(r"<\\/?"+tag+r"\\b[^>]*>", re.I)
+        depth = 0
+        for item in token.finditer(html, match.start()):
+            closing = item.group(0).startswith("</")
+            self_closing = item.group(0).rstrip().endswith("/>")
+            if closing:
+                depth -= 1
+            elif not self_closing:
+                depth += 1
+            if depth == 0:
+                return match.start(), item.end()
+    return None
+
+def remove_component(html, tag, predicate):
+    while True:
+        found = extract_outer(html, tag, predicate)
+        if not found:
+            return html
+        html = html[:found[0]] + html[found[1]:]
+
+def relative_asset_paths(fragment, page):
+    prefix = Path(__import__("os").path.relpath(ROOT, page.parent)).as_posix()
+    if prefix == ".":
+        prefix = "."
+    return fragment.replace("../foto/", prefix + "/foto/")
+
+for page in ROOT.rglob("*.html"):
+    html = page.read_text(encoding="utf-8")
+    html = remove_component(html, "aside", lambda tag: re.search(r'class=["\'][^"\']*\\bcontact-widget\\b', tag))
+    html = remove_component(html, "div", lambda tag: re.search(r'id=["\']callback-modal["\']', tag))
+    page_widget = relative_asset_paths(widget, page)
+    page_modal = relative_asset_paths(modal, page)
+    # Ensure shared scripts and stylesheet are present even on newly added pages.
+    prefix = Path(__import__("os").path.relpath(ROOT, page.parent)).as_posix()
+    if prefix == ".":
+        prefix = "."
+    head_additions = []
+    css_href = prefix + "/css/style.css"
+    if not re.search(r'<link[^>]+href=["\']' + re.escape(css_href) + r'["\']', html, re.I):
+        head_additions.append(f'<link rel="stylesheet" href="{css_href}">')
+    for filename in ("callback-modal.js", "main.js"):
+        src = prefix + "/js/" + filename
+        if not re.search(r'<script[^>]+src=["\']' + re.escape(src) + r'["\']', html, re.I):
+            module = ' type="module"' if filename == "main.js" else " defer"
+            head_additions.append(f'<script{module} src="{src}"></script>')
+    if head_additions:
+        html = re.sub(r"</head>", "  " + "\\n  ".join(head_additions) + "\\n</head>", html, count=1, flags=re.I)
+    injection = "\\n" + page_widget + "\\n\\n" + page_modal + "\\n"
+    if re.search(r"</body>", html, re.I):
+        html = re.sub(r"</body>", lambda _: injection + "</body>", html, count=1, flags=re.I)
+    else:
+        raise SystemExit(f"No closing body tag in {page}")
+    page.write_text(html, encoding="utf-8")
+print("Shared callback forms injected into every published HTML page.")
