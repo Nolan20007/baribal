@@ -1,8 +1,8 @@
 {
-  "startCard": 21,
-  "endCard": 30,
+  "startCard": 31,
+  "endCard": 40,
   "galleryLimit": 0,
   "requiredCardText": "",
   "pageUrl": "https://baribal-studio.ru/foto",
-  "note": "Batch 21-30: diagnose original gallery links and main cover candidates; manually verify covers before import."
+  "note": "Batch 31-40: diagnose originals and main cover candidates; visually verify covers before import."
 }
