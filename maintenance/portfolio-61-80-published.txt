@@ -1,1 +1,1 @@
-Verified gallery originals for portfolio cards 61-80 are committed and wired to the plain HTML gallery viewer. Card 75 intentionally skipped. See commit bf343d0254525c0f1036773a3b999287940ea299.
+Verified gallery originals for portfolio cards 61-80 are committed and wired to the plain HTML gallery viewer. Card 75 intentionally skipped. See commit bf343d0254525c0f1036773a3b999287940ea299. Trigger a fresh single-artifact GitHub Pages deployment.
