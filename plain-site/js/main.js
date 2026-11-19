@@ -475,11 +475,9 @@ const openServiceInfo = (title, trigger) => {
   infoModal.querySelector("#service-info-lead").textContent = details.lead;
   const serviceGallery = infoModal.querySelector("#service-info-gallery");
   if (serviceGallery) {
-    serviceGallery.replaceChildren();
     const normalizedTitle = lookupTitle.toLocaleLowerCase("ru").replaceAll("ё", "е");
     const showBookingGallery = normalizedTitle.includes("бронирование") &&
       (normalizedTitle.includes("защитной пленкой") || normalizedTitle.includes("кузова пленкой"));
-    serviceGallery.hidden = !showBookingGallery;
     serviceGallery.hidden = !showBookingGallery;
   }
   infoModal.querySelector("#service-info-story").textContent = details.story;
