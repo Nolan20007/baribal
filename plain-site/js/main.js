@@ -292,11 +292,28 @@ if (previewLauncher) {
 
 const backToTop = document.querySelector(".back-to-top");
 if (backToTop) {
-  const updateBackToTop = () => backToTop.classList.toggle("is-visible", (window.scrollY || document.documentElement.scrollTop || 0) > 300);
+  // Shared "Вверх" label sits beside the existing arrow on every page.
+  const backToTopGroup = document.createElement("div");
+  backToTopGroup.className = "back-to-top-group";
+  const backToTopLabel = document.createElement("button");
+  backToTopLabel.className = "back-to-top-label";
+  backToTopLabel.type = "button";
+  backToTopLabel.textContent = "Вверх";
+  backToTopLabel.setAttribute("aria-label", "Прокрутить страницу наверх");
+  backToTop.parentNode.insertBefore(backToTopGroup, backToTop);
+  backToTopGroup.append(backToTopLabel, backToTop);
+
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  const updateBackToTop = () => {
+    const visible = (window.scrollY || document.documentElement.scrollTop || 0) > 300;
+    backToTop.classList.toggle("is-visible", visible);
+    backToTopGroup.classList.toggle("is-visible", visible);
+  };
   window.addEventListener("scroll", updateBackToTop, { passive: true });
   window.addEventListener("pageshow", updateBackToTop);
   updateBackToTop();
-  backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+  backToTop.addEventListener("click", scrollToTop);
+  backToTopLabel.addEventListener("click", scrollToTop);
 }
 
 const serviceDetails = {
