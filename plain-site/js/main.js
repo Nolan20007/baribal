@@ -23,33 +23,7 @@ if (menuButton && navigation) {
 
 document.documentElement.classList.add("js-ready");
 
-const callbackModal = document.querySelector("#callback-modal");
-let lastModalTrigger = null;
-const openCallback = (workTitle = "", serviceTitle = "") => {
-  if (!callbackModal) return;
-  lastModalTrigger = document.activeElement;
-  const title = callbackModal.querySelector("#modal-title");
-  const context = callbackModal.querySelector("#callback-context");
-  const serviceField = callbackModal.querySelector("#callback-service");
-  title.textContent = serviceTitle ? "Заказать услугу" : "Мы вам перезвоним";
-  serviceField.value = serviceTitle || "";
-  context.textContent = serviceTitle
-    ? `Вы выбрали «${serviceTitle}». Оставьте телефон — мы свяжемся с вами, ответим на вопросы и согласуем удобное время.`
-    : workTitle
-      ? `Вы выбрали работу «${workTitle}». Оставьте телефон — обсудим похожее решение для вашего автомобиля.`
-      : "Оставьте номер — обсудим задачу и подберём решение для вашего автомобиля.";
-  callbackModal.classList.add("modal-open");
-  callbackModal.setAttribute("aria-hidden", "false");
-  document.body.classList.add("no-scroll");
-};
-const closeCallback = () => {
-  if (!callbackModal) return;
-  callbackModal.classList.remove("modal-open");
-  callbackModal.setAttribute("aria-hidden", "true");
-  document.body.classList.remove("no-scroll");
-  if (lastModalTrigger && typeof lastModalTrigger.focus === "function") lastModalTrigger.focus();
-};
-// Callback buttons are handled by the independent callback-modal.js script.
+// Callback modal behavior is centralized in callback-modal.js.
 
 // Keep the estimate summary in sync with the selected services.
 const estimateForm = document.querySelector(".estimate-form");
@@ -499,13 +473,13 @@ document.querySelectorAll("#works .work-card .js-service-info").forEach((button)
 document.querySelector("#service-info-order")?.addEventListener("click", (event) => {
   const title = event.currentTarget.dataset.serviceTitle || "";
   closeInfoModal();
-  openCallback("", title);
+  window.BaribalCallbackModal?.open({ serviceTitle: title, trigger: event.currentTarget });
 });
-document.querySelectorAll(".js-close").forEach((button) => button.addEventListener("click", () => { closeCallback(); closeInfoModal(); }));
+document.querySelectorAll("#service-info-modal .js-close").forEach((button) => button.addEventListener("click", closeInfoModal));
 document.addEventListener("keydown", (event) => {
   const activeModal = document.querySelector(".modal.modal-open");
   if (!activeModal) return;
-  if (event.key === "Escape") { event.preventDefault(); closeCallback(); closeInfoModal(); }
+  if (event.key === "Escape" && activeModal.id === "service-info-modal") { event.preventDefault(); closeInfoModal(); }
   if (event.key === "Tab") {
     const focusable = [...activeModal.querySelectorAll('button:not([disabled]), a[href], input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])')].filter((el) => !el.hidden);
     if (!focusable.length) return;
@@ -602,7 +576,6 @@ if (portfolioGrid) {
       const button = document.createElement("button");
       button.type = "button"; button.className = "text-link js-callback"; button.textContent = "Хочу так же ↗"; button.dataset.workTitle = card.querySelector("h3")?.textContent.trim() || "";
       actions.replaceChildren(button);
-      button.addEventListener("click", () => openCallback(card.querySelector("h3")?.textContent.trim() || ""));
     }
     const info = actions?.querySelector(".js-service-info");
     if (info) {
