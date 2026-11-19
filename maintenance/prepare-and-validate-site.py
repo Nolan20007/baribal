@@ -26,9 +26,12 @@ class LocalReferenceParser(HTMLParser):
     def __init__(self):
         super().__init__()
         self.references: list[tuple[str, str]] = []
+        self.images: list[dict[str, str | None]] = []
 
     def handle_starttag(self, tag, attrs):
         values = dict(attrs)
+        if tag.lower() == "img" and values.get("src"):
+            self.images.append(values)
         for attr in ("src", "href", "poster"):
             value = values.get(attr)
             if value:
@@ -111,6 +114,15 @@ def main() -> None:
             problem = check_local_reference(page, url)
             if problem:
                 errors.append(f"{page.relative_to(ROOT)} [{attr}] {problem}")
+        # Content images on ordinary pages must reserve their dimensions and
+        # provide an alt attribute. The large portfolio page is intentionally
+        # excluded from this migration and keeps its existing image pipeline.
+        if "foto" not in page.relative_to(ROOT).parts:
+            for image in parser.images:
+                if not (image.get("width", "").isdigit() and image.get("height", "").isdigit()):
+                    errors.append(f"{page.relative_to(ROOT)} [img] missing numeric width/height: {image.get('src')}")
+                if "alt" not in image:
+                    errors.append(f"{page.relative_to(ROOT)} [img] missing alt attribute: {image.get('src')}")
 
     required = [
         ROOT / "index.html",
