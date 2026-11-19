@@ -826,7 +826,7 @@ if (workGallery) {
   if (!grid) return;
   const cards = [...grid.querySelectorAll(".work-card")];
   let galleryMap = {};
-  const galleryMapReady = Promise.all(["work-galleries-1-20.json","work-galleries-61-80.json","work-galleries-81-100.json","work-galleries-141-154.json"].map(async file => {
+  const galleryMapReady = Promise.all(["work-galleries-1-20.json","work-galleries-21-40.json","work-galleries-61-80.json","work-galleries-81-100.json","work-galleries-141-154.json"].map(async file => {
     try {
       const response = await fetch("../data/" + file, { cache: "no-store" });
       if (response.ok) Object.assign(galleryMap, await response.json());
