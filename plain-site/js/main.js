@@ -41,7 +41,6 @@ const openCallback = (workTitle = "", serviceTitle = "") => {
   callbackModal.classList.add("modal-open");
   callbackModal.setAttribute("aria-hidden", "false");
   document.body.classList.add("no-scroll");
-  callbackModal.querySelector('input[name="phone"]')?.focus();
 };
 const closeCallback = () => {
   if (!callbackModal) return;
