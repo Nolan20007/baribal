@@ -28,6 +28,8 @@
     if (lastTrigger && typeof lastTrigger.focus === "function") lastTrigger.focus();
   };
 
+  window.BaribalCallbackModal = Object.freeze({ open, close });
+
   document.addEventListener("click", (event) => {
     const target = event.target;
     if (!(target instanceof Element)) return;
