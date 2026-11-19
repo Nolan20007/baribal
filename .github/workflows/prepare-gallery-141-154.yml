@@ -37,7 +37,7 @@ jobs:
           const report=JSON.parse(await fs.readFile('output/diag/report.json','utf8'));
           if(report.requestedRange?.start!==141||report.requestedRange?.end!==154||report.cardCount!==14||report.failures?.length) throw new Error('Diagnostic report range/status invalid');
           const html=await fs.readFile('plain-site/foto/index.html','utf8');
-          const cards=[...html.matchAll(/<article class="work-card">([\\s\\S]*?)<\\/article>/g)].map(x=>x[1]);
+          const cards=[...html.matchAll(/<article class="work-card">([\s\S]*?)<\/article>/g)].map(x=>x[1]);
           if(cards.length!==154) throw new Error('Expected 154 portfolio cards, found '+cards.length);
           const hash=b=>crypto.createHash('sha256').update(b).digest('hex');
           const files=[], summaries=[];
