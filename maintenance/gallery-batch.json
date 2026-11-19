@@ -1,8 +1,8 @@
 {
-  "startCard": 144,
+  "startCard": 153,
   "endCard": 154,
   "galleryLimit": 0,
   "requiredCardText": "",
   "pageUrl": "https://baribal-studio.ru/foto",
-  "note": "Targeted extraction batch for catalog cards 144-154. Keep all discovered gallery originals; verify each card against the legacy site before wiring images into the plain HTML catalog."
+  "note": "Quality-check batch: inspect cards 153-154 with the proven active-gallery original-link diagnostic. Do not use the unreliable generic extractor. Verify originals before download or publication."
 }
