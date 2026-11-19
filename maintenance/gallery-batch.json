@@ -4,5 +4,5 @@
   "galleryLimit": 0,
   "requiredCardText": "",
   "pageUrl": "https://baribal-studio.ru/foto",
-  "note": "Diagnostic batch 141-154. For cover candidates, use only each card's own visible cover URL and validate full-size originals; gallery URLs remain separate and must never be used as covers."
+  "note": "Retry diagnostic batch 141-154 after temporary Creatium image CDN timeouts. For cover candidates, use only each card's own visible cover URL and validate full-size originals; gallery URLs remain separate and must never be used as covers."
 }
