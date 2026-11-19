@@ -1936,3 +1936,10 @@ img.js-shared-lightbox-image:focus-visible{outline:2px solid var(--orange);outli
   position:relative;
   z-index:1;
 }
+
+
+/* Five-photo gallery for the paint-protection service information modal. */
+.service-info-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:0 0 26px}
+.service-info-gallery img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:3px;background:#292a2c}
+.service-info-gallery[hidden]{display:none}
+@media(max-width:520px){.service-info-gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.service-info-gallery img:first-child{grid-column:span 2;aspect-ratio:16/9}}

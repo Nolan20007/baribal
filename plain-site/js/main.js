@@ -432,6 +432,13 @@ const serviceDetails = {
 }
 
 const infoModal = document.querySelector("#service-info-modal");
+const serviceInfoGalleryImages = [
+  { src: "../assets/images/pages/foto/26-cover.webp", srcset: "../assets/images/pages/foto/responsive/26-cover-400.webp 400w, ../assets/images/pages/foto/responsive/26-cover-900.webp 900w, ../assets/images/pages/foto/responsive/26-cover-1280.webp 1280w", alt: "Mercedes SL — общий вид кузова после бронирования" },
+  { src: "../assets/images/portfolio/galleries/7261396a06208c86bcd80d62cef94d046bf9975105e8f5ec3105ceaacf0ce4a7.webp", alt: "Детали полной защиты кузова Mercedes SL — фото 2" },
+  { src: "../assets/images/portfolio/galleries/890ea9c7c70c31a26da97678f58f4b7506651a44f6a8a573c881e7a5adfc2e11.webp", alt: "Детали полной защиты кузова Mercedes SL — фото 3" },
+  { src: "../assets/images/portfolio/galleries/e97f6a91ef020c4fad38c1d8ee8c743874e50b70f6c74fd15011e4aec60539bd.webp", alt: "Детали полной защиты кузова Mercedes SL — фото 4" },
+  { src: "../assets/images/portfolio/galleries/596af4620e1a5c94bc2fb68b197f6d4f59165582d494d448e8c3ec895cdf1291.webp", alt: "Детали полной защиты кузова Mercedes SL — фото 5" }
+].map((photo) => ({ ...photo, src: new URL(photo.src, import.meta.url).href, srcset: photo.srcset ? photo.srcset.split(", ").map((part) => { const [path, size] = part.split(" "); return `${new URL(path, import.meta.url).href} ${size}`; }).join(", ") : "" }));
 const closeInfoModal = () => {
   if (!infoModal) return;
   infoModal.classList.remove("modal-open");
@@ -473,6 +480,21 @@ const openServiceInfo = (title, trigger) => {
   const price = card?.querySelector(".service-bottom b")?.textContent.trim() || servicePrices[lookupTitle] || servicePrices[title] || trigger?.dataset.servicePrice || "";
   infoModal.querySelector("#service-info-title").textContent = title;
   infoModal.querySelector("#service-info-lead").textContent = details.lead;
+  const serviceGallery = infoModal.querySelector("#service-info-gallery");
+  if (serviceGallery) {
+    serviceGallery.replaceChildren();
+    const showBookingGallery = lookupTitle === "Бронирование автомобиля защитной плёнкой";
+    serviceGallery.hidden = !showBookingGallery;
+    if (showBookingGallery) serviceInfoGalleryImages.forEach((photo) => {
+      const image = document.createElement("img");
+      image.src = photo.src;
+      if (photo.srcset) image.srcset = photo.srcset;
+      image.alt = photo.alt;
+      image.loading = "lazy";
+      image.decoding = "async";
+      serviceGallery.append(image);
+    });
+  }
   infoModal.querySelector("#service-info-story").textContent = details.story;
   const benefits = infoModal.querySelector("#service-info-benefits");
   benefits.replaceChildren();
