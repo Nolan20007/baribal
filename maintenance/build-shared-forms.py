@@ -24,6 +24,14 @@ def extract_outer(html, tag, predicate):
                 return match.start(), item.end()
     return None
 
+def has_class(tag, class_name):
+    match = re.search(r'class=["\']([^"\']*)["\']', tag, re.I)
+    return bool(match and class_name in match.group(1).split())
+
+def count_class(html, class_name):
+    return sum(class_name in match.group(1).split()
+               for match in re.finditer(r'class=["\']([^"\']*)["\']', html, re.I))
+
 def remove_component(html, tag, predicate):
     while True:
         found = extract_outer(html, tag, predicate)
@@ -41,7 +49,7 @@ for page in ROOT.rglob("*.html"):
     html = page.read_text(encoding="utf-8")
     html = remove_component(
         html, "aside",
-        lambda tag: re.search(r'class=["\'][^"\']*\bcontact-widget\b', tag)
+        lambda tag: has_class(tag, "contact-widget")
     )
     html = remove_component(
         html, "div",
@@ -83,7 +91,7 @@ for page in ROOT.rglob("*.html"):
     html = page.read_text(encoding="utf-8")
     if len(re.findall(r'id=["\']callback-modal["\']', html, re.I)) != 1:
         raise SystemExit(f"Expected exactly one callback modal in {page}")
-    if len(re.findall(r'class=["\'][^"\']*\bcontact-widget\b', html, re.I)) != 1:
+    if count_class(html, "contact-widget") != 1:
         raise SystemExit(f"Expected exactly one floating contact widget in {page}")
 
 # Partials are build inputs, not public website pages.
