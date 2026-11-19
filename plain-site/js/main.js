@@ -752,3 +752,67 @@ if (workGallery) {
     }
   });
 }
+
+
+// Verified Creatium galleries for portfolio cards 61–80 (card 75 intentionally skipped).
+(async () => {
+  const grid = document.querySelector("#portfolio-grid");
+  if (!grid) return;
+  try {
+    const response = await fetch("../data/work-galleries-61-80.json");
+    if (!response.ok) return;
+    const galleryMap = await response.json();
+    const cards = [...grid.querySelectorAll(".work-card")];
+    let overlay = document.querySelector("#verified-work-gallery");
+    if (!overlay) {
+      overlay = document.createElement("div");
+      overlay.id = "verified-work-gallery";
+      overlay.className = "verified-gallery";
+      overlay.innerHTML = '<div class="verified-gallery__panel" role="dialog" aria-modal="true" aria-label="Фотографии работы"><button class="verified-gallery__close" type="button" aria-label="Закрыть">×</button><button class="verified-gallery__prev" type="button" aria-label="Предыдущее фото">‹</button><img class="verified-gallery__image" alt=""><button class="verified-gallery__next" type="button" aria-label="Следующее фото">›</button><div class="verified-gallery__count"></div></div>';
+      document.body.append(overlay);
+    }
+    const image = overlay.querySelector(".verified-gallery__image");
+    const count = overlay.querySelector(".verified-gallery__count");
+    let items = [], current = 0, trigger = null;
+    const render = () => {
+      image.src = items[current];
+      image.alt = "Фотография проекта, фото " + (current + 1);
+      count.textContent = (current + 1) + " / " + items.length;
+      overlay.querySelector(".verified-gallery__prev").hidden = items.length < 2;
+      overlay.querySelector(".verified-gallery__next").hidden = items.length < 2;
+    };
+    const close = () => {
+      overlay.classList.remove("is-open");
+      document.body.classList.remove("no-scroll");
+      if (trigger) trigger.focus();
+    };
+    overlay.querySelector(".verified-gallery__close").addEventListener("click", close);
+    overlay.querySelector(".verified-gallery__prev").addEventListener("click", () => { current = (current - 1 + items.length) % items.length; render(); });
+    overlay.querySelector(".verified-gallery__next").addEventListener("click", () => { current = (current + 1) % items.length; render(); });
+    overlay.addEventListener("click", (event) => { if (event.target === overlay) close(); });
+    document.addEventListener("keydown", (event) => {
+      if (!overlay.classList.contains("is-open")) return;
+      if (event.key === "Escape") close();
+      if (event.key === "ArrowLeft") { current = (current - 1 + items.length) % items.length; render(); }
+      if (event.key === "ArrowRight") { current = (current + 1) % items.length; render(); }
+    });
+    Object.entries(galleryMap).forEach(([number, paths]) => {
+      const card = cards[Number(number) - 1];
+      const photo = card?.querySelector(".work-image img");
+      if (!photo || !paths.length) return;
+      photo.classList.add("has-verified-gallery");
+      photo.title = "Открыть фотографии проекта";
+      photo.addEventListener("click", () => {
+        items = paths;
+        current = 0;
+        trigger = photo;
+        render();
+        overlay.classList.add("is-open");
+        document.body.classList.add("no-scroll");
+        overlay.querySelector(".verified-gallery__close").focus();
+      });
+    });
+  } catch (error) {
+    console.warn("Verified portfolio galleries are unavailable", error);
+  }
+})();
