@@ -1,8 +1,8 @@
 {
-  "startCard": 121,
-  "endCard": 140,
+  "startCard": 141,
+  "endCard": 154,
   "galleryLimit": 0,
   "requiredCardText": "",
   "pageUrl": "https://baribal-studio.ru/foto",
-  "note": "Diagnostic batch 121-140. For cover candidates, use only card-specific visible cover URLs and validate full-size originals; gallery URLs are separate and must not be used as covers."
+  "note": "Diagnostic batch 141-154. For cover candidates, use only each card's own visible cover URL and validate full-size originals; gallery URLs remain separate and must never be used as covers."
 }
