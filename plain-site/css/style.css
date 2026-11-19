@@ -2177,3 +2177,14 @@ img.js-shared-lightbox-image:focus-visible{outline:2px solid var(--orange);outli
 .about-founder-photo{align-self:stretch;display:flex;align-items:flex-end;justify-content:center;min-width:0;}
 .about-founder-photo img{display:block;width:100%;max-width:390px;height:auto;max-height:570px;object-fit:contain;object-position:bottom center;}
 @media(max-width:760px){.about-intro{grid-template-columns:1fr;gap:10px;margin-bottom:38px}.about-intro-copy p{margin-bottom:18px}.about-founder-photo{justify-content:center;margin-top:0}.about-founder-photo img{width:min(54.6%,238px);max-height:329px}}
+
+
+/* One shared back-to-top control: label + the original round arrow. */
+.back-to-top-group{position:fixed;right:clamp(16px,3vw,34px);bottom:88px;z-index:80;display:flex;align-items:center;gap:8px;opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .22s ease,visibility .22s ease,transform .22s ease}
+.back-to-top-group.is-visible{opacity:1;visibility:visible;transform:translateY(0)}
+.back-to-top-group .back-to-top{position:relative;right:auto;bottom:auto;flex:0 0 auto}
+.back-to-top-label{min-width:70px;height:40px;padding:0 13px;border:1px solid #111;border-radius:8px;background:rgba(17,18,20,.94);color:var(--orange);font:700 12px/1 Manrope,Arial,sans-serif;letter-spacing:.04em;box-shadow:0 0 0 1px rgba(255,255,255,.9),0 5px 18px rgba(0,0,0,.24);transition:background .2s ease,transform .2s ease}
+.back-to-top-label:hover{background:#292522;transform:translateY(-2px)}
+.back-to-top-label:focus-visible{outline:2px solid var(--orange);outline-offset:4px}
+@media(max-width:560px){.back-to-top-group{right:16px;bottom:18px}.back-to-top-group .back-to-top{width:44px;height:44px}.back-to-top-label{height:38px;min-width:66px;padding:0 11px}}
+@media(prefers-reduced-motion:reduce){.back-to-top-group,.back-to-top-label{transition:none}}
