@@ -1,0 +1,25 @@
+<div class="modal" id="callback-modal" aria-hidden="true">
+    <div class="modal-backdrop js-close"></div>
+    <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close js-close" type="button" aria-label="Закрыть">×</button>
+      <div class="callback-modal-heading"><img src="../foto/foto.png" alt=""><span class="eyebrow">BARIBAL · ПЕРМЬ</span></div>
+      <h2 id="modal-title">Мы вам перезвоним</h2>
+      <p id="callback-context">Оставьте номер — обсудим задачу и подберём решение для вашего автомобиля.</p>
+      <form class="lead-form demo-form">
+        <input type="hidden" name="service" id="callback-service" value="">
+        <label>Ваше имя<input name="name" placeholder="Как к вам обращаться"></label>
+        <label>Телефон<input name="phone" type="tel" placeholder="+7 (___) ___-__-__" required></label>
+        <fieldset class="contact-preferences">
+          <legend>Как с вами связаться?</legend>
+          <div class="contact-preference-list">
+            <label><input type="checkbox" name="contact_method" value="phone" checked><span class="contact-option-icon contact-option-phone" aria-hidden="true">☎</span><span>По телефону</span></label>
+            <label><input type="checkbox" name="contact_method" value="max"><span class="contact-option-icon contact-option-max" aria-hidden="true">M</span><span>MAX</span></label>
+            <label><input type="checkbox" name="contact_method" value="telegram"><span class="contact-option-icon contact-option-telegram" aria-hidden="true">➤</span><span>Telegram</span></label>
+            <label><input type="checkbox" name="contact_method" value="other" data-contact-other-toggle><span>Другой способ</span></label>
+          </div>
+          <div class="contact-other-details" hidden><label>Укажите e-mail, мессенджер или другой способ связи<input type="text" name="contact_other" placeholder="Например: name@mail.ru или Signal"></label></div>
+        </fieldset>
+        <button class="button" type="submit">Заказать консультацию</button><output></output>
+      </form>
+    </section>
+  </div>
