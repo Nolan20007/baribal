@@ -4,7 +4,7 @@ import path from "node:path";
 
 const root = "output/gallery";
 const summary = JSON.parse(await readFile(path.join(root, "summary.json"), "utf8"));
-if (summary.range?.[0] !== 21 || summary.range?.[1] !== 40 || summary.cards?.length !== 40) {
+if (summary.range?.[0] !== 21 || summary.range?.[1] !== 40 || summary.cards?.length !== 20) {
   throw new Error("Gallery summary range/card count mismatch");
 }
 const destination = "assets/images/portfolio/galleries";
