@@ -26,23 +26,13 @@ jobs:
           cp -R plain-site/. dist/
           mkdir -p dist/assets
           cp -R assets/. dist/assets/
-          mkdir -p dist/foto
-          cp foto/foto.png dist/foto/foto.png
-          python - <<'PY'
-          from pathlib import Path
-          root = Path("dist")
-          home = root / "index.html"
-          home.write_text(home.read_text().replace("../assets/", "./assets/").replace("../foto/", "./foto/"))
-          for folder in ("tehnology", "kuzov", "himchistka", "avtovinil", "foto", "video", "reviews", "politika-konfidencialnosti"):
-              page = root / folder / "index.html"
-              page.write_text(page.read_text().replace("../../assets/", "../assets/").replace("../../foto/", "../foto/"))
-          css = root / "css" / "style.css"
-          css.write_text(css.read_text().replace("../../assets/", "../assets/"))
-          PY
+          python maintenance/prepare-and-validate-site.py
           rm -f dist/README.md
           cp dist/index.html dist/404.html
       - name: Inject shared callback forms into every page
         run: python maintenance/build-shared-forms.py
+      - name: Validate all published pages and local assets
+        run: python maintenance/prepare-and-validate-site.py
       - name: Verify essential published files
         run: |
           python - <<'PY'
