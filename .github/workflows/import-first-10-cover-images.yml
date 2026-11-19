@@ -84,3 +84,5 @@ jobs:
           git diff --cached --quiet && exit 0
           git commit -m "Add first 10 portfolio cover photos"
           git push origin HEAD:main
+
+# Cover images are imported by this workflow; Pages deployment is handled by deploy-pages.yml.
