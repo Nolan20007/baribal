@@ -697,18 +697,37 @@ if (workGallery) {
     if (lastGalleryTrigger) lastGalleryTrigger.focus();
   };
 
+  const openWorkGallery = (index, trigger, title) => {
+    galleryItems = workGallerySets[index] || [];
+    if (!galleryItems.length) return;
+    lastGalleryTrigger = trigger;
+    galleryTitle.textContent = title || "Фотографии работы";
+    showGallery(0);
+    workGallery.classList.add("is-open");
+    workGallery.setAttribute("aria-hidden", "false");
+    document.body.classList.add("no-scroll");
+    workGallery.querySelector(".work-gallery-close").focus();
+  };
   document.querySelectorAll(".js-open-work-gallery").forEach((button) => {
     button.addEventListener("click", () => {
-      const index = Number(button.dataset.galleryIndex);
-      galleryItems = workGallerySets[index] || [];
-      if (!galleryItems.length) return;
-      lastGalleryTrigger = button;
-      galleryTitle.textContent = button.dataset.galleryTitle || "Фотографии работы";
-      showGallery(0);
-      workGallery.classList.add("is-open");
-      workGallery.setAttribute("aria-hidden", "false");
-      document.body.classList.add("no-scroll");
-      workGallery.querySelector(".work-gallery-close").focus();
+      openWorkGallery(Number(button.dataset.galleryIndex), button, button.dataset.galleryTitle);
+    });
+  });
+  document.querySelectorAll(".works-section .work-card .work-image").forEach((image) => {
+    image.setAttribute("role", "button");
+    image.setAttribute("tabindex", "0");
+    image.setAttribute("aria-label", "Открыть фотографии работы");
+    const card = image.closest(".work-card");
+    const cards = [...document.querySelectorAll(".works-section .work-card")];
+    const index = cards.indexOf(card);
+    const title = card?.querySelector("h3")?.textContent.trim() || "Фотографии работы";
+    const open = () => openWorkGallery(index, image, title);
+    image.addEventListener("click", open);
+    image.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        open();
+      }
     });
   });
   workGallery.querySelectorAll("[data-gallery-close]").forEach((button) => button.addEventListener("click", closeGallery));
