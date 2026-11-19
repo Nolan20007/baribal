@@ -1,0 +1,39 @@
+name: Publish verified Creatium galleries 1-20
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "maintenance/tools/publish-gallery-1-20.mjs"
+      - ".github/workflows/publish-gallery-1-20.yml"
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Download the reviewed and validated gallery artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p output/gallery
+          gh run download 44468825584 --repo "${GITHUB_REPOSITORY}" --name live-gallery-1-20-review --dir output/gallery
+          test -s output/gallery/summary.json
+      - name: Verify hashes and prepare gallery data
+        run: node maintenance/tools/publish-gallery-1-20.mjs
+      - name: Commit verified gallery images and index
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/images/portfolio/galleries plain-site/data/work-galleries-1-20.json
+          git commit -m "Publish verified portfolio galleries for cards 1-20"
+          git pull --rebase origin main
+          git push
