@@ -37,13 +37,17 @@ jobs:
           const report=JSON.parse(await fs.readFile('output/diag/report.json','utf8'));
           if(report.requestedRange?.start!==141||report.requestedRange?.end!==154||report.cardCount!==14||report.failures?.length) throw new Error('Diagnostic report range/status invalid');
           const html=await fs.readFile('plain-site/foto/index.html','utf8');
-          const cards=[...html.matchAll(/<article class="work-card">([\\s\\S]*?)<\\/article>/g)].map(x=>x[1]);
+          const cards=[]; let cursor=0;
+          while(true){const start=html.indexOf('<article class="work-card"',cursor);if(start<0)break;const bodyStart=html.indexOf('>',start)+1;const end=html.indexOf('</article>',bodyStart);if(bodyStart===0||end<0)throw new Error('Malformed work-card HTML');cards.push(html.slice(bodyStart,end));cursor=end+10;}
           if(cards.length!==154) throw new Error('Expected 154 portfolio cards, found '+cards.length);
           const hash=b=>crypto.createHash('sha256').update(b).digest('hex');
           const files=[], summaries=[];
           for(const c of report.cards){
             if(c.status!=='captured-by-clicking-thumbnails') throw new Error('Unverified card '+c.cardIndex);
-            const block=cards[c.cardIndex-1], src=block?.match(/<img[^>]+src="([^"]+)"/)?.[1];
+            const block=cards[c.cardIndex-1]; const imgStart=block?.indexOf('<img');
+            const srcStart=imgStart>=0?block.indexOf('src="',imgStart):-1;
+            const srcEnd=srcStart>=0?block.indexOf('"',srcStart+5):-1;
+            const src=srcStart>=0&&srcEnd>srcStart?block.slice(srcStart+5,srcEnd):null;
             if(!src) throw new Error('Missing cover path for '+c.cardIndex);
             const coverPath=new URL(src,'file://'+process.cwd()+'/plain-site/foto/index.html').pathname;
             const cover=await fs.readFile(coverPath);
