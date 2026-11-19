@@ -754,7 +754,7 @@ if (workGallery) {
 }
 
 
-// Verified Creatium galleries for portfolio cards 61–80 (card 75 intentionally skipped).
+// Verified Creatium galleries for portfolio cards 61–100 (card 75 intentionally skipped).
 (async () => {
   const grid = document.querySelector("#portfolio-grid");
   if (!grid) return;
@@ -762,6 +762,8 @@ if (workGallery) {
     const response = await fetch("../data/work-galleries-61-80.json");
     if (!response.ok) return;
     const galleryMap = await response.json();
+    const nextBatchResponse = await fetch("../data/work-galleries-81-100.json");
+    if (nextBatchResponse.ok) Object.assign(galleryMap, await nextBatchResponse.json());
     const cards = [...grid.querySelectorAll(".work-card")];
     let overlay = document.querySelector("#verified-work-gallery");
     if (!overlay) {
