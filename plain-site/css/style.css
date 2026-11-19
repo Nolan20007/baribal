@@ -2160,3 +2160,11 @@ img.js-shared-lightbox-image:focus-visible{outline:2px solid var(--orange);outli
 /* About page: keep the full title monochrome and use the corrected Pages asset paths. */
 .about-page .page-hero h1 em{color:inherit}
 .about-route-button{margin-top:2px}
+
+
+/* About page: compact eyebrow and a prominent two-tone mission heading. */
+.about-page .page-hero{padding-top:82px;padding-bottom:70px}
+.about-page .page-hero .eyebrow{font-size:10px;letter-spacing:2.4px}
+.about-page .page-hero h1{max-width:1000px;font-size:clamp(39px,5.8vw,68px);line-height:1.12;margin:20px 0 14px}
+.about-page .page-hero h1 em{color:var(--orange)}
+@media(max-width:760px){.about-page .page-hero{padding:58px 0 48px}.about-page .page-hero h1{font-size:clamp(35px,9vw,48px);line-height:1.14}}
