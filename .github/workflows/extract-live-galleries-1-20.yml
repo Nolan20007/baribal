@@ -1,0 +1,39 @@
+name: Extract live Creatium galleries 1-20
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/extract-live-galleries-1-20.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install Playwright and Chromium
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Extract originals from active galleries only
+        env:
+          PAGE_URL: https://baribal-studio.ru/foto
+          CARD_START: "1"
+          CARD_END: "20"
+          GALLERY_LIMIT: "0"
+        run: node maintenance/tools/diagnose-creatium-originals.mjs
+      - name: Upload fresh extraction report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-creatium-galleries-1-20
+          path: output/creatium-originals-diagnostic/
+          if-no-files-found: error
+          retention-days: 14
