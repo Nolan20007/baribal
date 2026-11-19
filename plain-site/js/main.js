@@ -754,86 +754,34 @@ if (workGallery) {
 }
 
 
-// Verified Creatium galleries for portfolio cards 61–100 (card 75 intentionally skipped).
-(async () => {
-  const grid = document.querySelector("#portfolio-grid");
-  if (!grid) return;
-  try {
-    const response = await fetch("../data/work-galleries-61-80.json");
-    if (!response.ok) return;
-    const galleryMap = await response.json();
-    const nextBatchResponse = await fetch("../data/work-galleries-81-100.json");
-    if (nextBatchResponse.ok) Object.assign(galleryMap, await nextBatchResponse.json());
-    const cards = [...grid.querySelectorAll(".work-card")];
-    let overlay = document.querySelector("#verified-work-gallery");
-    if (!overlay) {
-      overlay = document.createElement("div");
-      overlay.id = "verified-work-gallery";
-      overlay.className = "verified-gallery";
-      overlay.innerHTML = '<div class="verified-gallery__panel" role="dialog" aria-modal="true" aria-label="Фотографии работы"><button class="verified-gallery__close" type="button" aria-label="Закрыть">×</button><button class="verified-gallery__prev" type="button" aria-label="Предыдущее фото">‹</button><img class="verified-gallery__image" alt=""><button class="verified-gallery__next" type="button" aria-label="Следующее фото">›</button><div class="verified-gallery__count"></div></div>';
-      document.body.append(overlay);
-    }
-    const image = overlay.querySelector(".verified-gallery__image");
-    const count = overlay.querySelector(".verified-gallery__count");
-    let items = [], current = 0, trigger = null;
-    const render = () => {
-      image.src = items[current];
-      image.alt = "Фотография проекта, фото " + (current + 1);
-      count.textContent = (current + 1) + " / " + items.length;
-      overlay.querySelector(".verified-gallery__prev").hidden = items.length < 2;
-      overlay.querySelector(".verified-gallery__next").hidden = items.length < 2;
-    };
-    const close = () => {
-      overlay.classList.remove("is-open");
-      document.body.classList.remove("no-scroll");
-      if (trigger) trigger.focus();
-    };
-    overlay.querySelector(".verified-gallery__close").addEventListener("click", close);
-    overlay.querySelector(".verified-gallery__prev").addEventListener("click", () => { current = (current - 1 + items.length) % items.length; render(); });
-    overlay.querySelector(".verified-gallery__next").addEventListener("click", () => { current = (current + 1) % items.length; render(); });
-    overlay.addEventListener("click", (event) => { if (event.target === overlay) close(); });
-    document.addEventListener("keydown", (event) => {
-      if (!overlay.classList.contains("is-open")) return;
-      if (event.key === "Escape") close();
-      if (event.key === "ArrowLeft") { current = (current - 1 + items.length) % items.length; render(); }
-      if (event.key === "ArrowRight") { current = (current + 1) % items.length; render(); }
-    });
-    Object.entries(galleryMap).forEach(([number, paths]) => {
-      const card = cards[Number(number) - 1];
-      const photo = card?.querySelector(".work-image img");
-      if (!photo || !paths.length) return;
-      photo.classList.add("has-verified-gallery");
-      photo.title = "Открыть фотографии проекта";
-      photo.addEventListener("click", () => {
-        items = paths;
-        current = 0;
-        trigger = photo;
-        render();
-        overlay.classList.add("is-open");
-        document.body.classList.add("no-scroll");
-        overlay.querySelector(".verified-gallery__close").focus();
-      });
-    });
-  } catch (error) {
-    console.warn("Verified portfolio galleries are unavailable", error);
-  }
-})();
-
-
 // BARIBAL project modal: open portfolio cards before additional gallery photos are attached.
 (() => {
   const grid = document.querySelector("#portfolio-grid");
   if (!grid) return;
   const cards = [...grid.querySelectorAll(".work-card")];
-  let galleryMap = {};
-  const galleryMapReady = Promise.all(["work-galleries-1-20.json","work-galleries-21-40.json","work-galleries-41-60.json","work-galleries-61-80.json","work-galleries-81-100.json","work-galleries-141-154.json"].map(async file => {
-    try {
-      const response = await fetch("../data/" + file, { cache: "no-store" });
-      if (response.ok) Object.assign(galleryMap, await response.json());
-    } catch (error) {
-      console.warn("Could not load portfolio gallery data:", file, error);
+  const galleryFileForCard = (number) => {
+    if (number <= 20) return "work-galleries-1-20.json";
+    if (number <= 40) return "work-galleries-21-40.json";
+    if (number <= 60) return "work-galleries-41-60.json";
+    if (number <= 80) return "work-galleries-61-80.json";
+    if (number <= 100) return "work-galleries-81-100.json";
+    if (number >= 141 && number <= 154) return "work-galleries-141-154.json";
+    return null;
+  };
+  const galleryFilePromises = new Map();
+  const loadGalleryForCard = async (number) => {
+    const file = galleryFileForCard(number);
+    if (!file) return {};
+    if (!galleryFilePromises.has(file)) {
+      galleryFilePromises.set(file, fetch("../data/" + file)
+        .then(response => response.ok ? response.json() : {})
+        .catch(error => {
+          console.warn("Could not load portfolio gallery data:", file, error);
+          return {};
+        }));
     }
-  }));
+    return galleryFilePromises.get(file);
+  };
 
   const modal = document.createElement("div");
   modal.className = "project-modal";
@@ -844,7 +792,7 @@ if (workGallery) {
   let items=[], index=0, trigger=null, touchX=0;
   const render=()=>{image.src=items[index];image.alt=title.textContent+" — фото "+(index+1);count.textContent=(index+1)+" / "+items.length;prev.hidden=next.hidden=items.length<2;hint.textContent=items.length<2?"Дополнительные фотографии появятся здесь":"Листайте фотографии";};
   const move=n=>{if(items.length<2)return;index=(index+n+items.length)%items.length;render();};
-  const open=async(card,source)=>{await galleryMapReady;const cover=card.querySelector(".work-image img");if(!cover?.getAttribute("src"))return;const number=cards.indexOf(card)+1;items=[...new Set([cover.getAttribute("src"),...(galleryMap[String(number)]||[])])];index=0;trigger=source;title.textContent=card.querySelector("h3")?.textContent.trim()||("Работа №"+number);desc.textContent=card.querySelector(".work-copy p")?.textContent.trim()||"";render();modal.classList.add("is-open");modal.setAttribute("aria-hidden","false");document.body.classList.add("no-scroll");modal.querySelector(".project-modal__close").focus();};
+  const open=async(card,source)=>{const cover=card.querySelector(".work-image img");if(!cover?.getAttribute("src"))return;const number=cards.indexOf(card)+1;const galleryMap=await loadGalleryForCard(number);items=[...new Set([cover.getAttribute("src"),...(galleryMap[String(number)]||[])])];index=0;trigger=source;title.textContent=card.querySelector("h3")?.textContent.trim()||("Работа №"+number);desc.textContent=card.querySelector(".work-copy p")?.textContent.trim()||"";render();modal.classList.add("is-open");modal.setAttribute("aria-hidden","false");document.body.classList.add("no-scroll");modal.querySelector(".project-modal__close").focus();};
   const close=()=>{modal.classList.remove("is-open");modal.setAttribute("aria-hidden","true");document.body.classList.remove("no-scroll");trigger?.focus?.();};
   cards.forEach(card=>{card.classList.add("portfolio-card--interactive");card.tabIndex=0;card.setAttribute("aria-label","Открыть проект: "+(card.querySelector("h3")?.textContent.trim()||""));card.addEventListener("click",e=>{if(e.target.closest("button,a,input,select,textarea"))return;open(card,e.target.closest(".work-image")||card);});card.addEventListener("keydown",e=>{if(e.target===card&&(e.key==="Enter"||e.key===" ")){e.preventDefault();open(card,card);}});const cover=card.querySelector(".work-image img");if(cover){cover.classList.add("has-verified-gallery");cover.title="Открыть фотографии проекта";}});
   modal.querySelectorAll("[data-close]").forEach(el=>el.addEventListener("click",close));prev.addEventListener("click",()=>move(-1));next.addEventListener("click",()=>move(1));
