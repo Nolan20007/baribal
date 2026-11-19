@@ -623,136 +623,12 @@ if (portfolioGrid) {
   updatePortfolio();
 }
 
-// Plain-JS work galleries. The first item is the same cover shown on each card.
-// Homepage galleries: use only the three verified cover images.
-// Paths are relative to the published site root (the homepage), not /assets at the domain root.
-const workGallerySets = [
-  ["./assets/images/pages/home/portfolio/galleries/a58165e7f70299a15a7ca5f55c623020b4190ebe69f09d124ab5bdd9d3eae3b8.webp"],
-  ["./assets/images/pages/home/portfolio/edb1f571acdac6f0a9bc76b7bdcff548467bed7c317eac3fbbbbe6e41cd3430c.webp"],
-  ["./assets/images/pages/home/portfolio/89aa4c603c5fe509040b7999422cd307e8aea34d9ce8fcd7862940961bd39ffa.webp"]
-];
-const workGallery = document.querySelector("#work-gallery-modal");
-if (workGallery) {
-  const galleryImage = workGallery.querySelector(".work-gallery-image");
-  const galleryTitle = workGallery.querySelector(".work-gallery-title");
-  const galleryCounter = workGallery.querySelector(".work-gallery-counter");
-  const galleryDots = workGallery.querySelector(".work-gallery-dots");
-  const previousButton = workGallery.querySelector("[data-gallery-prev]");
-  const nextButton = workGallery.querySelector("[data-gallery-next]");
-  let galleryItems = [];
-  let galleryIndex = 0;
-  let touchStartX = 0;
-  let lastGalleryTrigger = null;
+// Homepage and portfolio images now use one shared photo viewer.
 
-  const renderGallery = () => {
-    galleryImage.src = galleryItems[galleryIndex];
-    galleryImage.alt = galleryTitle.textContent + " — фото " + (galleryIndex + 1);
-    galleryCounter.textContent = (galleryIndex + 1) + " / " + galleryItems.length;
-    galleryDots.replaceChildren();
-    galleryItems.forEach((_, index) => {
-      const dot = document.createElement("button");
-      dot.type = "button";
-      dot.className = "work-gallery-dot" + (index === galleryIndex ? " is-active" : "");
-      dot.setAttribute("aria-label", "Фото " + (index + 1));
-      dot.setAttribute("aria-current", String(index === galleryIndex));
-      dot.addEventListener("click", () => { galleryIndex = index; renderGallery(); });
-      galleryDots.append(dot);
-    });
-    previousButton.hidden = galleryItems.length < 2;
-    nextButton.hidden = galleryItems.length < 2;
-  };
-  const showGallery = (index) => {
-    galleryIndex = (index + galleryItems.length) % galleryItems.length;
-    renderGallery();
-  };
-  const closeGallery = () => {
-    workGallery.classList.remove("is-open");
-    workGallery.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("no-scroll");
-    if (lastGalleryTrigger) lastGalleryTrigger.focus();
-  };
-
-  const openWorkGallery = (index, trigger, title) => {
-    galleryItems = workGallerySets[index] || [];
-    if (!galleryItems.length) return;
-    lastGalleryTrigger = trigger;
-    galleryTitle.textContent = title || "Фотографии работы";
-    showGallery(0);
-    workGallery.classList.add("is-open");
-    workGallery.setAttribute("aria-hidden", "false");
-    document.body.classList.add("no-scroll");
-    workGallery.querySelector(".work-gallery-close").focus();
-  };
-  document.querySelectorAll(".js-open-work-gallery").forEach((button) => {
-    button.addEventListener("click", () => {
-      openWorkGallery(Number(button.dataset.galleryIndex), button, button.dataset.galleryTitle);
-    });
-  });
-  document.querySelectorAll(".works-section .work-card .work-image").forEach((image) => {
-    image.setAttribute("role", "button");
-    image.setAttribute("tabindex", "0");
-    image.setAttribute("aria-label", "Открыть фотографии работы");
-    const card = image.closest(".work-card");
-    const cards = [...document.querySelectorAll(".works-section .work-card")];
-    const index = cards.indexOf(card);
-    const title = card?.querySelector("h3")?.textContent.trim() || "Фотографии работы";
-    const open = () => openWorkGallery(index, image, title);
-    image.addEventListener("click", open);
-    image.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        open();
-      }
-    });
-  });
-  workGallery.querySelectorAll("[data-gallery-close]").forEach((button) => button.addEventListener("click", closeGallery));
-  previousButton.addEventListener("click", () => showGallery(galleryIndex - 1));
-  nextButton.addEventListener("click", () => showGallery(galleryIndex + 1));
-  galleryImage.addEventListener("touchstart", (event) => { touchStartX = event.changedTouches[0].clientX; }, { passive: true });
-  galleryImage.addEventListener("touchend", (event) => {
-    const delta = event.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(delta) > 45) showGallery(galleryIndex + (delta < 0 ? 1 : -1));
-  }, { passive: true });
-  document.addEventListener("keydown", (event) => {
-    if (!workGallery.classList.contains("is-open")) return;
-    if (event.key === "Escape") {
-      event.preventDefault();
-      closeGallery();
-      return;
-    }
-    if (event.key === "ArrowLeft") {
-      event.preventDefault();
-      showGallery(galleryIndex - 1);
-      return;
-    }
-    if (event.key === "ArrowRight") {
-      event.preventDefault();
-      showGallery(galleryIndex + 1);
-      return;
-    }
-    if (event.key === "Tab") {
-      const focusable = [...workGallery.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), [tabindex]:not([tabindex="-1"])')]
-        .filter((element) => !element.hidden && element.getAttribute("aria-hidden") !== "true");
-      if (!focusable.length) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    }
-  });
-}
-
-
-// BARIBAL project modal: open portfolio cards before additional gallery photos are attached.
+// Shared BARIBAL photo viewer: the same lightbox is used by every page.
 (() => {
   const grid = document.querySelector("#portfolio-grid");
-  if (!grid) return;
-  const cards = [...grid.querySelectorAll(".work-card")];
+  const cards = grid ? [...grid.querySelectorAll(".work-card")] : [];
   const galleryFileForCard = (number) => {
     if (number <= 20) return "work-galleries-1-20.json";
     if (number <= 40) return "work-galleries-21-40.json";
@@ -781,19 +657,169 @@ if (workGallery) {
 
   const modal = document.createElement("div");
   modal.className = "project-modal";
-  modal.setAttribute("aria-hidden","true");
-  modal.innerHTML = '<div class="project-modal__backdrop" data-close></div><section class="project-modal__panel" role="dialog" aria-modal="true" aria-labelledby="project-modal-title"><button class="project-modal__close" type="button" aria-label="Закрыть" data-close>×</button><div class="project-modal__visual"><button class="project-modal__nav project-modal__prev" type="button" aria-label="Предыдущее фото">‹</button><img class="project-modal__image" alt=""><button class="project-modal__nav project-modal__next" type="button" aria-label="Следующее фото">›</button></div><div class="project-modal__details"><span class="eyebrow">ПРОЕКТ BARIBAL</span><h2 id="project-modal-title"></h2><p class="project-modal__description"></p><div class="project-modal__footer"><span class="project-modal__count"></span><span class="project-modal__hint"></span></div></div></section>';
+  modal.setAttribute("aria-hidden", "true");
+  modal.innerHTML = '<div class="project-modal__backdrop" data-close></div><section class="project-modal__panel" role="dialog" aria-modal="true" aria-labelledby="project-modal-title"><button class="project-modal__close" type="button" aria-label="Закрыть" data-close>×</button><div class="project-modal__visual"><button class="project-modal__nav project-modal__prev" type="button" aria-label="Предыдущее фото">‹</button><img class="project-modal__image" alt=""><button class="project-modal__nav project-modal__next" type="button" aria-label="Следующее фото">›</button></div><div class="project-modal__details"><span class="eyebrow project-modal__eyebrow">ФОТОГАЛЕРЕЯ BARIBAL</span><h2 id="project-modal-title"></h2><p class="project-modal__description"></p><div class="project-modal__footer"><span class="project-modal__count"></span><span class="project-modal__hint"></span></div></div></section>';
   document.body.append(modal);
-  const image=modal.querySelector(".project-modal__image"), title=modal.querySelector("#project-modal-title"), desc=modal.querySelector(".project-modal__description"), count=modal.querySelector(".project-modal__count"), hint=modal.querySelector(".project-modal__hint"), prev=modal.querySelector(".project-modal__prev"), next=modal.querySelector(".project-modal__next");
-  let items=[], index=0, trigger=null, touchX=0;
-  const render=()=>{image.src=items[index];image.alt=title.textContent+" — фото "+(index+1);count.textContent=(index+1)+" / "+items.length;prev.hidden=next.hidden=items.length<2;hint.textContent=items.length<2?"Дополнительные фотографии появятся здесь":"Листайте фотографии";};
-  const move=n=>{if(items.length<2)return;index=(index+n+items.length)%items.length;render();};
-  const open=async(card,source)=>{const cover=card.querySelector(".work-image img");if(!cover?.getAttribute("src"))return;const number=Number(card.dataset.projectNumber || cards.indexOf(card)+1);const galleryMap=await loadGalleryForCard(number);items=[...new Set([cover.getAttribute("src"),...(galleryMap[String(number)]||[])])];index=0;trigger=source;title.textContent=card.querySelector("h3")?.textContent.trim()||("Работа №"+number);desc.textContent=card.querySelector(".work-copy p")?.textContent.trim()||"";render();modal.classList.add("is-open");modal.setAttribute("aria-hidden","false");document.body.classList.add("no-scroll");modal.querySelector(".project-modal__close").focus();};
-  const close=()=>{modal.classList.remove("is-open");modal.setAttribute("aria-hidden","true");document.body.classList.remove("no-scroll");trigger?.focus?.();};
-  cards.forEach(card=>{card.classList.add("portfolio-card--interactive");card.tabIndex=0;card.setAttribute("aria-label","Открыть проект: "+(card.querySelector("h3")?.textContent.trim()||""));card.addEventListener("click",e=>{if(e.target.closest("button,a,input,select,textarea"))return;open(card,e.target.closest(".work-image")||card);});card.addEventListener("keydown",e=>{if(e.target===card&&(e.key==="Enter"||e.key===" ")){e.preventDefault();open(card,card);}});const cover=card.querySelector(".work-image img");if(cover){cover.classList.add("has-verified-gallery");cover.title="Открыть фотографии проекта";}});
-  modal.querySelectorAll("[data-close]").forEach(el=>el.addEventListener("click",close));prev.addEventListener("click",()=>move(-1));next.addEventListener("click",()=>move(1));
-  image.addEventListener("touchstart",e=>{touchX=e.changedTouches[0].clientX;},{passive:true});image.addEventListener("touchend",e=>{const d=e.changedTouches[0].clientX-touchX;if(Math.abs(d)>45)move(d<0?1:-1);},{passive:true});
-  document.addEventListener("keydown",e=>{if(!modal.classList.contains("is-open"))return;if(e.key==="Escape")close();if(e.key==="ArrowLeft")move(-1);if(e.key==="ArrowRight")move(1);});
+
+  const image = modal.querySelector(".project-modal__image");
+  const title = modal.querySelector("#project-modal-title");
+  const description = modal.querySelector(".project-modal__description");
+  const eyebrow = modal.querySelector(".project-modal__eyebrow");
+  const count = modal.querySelector(".project-modal__count");
+  const hint = modal.querySelector(".project-modal__hint");
+  const previous = modal.querySelector(".project-modal__prev");
+  const next = modal.querySelector(".project-modal__next");
+  let items = [];
+  let index = 0;
+  let trigger = null;
+  let touchX = 0;
+
+  const render = () => {
+    image.src = items[index].src;
+    image.alt = (title.textContent || "Фотография") + " — фото " + (index + 1);
+    count.textContent = (index + 1) + " / " + items.length;
+    previous.hidden = next.hidden = items.length < 2;
+    hint.textContent = items.length < 2 ? "Фотография" : "Листайте фотографии";
+  };
+  const move = (step) => {
+    if (items.length < 2) return;
+    index = (index + step + items.length) % items.length;
+    render();
+  };
+  const openItems = (nextItems, heading, text, source, isProject) => {
+    const unique = [];
+    const seen = new Set();
+    nextItems.forEach(item => {
+      if (!item || !item.src || seen.has(item.src)) return;
+      seen.add(item.src);
+      unique.push(item);
+    });
+    if (!unique.length) return;
+    items = unique;
+    index = 0;
+    trigger = source || document.activeElement;
+    title.textContent = heading || "Фотографии";
+    description.textContent = text || "";
+    description.hidden = !text;
+    eyebrow.textContent = isProject ? "ПРОЕКТ BARIBAL" : "ФОТОГАЛЕРЕЯ BARIBAL";
+    render();
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("no-scroll");
+    modal.querySelector(".project-modal__close").focus();
+  };
+  const close = () => {
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("no-scroll");
+    if (trigger && typeof trigger.focus === "function") trigger.focus();
+  };
+  const eligibleImage = (img) => {
+    if (!img || !img.getAttribute("src")) return false;
+    if (img.closest(".brand, .video-poster, .project-modal, .work-gallery-modal, .verified-gallery, .contact-widget, #callback-modal, #device-preview-modal")) return false;
+    if (img.closest("a, button")) return false;
+    if (img.closest("#portfolio-grid")) return false;
+    if (img.closest("[data-no-lightbox], .no-lightbox")) return false;
+    return true;
+  };
+  const detailsForImage = (img) => {
+    const card = img.closest(".work-card, .service-card, .split-feature, .feature-photo, figure");
+    const scope = card || img.parentElement;
+    const heading = scope?.querySelector("h2, h3, h4, figcaption")?.textContent.trim()
+      || img.getAttribute("alt")?.trim()
+      || "Фотографии";
+    const text = scope?.querySelector(".work-copy p, .service-copy p, .prose-block p, figcaption")?.textContent.trim() || "";
+    const grouped = card ? [...card.querySelectorAll("img")].filter(eligibleImage) : [img];
+    const images = grouped.length ? grouped : [img];
+    return { images, heading, text };
+  };
+  const openImage = (img) => {
+    if (!eligibleImage(img)) return;
+    const data = detailsForImage(img);
+    openItems(data.images.map(item => ({ src: item.currentSrc || item.src })), data.heading, data.text, img, false);
+  };
+
+  // The 154 portfolio cards retain their verified per-project photo sets.
+  cards.forEach((card, position) => {
+    card.classList.add("portfolio-card--interactive");
+    card.tabIndex = 0;
+    card.setAttribute("aria-label", "Открыть проект: " + (card.querySelector("h3")?.textContent.trim() || ""));
+    const openProject = async (source) => {
+      const cover = card.querySelector(".work-image img");
+      if (!cover?.getAttribute("src")) return;
+      const number = Number(card.dataset.projectNumber || position + 1);
+      const galleryMap = await loadGalleryForCard(number);
+      const sources = [cover.currentSrc || cover.src, ...(galleryMap[String(number)] || []).map(path => new URL(path, document.baseURI).href)];
+      const heading = card.querySelector("h3")?.textContent.trim() || ("Работа №" + number);
+      const text = card.querySelector(".work-copy p")?.textContent.trim() || "";
+      openItems(sources.map(src => ({ src })), heading, text, source, true);
+    };
+    card.addEventListener("click", event => {
+      if (event.target.closest("button, a, input, select, textarea")) return;
+      openProject(event.target.closest(".work-image") || card);
+    });
+    card.addEventListener("keydown", event => {
+      if (event.target === card && (event.key === "Enter" || event.key === " ")) {
+        event.preventDefault();
+        openProject(card);
+      }
+    });
+    const cover = card.querySelector(".work-image img");
+    if (cover) {
+      cover.classList.add("has-verified-gallery");
+      cover.title = "Открыть фотографии проекта";
+      cover.style.cursor = "zoom-in";
+    }
+  });
+
+  // Any ordinary content photo on any page opens this same viewer.
+  document.querySelectorAll("img").forEach(img => {
+    if (!eligibleImage(img)) return;
+    img.classList.add("js-shared-lightbox-image");
+    img.setAttribute("role", "button");
+    img.setAttribute("tabindex", "0");
+    img.setAttribute("aria-label", "Открыть фотографию: " + (img.alt || "BARIBAL"));
+    img.title = img.title || "Открыть фотографию";
+  });
+  document.addEventListener("click", event => {
+    const img = event.target.closest("img.js-shared-lightbox-image");
+    if (img) openImage(img);
+  });
+  document.addEventListener("keydown", event => {
+    const img = event.target.closest?.("img.js-shared-lightbox-image");
+    if (img && (event.key === "Enter" || event.key === " ")) {
+      event.preventDefault();
+      openImage(img);
+    }
+  });
+
+  // Existing “Все фото” buttons also use the shared viewer and gather photos from their own block.
+  document.querySelectorAll(".js-open-work-gallery").forEach(button => {
+    button.addEventListener("click", () => {
+      const scope = button.closest("#portfolio-grid .work-card, .work-card, .service-card, .split-feature, section") || button.parentElement;
+      const images = [...(scope?.querySelectorAll("img") || [])].filter(eligibleImage);
+      const titleText = button.dataset.galleryTitle || scope?.querySelector("h2, h3, h4")?.textContent.trim() || "Фотографии";
+      openItems(images.map(img => ({ src: img.currentSrc || img.src })), titleText, "", button, false);
+    });
+  });
+
+  modal.querySelectorAll("[data-close]").forEach(element => element.addEventListener("click", close));
+  previous.addEventListener("click", () => move(-1));
+  next.addEventListener("click", () => move(1));
+  image.addEventListener("touchstart", event => { touchX = event.changedTouches[0].clientX; }, { passive: true });
+  image.addEventListener("touchend", event => {
+    const delta = event.changedTouches[0].clientX - touchX;
+    if (Math.abs(delta) > 45) move(delta < 0 ? 1 : -1);
+  }, { passive: true });
+  document.addEventListener("keydown", event => {
+    if (!modal.classList.contains("is-open")) return;
+    if (event.key === "Escape") close();
+    if (event.key === "ArrowLeft") move(-1);
+    if (event.key === "ArrowRight") move(1);
+  });
+
+  // Remove legacy per-page gallery shells; their buttons are wired above.
+  document.querySelectorAll(".work-gallery-modal").forEach(element => element.remove());
 })();
 
 // WebP copies are generated separately; original image paths remain active until verification.
