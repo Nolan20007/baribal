@@ -1,0 +1,65 @@
+name: Import verified portfolio cover photos 11-20
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/import-cover-batch-11-20.yml"
+      - "maintenance/cover-batch-11-20.json"
+permissions:
+  contents: write
+concurrency:
+  group: portfolio-cover-import-11-20
+  cancel-in-progress: false
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Download, validate and attach only the main cover images
+        run: |
+          npm install --no-save sharp
+          node --input-type=module <<'JS'
+          import { readFile, mkdir, writeFile } from "node:fs/promises";
+          import sharp from "sharp";
+          const manifest=JSON.parse(await readFile("maintenance/cover-batch-11-20.json","utf8"));
+          const htmlPath="plain-site/foto/index.html";
+          let html=await readFile(htmlPath,"utf8");
+          const matches=[...html.matchAll(/<article class="work-card">[\s\S]*?<\/article>/g)];
+          if(matches.length!==154) throw new Error("Expected 154 portfolio cards, found "+matches.length);
+          await mkdir("assets/images/pages/foto",{recursive:true});
+          const replacements=[];
+          for(const card of manifest.cards){
+            const n=card.cardIndex;
+            const filename=String(n).padStart(2,"0")+"-cover.jpg";
+            const response=await fetch(card.url,{signal:AbortSignal.timeout(30000)});
+            if(!response.ok) throw new Error("HTTP "+response.status+" for card "+n);
+            const bytes=Buffer.from(await response.arrayBuffer());
+            const meta=await sharp(bytes).metadata();
+            if(!["jpeg","jpg"].includes(meta.format)||meta.width<500||meta.height<300||bytes.length<20000)
+              throw new Error("Invalid cover "+n+": "+JSON.stringify({format:meta.format,width:meta.width,height:meta.height,bytes:bytes.length}));
+            await writeFile("assets/images/pages/foto/"+filename,bytes);
+            const old=matches[n-1][0];
+            if(old.includes('class="work-image"')) throw new Error("Card "+n+" already has a cover; refusing to overwrite");
+            const markup='<div class="work-image"><img src="../../assets/images/pages/foto/'+filename+'" alt="Работа BARIBAL — проект '+n+'" loading="lazy"></div>';
+            replacements.push({old,next:old.replace('<article class="work-card">','<article class="work-card">'+markup)});
+            console.log("COVER_IMPORTED",n,meta.width+"x"+meta.height,bytes.length,filename);
+          }
+          for(const item of replacements) html=html.replace(item.old,item.next);
+          await writeFile(htmlPath,html);
+          const finalCards=[...html.matchAll(/<article class="work-card">[\s\S]*?<\/article>/g)];
+          const coverCount=finalCards.filter(x=>x[0].includes('class="work-image"')).length;
+          if(finalCards.length!==154||coverCount!==20) throw new Error("Post-check failed: cards="+finalCards.length+" covers="+coverCount);
+          console.log("POSTCHECK_OK",JSON.stringify({cards:finalCards.length,covers:coverCount,added:manifest.cards.length}));
+          JS
+      - name: Commit and push verified covers
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add plain-site/foto/index.html assets/images/pages/foto
+          git commit -m "Add verified portfolio cover photos 11-20"
+          git push origin HEAD:main
