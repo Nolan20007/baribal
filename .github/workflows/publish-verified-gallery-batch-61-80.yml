@@ -1,0 +1,32 @@
+name: Publish verified Creatium galleries 61-80
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "maintenance/verified-gallery-batch-61-80.json"
+      - "maintenance/tools/publish-verified-gallery-batch-61-80.mjs"
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install image validation
+        run: npm install --no-save sharp
+      - name: Download verified originals and prepare site gallery data
+        run: node maintenance/tools/publish-verified-gallery-batch-61-80.mjs
+      - name: Commit gallery photos and page data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/images/portfolio/galleries plain-site/data/work-galleries-61-80.json
+          git commit -m "Publish verified portfolio galleries for cards 61-80"
+          git push
