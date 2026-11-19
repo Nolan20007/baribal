@@ -28,7 +28,7 @@ for (const card of summary.cards) {
   }
   galleryMap[String(card.cardIndex)] = paths;
 }
-if (Object.keys(galleryMap).length !== 40) throw new Error("Expected 20 gallery entries");
+if (Object.keys(galleryMap).length !== 20) throw new Error("Expected 20 gallery entries");
 await mkdir("plain-site/data", { recursive: true });
 await writeFile("plain-site/data/work-galleries-21-40.json", JSON.stringify(galleryMap, null, 2) + "\n");
 console.log("VERIFIED_GALLERIES_READY", JSON.stringify({
