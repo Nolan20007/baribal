@@ -11,7 +11,7 @@ on:
       limit:
         description: "Number of covers to process (0 = all)"
         required: false
-        default: "5"
+        default: "0"
 
 permissions:
   contents: write
@@ -41,7 +41,7 @@ jobs:
 
       - name: Generate responsive WebP variants
         env:
-          RESPONSIVE_LIMIT: ${{ github.event.inputs.limit || '5' }}
+          RESPONSIVE_LIMIT: ${{ github.event.inputs.limit || '0' }}
         run: node maintenance/tools/generate-responsive-cover-variants.mjs
 
       - name: Commit generated variants and report
