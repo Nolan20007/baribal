@@ -13,12 +13,12 @@
     "sprites",
     "badges"
   ],
-  "scanned": 865,
-  "converted": 0,
+  "scanned": 866,
+  "converted": 1,
   "skippedExisting": 865,
   "failed": [],
-  "originalBytes": 395332073,
-  "webpBytes": 125329756,
+  "originalBytes": 395394463,
+  "webpBytes": 125345418,
   "files": [
     {
       "source": "assets/images/hero/hero-background.jpg",
@@ -1188,6 +1188,15 @@
       "status": "already-exists",
       "sourceBytes": 206076,
       "webpBytes": 106496
+    },
+    {
+      "source": "assets/images/pages/home/studio/map.png",
+      "output": "assets/images/pages/home/studio/map.webp",
+      "status": "converted",
+      "sourceBytes": 62390,
+      "webpBytes": 15662,
+      "width": 654,
+      "height": 412
     },
     {
       "source": "assets/images/pages/kuzov/portfolio/71461392b5f5e699e01e0b32f0b7f539e283a2f1365f342fdd5906b675b9dd56.jpg",
