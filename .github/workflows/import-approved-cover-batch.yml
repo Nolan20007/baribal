@@ -40,14 +40,14 @@ jobs:
             const response=await fetch(card.url,{signal:AbortSignal.timeout(30000)});
             if(!response.ok) throw new Error("HTTP "+response.status+" card "+n);
             const bytes=Buffer.from(await response.arrayBuffer()), meta=await sharp(bytes).metadata();
-            if(!["jpeg","jpg"].includes(meta.format)||meta.width<500||meta.height<300||bytes.length<20000)
+            if(!["jpeg","jpg","png"].includes(meta.format)||meta.width<500||meta.height<300||bytes.length<20000)
               throw new Error("Invalid original "+n+": "+JSON.stringify({format:meta.format,width:meta.width,height:meta.height,bytes:bytes.length}));
-            await writeFile("assets/images/pages/foto/"+filename,bytes);
+            await sharp(bytes).jpeg({quality:94,mozjpeg:true}).toFile("assets/images/pages/foto/"+filename);
             const old=matches[n-1][0];
             if(old.includes('class="work-image"')) throw new Error("Card "+n+" already has a cover; refusing overwrite");
             const markup='<div class="work-image"><img src="../../assets/images/pages/foto/'+filename+'" alt="Работа BARIBAL — проект '+n+'" loading="lazy"></div>';
             replacements.push({old,next:old.replace('<article class="work-card">','<article class="work-card">'+markup)});
-            console.log("COVER_IMPORTED",n,meta.width+"x"+meta.height,bytes.length);
+            console.log("COVER_IMPORTED",n,meta.width+"x"+meta.height,bytes.length,meta.format);
           }
           for(const item of replacements) html=html.replace(item.old,item.next);
           await writeFile(htmlPath,html);
@@ -61,5 +61,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add plain-site/foto/index.html assets/images/pages/foto
-          git commit -m "Add verified portfolio cover photos 21-30"
+          git commit -m "Add verified portfolio cover photos 61-80"
           git push origin HEAD:main
