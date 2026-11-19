@@ -61,8 +61,14 @@ for (const source of sources) {
       }
     } catch {}
 
-    const result = await sharp(source, { failOn: "error" })
-      .rotate()
+    let image = sharp(source, { failOn: "error" }).rotate();
+    // The homepage map sits in a compact fixed-size frame. Limit its source
+    // width for high-density screens; CSS handles the frame crop without
+    // changing the layout or distorting the original aspect ratio.
+    if (relativeSource === "assets/images/pages/home/studio/map.png") {
+      image = image.resize({ width: 1200, withoutEnlargement: true });
+    }
+    const result = await image
       .webp({ quality, effort: 5, smartSubsample: true })
       .toFile(destination);
 
