@@ -32,6 +32,8 @@ jobs:
           const matches=[...html.matchAll(/<article class="work-card">[\s\S]*?<\/article>/g)];
           if(matches.length!==154) throw new Error("Expected 154 cards, found "+matches.length);
           await mkdir("assets/images/pages/foto",{recursive:true});
+          const existingCoverCount=matches.filter(x=>x[0].includes('class="work-image"')).length;
+          const expectedCoverCount=existingCoverCount+manifest.cards.length;
           const replacements=[];
           for(const card of manifest.cards){
             const n=card.cardIndex, filename=String(n).padStart(2,"0")+"-cover.jpg";
@@ -51,8 +53,8 @@ jobs:
           await writeFile(htmlPath,html);
           const final=[...html.matchAll(/<article class="work-card">[\s\S]*?<\/article>/g)];
           const count=final.filter(x=>x[0].includes('class="work-image"')).length;
-          if(final.length!==154||count!==30) throw new Error("Post-check failed cards="+final.length+" covers="+count);
-          console.log("POSTCHECK_OK",JSON.stringify({cards:final.length,covers:count,added:manifest.cards.length}));
+          if(final.length!==154||count!==expectedCoverCount) throw new Error("Post-check failed cards="+final.length+" covers="+count);
+          console.log("POSTCHECK_OK",JSON.stringify({cards:final.length,covers:count,expected:expectedCoverCount,added:manifest.cards.length}));
           JS
       - name: Commit and push
         run: |
