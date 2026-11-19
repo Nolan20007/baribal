@@ -1,8 +1,8 @@
 {
-  "startCard": 153,
-  "endCard": 154,
+  "startCard": 11,
+  "endCard": 20,
   "galleryLimit": 0,
   "requiredCardText": "",
   "pageUrl": "https://baribal-studio.ru/foto",
-  "note": "Quality-check batch: inspect cards 153-154 with the proven active-gallery original-link diagnostic. Do not use the unreliable generic extractor. Verify originals before download or publication."
+  "note": "Batch 11-20: diagnose full-size originals and cover URLs only. Verify each card and cover before any publication."
 }
