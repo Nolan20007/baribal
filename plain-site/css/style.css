@@ -2155,3 +2155,8 @@ html[data-theme="light"] .estimate-form output{
 /* All content photos open the shared BARIBAL lightbox. */
 img.js-shared-lightbox-image{cursor:zoom-in}
 img.js-shared-lightbox-image:focus-visible{outline:2px solid var(--orange);outline-offset:4px}
+
+
+/* About page: keep the full title monochrome and use the corrected Pages asset paths. */
+.about-page .page-hero h1 em{color:inherit}
+.about-route-button{margin-top:2px}
