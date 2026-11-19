@@ -1,6 +1,8 @@
 # CREATIUM EXTRACTOR — LOCK / НЕ ТРОГАТЬ РАБОЧИЕ НАСТРОЙКИ
 
-Статус: **рабочая конфигурация зафиксирована**.
+Статус: **универсальный Playwright-экстрактор признан ненадёжным — НЕ ИСПОЛЬЗОВАТЬ**.
+
+Важно: `maintenance/tools/extract-creatium-images.mjs` и workflow `Extract and archive Creatium galleries` не использовать для сбора фотографий. В начало скрипта добавлено такое же предупреждение.
 
 ## Правило для будущих изменений
 
@@ -8,23 +10,24 @@
 
 Если через неделю или позже снова работаем с извлечением фотографий:
 1. Сначала прочитать этот файл и `maintenance/README.md`.
-2. Использовать существующий workflow **Extract and archive Creatium galleries**.
-3. Для новой карточки менять только номера карточек и, если нужно, необязательный текст-предохранитель.
-4. Не трогать код, пока обычный запуск не показал конкретную воспроизводимую проблему.
-5. Любое необходимое изменение проверять на одной известной карточке и убеждаться, что сохранены и main image, и все доступные дополнительные оригиналы.
+2. Сначала изучить проверенный специальный процесс карточек 8–9: `maintenance/tools/download-creatium-cards-8-9.mjs` (загрузка 14 проверенных оригиналов) и `maintenance/tools/prepare-creatium-cards-8-9.mjs` (подготовка этих оригиналов к архиву и индексу).
+3. Для новых карточек адаптировать именно этот проверенный подход; не возвращаться к универсальному Playwright-экстрактору.
+4. Не менять и не удалять успешные инструменты 8–9 без необходимости.
+5. Новую реализацию проверять на одной карточке и вручную сверять каждый оригинал до привязки к каталогу.
 
 ## Рабочая схема
 
 - Источник: `https://baribal-studio.ru/`.
-- Скрипт: `maintenance/tools/extract-creatium-images.mjs`.
-- Workflow: `.github/workflows/extract-creatium-images.yml`.
+- Проверенный процесс 8–9: `maintenance/tools/download-creatium-cards-8-9.mjs` и `maintenance/tools/prepare-creatium-cards-8-9.mjs`.
+- Универсальный экстрактор `maintenance/tools/extract-creatium-images.mjs` — **НЕ ИСПОЛЬЗОВАТЬ**.
+- Его workflow `.github/workflows/extract-creatium-images.yml` также не запускать.
 - Нормализация/индекс: `maintenance/tools/normalize-creatium-galleries.mjs`.
 - Индекс: `maintenance/creatium-gallery-index.json`.
 - Дополнительные оригиналы: `assets/images/portfolio/galleries/`.
 
-### Запуск
+### Проверенный ориентир
 
-GitHub → Actions → **Extract and archive Creatium galleries** → Run workflow.
+Для карточек 8–9 отдельный процесс нашёл и скачал 14 проверенных оригиналов без мусора. Это эталонный процесс для дальнейшей работы. Сначала изучать и адаптировать его, а не запускать универсальный Playwright workflow.
 
 - First card to process: номер карточки.
 - Last card to process: тот же номер для одной карточки; диапазон — для нескольких.
@@ -33,14 +36,12 @@ GitHub → Actions → **Extract and archive Creatium galleries** → Run workfl
 
 Workflow запускает Playwright/Chromium, скачивает главное изображение и дополнительные оригиналы, выполняет дедупликацию SHA-256, обновляет индекс и коммитит новые ресурсы. Скачанные исходные результаты доступны в артефакте `creatium-gallery-source`.
 
-Локальный эквивалент для карточки №8:
+Проверенные скрипты для карточек 8–9:
 
-```bash
-npm install
-npx playwright install chromium
-PAGE_URL=https://baribal-studio.ru/ CARD_START=8 CARD_END=8 GALLERY_LIMIT=0 node maintenance/tools/extract-creatium-images.mjs
-node maintenance/tools/normalize-creatium-galleries.mjs
-```
+- `maintenance/tools/download-creatium-cards-8-9.mjs`
+- `maintenance/tools/prepare-creatium-cards-8-9.mjs`
+
+Их результаты и сопоставление оригиналов проверять вручную. Не считать фотографии автоматически подтверждёнными для других карточек.
 
 ## Почему алгоритм именно такой
 
