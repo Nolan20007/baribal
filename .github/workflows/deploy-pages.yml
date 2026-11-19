@@ -50,7 +50,7 @@ jobs:
           root = Path("dist")
           required = [
               "index.html", "404.html", "css/style.css",
-              "js/main.js",
+              "js/main.js", "js/callback-modal.js",
               "data/work-galleries-1-20.json", "data/work-galleries-21-40.json",
               "data/work-galleries-41-60.json",
               "data/work-galleries-101-120.json", "data/work-galleries-121-140.json",
