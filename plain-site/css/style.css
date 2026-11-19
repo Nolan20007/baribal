@@ -1593,7 +1593,7 @@ html[data-design="4"] .hero-test-controls .hero-design-name{border-color:#ef684f
 
 
 /* Estimate block: restore the original intro and form, with a separate service checklist between them. */
-.estimate-inner{grid-template-columns:minmax(0,1fr) 250px 420px;column-gap:34px;align-items:center}
+.estimate-inner{grid-template-columns:minmax(0,1fr) 315px 420px;column-gap:34px;align-items:center}
 .estimate-intro{min-width:0}
 .estimate-services{min-width:0;margin:0;padding:13px 12px;border:1px solid #454648;display:flex;flex-direction:column;gap:9px;max-height:440px;overflow:auto;align-self:center}
 .estimate-services-title{color:#c4c2bd;font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:2px}
@@ -1609,7 +1609,7 @@ html[data-design="4"] .estimate-services{border-color:rgba(25,27,29,.28);backgro
 html[data-design="4"] .estimate-services-title,
 html[data-design="4"] .estimate-service-option{color:#2d2725}
 @media(max-width:1100px) and (min-width:761px){
-  .estimate-inner{grid-template-columns:minmax(0,1fr) 220px 340px;column-gap:22px}
+  .estimate-inner{grid-template-columns:minmax(0,1fr) 275px 340px;column-gap:22px}
   .estimate h2{font-size:clamp(30px,3.2vw,42px)}
 }
 @media(max-width:760px){
