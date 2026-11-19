@@ -437,7 +437,7 @@ const serviceInfoGalleryImages = [
   { src: "../assets/images/portfolio/galleries/7261396a06208c86bcd80d62cef94d046bf9975105e8f5ec3105ceaacf0ce4a7.webp", alt: "Детали полной защиты кузова Mercedes SL — фото 2" },
   { src: "../assets/images/portfolio/galleries/890ea9c7c70c31a26da97678f58f4b7506651a44f6a8a573c881e7a5adfc2e11.webp", alt: "Детали полной защиты кузова Mercedes SL — фото 3" },
   { src: "../assets/images/portfolio/galleries/e97f6a91ef020c4fad38c1d8ee8c743874e50b70f6c74fd15011e4aec60539bd.webp", alt: "Детали полной защиты кузова Mercedes SL — фото 4" },
-  { src: "../assets/images/portfolio/galleries/596af4620e1a5c94bc2fb68b197f6d4f59165582d494d448e8c3ec895cdf1291.webp", alt: "Детали полной защиты кузова Mercedes SL — фото 5" }
+  { src: "../assets/images/portfolio/galleries/596af4620e1a5c94bc2fb68a197f6d4f59165582d494d448e8c3ec895cdf1291.webp", alt: "Детали полной защиты кузова Mercedes SL — фото 5" }
 ].map((photo) => ({ ...photo, src: new URL(photo.src, import.meta.url).href, srcset: photo.srcset ? photo.srcset.split(", ").map((part) => { const [path, size] = part.split(" "); return `${new URL(path, import.meta.url).href} ${size}`; }).join(", ") : "" }));
 const closeInfoModal = () => {
   if (!infoModal) return;
