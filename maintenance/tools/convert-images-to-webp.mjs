@@ -4,7 +4,7 @@ import sharp from "sharp";
 
 const root = path.resolve("assets/images");
 const outputReport = path.resolve("maintenance/reports/webp-conversion-report.json");
-const quality = 80;
+const quality = 80; // Also converts restored gallery originals with missing WebP copies.
 const allowedExtensions = new Set([".jpg", ".jpeg", ".png"]);
 const excludedDirectories = new Set([
   "brand", "partners", "interface", "icons", "icon", "logos", "logo",

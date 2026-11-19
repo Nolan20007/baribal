@@ -483,17 +483,25 @@ const openServiceInfo = (title, trigger) => {
   const serviceGallery = infoModal.querySelector("#service-info-gallery");
   if (serviceGallery) {
     serviceGallery.replaceChildren();
-    const showBookingGallery = lookupTitle === "Бронирование автомобиля защитной плёнкой";
+    const normalizedTitle = lookupTitle.toLocaleLowerCase("ru").replaceAll("ё", "е");
+    const showBookingGallery = normalizedTitle.includes("бронирование") &&
+      (normalizedTitle.includes("защитной пленкой") || normalizedTitle.includes("кузова пленкой"));
     serviceGallery.hidden = !showBookingGallery;
-    if (showBookingGallery) serviceInfoGalleryImages.forEach((photo) => {
-      const image = document.createElement("img");
-      image.src = photo.src;
-      if (photo.srcset) image.srcset = photo.srcset;
-      image.alt = photo.alt;
-      image.loading = "lazy";
-      image.decoding = "async";
-      serviceGallery.append(image);
-    });
+    if (showBookingGallery) {
+      serviceInfoGalleryImages.forEach((photo) => {
+        const image = document.createElement("img");
+        image.src = photo.src;
+        if (photo.srcset) image.srcset = photo.srcset;
+        if (photo.srcset) image.sizes = "(max-width: 520px) 100vw, (max-width: 760px) 50vw, 220px";
+        image.alt = photo.alt;
+        image.loading = "eager";
+        image.decoding = "async";
+        image.fetchPriority = "high";
+        serviceGallery.append(image);
+      });
+      serviceGallery.hidden = false;
+      serviceGallery.dataset.imageCount = String(serviceInfoGalleryImages.length);
+    }
   }
   infoModal.querySelector("#service-info-story").textContent = details.story;
   const benefits = infoModal.querySelector("#service-info-benefits");
