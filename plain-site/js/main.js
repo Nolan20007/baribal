@@ -1,4 +1,5 @@
 // BARIBAL — plain JavaScript, with a small data module for project galleries.
+// Gallery batch 121-140 publication trigger: data and image assets are committed.
 "use strict";
 
 const menuButton = document.querySelector(".menu-toggle");
