@@ -2168,3 +2168,12 @@ img.js-shared-lightbox-image:focus-visible{outline:2px solid var(--orange);outli
 .about-page .page-hero h1{max-width:1000px;font-size:clamp(39px,5.8vw,68px);line-height:1.12;margin:20px 0 14px}
 .about-page .page-hero h1 em{color:var(--orange)}
 @media(max-width:760px){.about-page .page-hero{padding:58px 0 48px}.about-page .page-hero h1{font-size:clamp(35px,9vw,48px);line-height:1.14}}
+
+
+/* About page: founder portrait in the opening studio introduction. */
+.about-intro{display:grid;grid-template-columns:minmax(0,1fr) minmax(250px,36%);align-items:end;gap:34px;margin:0 0 54px;}
+.about-intro-copy{min-width:0;}
+.about-intro-copy p:last-child{margin-bottom:0;}
+.about-founder-photo{align-self:end;display:flex;justify-content:center;min-width:0;}
+.about-founder-photo img{display:block;width:100%;max-width:390px;height:auto;max-height:570px;object-fit:contain;object-position:bottom center;}
+@media(max-width:760px){.about-intro{grid-template-columns:1fr;gap:10px;margin-bottom:38px}.about-intro-copy p{margin-bottom:18px}.about-founder-photo{justify-content:center;margin-top:0}.about-founder-photo img{width:min(78%,340px);max-height:470px}}
