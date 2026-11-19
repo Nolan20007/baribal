@@ -36,6 +36,8 @@ def relative_asset_paths(fragment, page):
     return fragment.replace("../foto/", prefix + "/foto/")
 
 for page in ROOT.rglob("*.html"):
+    if "components" in page.relative_to(ROOT).parts:
+        continue
     html = page.read_text(encoding="utf-8")
     html = remove_component(
         html, "aside",
