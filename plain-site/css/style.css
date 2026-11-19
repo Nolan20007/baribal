@@ -412,7 +412,7 @@ html[data-theme="light"] .service-info-tech{background:#f4f2ed}
 .contact-widget.is-open .contact-widget-toggle img{display:none}
 .contact-widget.is-open .contact-widget-toggle{padding-left:18px;padding-right:18px}
 .contact-widget.is-open .contact-widget-toggle b{font-size:19px}
-.contact-widget-heading>img{object-fit:contain;object-position:center;background:transparent;border:0;border-radius:0;width:68px;height:68px;flex-basis:68px}
+.contact-widget-heading>img{object-fit:cover;object-position:center 35%;background:transparent;border:2px solid var(--orange);border-radius:50%;width:68px;height:68px;flex-basis:68px}
 .contact-widget-form .contact-preference-list{grid-template-columns:repeat(2,minmax(0,1fr))}
 .contact-widget-form .contact-preference-list label{font-size:10px!important}
 @media(max-width:760px){
