@@ -48,7 +48,7 @@ jobs:
           root = Path("dist")
           required = [
               "index.html", "404.html", "css/style.css",
-              "js/main.js", "js/portfolio-galleries.js",
+              "js/main.js",
               "assets", "foto/foto.png",
           ]
           required += [f"{route}/index.html" for route in (
