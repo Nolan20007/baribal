@@ -31,6 +31,7 @@ jobs:
           cp dist/index.html dist/404.html
       - name: Inject shared callback forms into every page
         run: python maintenance/build-shared-forms.py
+      # The site validator also checks intrinsic dimensions and alt text for page images.
       - name: Validate all published pages and local assets
         run: python maintenance/prepare-and-validate-site.py
       - name: Verify essential published files
