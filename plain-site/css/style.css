@@ -1937,4 +1937,6 @@ img.js-shared-lightbox-image:focus-visible{outline:2px solid var(--orange);outli
   z-index:1;
 }
 
-
+/* Estimate service checklist: comfortable touch targets without changing its visual style. */
+.estimate-services{gap:10px}
+.estimate-services > .estimate-service-option{min-height:44px;padding:8px 5px}
