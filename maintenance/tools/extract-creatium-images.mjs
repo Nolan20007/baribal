@@ -1,3 +1,20 @@
+/*
+ * ⚠️ DO NOT USE THIS SCRIPT FOR FUTURE CREATIUM PHOTO EXTRACTION.
+ *
+ * This generic Playwright extractor was unreliable in practice and must not
+ * be treated as the approved workflow for collecting portfolio photos.
+ *
+ * The verified cards 8–9 process is the reference:
+ *   - maintenance/tools/download-creatium-cards-8-9.mjs
+ *     (downloads the 14 manually verified gallery originals)
+ *   - maintenance/tools/prepare-creatium-cards-8-9.mjs
+ *     (prepares those verified originals for the gallery archive/index)
+ *
+ * For any new cards, first study and adapt the proven cards 8–9 method.
+ * Do not run or extend this generic extractor unless the user explicitly
+ * asks to test it.
+ */
+
 import { chromium } from "playwright";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
