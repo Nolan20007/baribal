@@ -826,9 +826,14 @@ if (workGallery) {
   if (!grid) return;
   const cards = [...grid.querySelectorAll(".work-card")];
   let galleryMap = {};
-  Promise.all(["work-galleries-61-80.json","work-galleries-81-100.json","work-galleries-141-154.json"].map(async file => {
-    try { const r = await fetch("../data/" + file); if (r.ok) Object.assign(galleryMap, await r.json()); } catch (_) {}
-  })).then(() => {});
+  const galleryMapReady = Promise.all(["work-galleries-61-80.json","work-galleries-81-100.json","work-galleries-141-154.json"].map(async file => {
+    try {
+      const response = await fetch("../data/" + file, { cache: "no-store" });
+      if (response.ok) Object.assign(galleryMap, await response.json());
+    } catch (error) {
+      console.warn("Could not load portfolio gallery data:", file, error);
+    }
+  }));
 
   const modal = document.createElement("div");
   modal.className = "project-modal";
@@ -839,7 +844,7 @@ if (workGallery) {
   let items=[], index=0, trigger=null, touchX=0;
   const render=()=>{image.src=items[index];image.alt=title.textContent+" — фото "+(index+1);count.textContent=(index+1)+" / "+items.length;prev.hidden=next.hidden=items.length<2;hint.textContent=items.length<2?"Дополнительные фотографии появятся здесь":"Листайте фотографии";};
   const move=n=>{if(items.length<2)return;index=(index+n+items.length)%items.length;render();};
-  const open=(card,source)=>{const cover=card.querySelector(".work-image img");if(!cover?.getAttribute("src"))return;const number=cards.indexOf(card)+1;items=[...new Set([cover.getAttribute("src"),...(galleryMap[String(number)]||[])])];index=0;trigger=source;title.textContent=card.querySelector("h3")?.textContent.trim()||("Работа №"+number);desc.textContent=card.querySelector(".work-copy p")?.textContent.trim()||"";render();modal.classList.add("is-open");modal.setAttribute("aria-hidden","false");document.body.classList.add("no-scroll");modal.querySelector(".project-modal__close").focus();};
+  const open=async(card,source)=>{await galleryMapReady;const cover=card.querySelector(".work-image img");if(!cover?.getAttribute("src"))return;const number=cards.indexOf(card)+1;items=[...new Set([cover.getAttribute("src"),...(galleryMap[String(number)]||[])])];index=0;trigger=source;title.textContent=card.querySelector("h3")?.textContent.trim()||("Работа №"+number);desc.textContent=card.querySelector(".work-copy p")?.textContent.trim()||"";render();modal.classList.add("is-open");modal.setAttribute("aria-hidden","false");document.body.classList.add("no-scroll");modal.querySelector(".project-modal__close").focus();};
   const close=()=>{modal.classList.remove("is-open");modal.setAttribute("aria-hidden","true");document.body.classList.remove("no-scroll");trigger?.focus?.();};
   cards.forEach(card=>{card.classList.add("portfolio-card--interactive");card.tabIndex=0;card.setAttribute("aria-label","Открыть проект: "+(card.querySelector("h3")?.textContent.trim()||""));card.addEventListener("click",e=>{if(e.target.closest("button,a,input,select,textarea"))return;open(card,e.target.closest(".work-image")||card);});card.addEventListener("keydown",e=>{if(e.target===card&&(e.key==="Enter"||e.key===" ")){e.preventDefault();open(card,card);}});const cover=card.querySelector(".work-image img");if(cover){cover.classList.add("has-verified-gallery");cover.title="Открыть фотографии проекта";}});
   modal.querySelectorAll("[data-close]").forEach(el=>el.addEventListener("click",close));prev.addEventListener("click",()=>move(-1));next.addEventListener("click",()=>move(1));
