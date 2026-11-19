@@ -324,7 +324,7 @@ html[data-theme="light"] .service-info-tech{background:#f4f2ed}
 .back-to-top:hover{background:#f0a04d;transform:translateY(-3px)}
 .back-to-top:focus-visible{outline:2px solid #f0a04d;outline-offset:4px}
 .back-to-top span{transform:translateY(-1px)}
-@media(max-width:560px){.back-to-top{width:44px;height:44px;right:16px;bottom:18px}}
+@media(max-width:560px){.back-to-top{width:35px;height:35px;font-size:21.6px;right:16px;bottom:18px}}
 @media(prefers-reduced-motion:reduce){.back-to-top{transition:none}}
 
 
