@@ -2070,3 +2070,16 @@ html[data-theme="light"] .estimate-form output{
 /* Neutral placeholders for archived portfolio entries without verified photos. */
 #portfolio-grid .work-image-placeholder{display:grid;place-items:center;box-sizing:border-box;padding:24px;background:#e8e5df;color:#777;text-align:center;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
 #portfolio-grid .work-image-placeholder span{max-width:220px}
+
+
+/* Verified photo galleries for portfolio cards 61–80 */
+.work-image img.has-verified-gallery { cursor: zoom-in; }
+.verified-gallery { position: fixed; inset: 0; z-index: 1200; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(0,0,0,.94); }
+.verified-gallery.is-open { display: flex; }
+.verified-gallery__panel { position: relative; width: min(100%, 1100px); display: flex; align-items: center; justify-content: center; }
+.verified-gallery__image { display: block; max-width: 100%; max-height: 82vh; object-fit: contain; }
+.verified-gallery__close, .verified-gallery__prev, .verified-gallery__next { position: absolute; z-index: 1; border: 0; border-radius: 50%; width: 44px; height: 44px; color: #fff; background: rgba(30,30,30,.8); font-size: 30px; cursor: pointer; }
+.verified-gallery__close { top: -12px; right: -12px; }
+.verified-gallery__prev { left: 8px; }
+.verified-gallery__next { right: 8px; }
+.verified-gallery__count { position: absolute; bottom: -30px; left: 0; right: 0; color: #fff; text-align: center; font-size: 14px; }
