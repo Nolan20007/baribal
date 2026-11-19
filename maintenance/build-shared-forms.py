@@ -76,4 +76,22 @@ for page in ROOT.rglob("*.html"):
     html = re.sub(r"</body>", lambda _: injection + "</body>", html, count=1, flags=re.I)
     page.write_text(html, encoding="utf-8")
 
-print("Shared callback forms injected into every published HTML page.")
+# Fail the build rather than publish a page with missing or duplicated forms.
+for page in ROOT.rglob("*.html"):
+    if "components" in page.relative_to(ROOT).parts:
+        continue
+    html = page.read_text(encoding="utf-8")
+    if len(re.findall(r'id=["\']callback-modal["\']', html, re.I)) != 1:
+        raise SystemExit(f"Expected exactly one callback modal in {page}")
+    if len(re.findall(r'class=["\'][^"\']*\bcontact-widget\b', html, re.I)) != 1:
+        raise SystemExit(f"Expected exactly one floating contact widget in {page}")
+
+# Partials are build inputs, not public website pages.
+for name in ("contact-widget.html", "callback-modal.html"):
+    (COMPONENTS / name).unlink(missing_ok=True)
+try:
+    COMPONENTS.rmdir()
+except OSError:
+    pass
+
+print("Shared callback forms injected and verified on every published HTML page.")
