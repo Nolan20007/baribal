@@ -1,0 +1,86 @@
+name: Import first 10 portfolio cover photos
+
+on:
+  push:
+    paths:
+      - ".github/workflows/import-first-10-cover-images.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import-covers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Download the 10 original cover photos
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p assets/images/pages/foto
+          curl -fLsS 'https://img1.creatium.ru/bf/2a/19/74285428ae252f0b4501cbea631e585284/1.png' -o assets/images/pages/foto/01-porsche.png
+          curl -fLsS 'https://i.1.creatium.io/plp/u20.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/467ae06547d65bf51338a8b2e5fbd71d.jpg' -o assets/images/pages/foto/02-kia-sorento.jpg
+          curl -fLsS 'https://i.1.creatium.io/plp/u20.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/85217f2d2a6845fe27e15fd62c9206eb.jpg' -o assets/images/pages/foto/03-mercedes-gls.jpg
+          curl -fLsS 'https://i.1.creatium.io/plp/u20.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/dabf547cf6e4e32efa87794a144a793a.jpg' -o assets/images/pages/foto/04-toyota-prado.jpg
+          curl -fLsS 'https://i.1.creatium.io/plp/u20.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/6840a8eecb4636bece9fbf09584163f1.jpg' -o assets/images/pages/foto/05-toyota-rav4.jpg
+          curl -fLsS 'https://i.1.creatium.io/plp/u20.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/f51495a97ca9a4e66158ab61688e3e54.jpg' -o assets/images/pages/foto/06-tesla.jpg
+          curl -fLsS 'https://i.1.creatium.io/plp/u20.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/ebe468efd593a38848c0988c3d2cf44c.jpg' -o assets/images/pages/foto/07-advance.jpg
+          curl -fLsS 'https://i.1.creatium.io/plp/u20.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/d8dda45fa03603508519b27f3032c7c6.jpg' -o assets/images/pages/foto/08-hexis.jpg
+          curl -fLsS 'https://i.1.creatium.io/plp/u20.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/743cdf4b21a5c6b6f449b390ceaa9a98.jpg' -o assets/images/pages/foto/09-advance.jpg
+          curl -fLsS 'https://i.1.creatium.io/plp/u20.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/8c91fa2b6fb74932a6a4463df778e4db.jpg' -o assets/images/pages/foto/10-advance.jpg
+          find assets/images/pages/foto -maxdepth 1 -type f \( -name '0*.jpg' -o -name '0*.png' \) -print0 | while IFS= read -r -d '' f; do
+            test "$(stat -c%s "$f")" -ge 20000
+            file "$f"
+          done
+      - name: Add cover images to the first 10 cards only
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          path = Path("plain-site/foto/index.html")
+          html = path.read_text(encoding="utf-8")
+          cards = [
+              ("01-porsche.png", "Porsche"),
+              ("02-kia-sorento.jpg", "Kia Sorento"),
+              ("03-mercedes-gls.jpg", "Mercedes GLS 400d"),
+              ("04-toyota-prado.jpg", "Toyota Prado"),
+              ("05-toyota-rav4.jpg", "Toyota RAV-4"),
+              ("06-tesla.jpg", "Tesla"),
+              ("07-advance.jpg", "AdVance"),
+              ("08-hexis.jpg", "HEXIS"),
+              ("09-advance.jpg", "AdVance"),
+              ("10-advance.jpg", "AdVance"),
+          ]
+          pattern = re.compile(r'(<article class="work-card">)(<div class="work-copy">)')
+          index = 0
+          def add_cover(match):
+              global index
+              if index >= len(cards):
+                  return match.group(0)
+              filename, alt = cards[index]
+              index += 1
+              return (match.group(1)
+                      + f'<div class="work-image"><img src="../../assets/images/pages/foto/{filename}" alt="{alt}" loading="lazy"></div>'
+                      + match.group(2))
+          updated = pattern.sub(add_cover, html)
+          if index != 10:
+              raise SystemExit(f"Expected 10 cards, changed {index}")
+          if updated.count('class="work-image"') != 10:
+              raise SystemExit("Unexpected number of cover images")
+          path.write_text(updated, encoding="utf-8")
+          print("Added exactly 10 cover images; card descriptions and scripts were not edited.")
+          PY
+      - name: Commit and push imported covers
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/images/pages/foto plain-site/foto/index.html
+          git diff --cached --quiet && exit 0
+          git commit -m "Add first 10 portfolio cover photos"
+          git push origin HEAD:main
