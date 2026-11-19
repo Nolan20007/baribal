@@ -11,8 +11,8 @@ for(const card of manifest.cards){
   const dir=path.join(root,String(card.cardIndex).padStart(3,"0"));
   await mkdir(dir,{recursive:true});
   const seen=new Set(), items=[];
-  for(let i=0;i<card.galleryUrls.length;i++){
-    const url=card.galleryUrls[i];
+  for(let i=0;i<card.filenames.length;i++){
+    const url=manifest.baseUrl+card.filenames[i];
     if(seen.has(url)){report.rejected.push({cardIndex:card.cardIndex,url,reason:"duplicate URL within card"});continue;}
     seen.add(url);
     const res=await fetch(url,{signal:AbortSignal.timeout(30000)});
