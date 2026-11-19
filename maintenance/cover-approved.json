@@ -1,55 +1,100 @@
 {
-  "source": "visually checked cover originals from diagnostic run 44439696580",
+  "source": "full-size Creatium cover originals validated and visually checked in diagnostic run 44450765156; PNG normalized to JPEG by importer; card 75 intentionally skipped",
   "cards": [
     {
-      "cardIndex": 51,
-      "description": "Toyota RAV-4 — защита кузова AdVance",
-      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/f98931e55d941bc1c48e598fb91d3f0d.jpg"
+      "cardIndex": 61,
+      "description": "Mercedes GL — защита кузова",
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/82031b3ffe2183130159dd523661a4ef.jpg"
     },
     {
-      "cardIndex": 52,
-      "description": "Toyota Prado — предпродажная подготовка и химчистка",
-      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/287c37f0e852494cc33facdd7b26cbc0.jpg"
+      "cardIndex": 62,
+      "description": "Mercedes GLC — бронирование кузова",
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/279cdecc5fa783de2db0932f05a33726.jpg"
     },
     {
-      "cardIndex": 53,
-      "description": "Toyota RAV-4 — бронирование передней части",
-      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/7ff6e80e18fd3a420ca7df3318bd5ec3.jpg"
+      "cardIndex": 63,
+      "description": "Mercedes GL — технология AdVance",
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/10e626afb2b58640f9cdfe96ed4c63cc.jpg"
     },
     {
-      "cardIndex": 54,
-      "description": "Toyota Camry — защита кузова AdVance",
-      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/ad35e11d587c8670ef976b507cfe8459.jpg"
+      "cardIndex": 64,
+      "description": "Mercedes GLE — бронирование кузова",
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/9aa13a72f0e435806fc7f3cb009ca794.jpg"
     },
     {
-      "cardIndex": 55,
-      "description": "Audi A5 — полное бронирование кузова",
-      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/1561362c75f97cc1dcfe72f6a57528b5.jpg"
+      "cardIndex": 65,
+      "description": "Lexus LX 450d — бронирование кузова",
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/fb2aeabb33093fd7e83f87d4c9794e4c.jpg"
     },
     {
-      "cardIndex": 56,
-      "description": "Mercedes GL — бронирование и AdVance",
-      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/fdb11f33900bb35cbaf8ea240168a58b.jpg"
+      "cardIndex": 66,
+      "description": "Jaguar F-Pace — бронирование кузова",
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/d84e5fb4f0aa8a6e1a3a2cf189735a4e.jpg"
     },
     {
-      "cardIndex": 57,
-      "description": "Jeep — бронирование капота, бампера и крыльев",
-      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/42ba1e9075f9df940966c38ee71645a6.jpg"
+      "cardIndex": 67,
+      "description": "Jeep Wrangler — технология AdVance",
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/19036fb83f3c363c6f3813131e8226ca.jpg"
     },
     {
-      "cardIndex": 58,
-      "description": "Jeep — бронирование капота, бампера и крыльев",
-      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/cf150dc64b42e3951da00c9ff4e7fb6e.jpg"
+      "cardIndex": 68,
+      "description": "Lexus RX 350 — бронирование и AdVance",
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/e947a86c50e8745a8a41cedc4344c803.jpg"
     },
     {
-      "cardIndex": 59,
-      "description": "BMW X6 — бронирование капота и защита AdVance",
-      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/58ceeb4741a0b1531b073e50938d21b2.jpg"
+      "cardIndex": 69,
+      "description": "Mercedes S500 — технология AdVance",
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/95ad0a52a513965b3aedbb0ec0c8c7e4.png"
     },
     {
-      "cardIndex": 60,
-      "description": "Honda Accord — бронирование передней части",
-      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/b36cac3c5862459f5281da3849444fec.jpg"
+      "cardIndex": 70,
+      "description": "Porsche Boxster — бронирование и AdVance",
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/2c2de265ea8fdccb70fdc29861ddc326.jpg"
+    },
+    {
+      "cardIndex": 71,
+      "description": "BMW X5 — технология AdVance",
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/24db6489e0ee47ae1852bd3919171137.jpg"
+    },
+    {
+      "cardIndex": 72,
+      "description": "Volkswagen Multivan — защита кузова и салона",
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/864694cccef51bfe11259f348b7b73fc.jpg"
+    },
+    {
+      "cardIndex": 73,
+      "description": "Mercedes E400 — бронирование и AdVance",
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/b3b927fa57061eca8464461d71431191.jpg"
+    },
+    {
+      "cardIndex": 74,
+      "description": "Audi Q5 — технология AdVance",
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/5c9c26cc98f54c6da0691628da187c9f.jpg"
+    },
+    {
+      "cardIndex": 76,
+      "description": "Porsche Cayenne — технология AdVance",
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/0efc310f9e5e5e8307a4dd7ce3ba2a3c.jpg"
+    },
+    {
+      "cardIndex": 77,
+      "description": "Chevrolet Express — бронирование кузова",
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/12457c3c1fd5e700dbbc4b84f30c7fcb.jpg"
+    },
+    {
+      "cardIndex": 78,
+      "description": "Volkswagen Touareg — бронирование и AdVance",
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/b1bb2b9f86270e87b0389d04affcc2b5.jpg"
+    },
+    {
+      "cardIndex": 79,
+      "description": "Volkswagen Touareg — бронирование кузова",
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/0bf42752d96e0d04ea6f20f0ac642f98.jpg"
+    },
+    {
+      "cardIndex": 80,
+      "description": "Mercedes GL — бронирование кузова",
+      "url": "https://i.1.creatium.io/plp/u8.plpstatic.ru/6109758c7c3dbc7697341195bfdbbc77/0dd1db7defdf8ad990cc01b1774c0157.jpg"
     }
   ]
 }
