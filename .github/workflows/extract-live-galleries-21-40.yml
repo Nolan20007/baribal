@@ -1,0 +1,49 @@
+name: Extract live Creatium galleries 21-40
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/extract-live-galleries-21-40.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install Playwright and Chromium
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Extract originals from active galleries only
+        env:
+          PAGE_URL: https://baribal-studio.ru/foto
+          CARD_START: "21"
+          CARD_END: "40"
+          GALLERY_LIMIT: "0"
+        run: node maintenance/tools/diagnose-creatium-originals.mjs
+      - name: Validate exact card range and capture completeness
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          const r=JSON.parse(await fs.readFile('output/creatium-originals-diagnostic/report.json','utf8'));
+          if(r.requestedRange?.start!==21 || r.requestedRange?.end!==40 || r.cardCount!==20 || r.cards?.length!==20) throw new Error('Expected exactly cards 21-40');
+          if(r.failures?.length) throw new Error('Extraction failures: '+JSON.stringify(r.failures));
+          for(let n=21;n<=40;n++){const c=r.cards.find(x=>x.cardIndex===n);if(!c||c.status!=='captured-by-clicking-thumbnails'||!Array.isArray(c.galleryOriginals)||!c.galleryOriginals.length)throw new Error('Missing verified clicked gallery for card '+n);}
+          console.log('EXTRACTION_RANGE_VALIDATED',JSON.stringify({cards:r.cards.length,images:r.cards.reduce((s,c)=>s+c.galleryOriginals.length,0)}));
+          NODE
+      - name: Upload fresh extraction report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-creatium-galleries-21-40
+          path: output/creatium-originals-diagnostic/
+          if-no-files-found: error
+          retention-days: 14
