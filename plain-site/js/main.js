@@ -567,9 +567,10 @@ if (portfolioGrid) {
     const value = (card.textContent || "").toLowerCase();
     const categories = [];
     if (/clearplex|лобов(ое|ого|ому)|ст[её]кл/.test(value)) categories.push("Защита стёкол");
-    if (/химчист|детейлинг|полировк|предпродаж|салон/.test(value)) categories.push("Детейлинг и уход");
-    if (/винил|стайлинг|рекламн|изменение цвета/.test(value)) categories.push("Оклейка и стайлинг");
+    if (/химчист|детейлинг|полировк|предпродаж|салон|интерьер|уход|очистк/.test(value)) categories.push("Детейлинг и уход");
+    if (/винил|стайлинг|рекламн|изменение цвета|ливре|оклейк/.test(value)) categories.push("Оклейка и стайлинг");
     if (/бронир|защит|advance|кузов|пленк|плёнк|hexis|suntek/.test(value)) categories.push("Защита кузова");
+    if (!categories.length) categories.push("Другое");
     return [...new Set(categories)];
   };
   cards.forEach((card, index) => {
