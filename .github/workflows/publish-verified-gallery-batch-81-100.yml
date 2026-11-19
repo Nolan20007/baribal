@@ -1,0 +1,40 @@
+name: Publish verified Creatium galleries 81-100
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "maintenance/publish-gallery-batch-81-100.json"
+      - "maintenance/tools/publish-diagnostic-gallery-batch.mjs"
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Download the successful proven-extractor report
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p output/creatium-originals-diagnostic
+          gh run download 44447989893 --repo "${GITHUB_REPOSITORY}" --name creatium-originals-diagnostic --dir output/creatium-originals-diagnostic
+          test -s output/creatium-originals-diagnostic/report.json
+      - name: Install image validation
+        run: npm install --no-save sharp
+      - name: Download full-size originals and prepare gallery data
+        run: node maintenance/tools/publish-diagnostic-gallery-batch.mjs
+      - name: Commit gallery photos and page data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/images/portfolio/galleries plain-site/data/work-galleries-81-100.json
+          git commit -m "Publish verified portfolio galleries for cards 81-100"
+          git push
