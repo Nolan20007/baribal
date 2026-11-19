@@ -37,7 +37,7 @@ for (const card of manifest.cards) {
       await writeFile(relative, bytes);
       downloaded++;
     }
-    paths.push("../../" + relative);
+    paths.push("../" + relative);
     console.log("SAVED", card.cardIndex, filename, meta.width + "x" + meta.height, bytes.length);
   }
   galleries[String(card.cardIndex)] = paths;
