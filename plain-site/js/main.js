@@ -818,3 +818,31 @@ if (workGallery) {
     console.warn("Verified portfolio galleries are unavailable", error);
   }
 })();
+
+
+// BARIBAL project modal: open portfolio cards before additional gallery photos are attached.
+(() => {
+  const grid = document.querySelector("#portfolio-grid");
+  if (!grid) return;
+  const cards = [...grid.querySelectorAll(".work-card")];
+  let galleryMap = {};
+  Promise.all(["work-galleries-61-80.json","work-galleries-81-100.json"].map(async file => {
+    try { const r = await fetch("../data/" + file); if (r.ok) Object.assign(galleryMap, await r.json()); } catch (_) {}
+  })).then(() => {});
+
+  const modal = document.createElement("div");
+  modal.className = "project-modal";
+  modal.setAttribute("aria-hidden","true");
+  modal.innerHTML = '<div class="project-modal__backdrop" data-close></div><section class="project-modal__panel" role="dialog" aria-modal="true" aria-labelledby="project-modal-title"><button class="project-modal__close" type="button" aria-label="Закрыть" data-close>×</button><div class="project-modal__visual"><button class="project-modal__nav project-modal__prev" type="button" aria-label="Предыдущее фото">‹</button><img class="project-modal__image" alt=""><button class="project-modal__nav project-modal__next" type="button" aria-label="Следующее фото">›</button></div><div class="project-modal__details"><span class="eyebrow">ПРОЕКТ BARIBAL</span><h2 id="project-modal-title"></h2><p class="project-modal__description"></p><div class="project-modal__footer"><span class="project-modal__count"></span><span class="project-modal__hint"></span></div></div></section>';
+  document.body.append(modal);
+  const image=modal.querySelector(".project-modal__image"), title=modal.querySelector("#project-modal-title"), desc=modal.querySelector(".project-modal__description"), count=modal.querySelector(".project-modal__count"), hint=modal.querySelector(".project-modal__hint"), prev=modal.querySelector(".project-modal__prev"), next=modal.querySelector(".project-modal__next");
+  let items=[], index=0, trigger=null, touchX=0;
+  const render=()=>{image.src=items[index];image.alt=title.textContent+" — фото "+(index+1);count.textContent=(index+1)+" / "+items.length;prev.hidden=next.hidden=items.length<2;hint.textContent=items.length<2?"Дополнительные фотографии появятся здесь":"Листайте фотографии";};
+  const move=n=>{if(items.length<2)return;index=(index+n+items.length)%items.length;render();};
+  const open=(card,source)=>{const cover=card.querySelector(".work-image img");if(!cover?.getAttribute("src"))return;const number=cards.indexOf(card)+1;items=[...new Set([cover.getAttribute("src"),...(galleryMap[String(number)]||[])])];index=0;trigger=source;title.textContent=card.querySelector("h3")?.textContent.trim()||("Работа №"+number);desc.textContent=card.querySelector(".work-copy p")?.textContent.trim()||"";render();modal.classList.add("is-open");modal.setAttribute("aria-hidden","false");document.body.classList.add("no-scroll");modal.querySelector(".project-modal__close").focus();};
+  const close=()=>{modal.classList.remove("is-open");modal.setAttribute("aria-hidden","true");document.body.classList.remove("no-scroll");trigger?.focus?.();};
+  cards.forEach(card=>{card.classList.add("portfolio-card--interactive");card.tabIndex=0;card.setAttribute("aria-label","Открыть проект: "+(card.querySelector("h3")?.textContent.trim()||""));card.addEventListener("click",e=>{if(e.target.closest("button,a,input,select,textarea"))return;open(card,e.target.closest(".work-image")||card);});card.addEventListener("keydown",e=>{if(e.target===card&&(e.key==="Enter"||e.key===" ")){e.preventDefault();open(card,card);}});const cover=card.querySelector(".work-image img");if(cover){cover.classList.add("has-verified-gallery");cover.title="Открыть фотографии проекта";}});
+  modal.querySelectorAll("[data-close]").forEach(el=>el.addEventListener("click",close));prev.addEventListener("click",()=>move(-1));next.addEventListener("click",()=>move(1));
+  image.addEventListener("touchstart",e=>{touchX=e.changedTouches[0].clientX;},{passive:true});image.addEventListener("touchend",e=>{const d=e.changedTouches[0].clientX-touchX;if(Math.abs(d)>45)move(d<0?1:-1);},{passive:true});
+  document.addEventListener("keydown",e=>{if(!modal.classList.contains("is-open"))return;if(e.key==="Escape")close();if(e.key==="ArrowLeft")move(-1);if(e.key==="ArrowRight")move(1);});
+})();
