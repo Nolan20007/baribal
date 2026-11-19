@@ -29,12 +29,12 @@ jobs:
             if(!response.ok) throw new Error("HTTP "+response.status+" for card "+card.cardIndex);
             const bytes=Buffer.from(await response.arrayBuffer());
             const meta=await sharp(bytes).metadata();
-            if(!["jpeg","jpg"].includes(meta.format)||meta.width<500||meta.height<300||bytes.length<20000)
+            if(!["jpeg","jpg","png"].includes(meta.format)||meta.width<500||meta.height<300||bytes.length<20000)
               throw new Error("Invalid cover "+card.cardIndex+": "+JSON.stringify({format:meta.format,width:meta.width,height:meta.height,bytes:bytes.length}));
             const file=String(card.cardIndex).padStart(3,"0")+".jpg";
-            await writeFile("output/cover-candidates/"+file,bytes);
-            results.push({cardIndex:card.cardIndex,description:card.description,file,width:meta.width,height:meta.height,bytes:bytes.length,url:card.url});
-            console.log("COVER_ORIGINAL_OK",card.cardIndex,meta.width+"x"+meta.height,bytes.length);
+            await sharp(bytes).jpeg({quality:94,mozjpeg:true}).toFile("output/cover-candidates/"+file);
+            results.push({cardIndex:card.cardIndex,description:card.description,file,width:meta.width,height:meta.height,bytes:bytes.length,format:meta.format,url:card.url});
+            console.log("COVER_ORIGINAL_OK",card.cardIndex,meta.width+"x"+meta.height,bytes.length,meta.format);
           }
           await writeFile("output/cover-candidates/report.json",JSON.stringify({count:results.length,results},null,2));
           JS
