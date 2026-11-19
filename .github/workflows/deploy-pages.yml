@@ -49,6 +49,7 @@ jobs:
           required = [
               "index.html", "404.html", "css/style.css",
               "js/main.js",
+              "data/work-galleries-1-20.json", "data/work-galleries-21-40.json",
               "assets", "foto/foto.png",
           ]
           required += [f"{route}/index.html" for route in (
