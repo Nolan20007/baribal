@@ -1,0 +1,45 @@
+name: Verify portfolio cover candidates
+on:
+  push:
+    branches: [main]
+    paths:
+      - "maintenance/cover-candidates.json"
+      - ".github/workflows/verify-cover-candidates-batch.yml"
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Download and validate full-size cover candidates
+        run: |
+          npm install --no-save sharp
+          node --input-type=module <<'JS'
+          import { readFile, mkdir, writeFile } from "node:fs/promises";
+          import sharp from "sharp";
+          const data=JSON.parse(await readFile("maintenance/cover-candidates.json","utf8"));
+          await mkdir("output/cover-candidates",{recursive:true});
+          const results=[];
+          for(const card of data.cards){
+            const response=await fetch(card.url,{signal:AbortSignal.timeout(30000)});
+            if(!response.ok) throw new Error("HTTP "+response.status+" for card "+card.cardIndex);
+            const bytes=Buffer.from(await response.arrayBuffer());
+            const meta=await sharp(bytes).metadata();
+            if(!["jpeg","jpg"].includes(meta.format)||meta.width<500||meta.height<300||bytes.length<20000)
+              throw new Error("Invalid cover "+card.cardIndex+": "+JSON.stringify({format:meta.format,width:meta.width,height:meta.height,bytes:bytes.length}));
+            const file=String(card.cardIndex).padStart(3,"0")+".jpg";
+            await writeFile("output/cover-candidates/"+file,bytes);
+            results.push({cardIndex:card.cardIndex,description:card.description,file,width:meta.width,height:meta.height,bytes:bytes.length,url:card.url});
+            console.log("COVER_ORIGINAL_OK",card.cardIndex,meta.width+"x"+meta.height,bytes.length);
+          }
+          await writeFile("output/cover-candidates/report.json",JSON.stringify({count:results.length,results},null,2));
+          JS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cover-candidates
+          path: output/cover-candidates/
+          retention-days: 14
