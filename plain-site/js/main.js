@@ -199,13 +199,17 @@ document.querySelectorAll(".baribal-player").forEach((player) => {
   });
   const fullscreenButton = player.querySelector("[data-player-fullscreen]");
   if (fullscreenButton) fullscreenButton.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 3H3v5m13-5h5v5M21 16v5h-5M3 16v5h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  muteButton.addEventListener("click", () => {
-    video.muted = !video.muted;
+  const renderMuteIcon = () => {
     muteButton.innerHTML = video.muted
       ? '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 9v6h4l5 4V5L8 9H4Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m17 9 5 6m0-6-5 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
       : '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 9v6h4l5 4V5L8 9H4Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M16 9a5 5 0 0 1 0 6m2-9a9 9 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
     muteButton.setAttribute("aria-label", video.muted ? "Включить звук" : "Выключить звук");
+  };
+  muteButton.addEventListener("click", () => {
+    video.muted = !video.muted;
+    renderMuteIcon();
   });
+  renderMuteIcon();
   player.querySelector("[data-player-fullscreen]")?.addEventListener("click", () => {
     if (document.fullscreenElement) document.exitFullscreen?.();
     else player.requestFullscreen?.();
@@ -912,7 +916,7 @@ if (portfolioGrid) {
     if (!kind) return;
     icon.replaceChildren(svg(contactPaths[kind], {
       className: "contact-method-svg",
-      fill: kind === "max" ? "#fff" : ""
+      fill: kind === "max" ? "#fff" : kind === "telegram" ? "currentColor" : ""
     }));
   });
 
