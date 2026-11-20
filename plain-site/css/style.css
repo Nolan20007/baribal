@@ -2874,3 +2874,18 @@ html[data-theme="light"] .ppf-page .deep-cleaning-materials-visual>p{color:#f1ee
 html[data-theme="light"] .ppf-page .deep-cleaning-process .deep-cleaning-steps li{border-color:rgba(20,21,22,.14)}
 html[data-theme="light"] .ppf-page .deep-cleaning-block .deep-cleaning-reasons,
 html[data-theme="light"] .ppf-page .deep-cleaning-block .deep-cleaning-reasons>div{border-color:rgba(20,21,22,.14)}
+
+
+/* Subtle service index numbers: keep 01 / 02 / 03 as quiet editorial markers. */
+.himchistka-page .deep-cleaning-band>div>span,
+.himchistka-page .deep-cleaning-number,
+.himchistka-page .deep-cleaning-steps li>span,
+.ppf-page .deep-cleaning-band>div>span,
+.ppf-page .deep-cleaning-number,
+.ppf-page .deep-cleaning-steps li>span,
+.avtovinil-page .vinyl-guide-highlights span,
+.avtovinil-page .vinyl-guide-cards article>span,
+.avtovinil-page .vinyl-guide-process li>span{
+  font:400 11px/1.2 Oswald,sans-serif;
+  letter-spacing:.06em;
+}
