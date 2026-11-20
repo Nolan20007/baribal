@@ -1903,10 +1903,10 @@ img.js-shared-lightbox-image:focus-visible{outline:2px solid var(--orange);outli
     gap:7px;
   }
   .back-to-top-group .back-to-top{
-    flex-basis:44px;
-    width:44px;
-    min-width:44px;
-    height:44px;
+    flex-basis:31px;
+    width:31px;
+    min-width:31px;
+    height:31px;
   }
   .back-to-top-group .back-to-top span[aria-hidden="true"]{
     font-size:22px;
