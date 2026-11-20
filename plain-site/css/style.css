@@ -2768,3 +2768,109 @@ html[data-theme="light"] .ppf-page .deep-cleaning-process .deep-cleaning-steps l
   .ppf-page .deep-cleaning-warning,
   .ppf-page .deep-cleaning-faq{padding-left:20px;padding-right:20px}
 }
+
+
+/* PPF contrast pass: explicit text/surface pairs for both site themes.
+   Light bands always use dark typography; graphite bands always use light typography. */
+.ppf-page .deep-cleaning-intro,
+.ppf-page .deep-cleaning-block,
+.ppf-page .deep-cleaning-warning,
+.ppf-page .deep-cleaning-faq{
+  color:#202123;
+}
+.ppf-page .deep-cleaning-intro h2,
+.ppf-page .deep-cleaning-heading h2,
+.ppf-page .deep-cleaning-warning h2,
+.ppf-page .deep-cleaning-faq summary{
+  color:#202123;
+}
+.ppf-page .deep-cleaning-intro p,
+.ppf-page .deep-cleaning-heading>p,
+.ppf-page .deep-cleaning-warning p,
+.ppf-page .deep-cleaning-faq details p{
+  color:#555650;
+}
+.ppf-page .deep-cleaning-intro .deep-cleaning-lead{color:#30312e}
+.ppf-page .deep-cleaning-block .deep-cleaning-reasons{
+  border-color:rgba(20,21,22,.16);
+}
+.ppf-page .deep-cleaning-block .deep-cleaning-reasons>div{
+  border-color:rgba(20,21,22,.16);
+}
+.ppf-page .deep-cleaning-block .deep-cleaning-reasons b{color:#202123}
+.ppf-page .deep-cleaning-block .deep-cleaning-reasons p{color:#555650}
+.ppf-page .deep-cleaning-block .deep-cleaning-note{color:#555650}
+.ppf-page .deep-cleaning-card{
+  background:#f7f6f1;
+  border-color:rgba(20,21,22,.12);
+}
+.ppf-page .deep-cleaning-card h3{color:#202123}
+.ppf-page .deep-cleaning-card p{color:#555650}
+.ppf-page .deep-cleaning-materials,
+.ppf-page .deep-cleaning-process,
+.ppf-page .deep-cleaning-final-cta{color:#f1eee7}
+.ppf-page .deep-cleaning-materials h2,
+.ppf-page .deep-cleaning-process h2,
+.ppf-page .deep-cleaning-final-cta h2,
+.ppf-page .deep-cleaning-materials-visual .material-stamp,
+.ppf-page .deep-cleaning-materials-visual>p{color:#f1eee7}
+.ppf-page .deep-cleaning-materials-copy>p,
+.ppf-page .deep-cleaning-process .deep-cleaning-heading>p,
+.ppf-page .deep-cleaning-process .deep-cleaning-steps p,
+.ppf-page .deep-cleaning-final-cta p{color:#c0bfba}
+.ppf-page .deep-cleaning-materials-copy .feature-list{color:#d0cec8}
+.ppf-page .deep-cleaning-materials-copy .feature-list strong{color:#f1bd83}
+.ppf-page .deep-cleaning-reasons>div{
+  background:rgba(255,255,255,.035);
+  border-color:rgba(255,255,255,.14);
+}
+.ppf-page .deep-cleaning-reasons b{color:#f1eee7}
+.ppf-page .deep-cleaning-reasons p{color:#c0bfba}
+.ppf-page .deep-cleaning-process .deep-cleaning-steps li{border-color:rgba(255,255,255,.14)}
+.ppf-page .deep-cleaning-process .deep-cleaning-steps b{color:#f1eee7}
+.ppf-page .deep-cleaning-process .deep-cleaning-steps li>span{color:var(--orange)}
+.ppf-page .deep-cleaning-faq details,
+.ppf-page .deep-cleaning-faq details:last-child{border-color:rgba(20,21,22,.16)}
+.ppf-page .deep-cleaning-faq summary:after{color:var(--orange)}
+
+/* In the light theme the graphite bands become warm light bands, matching the detailing reference. */
+html[data-theme="light"] .ppf-page .deep-cleaning-band,
+html[data-theme="light"] .ppf-page .deep-cleaning-materials,
+html[data-theme="light"] .ppf-page .deep-cleaning-process,
+html[data-theme="light"] .ppf-page .deep-cleaning-final-cta{
+  --ppf-panel-bg:#eae9e3;
+  color:#202123;
+}
+html[data-theme="light"] .ppf-page .deep-cleaning-band>div,
+html[data-theme="light"] .ppf-page .deep-cleaning-card,
+html[data-theme="light"] .ppf-page .deep-cleaning-reasons>div{
+  background:#f7f6f1;
+  border-color:rgba(20,21,22,.13);
+}
+html[data-theme="light"] .ppf-page .deep-cleaning-band b,
+html[data-theme="light"] .ppf-page .deep-cleaning-materials h2,
+html[data-theme="light"] .ppf-page .deep-cleaning-process h2,
+html[data-theme="light"] .ppf-page .deep-cleaning-process .deep-cleaning-steps b,
+html[data-theme="light"] .ppf-page .deep-cleaning-final-cta h2,
+html[data-theme="light"] .ppf-page .deep-cleaning-reasons b{
+  color:#202123;
+}
+html[data-theme="light"] .ppf-page .deep-cleaning-band p,
+html[data-theme="light"] .ppf-page .deep-cleaning-materials-copy>p,
+html[data-theme="light"] .ppf-page .deep-cleaning-materials-copy .feature-list,
+html[data-theme="light"] .ppf-page .deep-cleaning-process .deep-cleaning-heading>p,
+html[data-theme="light"] .ppf-page .deep-cleaning-process .deep-cleaning-steps p,
+html[data-theme="light"] .ppf-page .deep-cleaning-final-cta p,
+html[data-theme="light"] .ppf-page .deep-cleaning-reasons p{
+  color:#555650;
+}
+html[data-theme="light"] .ppf-page .deep-cleaning-materials-copy .feature-list strong{color:#9a6127}
+html[data-theme="light"] .ppf-page .deep-cleaning-materials-visual{
+  background:linear-gradient(145deg,#292a2c,#171819);
+  border-color:rgba(255,255,255,.12);
+}
+html[data-theme="light"] .ppf-page .deep-cleaning-materials-visual .material-stamp,
+html[data-theme="light"] .ppf-page .deep-cleaning-materials-visual>p{color:#f1eee7}
+html[data-theme="light"] .ppf-page .deep-cleaning-process .deep-cleaning-steps li{border-color:rgba(20,21,22,.14)}
+html[data-theme="light"] .ppf-page .deep-cleaning-block .deep-cleaning-reasons,
+html[data-theme="light"] .ppf-page .deep-cleaning-block .deep-cleaning-reasons>div{border-color:rgba(20,21,22,.14)}
