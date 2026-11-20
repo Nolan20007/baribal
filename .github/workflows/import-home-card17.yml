@@ -42,7 +42,7 @@ jobs:
           import re
           path = Path('plain-site/index.html')
           html = path.read_text(encoding='utf-8')
-          cards = list(re.finditer(r'<article class="work-card">[\\s\\S]*?</article>', html))
+          cards = list(re.finditer(r'<article class="work-card">[\s\S]*?</article>', html))
           if len(cards) != 3:
               raise SystemExit(f'Expected exactly 3 homepage cards, found {len(cards)}')
           folder = '../assets/images/pages/home/portfolio/galleries/card-17/'
