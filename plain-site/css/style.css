@@ -3248,33 +3248,3 @@ a.button:focus-visible,
   html{scroll-behavior:auto!important}
   .menu-toggle i{transition:none}
 }
-
-/* A focused dropdown is opened by the controller; this lets its button close it again. */
-.nav-dropdown:focus-within:not(.is-open) .nav-dropdown-panel{display:none}
-@media(max-width:1100px){
-  .nav-dropdown:focus-within:not(.is-open) .nav-dropdown-panel{display:none}
-}
-
-/* Keep the mega-menu inside the viewport on compact desktop widths. */
-@media(min-width:1101px){
-  .nav-dropdown-panel{left:0;transform:none}
-}
-@media(max-width:1100px){
-  .header .nav{max-height:calc(100vh - 92px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
-}
-@media(max-width:760px){
-  .header .nav{max-height:calc(100vh - 75px)}
-}
-@supports(height:100dvh){
-  @media(max-width:1100px){
-    .header .nav{max-height:calc(100dvh - 92px)}
-  }
-  @media(max-width:760px){
-    .header .nav{max-height:calc(100dvh - 75px)}
-  }
-}
-
-/* The dropdown panel touches its trigger so pointer travel cannot cross a dead gap. */
-@media(min-width:1101px){
-  .nav-dropdown-panel{top:100%}
-}

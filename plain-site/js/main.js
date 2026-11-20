@@ -4,64 +4,31 @@
 
 const menuButton = document.querySelector(".menu-toggle");
 const navigation = document.querySelector(".nav");
-const servicesDropdown = navigation?.querySelector(".nav-dropdown");
-const servicesToggle = servicesDropdown?.querySelector(".nav-dropdown-toggle");
 
 if (menuButton && navigation) {
-  const setServicesOpen = (open) => {
-    if (!servicesDropdown || !servicesToggle) return;
-    servicesDropdown.classList.toggle("is-open", open);
-    servicesToggle.setAttribute("aria-expanded", String(open));
-  };
   const closeNavigation = () => {
     navigation.classList.remove("nav-open");
     menuButton.setAttribute("aria-expanded", "false");
     menuButton.setAttribute("aria-label", "Открыть меню");
-    setServicesOpen(false);
   };
   menuButton.addEventListener("click", () => {
     const isOpen = navigation.classList.toggle("nav-open");
     menuButton.setAttribute("aria-expanded", String(isOpen));
     menuButton.setAttribute("aria-label", isOpen ? "Закрыть меню" : "Открыть меню");
-    if (!isOpen) setServicesOpen(false);
   });
   navigation.addEventListener("click", (event) => {
-    const toggle = event.target.closest(".nav-dropdown-toggle");
-    if (toggle) {
-      event.preventDefault();
-      setServicesOpen(servicesDropdown && !servicesDropdown.classList.contains("is-open"));
-      return;
-    }
     if (event.target.closest("a")) closeNavigation();
   });
-  if (servicesDropdown) {
-    servicesDropdown.addEventListener("pointerenter", (event) => {
-      if (event.pointerType === "mouse") setServicesOpen(true);
-    });
-    servicesDropdown.addEventListener("pointerleave", (event) => {
-      if (event.pointerType === "mouse" && !servicesDropdown.contains(document.activeElement)) setServicesOpen(false);
-    });
-    servicesDropdown.addEventListener("focusout", (event) => {
-      if (!servicesDropdown.contains(event.relatedTarget)) setServicesOpen(false);
-    });
-  }
   document.addEventListener("keydown", (event) => {
-    if (event.key !== "Escape") return;
-    if (servicesDropdown?.classList.contains("is-open")) {
-      setServicesOpen(false);
-      servicesToggle?.focus();
-      return;
-    }
-    if (navigation.classList.contains("nav-open")) {
+    if (event.key === "Escape" && navigation.classList.contains("nav-open")) {
       closeNavigation();
       menuButton.focus();
     }
   });
   const header = menuButton.closest(".header");
   document.addEventListener("click", (event) => {
-    if (header && !header.contains(event.target)) {
-      if (navigation.classList.contains("nav-open")) closeNavigation();
-      else setServicesOpen(false);
+    if (navigation.classList.contains("nav-open") && header && !header.contains(event.target)) {
+      closeNavigation();
     }
   });
 }
