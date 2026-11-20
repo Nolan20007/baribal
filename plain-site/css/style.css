@@ -2915,3 +2915,10 @@ html[data-theme="light"] .ppf-page .deep-cleaning-block .deep-cleaning-reasons>d
 .service-card:hover .service-image-link:not(:hover) img{
   transform:none;
 }
+
+
+/* Pilot: consistent SVG up-right arrow for the technology catalog's detail links. */
+.service-actions .text-link{gap:6px}
+.text-link .text-link-label{color:inherit;font-size:inherit}
+.text-link .ui-arrow-icon{display:block;width:12px;height:12px;flex:0 0 12px;color:var(--orange);overflow:visible}
+.text-link .ui-arrow-icon path{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
