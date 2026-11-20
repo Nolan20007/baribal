@@ -1,0 +1,26 @@
+{
+  "source": "keramika-na-avto-1.jpg",
+  "sourceWidth": 840,
+  "sourceHeight": 529,
+  "quality": 82,
+  "variants": [
+    {
+      "file": "assets/images/pages/home/services/ceramic-responsive/ceramic-coating-400.webp",
+      "width": 400,
+      "height": 252,
+      "bytes": 22806
+    },
+    {
+      "file": "assets/images/pages/home/services/ceramic-responsive/ceramic-coating-840.webp",
+      "width": 840,
+      "height": 529,
+      "bytes": 70550
+    },
+    {
+      "file": "assets/images/pages/home/services/ceramic-responsive/ceramic-coating-840.webp",
+      "width": 840,
+      "height": 529,
+      "bytes": 70550
+    }
+  ]
+}
