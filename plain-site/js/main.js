@@ -6,17 +6,29 @@ const menuButton = document.querySelector(".menu-toggle");
 const navigation = document.querySelector(".nav");
 
 if (menuButton && navigation) {
+  const closeNavigation = () => {
+    navigation.classList.remove("nav-open");
+    menuButton.setAttribute("aria-expanded", "false");
+    menuButton.setAttribute("aria-label", "Открыть меню");
+  };
   menuButton.addEventListener("click", () => {
     const isOpen = navigation.classList.toggle("nav-open");
     menuButton.setAttribute("aria-expanded", String(isOpen));
     menuButton.setAttribute("aria-label", isOpen ? "Закрыть меню" : "Открыть меню");
   });
-
   navigation.addEventListener("click", (event) => {
-    if (event.target.closest("a")) {
-      navigation.classList.remove("nav-open");
-      menuButton.setAttribute("aria-expanded", "false");
-      menuButton.setAttribute("aria-label", "Открыть меню");
+    if (event.target.closest("a")) closeNavigation();
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && navigation.classList.contains("nav-open")) {
+      closeNavigation();
+      menuButton.focus();
+    }
+  });
+  const header = menuButton.closest(".header");
+  document.addEventListener("click", (event) => {
+    if (navigation.classList.contains("nav-open") && header && !header.contains(event.target)) {
+      closeNavigation();
     }
   });
 }
@@ -79,8 +91,11 @@ if (contactWidget) {
     contactWidgetToggle.setAttribute("aria-expanded", String(open));
     contactWidgetPanel.setAttribute("aria-hidden", String(!open));
     contactWidgetToggle.querySelector("span").textContent = open ? "Скрыть" : "Связаться с нами";
-    contactWidgetToggle.querySelector("b").textContent = open ? "−" : "+";
+    contactWidgetToggle.querySelector("b").innerHTML = open
+      ? '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/></svg>'
+      : '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg>';
   };
+  setWidgetOpen(false);
   contactWidgetToggle.addEventListener("click", () => {
     const opening = !contactWidget.classList.contains("is-open");
     if (opening) {
@@ -127,7 +142,9 @@ const applyTheme = (theme) => {
   try { localStorage.setItem("baribal-theme", theme); } catch {}
   if (!themeButton) return;
   const nextTheme = theme === "dark" ? "light" : "dark";
-  themeButton.querySelector(".theme-icon").textContent = nextTheme === "light" ? "☀" : "☾";
+  themeButton.querySelector(".theme-icon").innerHTML = nextTheme === "light"
+    ? '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>'
+    : '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5 8.7 8.7 0 1 0 20.5 14.2Z"/></svg>';
   themeButton.querySelector(".theme-label").textContent = nextTheme === "light" ? "Светлая" : "Тёмная";
   themeButton.setAttribute("aria-label", nextTheme === "light" ? "Включить светлую тему" : "Включить тёмную тему");
   themeButton.setAttribute("aria-pressed", String(theme === "light"));
@@ -306,7 +323,8 @@ if (backToTop) {
   backToTop.parentNode.insertBefore(backToTopGroup, backToTop);
   backToTopGroup.append(backToTopLabel, backToTop);
 
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
   const updateBackToTop = () => {
     const visible = (window.scrollY || document.documentElement.scrollTop || 0) > 300;
     backToTop.classList.toggle("is-visible", visible);
