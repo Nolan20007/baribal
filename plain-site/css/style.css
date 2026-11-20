@@ -2901,17 +2901,16 @@ html[data-theme="light"] .ppf-page .deep-cleaning-block .deep-cleaning-reasons>d
 }
 
 
-/* Only linked service images act as navigation; keep card text unchanged. */
+/* Linked service images remain grid items themselves, so they keep the
+   exact same dimensions and responsive image rules as unlinked cards. */
 .service-image-link{
-  display:block;
-  min-width:0;
-  height:100%;
+  display:contents;
   color:inherit;
   text-decoration:none;
   cursor:pointer;
 }
 .service-image-link .service-image{
-  height:100%;
+  cursor:pointer;
 }
 .service-card:hover .service-image-link:not(:hover) img{
   transform:none;
