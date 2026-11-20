@@ -798,9 +798,12 @@ if (portfolioGrid) {
   document.querySelectorAll(".js-open-work-gallery").forEach(button => {
     button.addEventListener("click", () => {
       const scope = button.closest("#portfolio-grid .work-card, .work-card, .service-card, .split-feature, section") || button.parentElement;
-      const images = [...(scope?.querySelectorAll("img") || [])].filter(eligibleImage);
+      const customImages = (button.dataset.galleryImages || "").split("|").map(path => path.trim()).filter(Boolean);
+      const images = customImages.length
+        ? customImages.map(path => ({ src: new URL(path, document.baseURI).href }))
+        : [...(scope?.querySelectorAll("img") || [])].filter(eligibleImage).map(img => ({ src: img.currentSrc || img.src }));
       const titleText = button.dataset.galleryTitle || scope?.querySelector("h2, h3, h4")?.textContent.trim() || "Фотографии";
-      openItems(images.map(img => ({ src: img.currentSrc || img.src })), titleText, "", button, false);
+      openItems(images, titleText, "", button, false);
     });
   });
 
