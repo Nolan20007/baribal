@@ -41,7 +41,6 @@ if (menuButton && navigation) {
     servicesDropdown.addEventListener("pointerleave", (event) => {
       if (event.pointerType === "mouse" && !servicesDropdown.contains(document.activeElement)) setServicesOpen(false);
     });
-    servicesDropdown.addEventListener("focusin", () => setServicesOpen(true));
     servicesDropdown.addEventListener("focusout", (event) => {
       if (!servicesDropdown.contains(event.relatedTarget)) setServicesOpen(false);
     });
