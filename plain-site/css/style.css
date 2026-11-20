@@ -3254,3 +3254,22 @@ a.button:focus-visible,
 @media(max-width:1100px){
   .nav-dropdown:focus-within:not(.is-open) .nav-dropdown-panel{display:none}
 }
+
+/* Keep the mega-menu inside the viewport on compact desktop widths. */
+@media(min-width:1101px){
+  .nav-dropdown-panel{left:0;transform:none}
+}
+@media(max-width:1100px){
+  .header .nav{max-height:calc(100vh - 92px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+}
+@media(max-width:760px){
+  .header .nav{max-height:calc(100vh - 75px)}
+}
+@supports(height:100dvh){
+  @media(max-width:1100px){
+    .header .nav{max-height:calc(100dvh - 92px)}
+  }
+  @media(max-width:760px){
+    .header .nav{max-height:calc(100dvh - 75px)}
+  }
+}
