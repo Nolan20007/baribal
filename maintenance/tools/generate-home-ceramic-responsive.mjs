@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
 
-const source = path.resolve("keramika-na-avto-1.jpg");
+const source = path.resolve("assets/images/pages/home/services/ceramic-responsive/keramika-na-avto-1.jpg");
 const outputDir = path.resolve("assets/images/pages/home/services/ceramic-responsive");
 const widths = [400, 900, 1600];
 const quality = 82;

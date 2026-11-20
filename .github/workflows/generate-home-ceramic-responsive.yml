@@ -6,7 +6,7 @@ on:
     paths:
       - "maintenance/tools/generate-home-ceramic-responsive.mjs"
       - ".github/workflows/generate-home-ceramic-responsive.yml"
-      - "keramika-na-avto-1.jpg"
+      - "assets/images/pages/home/services/ceramic-responsive/keramika-na-avto-1.jpg"
   workflow_dispatch:
 
 permissions:
