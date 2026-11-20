@@ -266,6 +266,25 @@ if (previewLauncher) {
 
 const backToTop = document.querySelector(".back-to-top");
 if (backToTop) {
+  // Use a self-contained SVG so the arrow shape does not depend on system fonts.
+  const arrowContainer = backToTop.querySelector('span[aria-hidden="true"]');
+  if (arrowContainer) {
+    const arrowSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    arrowSvg.setAttribute("viewBox", "0 0 24 24");
+    arrowSvg.setAttribute("width", "22");
+    arrowSvg.setAttribute("height", "22");
+    arrowSvg.setAttribute("focusable", "false");
+    arrowSvg.setAttribute("aria-hidden", "true");
+    const arrowPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    arrowPath.setAttribute("d", "M12 19V5M5 12l7-7 7 7");
+    arrowPath.setAttribute("fill", "none");
+    arrowPath.setAttribute("stroke", "currentColor");
+    arrowPath.setAttribute("stroke-width", "2");
+    arrowPath.setAttribute("stroke-linecap", "round");
+    arrowPath.setAttribute("stroke-linejoin", "round");
+    arrowSvg.append(arrowPath);
+    arrowContainer.replaceChildren(arrowSvg);
+  }
   // Shared "Вверх" label sits beside the existing arrow on every page.
   const backToTopGroup = document.createElement("div");
   backToTopGroup.className = "back-to-top-group";
