@@ -561,7 +561,7 @@ if (portfolioGrid) {
     if (/clearplex|лобов(ое|ого|ому)|ст[её]кл/.test(value)) categories.push("Защита стёкол");
     if (/химчист|детейлинг|полировк|предпродаж|салон|интерьер|уход|очистк/.test(value)) categories.push("Детейлинг и уход");
     if (/винил|стайлинг|рекламн|изменение цвета|ливре|оклейк/.test(value)) categories.push("Оклейка и стайлинг");
-    if (/бронир|защит|advance|кузов|пленк|плёнк|hexis|suntek/.test(value)) categories.push("Защита кузова");
+    if (/бронир|защит|Gyeon|кузов|пленк|плёнк|hexis|suntek/.test(value)) categories.push("Защита кузова");
     if (!categories.length) categories.push("Другое");
     return [...new Set(categories)];
   };
@@ -587,7 +587,7 @@ if (portfolioGrid) {
         : /химчист|детейлинг|салон/.test(text) ? "Химчистка салона"
         : /полировк/.test(text) ? "Ручная полировка"
         : /винил|стайлинг|рекламн|изменение цвета/.test(text) ? "Автовинил"
-        : /advance|защитное покрытие/.test(text) ? "AdVance"
+        : /Gyeon|защитное покрытие/.test(text) ? "Gyeon"
         : "Бронирование автомобиля защитной плёнкой";
       info.dataset.serviceTitle = title;
       info.addEventListener("click", () => openServiceInfo(title, info));
