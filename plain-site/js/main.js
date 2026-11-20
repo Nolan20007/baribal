@@ -735,8 +735,36 @@ if (portfolioGrid) {
     const images = grouped.length ? grouped : [img];
     return { images, heading, text };
   };
+  const openWorkCardGallery = async (card, source) => {
+    const cover = card.querySelector(".work-image img");
+    if (!cover?.getAttribute("src")) return;
+    const heading = card.querySelector("h2, h3, h4")?.textContent.trim() || cover.alt || "Фотографии";
+    const text = card.querySelector(".work-copy p")?.textContent.trim() || "";
+
+    if (grid && grid.contains(card)) {
+      const position = cards.indexOf(card);
+      const number = Number(card.dataset.projectNumber || position + 1);
+      const galleryMap = await loadGalleryForCard(number);
+      const sources = [cover.currentSrc || cover.src, ...(galleryMap[String(number)] || []).map(path => new URL(path, document.baseURI).href)];
+      openItems(sources.map(src => ({ src })), heading, text, source, true);
+      return;
+    }
+
+    const galleryButton = card.querySelector(".js-open-work-gallery");
+    const customImages = (galleryButton?.dataset.galleryImages || "").split("|").map(path => path.trim()).filter(Boolean);
+    const images = customImages.length
+      ? customImages.map(path => ({ src: new URL(path, document.baseURI).href }))
+      : [...card.querySelectorAll("img")].filter(eligibleImage).map(img => ({ src: img.currentSrc || img.src }));
+    openItems(images, galleryButton?.dataset.galleryTitle || heading, text, source, false);
+  };
+
   const openImage = (img) => {
     if (!eligibleImage(img)) return;
+    const workCard = img.closest(".work-card");
+    if (workCard) {
+      openWorkCardGallery(workCard, img);
+      return;
+    }
     const data = detailsForImage(img);
     openItems(data.images.map(item => ({ src: item.currentSrc || item.src })), data.heading, data.text, img, false);
   };
@@ -746,16 +774,7 @@ if (portfolioGrid) {
     card.classList.add("portfolio-card--interactive");
     card.tabIndex = 0;
     card.setAttribute("aria-label", "Открыть проект: " + (card.querySelector("h3")?.textContent.trim() || ""));
-    const openProject = async (source) => {
-      const cover = card.querySelector(".work-image img");
-      if (!cover?.getAttribute("src")) return;
-      const number = Number(card.dataset.projectNumber || position + 1);
-      const galleryMap = await loadGalleryForCard(number);
-      const sources = [cover.currentSrc || cover.src, ...(galleryMap[String(number)] || []).map(path => new URL(path, document.baseURI).href)];
-      const heading = card.querySelector("h3")?.textContent.trim() || ("Работа №" + number);
-      const text = card.querySelector(".work-copy p")?.textContent.trim() || "";
-      openItems(sources.map(src => ({ src })), heading, text, source, true);
-    };
+    const openProject = (source) => openWorkCardGallery(card, source);
     card.addEventListener("click", event => {
       if (event.target.closest("button, a, input, select, textarea")) return;
       openProject(event.target.closest(".work-image") || card);
@@ -798,7 +817,12 @@ if (portfolioGrid) {
   // Existing “Все фото” buttons also use the shared viewer and gather photos from their own block.
   document.querySelectorAll(".js-open-work-gallery").forEach(button => {
     button.addEventListener("click", () => {
-      const scope = button.closest("#portfolio-grid .work-card, .work-card, .service-card, .split-feature, section") || button.parentElement;
+      const workCard = button.closest(".work-card");
+      if (workCard) {
+        openWorkCardGallery(workCard, button);
+        return;
+      }
+      const scope = button.closest(".service-card, .split-feature, section") || button.parentElement;
       const customImages = (button.dataset.galleryImages || "").split("|").map(path => path.trim()).filter(Boolean);
       const images = customImages.length
         ? customImages.map(path => ({ src: new URL(path, document.baseURI).href }))
