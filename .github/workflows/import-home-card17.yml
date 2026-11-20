@@ -1,0 +1,75 @@
+name: Import homepage project 17
+on:
+  push:
+    paths:
+      - '.github/workflows/import-home-card17.yml'
+permissions:
+  contents: write
+  actions: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Download verified project 17 gallery
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          curl -fL -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/Nolan20007/baribal/actions/artifacts/14369147901/zip \
+            -o /tmp/portfolio-archive.zip
+          mkdir -p /tmp/card17
+          unzip -q /tmp/portfolio-archive.zip 'galleries/017-project/*.jpg' -d /tmp/card17
+          python - <<'PY'
+          from pathlib import Path
+          import shutil
+          source = Path('/tmp/card17/galleries/017-project')
+          target = Path('plain-site/assets/images/pages/home/portfolio/galleries/card-17')
+          target.mkdir(parents=True, exist_ok=True)
+          originals = sorted(p for p in source.glob('*.jpg') if p.stat().st_size >= 100_000)
+          if len(originals) != 10:
+              raise SystemExit(f'Expected 10 verified originals >=100 KB, found {len(originals)}')
+          for index, image in enumerate(originals, 1):
+              shutil.copyfile(image, target / f'card-17-{index:02d}.jpg')
+          print('Imported:', ', '.join(p.name for p in sorted(target.glob('*.jpg'))))
+          PY
+      - name: Replace third homepage card with project 17
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          path = Path('plain-site/index.html')
+          html = path.read_text(encoding='utf-8')
+          cards = list(re.finditer(r'<article class="work-card">[\\s\\S]*?</article>', html))
+          if len(cards) != 3:
+              raise SystemExit(f'Expected exactly 3 homepage cards, found {len(cards)}')
+          folder = '../assets/images/pages/home/portfolio/galleries/card-17/'
+          images = [folder + f'card-17-{i:02d}.jpg' for i in range(1, 11)]
+          cover = folder + 'card-17-04.jpg'
+          gallery = '|'.join(images)
+          replacement = f'''<article class="work-card">
+            <div class="work-image"><img src="{cover}" alt="Porsche Cayenne — комплексная защита кузова и стёкол" width="1280" height="960" loading="lazy"></div>
+            <div class="work-copy"><span class="eyebrow">КОМПЛЕКСНАЯ ЗАЩИТА</span><h3>Комплексная защита кузова и стёкол</h3><p>Бронирование капота, крыльев, фар, стоек, бамперов и передней части крыши; защита лобового стекла плёнкой ClearPlex и нанесение покрытия AdVance на кузов.</p><div class="work-actions"><button class="text-link js-service-info" type="button" data-service-title="Бронирование автомобиля защитной плёнкой">Подробнее <span>↗</span></button><button class="text-link js-callback" type="button" data-service-title="Комплексная защита кузова и стёкол">Хочу так же <span>↗</span></button><button class="text-link js-open-work-gallery" type="button" data-gallery-index="2" data-gallery-title="Комплексная защита кузова и стёкол" data-gallery-images="{gallery}">Все фото <span>↗</span></button></div></div>
+          </article>'''
+          match = cards[2]
+          html = html[:match.start()] + replacement + html[match.end():]
+          path.write_text(html, encoding='utf-8')
+          print('Updated third homepage card; gallery images:', len(images))
+          PY
+      - name: Commit imported card and remove one-time workflow
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/import-home-card17.yml
+          git add plain-site/index.html plain-site/assets/images/pages/home/portfolio/galleries/card-17
+          git commit -m "Replace homepage third card with project 17"
+          git push origin HEAD:main
+          curl -fL -X POST \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/Nolan20007/baribal/actions/workflows/deploy-pages.yml/dispatches \
+            -d '{"ref":"main"}'
