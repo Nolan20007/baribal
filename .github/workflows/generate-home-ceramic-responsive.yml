@@ -1,0 +1,47 @@
+name: Generate homepage ceramic photo variants
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "maintenance/tools/generate-home-ceramic-responsive.mjs"
+      - ".github/workflows/generate-home-ceramic-responsive.yml"
+      - "keramika-na-avto-1.jpg"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: home-ceramic-responsive
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install image processor
+        run: npm install --no-save --package-lock=false sharp
+      - name: Generate only ceramic homepage variants
+        run: node maintenance/tools/generate-home-ceramic-responsive.mjs
+      - name: Commit generated variants and report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+users.noreply.github.com"
+          git add assets/images/pages/home/services/ceramic-responsive maintenance/reports/home-ceramic-responsive.json
+          if git diff --cached --quiet; then
+            echo "No changes in ceramic responsive assets."
+            exit 0
+          fi
+          git commit -m "Add responsive homepage ceramic photo variants"
+          git push origin main
