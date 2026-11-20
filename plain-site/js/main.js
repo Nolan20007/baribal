@@ -406,6 +406,7 @@ const serviceDetails = {
 }
 
 const infoModal = document.querySelector("#service-info-modal");
+let lastModalTrigger = null;
 const closeInfoModal = () => {
   if (!infoModal) return;
   infoModal.classList.remove("modal-open");
