@@ -478,6 +478,14 @@ html[data-theme="light"] .contact-widget-form input,
 html[data-theme="light"] .contact-widget-form select{background:#303133;border-color:#66686a;color:#fff}
 html[data-theme="light"] .contact-widget-form input::placeholder{color:#c6c6c6}
 html[data-theme="light"] .contact-widget-form small{color:#dedede}
+
+/* Preserve recognizable contact-brand icon colors in the light-theme widget. */
+html[data-theme="light"] .contact-widget-form .contact-preference-list .contact-option-phone{color:var(--orange)}
+html[data-theme="light"] .contact-widget-form .contact-preference-list .contact-option-telegram{color:#29a9e8}
+html[data-theme="light"] .contact-widget-form .contact-preference-list .contact-option-max{
+  color:#fff;
+  background:linear-gradient(135deg,#397cf6 0%,#7356e8 100%);
+}
 @media(max-width:760px){
   .contact-widget:not(.is-open) .contact-widget-toggle{min-width:0;padding:9px 16px 9px 9px;font-size:14px;gap:12px}
   .contact-widget:not(.is-open) .contact-widget-toggle img{width:51px;height:51px}
