@@ -3273,3 +3273,8 @@ a.button:focus-visible,
     .header .nav{max-height:calc(100dvh - 75px)}
   }
 }
+
+/* The dropdown panel touches its trigger so pointer travel cannot cross a dead gap. */
+@media(min-width:1101px){
+  .nav-dropdown-panel{top:100%}
+}
