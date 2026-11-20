@@ -2171,3 +2171,132 @@ html[data-theme="light"] .vinyl-guide-faq details{border-color:rgba(20,21,22,.17
  .vinyl-guide-actions{align-items:stretch;flex-direction:column}
  .vinyl-guide-actions .button{width:100%;justify-content:center}
 }
+
+
+/* Himchistka desktop visual refinement: wide intro and alternating BARIBAL panels. */
+.himchistka-page .feature-photo,
+.himchistka-page .feature-photo img{
+  height:360px;
+  min-height:360px;
+}
+.deep-cleaning-section{padding-top:34px}
+.deep-cleaning-intro{
+  width:100%;
+  max-width:none;
+  margin:0 0 48px;
+  padding:clamp(30px,4.2vw,64px);
+  display:grid;
+  grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);
+  column-gap:clamp(28px,5vw,84px);
+  align-items:start;
+  background:#eae9e3;
+  color:#202123;
+}
+.deep-cleaning-intro>.eyebrow,
+.deep-cleaning-intro>h2{grid-column:1/-1}
+.deep-cleaning-intro>h2{color:#202123;margin:12px 0 24px;max-width:1500px}
+.deep-cleaning-intro p,
+.deep-cleaning-intro .deep-cleaning-lead{color:#4e4f4a}
+.deep-cleaning-intro .deep-cleaning-lead{font-size:clamp(15px,1.15vw,18px);line-height:1.85;margin:0}
+.deep-cleaning-intro>p:not(.deep-cleaning-lead){margin:0 0 18px}
+.deep-cleaning-intro .deep-cleaning-actions{grid-column:2;align-self:end;margin-top:2px}
+.deep-cleaning-band{
+  margin-bottom:54px;
+  background:#202123;
+  border-color:rgba(255,255,255,.12);
+}
+.deep-cleaning-band>div{background:#202123;padding:28px 30px}
+.deep-cleaning-band b{color:#f1eee7}
+.deep-cleaning-band p{color:#c0bfba}
+.deep-cleaning-block{
+  margin:0 0 58px;
+  padding:clamp(28px,3.5vw,48px);
+  background:#eae9e3;
+  color:#202123;
+}
+.deep-cleaning-heading{max-width:1050px;margin-bottom:28px}
+.deep-cleaning-heading h2{color:#202123}
+.deep-cleaning-heading>p{color:#555650}
+.deep-cleaning-zones{gap:12px}
+.deep-cleaning-card{background:#f7f6f1;border-color:rgba(20,21,22,.12);min-height:205px}
+.deep-cleaning-card h3{color:#202123}
+.deep-cleaning-card p{color:#555650}
+.deep-cleaning-note{color:#5d5e58}
+.deep-cleaning-materials{
+  margin:0 0 58px;
+  padding:clamp(28px,3.5vw,48px);
+  background:#1c1d1f;
+  color:#f1eee7;
+}
+.deep-cleaning-materials h2{color:#f1eee7}
+.deep-cleaning-materials-copy>p{color:#c0bfba}
+.deep-cleaning-materials-copy .feature-list{color:#d0cec8}
+.deep-cleaning-reasons{
+  padding:clamp(28px,3.5vw,48px);
+  margin:0 0 58px;
+  background:#eae9e3;
+  border-color:rgba(20,21,22,.15);
+}
+.deep-cleaning-reasons>div{border-color:rgba(20,21,22,.15)}
+.deep-cleaning-reasons b{color:#202123}
+.deep-cleaning-reasons p{color:#555650}
+.deep-cleaning-process{
+  margin:0 0 58px;
+  background:#1c1d1f;
+  border:1px solid rgba(255,255,255,.1);
+}
+.deep-cleaning-process .deep-cleaning-heading h2{color:#f1eee7}
+.deep-cleaning-process .deep-cleaning-heading>p{color:#c0bfba}
+.deep-cleaning-warning{
+  margin:0 0 58px;
+  padding:clamp(28px,3.5vw,48px);
+  background:#eae9e3;
+  border:1px solid rgba(20,21,22,.13);
+}
+.deep-cleaning-warning h2{color:#202123}
+.deep-cleaning-warning p{color:#555650}
+.deep-cleaning-price{
+  margin:0 0 58px;
+  background:#202123;
+}
+.deep-cleaning-faq{
+  max-width:none;
+  margin:0 0 58px;
+  padding:clamp(28px,3.5vw,48px);
+  background:#eae9e3;
+}
+.deep-cleaning-faq .deep-cleaning-heading h2{color:#202123}
+.deep-cleaning-faq details,
+.deep-cleaning-faq details:last-child{border-color:rgba(20,21,22,.17)}
+.deep-cleaning-faq summary{color:#202123}
+.deep-cleaning-faq details p{color:#555650}
+.deep-cleaning-final-cta{max-width:none;background:#1c1d1f}
+@media(max-width:900px){
+  .deep-cleaning-intro{grid-template-columns:1fr;gap:0}
+  .deep-cleaning-intro .deep-cleaning-actions{grid-column:1; margin-top:12px}
+  .deep-cleaning-materials{gap:28px}
+}
+@media(max-width:760px){
+  .himchistka-page .feature-photo,
+  .himchistka-page .feature-photo img{height:250px;min-height:250px}
+}
+@media(max-width:650px){
+  .deep-cleaning-section{padding-top:28px}
+  .deep-cleaning-intro{padding:27px 22px;margin-bottom:34px}
+  .deep-cleaning-intro>h2{margin-bottom:18px}
+  .deep-cleaning-intro .deep-cleaning-lead{font-size:15px}
+  .deep-cleaning-intro .deep-cleaning-actions{margin-top:8px}
+  .deep-cleaning-band{margin-bottom:38px}
+  .deep-cleaning-block,
+  .deep-cleaning-materials,
+  .deep-cleaning-process,
+  .deep-cleaning-warning,
+  .deep-cleaning-price,
+  .deep-cleaning-faq{margin-bottom:38px}
+  .deep-cleaning-block,
+  .deep-cleaning-materials,
+  .deep-cleaning-reasons,
+  .deep-cleaning-warning,
+  .deep-cleaning-faq{padding:26px 20px}
+  .deep-cleaning-final-cta{padding:38px 22px}
+}
