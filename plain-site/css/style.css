@@ -2300,3 +2300,106 @@ html[data-theme="light"] .vinyl-guide-faq details{border-color:rgba(20,21,22,.17
   .deep-cleaning-faq{padding:26px 20px}
   .deep-cleaning-final-cta{padding:38px 22px}
 }
+
+/* Himchistka reference layout: full-bleed section bands with explicit contrast in both themes. */
+.himchistka-page .deep-cleaning-intro,
+.himchistka-page .deep-cleaning-band,
+.himchistka-page .deep-cleaning-block,
+.himchistka-page .deep-cleaning-materials,
+.himchistka-page .deep-cleaning-reasons,
+.himchistka-page .deep-cleaning-process,
+.himchistka-page .deep-cleaning-warning,
+.himchistka-page .deep-cleaning-price,
+.himchistka-page .deep-cleaning-faq,
+.himchistka-page .deep-cleaning-final-cta{
+  position:relative;
+  isolation:isolate;
+  background:transparent;
+}
+.himchistka-page .deep-cleaning-intro::before,
+.himchistka-page .deep-cleaning-band::before,
+.himchistka-page .deep-cleaning-block::before,
+.himchistka-page .deep-cleaning-materials::before,
+.himchistka-page .deep-cleaning-reasons::before,
+.himchistka-page .deep-cleaning-process::before,
+.himchistka-page .deep-cleaning-warning::before,
+.himchistka-page .deep-cleaning-price::before,
+.himchistka-page .deep-cleaning-faq::before,
+.himchistka-page .deep-cleaning-final-cta::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  top:0;
+  bottom:0;
+  left:50%;
+  width:100vw;
+  transform:translateX(-50%);
+  background:var(--himchistka-panel-bg,#eae9e3);
+  pointer-events:none;
+}
+.himchistka-page .deep-cleaning-intro{--himchistka-panel-bg:#eae9e3}
+.himchistka-page .deep-cleaning-band{
+  --himchistka-panel-bg:#202123;
+  border:0;
+}
+.himchistka-page .deep-cleaning-block{--himchistka-panel-bg:#eae9e3}
+.himchistka-page .deep-cleaning-materials{--himchistka-panel-bg:#1c1d1f}
+.himchistka-page .deep-cleaning-reasons{--himchistka-panel-bg:#eae9e3}
+.himchistka-page .deep-cleaning-process{--himchistka-panel-bg:#1c1d1f}
+.himchistka-page .deep-cleaning-warning{--himchistka-panel-bg:#eae9e3}
+.himchistka-page .deep-cleaning-price{--himchistka-panel-bg:#202123}
+.himchistka-page .deep-cleaning-faq{--himchistka-panel-bg:#eae9e3}
+.himchistka-page .deep-cleaning-final-cta{--himchistka-panel-bg:#1c1d1f}
+
+.himchistka-page .deep-cleaning-intro .button-outline{
+  color:#202123;
+  border-color:rgba(32,33,35,.48);
+  background:transparent;
+}
+.himchistka-page .deep-cleaning-intro .button-outline:hover{
+  color:#fff;
+  background:#202123;
+  border-color:#202123;
+}
+.himchistka-page .deep-cleaning-intro .button-outline:focus-visible{
+  outline:2px solid var(--orange);
+  outline-offset:3px;
+}
+
+/* The light theme keeps the alternating rhythm but switches dark bands to readable light panels. */
+html[data-theme="light"] .himchistka-page .deep-cleaning-band,
+html[data-theme="light"] .himchistka-page .deep-cleaning-materials,
+html[data-theme="light"] .himchistka-page .deep-cleaning-process,
+html[data-theme="light"] .himchistka-page .deep-cleaning-price,
+html[data-theme="light"] .himchistka-page .deep-cleaning-final-cta{
+  --himchistka-panel-bg:#eae9e3;
+  color:#202123;
+}
+html[data-theme="light"] .himchistka-page .deep-cleaning-band>div{
+  background:#eae9e3;
+}
+html[data-theme="light"] .himchistka-page .deep-cleaning-band b,
+html[data-theme="light"] .himchistka-page .deep-cleaning-materials h2,
+html[data-theme="light"] .himchistka-page .deep-cleaning-process .deep-cleaning-heading h2,
+html[data-theme="light"] .himchistka-page .deep-cleaning-process .deep-cleaning-steps b,
+html[data-theme="light"] .himchistka-page .deep-cleaning-final-cta h2{
+  color:#202123;
+}
+html[data-theme="light"] .himchistka-page .deep-cleaning-band p,
+html[data-theme="light"] .himchistka-page .deep-cleaning-materials-copy>p,
+html[data-theme="light"] .himchistka-page .deep-cleaning-materials-copy .feature-list,
+html[data-theme="light"] .himchistka-page .deep-cleaning-process .deep-cleaning-heading>p,
+html[data-theme="light"] .himchistka-page .deep-cleaning-process .deep-cleaning-steps p,
+html[data-theme="light"] .himchistka-page .deep-cleaning-final-cta p{
+  color:#555650;
+}
+html[data-theme="light"] .himchistka-page .deep-cleaning-materials-copy .feature-list strong{
+  color:#9a6127;
+}
+html[data-theme="light"] .himchistka-page .deep-cleaning-process .deep-cleaning-steps li{
+  border-color:rgba(20,21,22,.14);
+}
+html[data-theme="light"] .himchistka-page .deep-cleaning-final-cta{
+  border-color:rgba(20,21,22,.13);
+}
+
