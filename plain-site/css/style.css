@@ -2974,3 +2974,165 @@ html[data-theme="light"] .contact-widget-form .contact-preference-list label:not
   color:#fff;
   background:linear-gradient(135deg,#397cf6 0%,#7356e8 100%);
 }
+
+
+/* Cross-browser visual system — approved batch 1–6 across active plain-HTML pages. */
+/* Shared SVG arrow treatment for CTA links and gallery navigation. */
+.ui-arrow-icon{
+  display:inline-block;
+  width:13px;
+  height:13px;
+  flex:0 0 13px;
+  margin-left:7px;
+  vertical-align:middle;
+  color:currentColor;
+  overflow:visible;
+}
+.text-link .ui-arrow-icon{color:var(--orange);margin-left:0}
+.ui-arrow-icon path{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.work-gallery-arrow,
+.project-modal__nav,
+.verified-gallery__arrow,
+.verified-gallery__prev,
+.verified-gallery__next{
+  font-size:0!important;
+  line-height:0!important;
+}
+.work-gallery-arrow svg,
+.project-modal__nav svg,
+.verified-gallery__arrow svg,
+.verified-gallery__prev svg,
+.verified-gallery__next svg{
+  display:block;
+  width:22px;
+  height:22px;
+  flex:0 0 22px;
+  color:currentColor;
+}
+.work-gallery-arrow svg path,
+.project-modal__nav svg path,
+.verified-gallery__arrow svg path,
+.verified-gallery__prev svg path,
+.verified-gallery__next svg path{
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2.2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+/* One vector icon set for phone, Telegram and MAX in every contact form. */
+.contact-preference-list .contact-option-icon svg{
+  display:block;
+  width:17px;
+  height:17px;
+  flex:0 0 17px;
+}
+.contact-preference-list .contact-option-phone{color:var(--orange)}
+.contact-preference-list .contact-option-telegram{color:#29a9e8}
+.contact-preference-list .contact-option-max{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:17px;
+  height:17px;
+  flex:0 0 17px;
+  border-radius:5px;
+  background:linear-gradient(135deg,#397cf6 0%,#7356e8 100%);
+}
+.contact-preference-list .contact-option-max svg{width:13px;height:13px;flex-basis:13px}
+
+/* Stable button rendering without changing the approved square/rounded variants. */
+button,
+.button,
+.text-link,
+.footer-route-button{
+  -webkit-appearance:none;
+  appearance:none;
+  font-family:Manrope,Arial,sans-serif;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+.button,
+.button-order,
+.footer-route-button{
+  line-height:1.25;
+  text-decoration:none;
+}
+.text-link{line-height:1.4}
+button:focus-visible,
+a.button:focus-visible,
+.text-link:focus-visible,
+.footer-route-button:focus-visible{
+  outline:2px solid var(--orange);
+  outline-offset:3px;
+}
+
+/* Matching custom checkboxes: no platform-dependent native tick glyphs. */
+.contact-preference-list input[type="checkbox"],
+.estimate-form .estimate-service-option input[type="checkbox"],
+.estimate-service-option input[type="checkbox"]{
+  -webkit-appearance:none!important;
+  appearance:none!important;
+  position:relative;
+  display:inline-block;
+  flex-shrink:0;
+  margin:0;
+  padding:0;
+  border:1px solid #858585;
+  border-radius:4px;
+  background-color:transparent;
+  background-image:none;
+  cursor:pointer;
+  vertical-align:middle;
+  transition:background-color .16s ease,border-color .16s ease,box-shadow .16s ease;
+}
+.contact-preference-list input[type="checkbox"]{
+  width:15px!important;
+  height:15px!important;
+  flex-basis:15px!important;
+}
+.estimate-form .estimate-service-option input[type="checkbox"],
+.estimate-service-option input[type="checkbox"]{
+  width:16px!important;
+  height:16px!important;
+  flex-basis:16px!important;
+  margin:1px 0 0!important;
+}
+.contact-preference-list input[type="checkbox"]:checked,
+.estimate-form .estimate-service-option input[type="checkbox"]:checked,
+.estimate-service-option input[type="checkbox"]:checked{
+  border-color:var(--orange);
+  background-color:var(--orange);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='m2 6 2.5 2.5L10 3' fill='none' stroke='%23171919' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:center;
+  background-size:11px 11px;
+}
+.contact-preference-list input[type="checkbox"]:checked:after{
+  content:none!important;
+}
+.contact-preference-list input[type="checkbox"]:focus-visible,
+.estimate-form .estimate-service-option input[type="checkbox"]:focus-visible,
+.estimate-service-option input[type="checkbox"]:focus-visible{
+  outline:2px solid var(--orange);
+  outline-offset:3px;
+}
+@media(prefers-reduced-motion:reduce){
+  .contact-preference-list input[type="checkbox"],
+  .estimate-form .estimate-service-option input[type="checkbox"],
+  .estimate-service-option input[type="checkbox"]{transition:none}
+}
+
+/* SVG controls in the branded video player. */
+.baribal-controls button{font-size:0}
+.baribal-controls button svg{
+  display:block;
+  width:19px;
+  height:19px;
+  flex:0 0 19px;
+  color:currentColor;
+}
+@media(max-width:760px){
+  .baribal-controls button svg{width:17px;height:17px;flex-basis:17px}
+}

@@ -160,7 +160,9 @@ document.querySelectorAll(".baribal-player").forEach((player) => {
     if (status) { status.hidden = false; status.textContent = "Тестовый видеофайл пока не загружен"; }
   };
   const updatePlayState = () => {
-    playButton.textContent = video.paused ? "▶" : "Ⅱ";
+    playButton.innerHTML = video.paused
+      ? '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7Z" fill="currentColor"/></svg>'
+      : '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>';
     playButton.setAttribute("aria-label", video.paused ? "Воспроизвести видео" : "Приостановить видео");
   };
   const updateProgress = () => {
@@ -195,9 +197,13 @@ document.querySelectorAll(".baribal-player").forEach((player) => {
   progress.addEventListener("input", () => {
     if (Number.isFinite(video.duration)) video.currentTime = video.duration * Number(progress.value) / 100;
   });
+  const fullscreenButton = player.querySelector("[data-player-fullscreen]");
+  if (fullscreenButton) fullscreenButton.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 3H3v5m13-5h5v5M21 16v5h-5M3 16v5h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   muteButton.addEventListener("click", () => {
     video.muted = !video.muted;
-    muteButton.textContent = video.muted ? "×" : "♪";
+    muteButton.innerHTML = video.muted
+      ? '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 9v6h4l5 4V5L8 9H4Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m17 9 5 6m0-6-5 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
+      : '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 9v6h4l5 4V5L8 9H4Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M16 9a5 5 0 0 1 0 6m2-9a9 9 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
     muteButton.setAttribute("aria-label", video.muted ? "Включить звук" : "Выключить звук");
   });
   player.querySelector("[data-player-fullscreen]")?.addEventListener("click", () => {
@@ -871,3 +877,79 @@ if (portfolioGrid) {
 })();
 
 // WebP copies are generated separately; original image paths remain active until verification.
+
+/* Cross-browser decorative icon pass for all active plain-HTML pages. */
+(() => {
+  const svg = (pathData, options = {}) => {
+    const node = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    node.setAttribute("viewBox", options.viewBox || "0 0 24 24");
+    node.setAttribute("aria-hidden", "true");
+    node.setAttribute("focusable", "false");
+    if (options.className) node.setAttribute("class", options.className);
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", pathData);
+    if (options.fill) path.setAttribute("fill", options.fill);
+    else {
+      path.setAttribute("fill", "none");
+      path.setAttribute("stroke", "currentColor");
+      path.setAttribute("stroke-width", options.strokeWidth || "2");
+      path.setAttribute("stroke-linecap", "round");
+      path.setAttribute("stroke-linejoin", "round");
+    }
+    node.append(path);
+    return node;
+  };
+
+  const contactPaths = {
+    phone: "M5 3.8 8.2 3l2.1 5.1-2.1 1.7a15 15 0 0 0 6 6l1.7-2.1 5.1 2.1-.8 3.2a2 2 0 0 1-2.2 1.5A17 17 0 0 1 3.5 6a2 2 0 0 1 1.5-2.2Z",
+    telegram: "M21.7 4.4 18.5 20c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.3-8.4c.4-.4-.1-.6-.6-.2l-11.5 7.1-4.9-1.6c-1.1-.3-1.1-1.1.2-1.6L20 3.2c1-.4 1.9.2 1.7 1.2Z",
+    max: "M3.5 18V6h3.1l5.4 7.1L17.4 6h3.1v12h-3V10.8l-5.5 7-5.5-7V18Z"
+  };
+  document.querySelectorAll(".contact-option-icon").forEach((icon) => {
+    const kind = icon.classList.contains("contact-option-phone") ? "phone"
+      : icon.classList.contains("contact-option-telegram") ? "telegram"
+      : icon.classList.contains("contact-option-max") ? "max" : "";
+    if (!kind) return;
+    icon.replaceChildren(svg(contactPaths[kind], {
+      className: "contact-method-svg",
+      fill: kind === "max" ? "#fff" : ""
+    }));
+  });
+
+  const gallerySelectors = [
+    ".work-gallery-arrow.prev", ".project-modal__prev",
+    ".verified-gallery__prev", ".verified-gallery__arrow.prev"
+  ];
+  const nextSelectors = [
+    ".work-gallery-arrow.next", ".project-modal__next",
+    ".verified-gallery__next", ".verified-gallery__arrow.next"
+  ];
+  document.querySelectorAll(gallerySelectors.join(",")).forEach((button) => {
+    button.replaceChildren(svg("M15 18 9 12l6-6", { className: "gallery-direction-svg", strokeWidth: "2.2" }));
+  });
+  document.querySelectorAll(nextSelectors.join(",")).forEach((button) => {
+    button.replaceChildren(svg("m9 18 6-6-6-6", { className: "gallery-direction-svg", strokeWidth: "2.2" }));
+  });
+
+  // Convert every visible up-right text arrow to the same inline SVG, including
+  // buttons and links generated by the portfolio script above.
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  const textNodes = [];
+  while (walker.nextNode()) {
+    const node = walker.currentNode;
+    const parent = node.parentElement;
+    if (!node.nodeValue.includes("↗") || !parent || parent.closest("script,style,svg,.ui-arrow-icon")) continue;
+    textNodes.push(node);
+  }
+  textNodes.forEach((node) => {
+    const parts = node.nodeValue.split("↗");
+    const fragment = document.createDocumentFragment();
+    parts.forEach((part, index) => {
+      if (part) fragment.append(document.createTextNode(part));
+      if (index < parts.length - 1) {
+        fragment.append(svg("M7 17 17 7M7 7h10v10", { className: "ui-arrow-icon", strokeWidth: "1.8" }));
+      }
+    });
+    node.parentNode.replaceChild(fragment, node);
+  });
+})();
