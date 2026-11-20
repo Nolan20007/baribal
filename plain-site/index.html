@@ -113,11 +113,29 @@
       <button class="menu-toggle" type="button" aria-label="Открыть меню" aria-expanded="false"><i></i><i></i><i></i></button>
       <nav class="nav" aria-label="Основная навигация">
         <a href="./index.html" aria-current="page">Главная</a>
-        <a href="./kuzov/">Защита кузова</a>
-        <a href="./himchistka/">Автохимчистка</a>
-        <a href="./avtovinil/">Автовинил</a>
-        <a href="./tehnology/">Все услуги и технологии</a>
-        <a href="./foto/">Все наши работы</a>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-controls="services-mega-menu">Услуги <span class="nav-chevron" aria-hidden="true"></span></button>
+          <div class="nav-dropdown-panel" id="services-mega-menu">
+            <section class="nav-dropdown-group" aria-label="Защита кузова">
+              <a href="./kuzov/">Защита кузова</a>
+              <a href="./zaschita-kuzova-plenkoy/">Бронирование кузова плёнкой</a>
+              <a href="./keramicheskoe-pokrytie/">Керамическое покрытие</a>
+              <a href="./zaschita-stekol-plenkoy/">Защита стёкол плёнкой</a>
+            </section>
+            <section class="nav-dropdown-group" aria-label="Салон и уход">
+              <span class="nav-dropdown-heading">Салон и уход</span>
+              <a href="./himchistka/">Химчистка салона</a>
+              <p class="nav-dropdown-note">Уход за интерьером и материалами салона</p>
+            </section>
+            <section class="nav-dropdown-group" aria-label="Внешний вид и восстановление">
+              <span class="nav-dropdown-heading">Внешний вид и восстановление</span>
+              <a href="./avtovinil/">Автовинил</a>
+              <a href="./udalenie-vmyatin-bez-pokraski/">Удаление вмятин без покраски</a>
+            </section>
+            <a class="nav-dropdown-all" href="./tehnology/">Все услуги и технологии <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <a href="./foto/">Наши работы</a>
         <a href="#studio">Студия</a>
         <a href="#contacts">Контакты</a>
         <a href="./video/">Видео</a>

@@ -3248,3 +3248,9 @@ a.button:focus-visible,
   html{scroll-behavior:auto!important}
   .menu-toggle i{transition:none}
 }
+
+/* A focused dropdown is opened by the controller; this lets its button close it again. */
+.nav-dropdown:focus-within:not(.is-open) .nav-dropdown-panel{display:none}
+@media(max-width:1100px){
+  .nav-dropdown:focus-within:not(.is-open) .nav-dropdown-panel{display:none}
+}
