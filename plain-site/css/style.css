@@ -2403,3 +2403,263 @@ html[data-theme="light"] .himchistka-page .deep-cleaning-final-cta{
   border-color:rgba(20,21,22,.13);
 }
 
+/* Avtovinil page follows the approved himchistka reference: full-width alternating panels and theme-safe contrast. */
+.avtovinil-page .vinyl-guide-intro,
+.avtovinil-page .vinyl-guide-highlights,
+.avtovinil-page .vinyl-guide-block,
+.avtovinil-page .vinyl-guide-compare,
+.avtovinil-page .vinyl-guide-materials,
+.avtovinil-page .vinyl-guide-process,
+.avtovinil-page .vinyl-guide-care,
+.avtovinil-page .vinyl-guide-facts,
+.avtovinil-page .vinyl-guide-price,
+.avtovinil-page .vinyl-guide-faq,
+.avtovinil-page .vinyl-guide-final{
+  position:relative;
+  isolation:isolate;
+  background:transparent;
+  border-color:transparent;
+}
+.avtovinil-page .vinyl-guide-intro::before,
+.avtovinil-page .vinyl-guide-highlights::before,
+.avtovinil-page .vinyl-guide-block::before,
+.avtovinil-page .vinyl-guide-compare::before,
+.avtovinil-page .vinyl-guide-materials::before,
+.avtovinil-page .vinyl-guide-process::before,
+.avtovinil-page .vinyl-guide-care::before,
+.avtovinil-page .vinyl-guide-facts::before,
+.avtovinil-page .vinyl-guide-price::before,
+.avtovinil-page .vinyl-guide-faq::before,
+.avtovinil-page .vinyl-guide-final::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  top:0;
+  bottom:0;
+  left:50%;
+  width:100vw;
+  transform:translateX(-50%);
+  background:var(--vinyl-panel-bg,#eae9e3);
+  pointer-events:none;
+}
+.avtovinil-page .vinyl-guide-intro{
+  --vinyl-panel-bg:#eae9e3;
+  max-width:none;
+  margin:0 0 48px;
+  padding:clamp(30px,4.2vw,64px);
+  display:grid;
+  grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);
+  column-gap:clamp(28px,5vw,84px);
+  align-items:start;
+}
+.avtovinil-page .vinyl-guide-intro>.eyebrow,
+.avtovinil-page .vinyl-guide-intro>h2{grid-column:1/-1}
+.avtovinil-page .vinyl-guide-intro h2{color:#202123;max-width:1500px;margin:12px 0 24px}
+.avtovinil-page .vinyl-guide-intro p{color:#4e4f4a}
+.avtovinil-page .vinyl-guide-intro .vinyl-guide-lead{color:#30312e;font-size:clamp(15px,1.15vw,18px);line-height:1.85;margin:0}
+.avtovinil-page .vinyl-guide-intro>p:not(.vinyl-guide-lead){margin:0 0 18px}
+.avtovinil-page .vinyl-guide-actions{grid-column:2;align-self:end;margin-top:2px}
+.avtovinil-page .vinyl-guide-intro .button-outline{color:#202123;border-color:rgba(32,33,35,.48);background:transparent}
+.avtovinil-page .vinyl-guide-intro .button-outline:hover{color:#fff;background:#202123;border-color:#202123}
+.avtovinil-page .vinyl-guide-intro .button-outline:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+
+.avtovinil-page .vinyl-guide-highlights{--vinyl-panel-bg:#202123;margin-bottom:58px;padding:0;border:0;gap:1px;background:transparent}
+.avtovinil-page .vinyl-guide-highlights>div{background:#202123;padding:27px 28px}
+.avtovinil-page .vinyl-guide-highlights b{color:#f1eee7}
+.avtovinil-page .vinyl-guide-highlights p{color:#c0bfba}
+.avtovinil-page .vinyl-guide-block{
+  --vinyl-panel-bg:#eae9e3;
+  margin:0 0 58px;
+  padding:clamp(28px,3.5vw,48px);
+  color:#202123;
+}
+.avtovinil-page .vinyl-guide-heading h2{color:#202123}
+.avtovinil-page .vinyl-guide-heading>p{color:#555650}
+.avtovinil-page .vinyl-guide-cards article{background:#f7f6f1;border-color:rgba(20,21,22,.12)}
+.avtovinil-page .vinyl-guide-cards h3{color:#202123}
+.avtovinil-page .vinyl-guide-cards p{color:#555650}
+.avtovinil-page .vinyl-guide-compare{
+  --vinyl-panel-bg:#1c1d1f;
+  padding:clamp(28px,3.5vw,48px);
+  margin:0 0 58px;
+}
+.avtovinil-page .vinyl-guide-compare h2{color:#f1eee7}
+.avtovinil-page .vinyl-guide-compare-copy p{color:#c0bfba}
+.avtovinil-page .vinyl-guide-compare-table{background:#202123;border-color:rgba(255,255,255,.14)}
+.avtovinil-page .vinyl-guide-compare-row{border-color:rgba(255,255,255,.12)}
+.avtovinil-page .vinyl-guide-compare-row span{color:#c0bfba}
+.avtovinil-page .vinyl-guide-compare-row b{color:#f1eee7}
+.avtovinil-page .vinyl-guide-compare-head{background:#303133}
+.avtovinil-page .vinyl-guide-compare-head span,
+.avtovinil-page .vinyl-guide-compare-head b{color:#fff}
+.avtovinil-page .vinyl-guide-footnote{color:#c0bfba}
+.avtovinil-page .vinyl-guide-materials{
+  --vinyl-panel-bg:#eae9e3;
+  padding:clamp(28px,3.5vw,48px);
+  margin:0 0 58px;
+  color:#202123;
+}
+.avtovinil-page .vinyl-guide-materials h2{color:#202123}
+.avtovinil-page .vinyl-guide-materials-copy>p{color:#555650}
+.avtovinil-page .vinyl-guide-materials-copy .feature-list{color:#4e4f4a}
+.avtovinil-page .vinyl-guide-materials-copy .feature-list strong{color:#9a6127}
+.avtovinil-page .vinyl-guide-block:has(.vinyl-guide-prep){
+  --vinyl-panel-bg:#1c1d1f;
+  color:#f1eee7;
+}
+.avtovinil-page .vinyl-guide-block:has(.vinyl-guide-prep) .vinyl-guide-heading h2{color:#f1eee7}
+.avtovinil-page .vinyl-guide-block:has(.vinyl-guide-prep) .vinyl-guide-heading>p,
+.avtovinil-page .vinyl-guide-block:has(.vinyl-guide-prep) .vinyl-guide-prep p{color:#c0bfba}
+.avtovinil-page .vinyl-guide-prep{border-color:rgba(255,255,255,.14)}
+.avtovinil-page .vinyl-guide-prep>div{border-color:rgba(255,255,255,.14)}
+.avtovinil-page .vinyl-guide-prep b{color:#f1eee7}
+.avtovinil-page .vinyl-guide-warning{color:#c0bfba}
+.avtovinil-page .vinyl-guide-warning b{color:#f1bd83}
+.avtovinil-page .vinyl-guide-process{
+  --vinyl-panel-bg:#eae9e3;
+  padding:clamp(28px,3.5vw,48px);
+  margin:0 0 58px;
+  color:#202123;
+}
+.avtovinil-page .vinyl-guide-process .vinyl-guide-heading h2{color:#202123}
+.avtovinil-page .vinyl-guide-process .vinyl-guide-heading>p{color:#555650}
+.avtovinil-page .vinyl-guide-process li{border-color:rgba(20,21,22,.14)}
+.avtovinil-page .vinyl-guide-process li b{color:#202123}
+.avtovinil-page .vinyl-guide-process li p{color:#555650}
+.avtovinil-page .vinyl-guide-care{
+  --vinyl-panel-bg:#1c1d1f;
+  padding:clamp(28px,3.5vw,48px);
+  margin:0 0 58px;
+  border:0;
+  color:#f1eee7;
+}
+.avtovinil-page .vinyl-guide-care h2{color:#f1eee7}
+.avtovinil-page .vinyl-guide-care>div p{color:#c0bfba}
+.avtovinil-page .vinyl-guide-care .feature-list{color:#d0cec8}
+.avtovinil-page .vinyl-guide-facts{
+  --vinyl-panel-bg:#eae9e3;
+  padding:clamp(28px,3.5vw,48px);
+  margin:0 0 58px;
+}
+.avtovinil-page .vinyl-guide-facts>div{background:#f7f6f1;border-color:rgba(20,21,22,.12)}
+.avtovinil-page .vinyl-guide-facts b{color:#30312e}
+.avtovinil-page .vinyl-guide-facts p{color:#555650}
+.avtovinil-page .vinyl-guide-price{
+  --vinyl-panel-bg:#202123;
+  padding:clamp(28px,3.5vw,48px);
+  margin:0 0 58px;
+  border:0;
+  color:#f1eee7;
+}
+.avtovinil-page .vinyl-guide-price h2{color:#f1eee7}
+.avtovinil-page .vinyl-guide-price>div>p:not(.vinyl-guide-price-value){color:#c0bfba}
+.avtovinil-page .vinyl-guide-price-side{background:#191a1c;border-color:rgba(255,255,255,.14)}
+.avtovinil-page .vinyl-guide-price-side>b{color:#f1eee7}
+.avtovinil-page .vinyl-guide-price-side li,
+.avtovinil-page .vinyl-guide-price-side p{color:#c0bfba}
+.avtovinil-page .vinyl-guide-faq{
+  --vinyl-panel-bg:#eae9e3;
+  max-width:none;
+  padding:clamp(28px,3.5vw,48px);
+  margin:0 0 58px;
+}
+.avtovinil-page .vinyl-guide-faq .vinyl-guide-heading h2{color:#202123}
+.avtovinil-page .vinyl-guide-faq details,
+.avtovinil-page .vinyl-guide-faq details:last-child{border-color:rgba(20,21,22,.17)}
+.avtovinil-page .vinyl-guide-faq summary{color:#202123}
+.avtovinil-page .vinyl-guide-faq details p{color:#555650}
+.avtovinil-page .vinyl-guide-final{
+  --vinyl-panel-bg:#1c1d1f;
+  max-width:none;
+  padding:clamp(38px,4.5vw,64px);
+  margin:0;
+  border:0;
+  color:#f1eee7;
+}
+.avtovinil-page .vinyl-guide-final h2{color:#f1eee7}
+.avtovinil-page .vinyl-guide-final p{color:#c0bfba}
+
+/* Light theme: retain the same section rhythm while using readable light surfaces. */
+html[data-theme="light"] .avtovinil-page .vinyl-guide-highlights,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-compare,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-block:has(.vinyl-guide-prep),
+html[data-theme="light"] .avtovinil-page .vinyl-guide-care,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-price,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-final{
+  --vinyl-panel-bg:#eae9e3;
+  color:#202123;
+}
+html[data-theme="light"] .avtovinil-page .vinyl-guide-highlights>div,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-compare-table,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-compare-head,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-price-side{
+  background:#f7f6f1;
+  border-color:rgba(20,21,22,.13);
+}
+html[data-theme="light"] .avtovinil-page .vinyl-guide-highlights b,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-compare h2,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-compare-row b,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-compare-head span,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-compare-head b,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-block:has(.vinyl-guide-prep) .vinyl-guide-heading h2,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-prep b,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-care h2,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-price h2,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-price-side>b,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-final h2{
+  color:#202123;
+}
+html[data-theme="light"] .avtovinil-page .vinyl-guide-highlights p,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-compare-copy p,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-compare-row span,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-footnote,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-block:has(.vinyl-guide-prep) .vinyl-guide-heading>p,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-block:has(.vinyl-guide-prep) .vinyl-guide-prep p,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-warning,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-care>div p,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-care .feature-list,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-price>div>p:not(.vinyl-guide-price-value),
+html[data-theme="light"] .avtovinil-page .vinyl-guide-price-side li,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-price-side p,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-final p{
+  color:#555650;
+}
+html[data-theme="light"] .avtovinil-page .vinyl-guide-warning b{color:#9a6127}
+html[data-theme="light"] .avtovinil-page .vinyl-guide-compare-row{border-color:rgba(20,21,22,.14)}
+html[data-theme="light"] .avtovinil-page .vinyl-guide-prep,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-prep>div{border-color:rgba(20,21,22,.14)}
+html[data-theme="light"] .avtovinil-page .vinyl-guide-price,
+html[data-theme="light"] .avtovinil-page .vinyl-guide-facts>div{border-color:rgba(20,21,22,.12)}
+html[data-theme="light"] .avtovinil-page .vinyl-guide-final{border-color:rgba(20,21,22,.13)}
+html[data-theme="light"] .avtovinil-page .vinyl-guide-intro .button-outline{color:#202123;border-color:rgba(32,33,35,.48)}
+html[data-theme="light"] .avtovinil-page .vinyl-guide-intro .button-outline:hover{background:#202123;color:#fff;border-color:#202123}
+
+@media(max-width:900px){
+  .avtovinil-page .vinyl-guide-intro{grid-template-columns:1fr;gap:0}
+  .avtovinil-page .vinyl-guide-actions{grid-column:1;margin-top:12px}
+}
+@media(max-width:650px){
+  .avtovinil-page .vinyl-guide-intro{padding:27px 22px;margin-bottom:34px}
+  .avtovinil-page .vinyl-guide-intro h2{margin-bottom:18px}
+  .avtovinil-page .vinyl-guide-intro .vinyl-guide-lead{font-size:15px}
+  .avtovinil-page .vinyl-guide-actions{margin-top:8px}
+  .avtovinil-page .vinyl-guide-highlights{margin-bottom:38px}
+  .avtovinil-page .vinyl-guide-block,
+  .avtovinil-page .vinyl-guide-compare,
+  .avtovinil-page .vinyl-guide-materials,
+  .avtovinil-page .vinyl-guide-process,
+  .avtovinil-page .vinyl-guide-care,
+  .avtovinil-page .vinyl-guide-facts,
+  .avtovinil-page .vinyl-guide-price,
+  .avtovinil-page .vinyl-guide-faq{margin-bottom:38px}
+  .avtovinil-page .vinyl-guide-block,
+  .avtovinil-page .vinyl-guide-compare,
+  .avtovinil-page .vinyl-guide-materials,
+  .avtovinil-page .vinyl-guide-process,
+  .avtovinil-page .vinyl-guide-care,
+  .avtovinil-page .vinyl-guide-facts,
+  .avtovinil-page .vinyl-guide-price,
+  .avtovinil-page .vinyl-guide-faq{padding:26px 20px}
+  .avtovinil-page .vinyl-guide-final{padding:38px 22px}
+}
+
