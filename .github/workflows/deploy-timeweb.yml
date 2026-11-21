@@ -53,7 +53,7 @@ jobs:
               "assets", "foto/foto.png",
           ]
           required += [f"{route}/index.html" for route in (
-              "tehnology", "kuzov", "himchistka", "avtovinil", "shumo-vibro-teploizolyaciya", "bariglass", "baritools", "tonirovanie-stekol", "predprodazhnaya-podgotovka", "ruchnaya-polirovka", "remont-sideniy", "polirovka-i-zashchita-far", "himchistka-dvigatelya",
+              "tehnology", "kuzov", "himchistka", "avtovinil", "shumo-vibro-teploizolyaciya", "bariglass", "baritools", "tonirovanie-stekol", "predprodazhnaya-podgotovka", "ruchnaya-polirovka", "remont-sideniy", "polirovka-i-zashchita-far", "himchistka-dvigatelya", "baritools", "tonirovanie-stekol", "predprodazhnaya-podgotovka", "ruchnaya-polirovka", "remont-sideniy", "polirovka-i-zashchita-far", "himchistka-dvigatelya",
               "foto", "video", "reviews", "politika-konfidencialnosti",
           )]
           missing = []
