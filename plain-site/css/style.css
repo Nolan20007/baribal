@@ -1769,12 +1769,12 @@ html[data-theme="light"] .estimate-form output{
   .modal{
     align-items:center;
     justify-content:center;
-    padding:calc(env(safe-area-inset-top,0px) + 16px) 16px calc(env(safe-area-inset-bottom,0px) + 16px);
+    padding:calc(env(safe-area-inset-top,0px) + 4px) 12px calc(env(safe-area-inset-bottom,0px) + 4px);
   }
   .modal-card{
     width:min(460px,100%);
     max-width:460px;
-    max-height:calc(100vh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px) - 32px);
+    max-height:calc(100vh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px) - 8px);
     overflow-y:auto;
     box-sizing:border-box;
     padding:24px 20px;
@@ -3238,7 +3238,7 @@ a.button:focus-visible,
   .contact-widget-panel{max-height:min(78dvh,680px)}
   .verified-gallery__image{max-height:82dvh}
   @media(max-width:760px){
-    .modal-card{max-height:calc(100dvh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px) - 32px)}
+    .modal-card{max-height:calc(100dvh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px) - 8px)}
     .work-gallery-stage{height:64dvh}
     .project-modal__panel{max-height:94dvh}
     .project-modal__image{max-height:55dvh}
