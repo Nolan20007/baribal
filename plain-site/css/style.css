@@ -3248,3 +3248,8 @@ a.button:focus-visible,
   html{scroll-behavior:auto!important}
   .menu-toggle i{transition:none}
 }
+
+
+/* Keep service detail links fully legible on white service cards. */
+.service-card .service-actions .text-link{color:#171819;opacity:1;text-decoration:none;transition:color .2s ease}
+.service-card .service-actions .text-link:hover{color:#b8752f}
