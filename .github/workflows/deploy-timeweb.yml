@@ -2,12 +2,6 @@ name: Deploy BARIBAL to Timeweb (manual)
 
 on:
   workflow_dispatch:
-    inputs:
-      dry_run:
-        description: "Безопасная проверка без загрузки и удаления файлов"
-        required: true
-        type: boolean
-        default: true
 
 permissions:
   contents: read
@@ -74,16 +68,15 @@ jobs:
           test -n "$TIMEWEB_FTP_USERNAME" || (echo "Missing repository secret: TIMEWEB_FTP_USERNAME" && exit 1)
           test -n "$TIMEWEB_FTP_PASSWORD" || (echo "Missing repository secret: TIMEWEB_FTP_PASSWORD" && exit 1)
 
-      - name: TEMPORARY diagnostic: test plain FTP authentication only (dry-run must stay enabled)
+      - name: Test Timeweb explicit FTPS connection (dry-run only)
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: vh480.timeweb.ru
           username: ${{ secrets.TIMEWEB_FTP_USERNAME }}
           password: ${{ secrets.TIMEWEB_FTP_PASSWORD }}
-          protocol: ftp
+          protocol: ftps
           port: 21
           local-dir: ./dist/
-          # Diagnostic only: never upload while testing unencrypted FTP.
           server-dir: ./
           dry-run: true
           timeout: 120000
