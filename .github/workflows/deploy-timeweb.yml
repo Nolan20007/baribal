@@ -60,6 +60,14 @@ jobs:
           print(f"Plain HTML publication check passed: {len(required)} required paths.")
           PY
 
+      - name: Save the ready website as a downloadable ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: baribal-timeweb-site
+          path: dist/
+          if-no-files-found: error
+          retention-days: 7
+
       - name: Check that Timeweb credentials are configured
         env:
           TIMEWEB_FTP_USERNAME: ${{ secrets.TIMEWEB_FTP_USERNAME }}
