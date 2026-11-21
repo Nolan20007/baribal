@@ -1,0 +1,94 @@
+name: Deploy BARIBAL to Timeweb (manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Безопасная проверка без загрузки и удаления файлов"
+        required: true
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: timeweb-deploy
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Assemble the main plain HTML site
+        run: |
+          mkdir -p dist
+          cp -R plain-site/. dist/
+          mkdir -p dist/assets
+          cp -R assets/. dist/assets/
+          python maintenance/prepare-and-validate-site.py
+          rm -f dist/README.md
+          cp dist/index.html dist/404.html
+
+      - name: Inject shared callback forms into every page
+        run: python maintenance/build-shared-forms.py
+
+      - name: Validate all published pages and local assets
+        run: python maintenance/prepare-and-validate-site.py
+
+      - name: Verify essential published files
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          root = Path("dist")
+          required = [
+              "index.html", "404.html", "css/style.css",
+              "js/main.js", "js/callback-modal.js",
+              "data/work-galleries-1-20.json", "data/work-galleries-21-40.json",
+              "data/work-galleries-41-60.json",
+              "data/work-galleries-101-120.json", "data/work-galleries-121-140.json",
+              "assets", "foto/foto.png",
+          ]
+          required += [f"{route}/index.html" for route in (
+              "tehnology", "kuzov", "himchistka", "avtovinil", "shumo-vibro-teploizolyaciya", "bariglass", "baritools", "tonirovanie-stekol", "predprodazhnaya-podgotovka", "ruchnaya-polirovka", "remont-sideniy", "polirovka-i-zashchita-far", "himchistka-dvigatelya",
+              "foto", "video", "reviews", "politika-konfidencialnosti",
+          )]
+          missing = []
+          for item in required:
+              path = root / item
+              if not path.exists() or (path.is_file() and path.stat().st_size == 0):
+                  missing.append(item)
+          if missing:
+              raise SystemExit("Missing or empty published files: " + ", ".join(missing))
+          print(f"Plain HTML publication check passed: {len(required)} required paths.")
+          PY
+
+      - name: Check that Timeweb credentials are configured
+        env:
+          TIMEWEB_FTP_USERNAME: ${{ secrets.TIMEWEB_FTP_USERNAME }}
+          TIMEWEB_FTP_PASSWORD: ${{ secrets.TIMEWEB_FTP_PASSWORD }}
+        run: |
+          test -n "$TIMEWEB_FTP_USERNAME" || (echo "Missing repository secret: TIMEWEB_FTP_USERNAME" && exit 1)
+          test -n "$TIMEWEB_FTP_PASSWORD" || (echo "Missing repository secret: TIMEWEB_FTP_PASSWORD" && exit 1)
+
+      - name: Sync published files to Timeweb over explicit FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        with:
+          server: vh480.timeweb.ru
+          username: ${{ secrets.TIMEWEB_FTP_USERNAME }}
+          password: ${{ secrets.TIMEWEB_FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          local-dir: ./dist/
+          # The FTP account is restricted to public_html, so its FTP root is ./
+          server-dir: ./
+          dry-run: ${{ inputs.dry_run }}
+          timeout: 120000
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            cgi-bin/**
