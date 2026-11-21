@@ -74,18 +74,18 @@ jobs:
           test -n "$TIMEWEB_FTP_USERNAME" || (echo "Missing repository secret: TIMEWEB_FTP_USERNAME" && exit 1)
           test -n "$TIMEWEB_FTP_PASSWORD" || (echo "Missing repository secret: TIMEWEB_FTP_PASSWORD" && exit 1)
 
-      - name: Sync published files to Timeweb over explicit FTPS
+      - name: TEMPORARY diagnostic: test plain FTP authentication only (dry-run must stay enabled)
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: vh480.timeweb.ru
           username: ${{ secrets.TIMEWEB_FTP_USERNAME }}
           password: ${{ secrets.TIMEWEB_FTP_PASSWORD }}
-          protocol: ftps
+          protocol: ftp
           port: 21
           local-dir: ./dist/
-          # The FTP account is restricted to public_html, so its FTP root is ./
+          # Diagnostic only: never upload while testing unencrypted FTP.
           server-dir: ./
-          dry-run: ${{ inputs.dry_run }}
+          dry-run: true
           timeout: 120000
           exclude: |
             **/.git*
