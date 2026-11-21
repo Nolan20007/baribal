@@ -1764,20 +1764,20 @@ html[data-theme="light"] .estimate-form output{
 @media(prefers-reduced-motion:reduce){.project-modal__close,.project-modal__nav{transition:none}}
 
 
-/* Compact callback modal on phones: 70% of viewport, aligned near the top. */
+/* Responsive callback modal: use the available viewport without an artificial 70% cap. */
 @media(max-width:760px){
   .modal{
-    align-items:flex-start;
+    align-items:center;
     justify-content:center;
-    padding:2vh 0 0;
+    padding:calc(env(safe-area-inset-top,0px) + 16px) 16px calc(env(safe-area-inset-bottom,0px) + 16px);
   }
   .modal-card{
-    width:70vw;
-    max-width:70vw;
-    max-height:70vh;
+    width:min(460px,100%);
+    max-width:460px;
+    max-height:calc(100vh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px) - 32px);
     overflow-y:auto;
     box-sizing:border-box;
-    padding:24px 16px;
+    padding:24px 20px;
     overscroll-behavior:contain;
   }
   .modal-card h2{font-size:clamp(21px,5vw,29px);line-height:1.15}
@@ -3238,7 +3238,7 @@ a.button:focus-visible,
   .contact-widget-panel{max-height:min(78dvh,680px)}
   .verified-gallery__image{max-height:82dvh}
   @media(max-width:760px){
-    .modal-card{max-height:70dvh}
+    .modal-card{max-height:calc(100dvh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px) - 32px)}
     .work-gallery-stage{height:64dvh}
     .project-modal__panel{max-height:94dvh}
     .project-modal__image{max-height:55dvh}
