@@ -1,6 +1,19 @@
 name: Validate BARIBAL site and lead forms
 
 on:
+  push:
+    branches:
+      - "feature/**"
+      - "fix/**"
+      - "maintenance/**"
+    paths:
+      - "plain-site/**"
+      - "maintenance/**"
+      - ".github/workflows/deploy-pages.yml"
+      - ".github/workflows/deploy-timeweb.yml"
+      - ".github/workflows/validate-lead-forms.yml"
+      - "assets/**"
+      - "foto/**"
   pull_request:
     branches: [main]
     paths:
