@@ -4,7 +4,7 @@ declare(strict_types=1);
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store, max-age=0');
 
-$configReady = is_file(__DIR__ . '/private/config.php')
+$configReady = is_file(dirname(__DIR__, 2) . '/private/baribal-mail.php')
     && is_file(dirname(__DIR__) . '/vendor/autoload.php');
 
 http_response_code($configReady ? 200 : 503);
