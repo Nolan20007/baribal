@@ -32,6 +32,11 @@ jobs:
       - name: Inject shared callback forms into every page
         run: python maintenance/build-shared-forms.py
       # The site validator also checks intrinsic dimensions and alt text for page images.
+      - name: Generate responsive image variants for all published pages
+        run: |
+          python -m pip install --disable-pip-version-check Pillow
+          python maintenance/optimize-published-images.py
+
       - name: Validate all published pages and local assets
         run: python maintenance/prepare-and-validate-site.py
       - name: Verify essential published files
