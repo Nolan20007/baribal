@@ -3287,3 +3287,10 @@ a.button:focus-visible,
     min-height:420px;
   }
 }
+
+
+/* BARIBAL orange scrollbar for the service selector in the home-page estimate block. */
+.estimate-services{scrollbar-width:thin;scrollbar-color:var(--orange) #292a2c}
+.estimate-services::-webkit-scrollbar{width:7px}
+.estimate-services::-webkit-scrollbar-track{background:#292a2c;border-radius:10px}
+.estimate-services::-webkit-scrollbar-thumb{background:var(--orange);border:1px solid #292a2c;border-radius:10px}
