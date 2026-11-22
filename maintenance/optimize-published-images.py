@@ -94,9 +94,9 @@ def choose_sizes(ancestors: set[str], attrs: dict[str, str], source_width: int) 
     if "brand" in ancestors or "hero-index" in ancestors:
         return "47px" if "brand" in ancestors else "28px"
     if "contact-widget-toggle" in ancestors:
-        return "24px"
+        return "48px"
     if "contact-widget-heading" in ancestors:
-        return "40px"
+        return "56px"
     if "contact-widget" in ancestors:
         return "48px"
     if "work-image" in ancestors or "video-preview" in ancestors:
@@ -108,7 +108,7 @@ def choose_sizes(ancestors: set[str], attrs: dict[str, str], source_width: int) 
     return "(max-width: 700px) calc(100vw - 48px), (max-width: 1100px) 50vw, 600px"
 
 
-def make_webp(source: Path, destination: Path, width: int) -> tuple[int, int, int]:
+def make_webp(source: Path, destination: Path, width: int, quality: int | None = None) -> tuple[int, int, int]:
     destination.parent.mkdir(parents=True, exist_ok=True)
     with Image.open(source) as original:
         if getattr(original, "is_animated", False):
@@ -119,7 +119,7 @@ def make_webp(source: Path, destination: Path, width: int) -> tuple[int, int, in
             image = image.resize((width, height), Image.Resampling.LANCZOS)
         has_alpha = "A" in image.getbands() or "transparency" in image.info
         image = image.convert("RGBA" if has_alpha else "RGB")
-        image.save(destination, "WEBP", quality=88 if has_alpha else QUALITY, method=4)
+        image.save(destination, "WEBP", quality=quality if quality is not None else (88 if has_alpha else QUALITY), method=4)
         return image.width, image.height, destination.stat().st_size
 
 
@@ -199,7 +199,7 @@ def main() -> None:
                 for width in widths:
                     output = source.with_name(f"{stem}.r{width}.webp")
                     try:
-                        out_width, out_height, out_bytes = make_webp(source, output, width)
+                        out_width, out_height, out_bytes = make_webp(source, output, width, quality=92 if is_avatar else None)
                         variants.append((out_width, output))
                         responsive_bytes += out_bytes
                         converted += 1
