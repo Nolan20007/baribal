@@ -3294,3 +3294,31 @@ a.button:focus-visible,
 .estimate-services::-webkit-scrollbar{width:7px}
 .estimate-services::-webkit-scrollbar-track{background:#292a2c;border-radius:10px}
 .estimate-services::-webkit-scrollbar-thumb{background:var(--orange);border:1px solid #292a2c;border-radius:10px}
+
+
+/* Автовинил: на мобильных фото располагается под шапкой услуги, перед описанием.
+   Desktop-композиция остаётся без изменений. */
+@media(max-width:760px){
+  .avtovinil-page .split-feature{
+    grid-template-columns:minmax(0,1fr);
+    gap:24px;
+    align-items:start;
+  }
+  .avtovinil-page .split-feature .feature-photo{
+    order:0;
+    width:100%;
+    height:auto;
+    min-height:0;
+    aspect-ratio:4/3;
+  }
+  .avtovinil-page .split-feature .feature-photo img{
+    display:block;
+    width:100%;
+    height:100%;
+    min-height:0;
+    aspect-ratio:4/3;
+    object-fit:cover;
+    object-position:center;
+  }
+  .avtovinil-page .split-feature .prose-block{order:1}
+}
