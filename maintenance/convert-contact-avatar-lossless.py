@@ -34,7 +34,7 @@ def main() -> None:
         image.load()
 
     DESTINATION.parent.mkdir(parents=True, exist_ok=True)
-    image.save(DESTINATION, format="WEBP", lossless=True, method=6)
+    image.save(DESTINATION, format="WEBP", lossless=True, exact=True, method=6)
 
     with Image.open(DESTINATION) as encoded:
         if encoded.format != "WEBP" or encoded.size != EXPECTED_SIZE:
