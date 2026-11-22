@@ -66,11 +66,47 @@ if (estimateForm && estimateOptions.length) {
   syncEstimate();
 }
 
-document.querySelectorAll(".demo-form").forEach((form) => {
-  form.addEventListener("submit", (event) => {
+document.querySelectorAll(".lead-form").forEach((form) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
+    if (form.dataset.submitting === "1") return;
+
     const output = form.querySelector("output");
-    if (output) output.textContent = "Предпросмотр: форма готова. Подключение реальной отправки заявок — следующий этап.";
+    const submitButton = form.querySelector('button[type="submit"], button:not([type])');
+    const originalButtonText = submitButton ? submitButton.innerHTML : "";
+    form.dataset.submitting = "1";
+    if (submitButton) submitButton.disabled = true;
+    if (output) output.textContent = "Отправляем заявку…";
+
+    try {
+      const response = await fetch(new URL("/api/submit.php", window.location.origin), {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" },
+        credentials: "same-origin"
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || "Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.");
+      }
+
+      form.reset();
+      form.querySelectorAll("[data-contact-other-toggle]").forEach((toggle) => {
+        toggle.dispatchEvent(new Event("change", { bubbles: true }));
+      });
+      document.querySelectorAll('.estimate-services input[name="requestedServices"]').forEach((input) => {
+        input.dispatchEvent(new Event("change", { bubbles: true }));
+      });
+      if (output) output.textContent = "Спасибо! Заявка отправлена. Мы свяжемся с вами.";
+    } catch (error) {
+      if (output) output.textContent = error.message || "Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.";
+    } finally {
+      delete form.dataset.submitting;
+      if (submitButton) {
+        submitButton.disabled = false;
+        if (submitButton.innerHTML !== originalButtonText) submitButton.innerHTML = originalButtonText;
+      }
+    }
   });
 });
 
