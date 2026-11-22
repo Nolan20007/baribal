@@ -91,11 +91,11 @@ jobs:
           server: vh480.timeweb.ru
           username: ${{ secrets.TIMEWEB_FTP_USERNAME }}
           password: ${{ secrets.TIMEWEB_FTP_PASSWORD }}
-          protocol: ftps
+          protocol: ftp
           port: 21
           local-dir: ./dist/
           server-dir: ./
-          dry-run: false
+          dry-run: true
           timeout: 120000
           exclude: |
             **/.git*
