@@ -1,0 +1,102 @@
+name: Validate BARIBAL site and lead forms
+
+on:
+  push:
+    branches:
+      - "feature/**"
+      - "fix/**"
+      - "maintenance/**"
+    paths:
+      - "plain-site/**"
+      - "maintenance/**"
+      - ".github/workflows/deploy-pages.yml"
+      - ".github/workflows/deploy-timeweb.yml"
+      - ".github/workflows/validate-lead-forms.yml"
+      - "assets/**"
+      - "foto/**"
+  pull_request:
+    branches: [main]
+    paths:
+      - "plain-site/**"
+      - "maintenance/**"
+      - ".github/workflows/deploy-pages.yml"
+      - ".github/workflows/deploy-timeweb.yml"
+      - ".github/workflows/validate-lead-forms.yml"
+      - "assets/**"
+      - "foto/**"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install image build dependency
+        run: python -m pip install --disable-pip-version-check Pillow
+
+      - name: Check Python and JavaScript syntax
+        run: |
+          python -m py_compile maintenance/build-shared-forms.py maintenance/prepare-and-validate-site.py maintenance/optimize-published-images.py
+          node --check plain-site/js/lead-forms.js
+          node --check plain-site/js/main.js
+
+      - name: Build and validate GitHub Pages preview mode
+        run: |
+          mkdir -p dist
+          cp -R plain-site/. dist/
+          mkdir -p dist/assets
+          cp -R assets/. dist/assets/
+          python maintenance/prepare-and-validate-site.py
+          rm -f dist/README.md
+          cp dist/index.html dist/404.html
+          python maintenance/build-shared-forms.py
+          python maintenance/optimize-published-images.py
+          python maintenance/prepare-and-validate-site.py
+          python - <<'PY'
+          import re
+          from pathlib import Path
+
+          pages = sorted(Path("dist").rglob("*.html"))
+          assert pages, "No HTML pages were built"
+          for page in pages:
+              html = page.read_text(encoding="utf-8")
+              assert re.search(r'<meta name="baribal-lead-endpoint" content="">', html), f"GitHub Pages endpoint is not empty: {page}"
+              assert "lead-forms.js" in html, f"Shared lead handler is missing: {page}"
+          print(f"GitHub Pages preview mode verified on {len(pages)} pages.")
+          PY
+
+      - name: Verify Timeweb endpoint injection contract
+        run: |
+          rm -rf dist
+          mkdir -p dist
+          cp -R plain-site/. dist/
+          mkdir -p dist/assets
+          cp -R assets/. dist/assets/
+          python maintenance/prepare-and-validate-site.py
+          rm -f dist/README.md
+          cp dist/index.html dist/404.html
+          BARIBAL_LEAD_ENDPOINT=/api/lead.php python maintenance/build-shared-forms.py
+          python - <<'PY'
+          import re
+          from pathlib import Path
+
+          pages = sorted(Path("dist").rglob("*.html"))
+          for page in pages:
+              html = page.read_text(encoding="utf-8")
+              assert re.search(r'<meta name="baribal-lead-endpoint" content="/api/lead\.php">', html), f"Timeweb endpoint was not injected: {page}"
+          print(f"Timeweb endpoint injection verified on {len(pages)} pages.")
+          PY

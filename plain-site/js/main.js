@@ -66,15 +66,6 @@ if (estimateForm && estimateOptions.length) {
   syncEstimate();
 }
 
-document.querySelectorAll(".demo-form").forEach((form) => {
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const output = form.querySelector("output");
-    if (output) output.textContent = "Предпросмотр: форма готова. Подключение реальной отправки заявок — следующий этап.";
-  });
-});
-
-
 // Floating callback widget: same timed opening and session behavior as the original site.
 const contactWidget = document.querySelector(".contact-widget");
 if (contactWidget) {

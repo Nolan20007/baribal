@@ -1,9 +1,15 @@
 from pathlib import Path
+from html import escape as html_escape
 import os
 import re
 
 ROOT = Path("dist")
 COMPONENTS = ROOT / "components"
+# GitHub Pages deliberately receives an empty endpoint. The Timeweb workflow
+# may set this public same-origin path after the PHP handler is installed.
+LEAD_ENDPOINT = os.environ.get("BARIBAL_LEAD_ENDPOINT", "").strip()
+if LEAD_ENDPOINT and LEAD_ENDPOINT != "/api/lead.php":
+    raise SystemExit("BARIBAL_LEAD_ENDPOINT must be empty or /api/lead.php")
 widget = (COMPONENTS / "contact-widget.html").read_text(encoding="utf-8").strip()
 modal = (COMPONENTS / "callback-modal.html").read_text(encoding="utf-8").strip()
 
@@ -61,11 +67,14 @@ for page in ROOT.rglob("*.html"):
 
     prefix = Path(os.path.relpath(ROOT, page.parent)).as_posix()
     head_additions = []
+    lead_meta = '<meta name="baribal-lead-endpoint" content="' + html_escape(LEAD_ENDPOINT, quote=True) + '">'
+    head_additions.append(lead_meta)
+
     css_href = prefix + "/css/style.css"
     if not re.search(r'<link[^>]+href=["\']' + re.escape(css_href) + r'["\']', html, re.I):
         head_additions.append(f'<link rel="stylesheet" href="{css_href}">')
 
-    for filename in ("callback-modal.js", "main.js"):
+    for filename in ("callback-modal.js", "lead-forms.js", "main.js"):
         src = prefix + "/js/" + filename
         if not re.search(r'<script[^>]+src=["\']' + re.escape(src) + r'["\']', html, re.I):
             module = ' type="module"' if filename == "main.js" else " defer"
