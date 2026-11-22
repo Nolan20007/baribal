@@ -85,13 +85,13 @@ jobs:
           test -n "$TIMEWEB_FTP_USERNAME" || (echo "Missing repository secret: TIMEWEB_FTP_USERNAME" && exit 1)
           test -n "$TIMEWEB_FTP_PASSWORD" || (echo "Missing repository secret: TIMEWEB_FTP_PASSWORD" && exit 1)
 
-      - name: Test Timeweb explicit FTPS connection (dry-run only)
+      - name: Test Timeweb FTP connection (dry-run only)
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: vh480.timeweb.ru
           username: ${{ secrets.TIMEWEB_FTP_USERNAME }}
           password: ${{ secrets.TIMEWEB_FTP_PASSWORD }}
-          protocol: ftps
+          protocol: ftp
           port: 21
           local-dir: ./dist/
           server-dir: ./
