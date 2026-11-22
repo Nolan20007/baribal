@@ -4,7 +4,7 @@ declare(strict_types=1);
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store, max-age=0');
 
-$configPath = dirname(__DIR__, 2) . '/private/baribal-mail.php';
+$configPath = dirname(__DIR__, 2) . '/baribal-private/baribal-mail.php';
 $autoloadPath = dirname(__DIR__) . '/vendor/autoload.php';
 $configReady = false;
 if (is_file($configPath) && is_file($autoloadPath)) {
