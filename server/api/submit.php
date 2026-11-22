@@ -2,7 +2,6 @@
 declare(strict_types=1);
 
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
 
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store, max-age=0');
