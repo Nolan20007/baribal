@@ -11,8 +11,8 @@ from PIL import Image, ImageOps
 
 ROOT = Path("dist").resolve()
 PHOTO_WIDTHS = (400, 800, 1200, 1600)
-LOGO_WIDTHS = (96, 192, 384)
-AVATAR_WIDTHS = (48, 96, 192)
+LOGO_WIDTHS = (48, 96, 192, 384)
+AVATAR_WIDTHS = (24, 48, 96, 192)
 QUALITY = 80
 VOID_TAGS = {
     "area", "base", "br", "col", "embed", "hr", "img", "input",
@@ -93,6 +93,10 @@ def relative_url(page: Path, target: Path) -> str:
 def choose_sizes(ancestors: set[str], attrs: dict[str, str], source_width: int) -> str:
     if "brand" in ancestors or "hero-index" in ancestors:
         return "47px" if "brand" in ancestors else "28px"
+    if "contact-widget-toggle" in ancestors:
+        return "24px"
+    if "contact-widget-heading" in ancestors:
+        return "40px"
     if "contact-widget" in ancestors:
         return "48px"
     if "work-image" in ancestors or "video-preview" in ancestors:
