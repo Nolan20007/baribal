@@ -137,7 +137,8 @@ def main() -> None:
     if not ROOT.is_dir():
         raise SystemExit("dist/ does not exist; assemble the site before optimizing images")
 
-    converted = 0
+    generated = 0
+    reused = 0
     skipped = 0
     failed: list[str] = []
     original_bytes = 0
@@ -213,26 +214,29 @@ def main() -> None:
                     output = source.with_name(f"{stem}.r{width}.webp")
                     cache_file = CACHE_ROOT / f"{source_hashes[source]}_{width}_q{quality}.webp"
                     try:
+                        cache_hit = False
                         if cache_file.is_file():
                             try:
                                 with Image.open(cache_file) as cached:
                                     if (cached.format or "").upper() != "WEBP" or cached.width != min(width, source_width):
                                         raise ValueError("cached variant has an unexpected format or width")
                                     out_width, out_height = cached.size
-                                shutil.copy2(cache_file, output)
-                                out_bytes = output.stat().st_size
+                                cache_hit = True
                             except Exception:
                                 cache_file.unlink(missing_ok=True)
-                                out_width, out_height, out_bytes = make_webp(source, cache_file, width, quality=quality)
-                                shutil.copy2(cache_file, output)
-                                out_bytes = output.stat().st_size
+
+                        if cache_hit:
+                            shutil.copy2(cache_file, output)
+                            out_bytes = output.stat().st_size
+                            reused += 1
                         else:
                             out_width, out_height, out_bytes = make_webp(source, cache_file, width, quality=quality)
                             shutil.copy2(cache_file, output)
                             out_bytes = output.stat().st_size
+                            generated += 1
+
                         variants.append((out_width, output))
                         responsive_bytes += out_bytes
-                        converted += 1
                     except Exception as error:
                         failed.append(f"{relative_source} at {width}px: {error}")
                 variants.sort(key=lambda pair: pair[0])
@@ -268,7 +272,7 @@ def main() -> None:
 
     print(
         "Responsive image optimization passed: "
-        f"{updated_tags} image tags updated, {converted} WebP variants generated, "
+        f"{updated_tags} image tags updated, {generated} WebP variants generated, {reused} restored from cache, "
         f"{full_src_tags} existing responsive images linked to their originals, "
         f"{skipped} images left unchanged. "
         f"Source files represented: {original_bytes / 1024:.1f} KiB; "
