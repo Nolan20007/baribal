@@ -175,7 +175,7 @@ def main() -> None:
 
             relative_source = source.relative_to(ROOT).as_posix()
             is_logo = source.name.lower() in {"baribal-logo.png", "baribal-logo.webp"}
-            is_avatar = relative_source.endswith("foto/foto.png")
+            is_avatar = relative_source.endswith(("foto/foto.png", "foto/foto1.png"))
             if is_logo:
                 widths = [w for w in LOGO_WIDTHS if w < source_width] + [source_width]
             elif is_avatar:
