@@ -141,6 +141,7 @@ jobs:
           port: 21
           local-dir: ./private-config/
           server-dir: ./baribal-private/
+          dangerous-clean-slate: true
           dry-run: false
           timeout: 120000
 
