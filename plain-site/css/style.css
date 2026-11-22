@@ -3258,23 +3258,23 @@ a.button:focus-visible,
 .nav a[href$="/video/"], .footer a[href$="/video/"] { display: none !important; }
 
 
-/* Service detail photos: a modest +20% size, scoped only to individual service pages. */
+/* Service detail photos: restore original column width and increase height by about 40%. */
 .avtovinil-page .split-feature,
 .himchistka-page .split-feature,
 .ppf-page .split-feature{
-  grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
 }
 .avtovinil-page .feature-photo,
 .avtovinil-page .feature-photo img,
 .ppf-page .feature-photo,
 .ppf-page .feature-photo img{
-  height:456px;
-  min-height:456px;
+  height:638px;
+  min-height:638px;
 }
 .himchistka-page .feature-photo,
 .himchistka-page .feature-photo img{
-  height:432px;
-  min-height:432px;
+  height:605px;
+  min-height:605px;
 }
 @media(max-width:760px){
   .avtovinil-page .feature-photo,
@@ -3283,7 +3283,7 @@ a.button:focus-visible,
   .himchistka-page .feature-photo img,
   .ppf-page .feature-photo,
   .ppf-page .feature-photo img{
-    height:300px;
-    min-height:300px;
+    height:420px;
+    min-height:420px;
   }
 }
