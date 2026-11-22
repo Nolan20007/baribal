@@ -3253,3 +3253,6 @@ a.button:focus-visible,
 /* Keep service detail links fully legible on white service cards. */
 .service-card .service-actions .text-link{color:#171819;opacity:1;text-decoration:none;transition:color .2s ease}
 .service-card .service-actions .text-link:hover{color:#b8752f}
+
+/* Временно скрываем пункт видео в навигации и футере, не удаляя саму страницу. */
+.nav a[href$="/video/"], .footer a[href$="/video/"] { display: none !important; }
