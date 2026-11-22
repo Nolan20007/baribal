@@ -32,7 +32,7 @@ class LocalReferenceParser(HTMLParser):
         values = dict(attrs)
         if tag.lower() == "img" and values.get("src"):
             self.images.append(values)
-        for attr in ("src", "href", "poster"):
+        for attr in ("src", "href", "poster", "data-full-src"):
             value = values.get(attr)
             if value:
                 self.references.append((attr, value))
