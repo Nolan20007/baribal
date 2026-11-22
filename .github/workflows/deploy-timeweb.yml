@@ -33,9 +33,23 @@ jobs:
       - name: Inject shared callback forms into every page
         run: python maintenance/build-shared-forms.py
 
+      - name: Restore responsive image cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .image-cache
+          key: baribal-responsive-images-v1-${{ runner.os }}-${{ github.run_id }}
+          restore-keys: |
+            baribal-responsive-images-v1-${{ runner.os }}-
+
       - name: Generate responsive image variants for all published pages
         run: |
           python maintenance/optimize-published-images.py
+
+      - name: Save responsive image cache
+        uses: actions/cache/save@v4
+        with:
+          path: .image-cache
+          key: baribal-responsive-images-v1-${{ runner.os }}-${{ github.run_id }}
 
       - name: Validate all published pages and local assets
         run: python maintenance/prepare-and-validate-site.py
@@ -85,7 +99,7 @@ jobs:
           test -n "$TIMEWEB_FTP_USERNAME" || (echo "Missing repository secret: TIMEWEB_FTP_USERNAME" && exit 1)
           test -n "$TIMEWEB_FTP_PASSWORD" || (echo "Missing repository secret: TIMEWEB_FTP_PASSWORD" && exit 1)
 
-      - name: Test Timeweb FTP connection (dry-run only)
+      - name: Deploy website directly to Timeweb public_html
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: vh480.timeweb.ru
@@ -94,7 +108,7 @@ jobs:
           protocol: ftp
           port: 21
           local-dir: ./dist/
-          server-dir: ./
+          server-dir: ./public_html/
           dry-run: false
           timeout: 120000
           exclude: |
