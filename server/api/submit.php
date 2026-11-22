@@ -20,7 +20,11 @@ function leadText($value, int $maxLength): string
         return '';
     }
     $value = trim(preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/u', '', $value) ?? '');
-    return mb_substr($value, 0, $maxLength, 'UTF-8');
+    return function_exists('mb_substr') ? mb_substr($value, 0, $maxLength, 'UTF-8') : substr($value, 0, $maxLength);
+}
+
+if ((int)($_SERVER['CONTENT_LENGTH'] ?? 0) > 8192) {
+    leadResponse(413, ['success' => false, 'message' => 'Слишком большой объём данных.']);
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
