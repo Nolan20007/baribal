@@ -114,5 +114,5 @@ jobs:
             echo "No font asset changes to commit."
           else
             git commit -m "Add locally hosted Manrope and Oswald fonts"
-            git push
+            git push origin HEAD:${{ github.ref_name }}
           fi
