@@ -66,7 +66,7 @@ if (estimateForm && estimateOptions.length) {
   syncEstimate();
 }
 
-document.querySelectorAll(".lead-form").forEach((form) => {
+document.querySelectorAll(".lead-form, .demo-form").forEach((form) => {
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     if (form.dataset.submitting === "1") return;
