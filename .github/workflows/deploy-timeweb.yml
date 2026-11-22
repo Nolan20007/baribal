@@ -81,7 +81,7 @@ jobs:
               "data/work-galleries-41-60.json",
               "data/work-galleries-101-120.json", "data/work-galleries-121-140.json",
               "assets", "foto/foto.png", "foto/foto.webp", "og.jpg",
-              "api/submit.php", "api/health.php", "api/private/.htaccess", "vendor/autoload.php",
+              "api/submit.php", "api/health.php", "vendor/autoload.php",
               "assets/images/brand/favicon-new.svg",
               "favicon.ico", "favicon-32.png", "favicon-16.png", "apple-touch-icon.png",
           ]
@@ -124,10 +124,23 @@ jobs:
           TIMEWEB_SMTP_USERNAME: ${{ secrets.TIMEWEB_SMTP_USERNAME }}
           TIMEWEB_SMTP_PASSWORD: ${{ secrets.TIMEWEB_SMTP_PASSWORD }}
         run: |
-          php -r '$config = ["smtp_host" => "smtp.timeweb.ru", "smtp_username" => getenv("TIMEWEB_SMTP_USERNAME"), "smtp_password" => getenv("TIMEWEB_SMTP_PASSWORD"), "recipient" => "info@co376877.tw1.ru"]; file_put_contents("dist/api/private/config.php", "<?php\nreturn " . var_export($config, true) . ";\n", LOCK_EX);'
-          chmod 600 dist/api/private/config.php
-          test -s dist/api/private/config.php
-          test -s dist/api/private/.htaccess
+          mkdir -p private-config
+          php -r '$config = ["smtp_host" => "smtp.timeweb.ru", "smtp_username" => getenv("TIMEWEB_SMTP_USERNAME"), "smtp_password" => getenv("TIMEWEB_SMTP_PASSWORD"), "recipient" => "info@co376877.tw1.ru"]; file_put_contents("private-config/baribal-mail.php", "<?php\nreturn " . var_export($config, true) . ";\n", LOCK_EX);'
+          chmod 600 private-config/baribal-mail.php
+          test -s private-config/baribal-mail.php
+
+      - name: Deploy private SMTP configuration outside public_html
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        with:
+          server: vh480.timeweb.ru
+          username: ${{ secrets.TIMEWEB_FTP_USERNAME }}
+          password: ${{ secrets.TIMEWEB_FTP_PASSWORD }}
+          protocol: ftp
+          port: 21
+          local-dir: ./private-config/
+          server-dir: ./private/
+          dry-run: false
+          timeout: 120000
 
       - name: Deploy website directly to Timeweb public_html
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
