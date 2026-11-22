@@ -755,6 +755,7 @@ if (portfolioGrid) {
     if (img.closest("[data-no-lightbox], .no-lightbox")) return false;
     return true;
   };
+  const fullImageSource = (img) => img?.dataset.fullSrc || img?.currentSrc || img?.src;
   const detailsForImage = (img) => {
     const serviceGallery = img.closest("#service-info-gallery");
     if (serviceGallery) {
@@ -784,7 +785,7 @@ if (portfolioGrid) {
       const position = cards.indexOf(card);
       const number = Number(card.dataset.projectNumber || position + 1);
       const galleryMap = await loadGalleryForCard(number);
-      const sources = [cover.currentSrc || cover.src, ...(galleryMap[String(number)] || []).map(path => new URL(path, document.baseURI).href)];
+      const sources = [fullImageSource(cover), ...(galleryMap[String(number)] || []).map(path => new URL(path, document.baseURI).href)];
       openItems(sources.map(src => ({ src })), heading, text, source, true);
       return;
     }
@@ -793,7 +794,7 @@ if (portfolioGrid) {
     const customImages = (galleryButton?.dataset.galleryImages || "").split("|").map(path => path.trim()).filter(Boolean);
     const images = customImages.length
       ? customImages.map(path => ({ src: new URL(path, document.baseURI).href }))
-      : [...card.querySelectorAll("img")].filter(eligibleImage).map(img => ({ src: img.currentSrc || img.src }));
+      : [...card.querySelectorAll("img")].filter(eligibleImage).map(img => ({ src: fullImageSource(img) }));
     openItems(images, galleryButton?.dataset.galleryTitle || heading, text, source, false);
   };
 
@@ -805,7 +806,7 @@ if (portfolioGrid) {
       return;
     }
     const data = detailsForImage(img);
-    openItems(data.images.map(item => ({ src: item.currentSrc || item.src })), data.heading, data.text, img, false);
+    openItems(data.images.map(item => ({ src: fullImageSource(item) })), data.heading, data.text, img, false);
   };
 
   // The 154 portfolio cards retain their verified per-project photo sets.
@@ -865,7 +866,7 @@ if (portfolioGrid) {
       const customImages = (button.dataset.galleryImages || "").split("|").map(path => path.trim()).filter(Boolean);
       const images = customImages.length
         ? customImages.map(path => ({ src: new URL(path, document.baseURI).href }))
-        : [...(scope?.querySelectorAll("img") || [])].filter(eligibleImage).map(img => ({ src: img.currentSrc || img.src }));
+        : [...(scope?.querySelectorAll("img") || [])].filter(eligibleImage).map(img => ({ src: fullImageSource(img) }));
       const titleText = button.dataset.galleryTitle || scope?.querySelector("h2, h3, h4")?.textContent.trim() || "Фотографии";
       openItems(images, titleText, "", button, false);
     });
