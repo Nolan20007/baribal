@@ -35,9 +35,23 @@ jobs:
       - name: Inject shared callback forms into every page
         run: python maintenance/build-shared-forms.py
       # The site validator also checks intrinsic dimensions and alt text for page images.
+      - name: Restore responsive image cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .image-cache
+          key: baribal-responsive-images-v1-${{ runner.os }}-${{ github.run_id }}
+          restore-keys: |
+            baribal-responsive-images-v1-${{ runner.os }}-
+
       - name: Generate responsive image variants for all published pages
         run: |
           python maintenance/optimize-published-images.py
+
+      - name: Save responsive image cache
+        uses: actions/cache/save@v4
+        with:
+          path: .image-cache
+          key: baribal-responsive-images-v1-${{ runner.os }}-${{ github.run_id }}
 
       - name: Validate all published pages and local assets
         run: python maintenance/prepare-and-validate-site.py
