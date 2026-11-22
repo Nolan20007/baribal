@@ -68,11 +68,7 @@ for page in ROOT.rglob("*.html"):
     prefix = Path(os.path.relpath(ROOT, page.parent)).as_posix()
     head_additions = []
     lead_meta = '<meta name="baribal-lead-endpoint" content="' + html_escape(LEAD_ENDPOINT, quote=True) + '">'
-    lead_meta_pattern = re.compile(r'<meta\\s+name=["\\']baribal-lead-endpoint["\\'][^>]*>', re.I)
-    if lead_meta_pattern.search(html):
-        html = lead_meta_pattern.sub(lambda _: lead_meta, html, count=1)
-    else:
-        head_additions.append(lead_meta)
+    head_additions.append(lead_meta)
 
     css_href = prefix + "/css/style.css"
     if not re.search(r'<link[^>]+href=["\']' + re.escape(css_href) + r'["\']', html, re.I):
