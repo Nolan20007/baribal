@@ -97,7 +97,7 @@ if ($rateHandle !== false) {
     fclose($rateHandle);
 }
 
-$configPath = __DIR__ . '/private/config.php';
+$configPath = dirname(__DIR__, 2) . '/private/baribal-mail.php';
 $autoloadPath = dirname(__DIR__) . '/vendor/autoload.php';
 if (!is_file($configPath) || !is_file($autoloadPath)) {
     error_log('BARIBAL lead delivery is not configured.');
