@@ -43,12 +43,12 @@ jobs:
           local_rules = []
           saved = set()
 
-          blocks = re.findall(r"@font-face\\s*\\{[^}]+\\}", css, re.S)
+          blocks = re.findall(r"@font-face\s*\{[^}]+\}", css, re.S)
           for block in blocks:
-              family_match = re.search(r"font-family:\\s*['\"]?([^;'\"]+)", block)
-              weight_match = re.search(r"font-weight:\\s*([^;]+)", block)
-              range_match = re.search(r"unicode-range:\\s*([^;]+)", block)
-              url_match = re.search(r"src:\\s*url\\((https://[^)]+)\\)", block)
+              family_match = re.search(r"font-family:\s*['\"]?([^;'\"]+)", block)
+              weight_match = re.search(r"font-weight:\s*([^;]+)", block)
+              range_match = re.search(r"unicode-range:\s*([^;]+)", block)
+              url_match = re.search(r"src:\s*url\((https://[^)]+)\)", block)
               if not all((family_match, weight_match, range_match, url_match)):
                   continue
 
