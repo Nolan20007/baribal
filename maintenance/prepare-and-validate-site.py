@@ -132,6 +132,7 @@ def main() -> None:
         ROOT / "css" / "style.css",
         ROOT / "js" / "main.js",
         ROOT / "js" / "callback-modal.js",
+        ROOT / "js" / "lead-forms.js",
     ]
     for path in required:
         if not path.is_file() or path.stat().st_size == 0:
