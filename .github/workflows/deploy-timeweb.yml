@@ -127,7 +127,7 @@ jobs:
         run: |
           mkdir -p private-config
           php -r '$config = ["smtp_host" => "smtp.timeweb.ru", "smtp_username" => getenv("TIMEWEB_SMTP_USERNAME"), "smtp_password" => getenv("TIMEWEB_SMTP_PASSWORD"), "recipient" => "info@co376877.tw1.ru"]; $json = json_encode($config, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES); if (file_put_contents("private-config/baribal-mail.json", $json, LOCK_EX) === false) { throw new RuntimeException("Could not write private mail configuration"); }'
-          chmod 600 private-config/baribal-mail.json
+          chmod 644 private-config/baribal-mail.json
           test -s private-config/baribal-mail.json
           php -r '$config = json_decode(file_get_contents("private-config/baribal-mail.json"), true, 512, JSON_THROW_ON_ERROR); foreach (["smtp_username", "smtp_password", "recipient"] as $key) { if (!isset($config[$key]) || !is_string($config[$key]) || trim($config[$key]) === "") { throw new RuntimeException("Missing required private mail configuration field: " . $key); } } echo "Private JSON mail configuration validated (values hidden).\n";'
 
