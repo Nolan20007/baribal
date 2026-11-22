@@ -21,6 +21,8 @@ jobs:
     steps:
       - name: Check out working branch
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Download exact Google Fonts WOFF2 subsets
         run: |
@@ -93,8 +95,8 @@ jobs:
               raise RuntimeError(f"Missing required font subsets: {sorted(missing)}")
 
           Path("plain-site/css/fonts-local.css").write_text(
-              "/* Locally hosted Google Fonts; generated from the official CSS2 API. */\\n"
-              + "\\n\\n".join(local_rules) + "\\n",
+              "/* Locally hosted Google Fonts; generated from the official CSS2 API. */\n"
+              + "\n\n".join(local_rules) + "\n",
               encoding="utf-8"
           )
           print("Downloaded:", ", ".join(sorted(saved)))
