@@ -140,7 +140,7 @@ jobs:
           protocol: ftp
           port: 21
           local-dir: ./private-config/
-          server-dir: ./private/
+          server-dir: ./baribal-private/
           dry-run: false
           timeout: 120000
 
