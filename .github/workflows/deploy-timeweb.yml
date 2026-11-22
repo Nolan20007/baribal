@@ -17,12 +17,27 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Set up PHP and install the mailer
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer:v2
+
+      - name: Install PHP dependencies and validate server scripts
+        run: |
+          composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
+          php -l server/api/submit.php
+          php -l server/api/health.php
+
       - name: Assemble the main plain HTML site
         run: |
           mkdir -p dist
           cp -R plain-site/. dist/
           mkdir -p dist/assets
           cp -R assets/. dist/assets/
+          mkdir -p dist/api
+          cp -R server/api/. dist/api/
+          cp -R vendor dist/vendor
           python -m pip install --disable-pip-version-check Pillow CairoSVG
           python maintenance/inject-social-metadata.py
           python maintenance/convert-contact-avatar-lossless.py
@@ -66,6 +81,7 @@ jobs:
               "data/work-galleries-41-60.json",
               "data/work-galleries-101-120.json", "data/work-galleries-121-140.json",
               "assets", "foto/foto.png", "foto/foto.webp", "og.jpg",
+              "api/submit.php", "api/health.php", "api/private/.htaccess", "vendor/autoload.php",
               "assets/images/brand/favicon-new.svg",
               "favicon.ico", "favicon-32.png", "favicon-16.png", "apple-touch-icon.png",
           ]
@@ -95,9 +111,23 @@ jobs:
         env:
           TIMEWEB_FTP_USERNAME: ${{ secrets.TIMEWEB_FTP_USERNAME }}
           TIMEWEB_FTP_PASSWORD: ${{ secrets.TIMEWEB_FTP_PASSWORD }}
+          TIMEWEB_SMTP_USERNAME: ${{ secrets.TIMEWEB_SMTP_USERNAME }}
+          TIMEWEB_SMTP_PASSWORD: ${{ secrets.TIMEWEB_SMTP_PASSWORD }}
         run: |
           test -n "$TIMEWEB_FTP_USERNAME" || (echo "Missing repository secret: TIMEWEB_FTP_USERNAME" && exit 1)
           test -n "$TIMEWEB_FTP_PASSWORD" || (echo "Missing repository secret: TIMEWEB_FTP_PASSWORD" && exit 1)
+          test "$TIMEWEB_SMTP_USERNAME" = "zayavki@co376877.tw1.ru" || (echo "TIMEWEB_SMTP_USERNAME must be the exact staging sender mailbox, with no spaces" && exit 1)
+          test -n "$TIMEWEB_SMTP_PASSWORD" || (echo "Missing repository secret: TIMEWEB_SMTP_PASSWORD" && exit 1)
+
+      - name: Create private SMTP configuration for deployment
+        env:
+          TIMEWEB_SMTP_USERNAME: ${{ secrets.TIMEWEB_SMTP_USERNAME }}
+          TIMEWEB_SMTP_PASSWORD: ${{ secrets.TIMEWEB_SMTP_PASSWORD }}
+        run: |
+          php -r '$config = ["smtp_host" => "smtp.timeweb.ru", "smtp_username" => getenv("TIMEWEB_SMTP_USERNAME"), "smtp_password" => getenv("TIMEWEB_SMTP_PASSWORD"), "recipient" => "info@co376877.tw1.ru"]; file_put_contents("dist/api/private/config.php", "<?php\\nreturn " . var_export($config, true) . ";\\n", LOCK_EX);'
+          chmod 600 dist/api/private/config.php
+          test -s dist/api/private/config.php
+          test -s dist/api/private/.htaccess
 
       - name: Deploy website directly to Timeweb public_html
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
