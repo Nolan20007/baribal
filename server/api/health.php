@@ -18,6 +18,7 @@ $fieldStatus = [
     'recipient_nonempty' => false,
 ];
 $loadError = null;
+$loadErrorLine = null;
 
 if ($configReadable && $autoloadFound) {
     try {
@@ -37,7 +38,8 @@ if ($configReadable && $autoloadFound) {
             }
         }
     } catch (Throwable $error) {
-        $loadError = get_class($error);
+        $loadError = get_class($error) . ': ' . substr(preg_replace('/[\r\n\t]+/', ' ', $error->getMessage()) ?? '', 0, 240);
+        $loadErrorLine = $error->getLine();
     }
 }
 
@@ -61,6 +63,7 @@ echo json_encode([
         'config_keys' => $configKeys,
         'required_fields' => $fieldStatus,
         'load_error' => $loadError,
+        'load_error_line' => $loadErrorLine,
         'open_basedir_enabled' => (string)ini_get('open_basedir') !== '',
     ],
 ], JSON_UNESCAPED_SLASHES);
