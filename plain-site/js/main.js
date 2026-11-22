@@ -82,7 +82,14 @@ if (contactWidget) {
   const contactWidgetPanel = contactWidget.querySelector(".contact-widget-panel");
   let widgetDismissed = false;
   let widgetAlreadyShown = false;
+  let widgetSessionStartedAt = Date.now();
   try {
+    const storedStart = Number(sessionStorage.getItem("baribal-contact-widget-started-at"));
+    if (Number.isFinite(storedStart) && storedStart > 0) {
+      widgetSessionStartedAt = storedStart;
+    } else {
+      sessionStorage.setItem("baribal-contact-widget-started-at", String(widgetSessionStartedAt));
+    }
     widgetDismissed = sessionStorage.getItem("baribal-contact-widget-dismissed") === "1";
     widgetAlreadyShown = sessionStorage.getItem("baribal-contact-widget-shown") === "1";
   } catch {}
@@ -108,13 +115,17 @@ if (contactWidget) {
     setWidgetOpen(opening);
   });
   if (!widgetAlreadyShown && !widgetDismissed) {
+    // Count 30 seconds from the first page in this tab session, not from each page load.
+    // If the visitor navigates before the deadline, the widget opens on the page they are viewing.
+    const elapsedOnSite = Math.max(0, Date.now() - widgetSessionStartedAt);
+    const delayUntilAutoOpen = Math.max(0, 30000 - elapsedOnSite);
     window.setTimeout(() => {
       if (!widgetAlreadyShown && !widgetDismissed) {
         widgetAlreadyShown = true;
         try { sessionStorage.setItem("baribal-contact-widget-shown", "1"); } catch {}
         setWidgetOpen(true);
       }
-    }, 7000);
+    }, delayUntilAutoOpen);
   }
   contactWidget.querySelectorAll(".contact-preferences").forEach((group) => {
     const otherToggle = group.querySelector("[data-contact-other-toggle]");
