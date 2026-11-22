@@ -100,7 +100,7 @@ def choose_sizes(ancestors: set[str], attrs: dict[str, str], source_width: int) 
     if "contact-widget" in ancestors:
         return "48px"
     if "work-image" in ancestors or "video-preview" in ancestors:
-        return "(max-width: 700px) calc(100vw - 48px), (max-width: 1200px) calc((100vw - 92px) / 3), 379px"
+        return "(max-width: 760px) 92vw, (max-width: 1200px) calc((100vw - 92px) / 3), 379px"
     if "service-image" in ancestors:
         return "(max-width: 700px) calc(100vw - 48px), (max-width: 1100px) 42vw, 250px"
     if "video-card" in ancestors or "video-item" in ancestors:
