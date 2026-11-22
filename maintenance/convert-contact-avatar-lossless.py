@@ -41,7 +41,7 @@ def main() -> None:
             raise SystemExit("Generated contact portrait is not a 350x350 WebP image")
         decoded = encoded.convert(image.mode)
         difference = ImageChops.difference(image, decoded)
-        if difference.getbbox() is not None:
+        if any(channel.getbbox() is not None for channel in difference.split()):
             raise SystemExit("Lossless WebP verification failed: pixel values changed")
 
     source_size = SOURCE.stat().st_size
