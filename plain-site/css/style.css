@@ -1958,10 +1958,7 @@ img.js-shared-lightbox-image:focus-visible{outline:2px solid var(--orange);outli
 .estimate-services > .estimate-service-option{min-height:44px;padding:8px 5px}
 
 
-/* Homepage studio services: images are decorative; paired actions stay together on the right. */
-.services-section .service-image{cursor:default}
-.services-section .service-image img{pointer-events:none;cursor:default}
-.services-section .service-card:hover .service-image img{transform:none}
+/* Homepage studio services: keep the established layout while enabling image links and hover zoom. */
 .services-section .service-bottom{display:flex;flex-direction:row;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
 .services-section .service-bottom>b{flex:0 0 auto;margin-right:auto;white-space:nowrap}
 .services-section .service-actions{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:14px;flex:0 0 auto}
@@ -2912,16 +2909,14 @@ html[data-theme="light"] .ppf-page .deep-cleaning-block .deep-cleaning-reasons>d
 /* Linked service images remain grid items themselves, so they keep the
    exact same dimensions and responsive image rules as unlinked cards. */
 .service-image-link{
-  display:contents;
+  display:block;
+  min-width:0;
   color:inherit;
   text-decoration:none;
   cursor:pointer;
 }
 .service-image-link .service-image{
   cursor:pointer;
-}
-.service-card:hover .service-image-link:not(:hover) img{
-  transform:none;
 }
 
 
