@@ -120,3 +120,55 @@ jobs:
             git commit -m "Add locally hosted Manrope and Oswald fonts"
             git push origin HEAD:${{ github.ref_name }}
           fi
+
+      - name: Assemble published site for preview validation
+        run: |
+          mkdir -p dist
+          cp -R plain-site/. dist/
+          mkdir -p dist/assets
+          cp -R assets/. dist/assets/
+          python maintenance/prepare-and-validate-site.py
+          rm -f dist/README.md
+          cp dist/index.html dist/404.html
+
+      - name: Inject shared callback forms
+        run: python maintenance/build-shared-forms.py
+
+      - name: Generate responsive image variants
+        run: |
+          python -m pip install --disable-pip-version-check Pillow
+          python maintenance/optimize-published-images.py
+
+      - name: Validate all published pages and local assets
+        run: python maintenance/prepare-and-validate-site.py
+
+      - name: Verify local fonts in the publication artifact
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          root = Path("dist")
+          required = [
+              "css/fonts-local.css",
+              "assets/fonts/manrope-cyrillic.woff2",
+              "assets/fonts/manrope-latin.woff2",
+              "assets/fonts/oswald-cyrillic.woff2",
+              "assets/fonts/oswald-latin.woff2",
+          ]
+          missing = [name for name in required if not (root / name).is_file()]
+          if missing:
+              raise SystemExit("Missing local font files: " + ", ".join(missing))
+          css = (root / "css/fonts-local.css").read_text(encoding="utf-8")
+          for name in (
+              "manrope-cyrillic-ext.woff2", "manrope-cyrillic.woff2",
+              "manrope-latin-ext.woff2", "manrope-latin.woff2",
+              "oswald-cyrillic-ext.woff2", "oswald-cyrillic.woff2",
+              "oswald-latin-ext.woff2", "oswald-latin.woff2",
+          ):
+              if name not in css or not (root / "assets/fonts" / name).is_file():
+                  raise SystemExit("Font CSS/file mismatch: " + name)
+          for page in root.rglob("*.html"):
+              source = page.read_text(encoding="utf-8")
+              if "fonts.googleapis.com" in source or "fonts.gstatic.com" in source:
+                  raise SystemExit("Remote Google Fonts reference remains: " + str(page))
+          print("Local fonts are present and all published HTML pages are free of Google Fonts requests.")
+          PY
