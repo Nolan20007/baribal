@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import hashlib
 import html
 import os
 import re
+import shutil
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import quote, unquote, urlsplit
@@ -10,6 +12,7 @@ from urllib.parse import quote, unquote, urlsplit
 from PIL import Image, ImageOps
 
 ROOT = Path("dist").resolve()
+CACHE_ROOT = Path(".image-cache") / "v1"
 PHOTO_WIDTHS = (400, 800, 1200, 1600)
 LOGO_WIDTHS = (48, 96, 192, 384)
 QUALITY = 80
@@ -107,6 +110,14 @@ def choose_sizes(ancestors: set[str], attrs: dict[str, str], source_width: int) 
     return "(max-width: 700px) calc(100vw - 48px), (max-width: 1100px) 50vw, 600px"
 
 
+def source_digest(source: Path) -> str:
+    digest = hashlib.sha256()
+    with source.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
 def make_webp(source: Path, destination: Path, width: int, quality: int | None = None) -> tuple[int, int, int]:
     destination.parent.mkdir(parents=True, exist_ok=True)
     with Image.open(source) as original:
@@ -134,6 +145,8 @@ def main() -> None:
     updated_tags = 0
     full_src_tags = 0
     variant_cache: dict[Path, list[tuple[int, Path]]] = {}
+    source_hashes: dict[Path, str] = {}
+    CACHE_ROOT.mkdir(parents=True, exist_ok=True)
 
     for page in sorted(ROOT.rglob("*.html")):
         if "components" in page.relative_to(ROOT).parts:
@@ -156,6 +169,7 @@ def main() -> None:
                     source_width, source_height = probe.size
                     image_format = (probe.format or "").upper()
                     animated = getattr(probe, "is_animated", False)
+                    has_alpha = "A" in probe.getbands() or "transparency" in probe.info
             except Exception as error:
                 failed.append(f"{page.relative_to(ROOT)}: {original_url}: {error}")
                 continue
@@ -192,10 +206,30 @@ def main() -> None:
             variants = variant_cache.get(source)
             if variants is None:
                 variants = []
+                if source not in source_hashes:
+                    source_hashes[source] = source_digest(source)
+                quality = 88 if has_alpha else QUALITY
                 for width in widths:
                     output = source.with_name(f"{stem}.r{width}.webp")
+                    cache_file = CACHE_ROOT / f"{source_hashes[source]}_{width}_q{quality}.webp"
                     try:
-                        out_width, out_height, out_bytes = make_webp(source, output, width)
+                        if cache_file.is_file():
+                            try:
+                                with Image.open(cache_file) as cached:
+                                    if (cached.format or "").upper() != "WEBP" or cached.width != min(width, source_width):
+                                        raise ValueError("cached variant has an unexpected format or width")
+                                    out_width, out_height = cached.size
+                                shutil.copy2(cache_file, output)
+                                out_bytes = output.stat().st_size
+                            except Exception:
+                                cache_file.unlink(missing_ok=True)
+                                out_width, out_height, out_bytes = make_webp(source, cache_file, width, quality=quality)
+                                shutil.copy2(cache_file, output)
+                                out_bytes = output.stat().st_size
+                        else:
+                            out_width, out_height, out_bytes = make_webp(source, cache_file, width, quality=quality)
+                            shutil.copy2(cache_file, output)
+                            out_bytes = output.stat().st_size
                         variants.append((out_width, output))
                         responsive_bytes += out_bytes
                         converted += 1
