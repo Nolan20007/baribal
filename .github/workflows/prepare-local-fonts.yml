@@ -29,8 +29,8 @@ jobs:
 
           css_url = (
               "https://fonts.googleapis.com/css2?"
-              "family=Manrope:wght@400;500;600;700;800"
-              "&family=Oswald:wght@400;500;600&display=swap"
+              "family=Manrope:wght@400..800"
+              "&family=Oswald:wght@400..600&display=swap"
           )
           request = Request(css_url, headers={
               "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) "
@@ -89,6 +89,10 @@ jobs:
           missing = required - saved
           if missing:
               raise RuntimeError(f"Missing required font subsets: {sorted(missing)}")
+          if not any("font-weight: 400 800" in rule for rule in local_rules if "Manrope" in rule):
+              raise RuntimeError("Manrope variable weight range 400–800 was not returned")
+          if not any("font-weight: 400 600" in rule for rule in local_rules if "Oswald" in rule):
+              raise RuntimeError("Oswald variable weight range 400–600 was not returned")
 
           Path("plain-site/css/fonts-local.css").write_text(
               "/* Locally hosted Google Fonts; generated from the official CSS2 API. */\n"
