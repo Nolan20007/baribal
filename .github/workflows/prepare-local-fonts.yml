@@ -8,6 +8,9 @@ on:
       - "assets/fonts/**"
       - "plain-site/css/fonts-local.css"
       - "maintenance/prepare-local-fonts.py"
+  pull_request:
+    branches:
+      - main
 
 permissions:
   contents: write
