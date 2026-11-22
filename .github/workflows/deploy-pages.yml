@@ -26,6 +26,7 @@ jobs:
           cp -R plain-site/. dist/
           mkdir -p dist/assets
           cp -R assets/. dist/assets/
+          python maintenance/inject-social-metadata.py
           python -m pip install --disable-pip-version-check Pillow
           python maintenance/convert-contact-avatar-lossless.py
           python maintenance/prepare-and-validate-site.py
@@ -51,7 +52,8 @@ jobs:
               "data/work-galleries-1-20.json", "data/work-galleries-21-40.json",
               "data/work-galleries-41-60.json",
               "data/work-galleries-101-120.json", "data/work-galleries-121-140.json",
-              "assets", "foto/foto.png", "foto/foto.webp",
+              "assets", "foto/foto.png", "foto/foto.webp", "og.jpg",
+              "assets/images/brand/favicon.svg", "assets/images/brand/bear-black.png",
           ]
           required += [f"{route}/index.html" for route in (
               "tehnology", "kuzov", "himchistka", "avtovinil", "shumo-vibro-teploizolyaciya", "bariglass", "baritools", "tonirovanie-stekol", "predprodazhnaya-podgotovka", "ruchnaya-polirovka", "remont-sideniy", "polirovka-i-zashchita-far", "baritools", "tonirovanie-stekol", "predprodazhnaya-podgotovka", "ruchnaya-polirovka", "remont-sideniy", "polirovka-i-zashchita-far",
