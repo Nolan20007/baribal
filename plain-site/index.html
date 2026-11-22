@@ -29,7 +29,7 @@
         "+73422024142",
         "+79824814142"
       ],
-      "email": "mihail051206@yandex.ru",
+      "email": "info@co376877.tw1.ru",
       "taxID": "810704738466",
       "identifier": {
         "@type": "PropertyValue",
@@ -209,6 +209,7 @@
           <label class="estimate-service-option"><input type="checkbox" name="requestedServices" value="Полировка и защитная обработка фар"><span>Полировка и защитная обработка фар</span></label>
         </div>
         <form class="estimate-form demo-form">
+          <div aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden"><label>Оставьте это поле пустым<input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
           <label>Ваш автомобиль<input name="car" placeholder="Марка и модель"></label>
           <div class="estimate-selected">
             <div class="estimate-selected-heading"><span>Выбранные услуги</span><b data-selected-count>0</b></div>
@@ -222,8 +223,9 @@
               <label><input type="checkbox" name="contact_method" value="phone" checked><span class="contact-option-icon contact-option-phone" aria-hidden="true"></span><span>По телефону</span></label>
               <label><input type="checkbox" name="contact_method" value="max"><span class="contact-option-icon contact-option-max" aria-hidden="true"></span><span>MAX</span></label>
               <label><input type="checkbox" name="contact_method" value="telegram"><span class="contact-option-icon contact-option-telegram" aria-hidden="true"></span><span>Telegram</span></label>
-              <label><input type="checkbox" name="contact_method" value="other"><span>Другой способ</span></label>
+              <label><input type="checkbox" name="contact_method" value="other" data-contact-other-toggle><span>Другой способ</span></label>
             </div>
+            <div class="contact-other-details" hidden><label>Укажите e-mail, мессенджер или другой способ связи<input type="text" name="contact_other" placeholder="Например: name@mail.ru или Signal"></label></div>
           </fieldset>
           <button class="button" type="submit">Отправить на расчёт <span>↗</span></button>
           <output aria-live="polite"></output>
@@ -306,7 +308,7 @@
   <footer class="footer">
     <div class="wrap footer-grid">
       <a class="brand footer-brand" href="./index.html"><img src="../assets/images/brand/baribal-logo.png" alt="" width="408" height="411"><span><b>BARIBAL</b><small>СТУДИЯ ЗАЩИТНЫХ ТЕХНОЛОГИЙ</small></span></a>
-      <div><h2>Контакты</h4><a href="tel:+79824814142">+7 (982) 481-41-42</a><a href="tel:+73422024142">+7 (342) 202-41-42</a><a href="mailto:mihail051206@yandex.ru">mihail051206@yandex.ru</a></div>
+      <div><h2>Контакты</h4><a href="tel:+79824814142">+7 (982) 481-41-42</a><a href="tel:+73422024142">+7 (342) 202-41-42</a><a href="mailto:info@co376877.tw1.ru">info@co376877.tw1.ru</a></div>
       <div class="footer-address"><h2>Адрес студии</h4><p>Пермь, ул. Героев Хасана, 105Э</p><p>За ТЦ «Шоколад», в районе Велты</p><a class="footer-route-button" href="https://yandex.ru/maps/org/baribal/66190218088?si=t32uycp3bmd4me8yudj9meng48" target="_blank" rel="noopener noreferrer">Построить маршрут <span>↗</span></a></div>
       <div><h2>Навигация</h4><a href="./tehnology/">Услуги</a><a href="./foto/">Все наши работы</a><a href="#studio">Студия</a><a href="#contacts">Контакты</a><a href="./video/">Видео</a><a href="./reviews/">Отзывы</a><a href="./about/">О компании</a><a href="./politika-konfidencialnosti/">Политика конфиденциальности</a></div>
     </div>
