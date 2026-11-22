@@ -513,7 +513,7 @@ document.querySelectorAll("#works .work-card .js-service-info").forEach((button)
 document.querySelector("#service-info-order")?.addEventListener("click", (event) => {
   const title = event.currentTarget.dataset.serviceTitle || "";
   closeInfoModal();
-  window.BaribalCallbackModal?.open({ serviceTitle: title, trigger: event.currentTarget });
+  window.BaribalCallbackModal?.open("", title, lastModalTrigger || event.currentTarget);
 });
 document.querySelectorAll("#service-info-modal .js-close").forEach((button) => button.addEventListener("click", closeInfoModal));
 document.addEventListener("keydown", (event) => {
