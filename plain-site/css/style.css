@@ -3256,3 +3256,34 @@ a.button:focus-visible,
 
 /* Временно скрываем пункт видео в навигации и футере, не удаляя саму страницу. */
 .nav a[href$="/video/"], .footer a[href$="/video/"] { display: none !important; }
+
+
+/* Service detail photos: a modest +20% size, scoped only to individual service pages. */
+.avtovinil-page .split-feature,
+.himchistka-page .split-feature,
+.ppf-page .split-feature{
+  grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);
+}
+.avtovinil-page .feature-photo,
+.avtovinil-page .feature-photo img,
+.ppf-page .feature-photo,
+.ppf-page .feature-photo img{
+  height:456px;
+  min-height:456px;
+}
+.himchistka-page .feature-photo,
+.himchistka-page .feature-photo img{
+  height:432px;
+  min-height:432px;
+}
+@media(max-width:760px){
+  .avtovinil-page .feature-photo,
+  .avtovinil-page .feature-photo img,
+  .himchistka-page .feature-photo,
+  .himchistka-page .feature-photo img,
+  .ppf-page .feature-photo,
+  .ppf-page .feature-photo img{
+    height:300px;
+    min-height:300px;
+  }
+}
