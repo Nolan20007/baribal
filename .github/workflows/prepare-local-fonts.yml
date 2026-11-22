@@ -1,0 +1,117 @@
+name: Prepare self-hosted fonts
+
+on:
+  push:
+    branches:
+      - maintenance/self-host-google-fonts
+    paths-ignore:
+      - "assets/fonts/**"
+      - "plain-site/css/fonts-local.css"
+      - "maintenance/prepare-local-fonts.py"
+
+permissions:
+  contents: write
+
+jobs:
+  download-fonts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out working branch
+        uses: actions/checkout@v4
+
+      - name: Download exact Google Fonts WOFF2 subsets
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from urllib.request import Request, urlopen
+          import re
+
+          css_url = (
+              "https://fonts.googleapis.com/css2?"
+              "family=Manrope:wght@400;500;600;700;800"
+              "&family=Oswald:wght@400;500;600&display=swap"
+          )
+          request = Request(css_url, headers={
+              "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) "
+                            "AppleWebKit/537.36 (KHTML, like Gecko) "
+                            "Chrome/131.0.0.0 Safari/537.36"
+          })
+          css = urlopen(request, timeout=30).read().decode("utf-8")
+
+          out = Path("assets/fonts")
+          out.mkdir(parents=True, exist_ok=True)
+          local_rules = []
+          saved = set()
+
+          blocks = re.findall(r"@font-face\\s*\\{[^}]+\\}", css, re.S)
+          for block in blocks:
+              family_match = re.search(r"font-family:\\s*['\"]?([^;'\"]+)", block)
+              weight_match = re.search(r"font-weight:\\s*([^;]+)", block)
+              range_match = re.search(r"unicode-range:\\s*([^;]+)", block)
+              url_match = re.search(r"src:\\s*url\\((https://[^)]+)\\)", block)
+              if not all((family_match, weight_match, range_match, url_match)):
+                  continue
+
+              family = family_match.group(1).strip()
+              unicode_range = range_match.group(1).strip()
+              subset = None
+              if "U+0400" in unicode_range or "U+045F" in unicode_range:
+                  subset = "cyrillic"
+              elif "U+0460" in unicode_range or "U+052F" in unicode_range:
+                  subset = "cyrillic-ext"
+              elif "U+0000" in unicode_range or "U+00FF" in unicode_range:
+                  subset = "latin"
+              elif "U+0100" in unicode_range or "U+024F" in unicode_range:
+                  subset = "latin-ext"
+              if subset is None:
+                  continue
+
+              family_slug = "manrope" if family.lower() == "manrope" else "oswald"
+              filename = f"{family_slug}-{subset}.woff2"
+              if filename not in saved:
+                  font_request = Request(url_match.group(1), headers={
+                      "User-Agent": "Mozilla/5.0"
+                  })
+                  data = urlopen(font_request, timeout=30).read()
+                  if not data.startswith(b"wOF2"):
+                      raise RuntimeError(f"Not a WOFF2 file: {filename}")
+                  (out / filename).write_bytes(data)
+                  saved.add(filename)
+
+              local = block.replace(url_match.group(1), f"../../assets/fonts/{filename}")
+              local_rules.append(local)
+
+          required = {
+              "manrope-cyrillic.woff2", "manrope-latin.woff2",
+              "oswald-cyrillic.woff2", "oswald-latin.woff2"
+          }
+          missing = required - saved
+          if missing:
+              raise RuntimeError(f"Missing required font subsets: {sorted(missing)}")
+
+          Path("plain-site/css/fonts-local.css").write_text(
+              "/* Locally hosted Google Fonts; generated from the official CSS2 API. */\\n"
+              + "\\n\\n".join(local_rules) + "\\n",
+              encoding="utf-8"
+          )
+          print("Downloaded:", ", ".join(sorted(saved)))
+          print("Generated @font-face rules:", len(local_rules))
+          PY
+
+      - name: Preserve font licenses
+        run: |
+          mkdir -p assets/fonts
+          curl -fsSL https://raw.githubusercontent.com/google/fonts/main/ofl/manrope/OFL.txt -o assets/fonts/LICENSE-Manrope.txt
+          curl -fsSL https://raw.githubusercontent.com/google/fonts/main/ofl/oswald/OFL.txt -o assets/fonts/LICENSE-Oswald.txt
+
+      - name: Commit generated font assets to this branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/fonts plain-site/css/fonts-local.css
+          if git diff --cached --quiet; then
+            echo "No font asset changes to commit."
+          else
+            git commit -m "Add locally hosted Manrope and Oswald fonts"
+            git push
+          fi
