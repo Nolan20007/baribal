@@ -124,7 +124,7 @@ jobs:
           TIMEWEB_SMTP_USERNAME: ${{ secrets.TIMEWEB_SMTP_USERNAME }}
           TIMEWEB_SMTP_PASSWORD: ${{ secrets.TIMEWEB_SMTP_PASSWORD }}
         run: |
-          php -r '$config = ["smtp_host" => "smtp.timeweb.ru", "smtp_username" => getenv("TIMEWEB_SMTP_USERNAME"), "smtp_password" => getenv("TIMEWEB_SMTP_PASSWORD"), "recipient" => "info@co376877.tw1.ru"]; file_put_contents("dist/api/private/config.php", "<?php\\nreturn " . var_export($config, true) . ";\\n", LOCK_EX);'
+          php -r '$config = ["smtp_host" => "smtp.timeweb.ru", "smtp_username" => getenv("TIMEWEB_SMTP_USERNAME"), "smtp_password" => getenv("TIMEWEB_SMTP_PASSWORD"), "recipient" => "info@co376877.tw1.ru"]; file_put_contents("dist/api/private/config.php", "<?php\nreturn " . var_export($config, true) . ";\n", LOCK_EX);'
           chmod 600 dist/api/private/config.php
           test -s dist/api/private/config.php
           test -s dist/api/private/.htaccess
