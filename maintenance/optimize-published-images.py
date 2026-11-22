@@ -115,7 +115,7 @@ def make_webp(source: Path, destination: Path, width: int) -> tuple[int, int, in
             image = image.resize((width, height), Image.Resampling.LANCZOS)
         has_alpha = "A" in image.getbands() or "transparency" in image.info
         image = image.convert("RGBA" if has_alpha else "RGB")
-        image.save(destination, "WEBP", quality=88 if has_alpha else QUALITY, method=6)
+        image.save(destination, "WEBP", quality=88 if has_alpha else QUALITY, method=4)
         return image.width, image.height, destination.stat().st_size
 
 
@@ -130,6 +130,7 @@ def main() -> None:
     responsive_bytes = 0
     updated_tags = 0
     full_src_tags = 0
+    variant_cache: dict[Path, list[tuple[int, Path]]] = {}
 
     for page in sorted(ROOT.rglob("*.html")):
         if "components" in page.relative_to(ROOT).parts:
@@ -188,16 +189,20 @@ def main() -> None:
                 continue
 
             stem = source.stem
-            variants: list[tuple[int, Path]] = []
-            for width in widths:
-                output = source.with_name(f"{stem}.r{width}.webp")
-                try:
-                    out_width, out_height, out_bytes = make_webp(source, output, width)
-                    variants.append((out_width, output))
-                    responsive_bytes += out_bytes
-                    converted += 1
-                except Exception as error:
-                    failed.append(f"{relative_source} at {width}px: {error}")
+            variants = variant_cache.get(source)
+            if variants is None:
+                variants = []
+                for width in widths:
+                    output = source.with_name(f"{stem}.r{width}.webp")
+                    try:
+                        out_width, out_height, out_bytes = make_webp(source, output, width)
+                        variants.append((out_width, output))
+                        responsive_bytes += out_bytes
+                        converted += 1
+                    except Exception as error:
+                        failed.append(f"{relative_source} at {width}px: {error}")
+                variants.sort(key=lambda pair: pair[0])
+                variant_cache[source] = variants
 
             if len(variants) < 2:
                 continue
