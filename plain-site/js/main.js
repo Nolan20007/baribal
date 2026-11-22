@@ -79,9 +79,14 @@ document.querySelectorAll(".lead-form, .demo-form").forEach((form) => {
     if (output) output.textContent = "Отправляем заявку…";
 
     try {
+      const payload = new FormData(form);
+      const contactMethods = payload.getAll("contact_method");
+      payload.delete("contact_method");
+      contactMethods.forEach((method) => payload.append("contact_method[]", method));
+
       const response = await fetch(new URL("/api/submit.php", window.location.origin), {
         method: "POST",
-        body: new FormData(form),
+        body: payload,
         headers: { Accept: "application/json" },
         credentials: "same-origin"
       });
