@@ -4,7 +4,7 @@ declare(strict_types=1);
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store, max-age=0');
 
-$configPath = dirname(__DIR__, 2) . '/baribal-private/baribal-mail.php';
+$configPath = dirname(__DIR__, 2) . '/baribal-private/baribal-mail.json';
 $autoloadPath = dirname(__DIR__) . '/vendor/autoload.php';
 $configFound = @is_file($configPath);
 $autoloadFound = @is_file($autoloadPath);
@@ -18,11 +18,14 @@ $fieldStatus = [
     'recipient_nonempty' => false,
 ];
 $loadError = null;
-$loadErrorLine = null;
 
-if ($configReadable && $autoloadFound) {
+if ($configReadable) {
     try {
-        $mailConfig = require $configPath;
+        $configJson = @file_get_contents($configPath);
+        if ($configJson === false) {
+            throw new RuntimeException('Private JSON configuration could not be read.');
+        }
+        $mailConfig = json_decode($configJson, true, 512, JSON_THROW_ON_ERROR);
         $configLoaded = true;
         $configIsArray = is_array($mailConfig);
         if ($configIsArray) {
@@ -33,13 +36,12 @@ if ($configReadable && $autoloadFound) {
             foreach ($fieldStatus as $key => $_) {
                 $configKey = substr($key, 0, -9);
                 $fieldStatus[$key] = isset($mailConfig[$configKey])
-                    && is_scalar($mailConfig[$configKey])
-                    && trim((string)$mailConfig[$configKey]) !== '';
+                    && is_string($mailConfig[$configKey])
+                    && trim($mailConfig[$configKey]) !== '';
             }
         }
     } catch (Throwable $error) {
         $loadError = get_class($error) . ': ' . substr(preg_replace('/[\r\n\t]+/', ' ', $error->getMessage()) ?? '', 0, 240);
-        $loadErrorLine = $error->getLine();
     }
 }
 
@@ -47,7 +49,7 @@ $configValid = $configLoaded && $configIsArray
     && $fieldStatus['smtp_username_nonempty']
     && $fieldStatus['smtp_password_nonempty']
     && $fieldStatus['recipient_nonempty'];
-$configReady = $configFound && $autoloadFound && $configReadable && $configValid;
+$configReady = $configFound && $configReadable && $autoloadFound && $configValid;
 
 http_response_code($configReady ? 200 : 503);
 echo json_encode([
@@ -57,13 +59,13 @@ echo json_encode([
     'diagnostics' => [
         'private_config_found' => $configFound,
         'private_config_readable' => $configReadable,
+        'private_config_format' => 'json',
         'mailer_autoload_found' => $autoloadFound,
         'config_loaded' => $configLoaded,
         'config_is_array' => $configIsArray,
         'config_keys' => $configKeys,
         'required_fields' => $fieldStatus,
         'load_error' => $loadError,
-        'load_error_line' => $loadErrorLine,
         'open_basedir_enabled' => (string)ini_get('open_basedir') !== '',
     ],
 ], JSON_UNESCAPED_SLASHES);

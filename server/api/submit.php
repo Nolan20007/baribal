@@ -96,14 +96,24 @@ if ($rateHandle !== false) {
     fclose($rateHandle);
 }
 
-$configPath = dirname(__DIR__, 2) . '/baribal-private/baribal-mail.php';
+$configPath = dirname(__DIR__, 2) . '/baribal-private/baribal-mail.json';
 $autoloadPath = dirname(__DIR__) . '/vendor/autoload.php';
-if (!is_file($configPath) || !is_file($autoloadPath)) {
-    error_log('BARIBAL lead delivery is not configured.');
+if (!is_file($configPath) || !is_readable($configPath) || !is_file($autoloadPath)) {
+    error_log('BARIBAL lead delivery configuration or mailer is unavailable.');
     leadResponse(503, ['success' => false, 'message' => 'Отправка заявок временно недоступна. Позвоните нам, пожалуйста.']);
 }
 
-$config = require $configPath;
+try {
+    $configJson = file_get_contents($configPath);
+    if ($configJson === false) {
+        throw new RuntimeException('Private mail configuration could not be read.');
+    }
+    $config = json_decode($configJson, true, 512, JSON_THROW_ON_ERROR);
+} catch (Throwable $error) {
+    error_log('BARIBAL private mail configuration could not be decoded (' . get_class($error) . ').');
+    leadResponse(503, ['success' => false, 'message' => 'Отправка заявок временно недоступна. Позвоните нам, пожалуйста.']);
+}
+
 if (!is_array($config) || empty($config['smtp_username']) || empty($config['smtp_password']) || empty($config['recipient'])) {
     error_log('BARIBAL lead delivery configuration is incomplete.');
     leadResponse(503, ['success' => false, 'message' => 'Отправка заявок временно недоступна. Позвоните нам, пожалуйста.']);
