@@ -2,15 +2,17 @@ from __future__ import annotations
 
 import re
 from html import escape, unescape
+from io import BytesIO
 from pathlib import Path
+
+import cairosvg
 
 from PIL import Image, ImageDraw
 
 ROOT = Path("dist")
 SITE_BASE_URL = "https://nolan20007.github.io/baribal"
 OG_IMAGE = SITE_BASE_URL + "/og.jpg"
-FAVICON_SVG = "assets/images/brand/favicon.svg"
-FAVICON_PNG = "assets/images/brand/bear-black.png"
+FAVICON_SVG = "assets/images/brand/favicon-new.svg"
 DEFAULT_DESCRIPTION = (
     "Студия защитных технологий BARIBAL в Перми: детейлинг, защита кузова "
     "и стёкол, плёнки, керамические покрытия и уход за автомобилем."
@@ -48,7 +50,8 @@ def page_url(page: Path) -> str:
 
 
 def generate_raster_icons(source_path: Path) -> None:
-    source = Image.open(source_path).convert("RGBA")
+    svg_png = cairosvg.svg2png(url=str(source_path), output_width=512, output_height=512)
+    source = Image.open(BytesIO(svg_png)).convert("RGBA")
 
     def render(size: int) -> Image.Image:
         scale = 4
@@ -60,9 +63,8 @@ def generate_raster_icons(source_path: Path) -> None:
             radius=int(canvas_size * 0.20),
             fill=(255, 255, 255, 255),
         )
-        mark = source.copy()
-        mark.thumbnail((int(canvas_size * 0.78), int(canvas_size * 0.78)), Image.Resampling.LANCZOS)
-        canvas.alpha_composite(mark, ((canvas_size - mark.width) // 2, (canvas_size - mark.height) // 2))
+        mark = source.resize((canvas_size, canvas_size), Image.Resampling.LANCZOS)
+        canvas.alpha_composite(mark, (0, 0))
         return canvas.resize((size, size), Image.Resampling.LANCZOS)
 
     rendered = {size: render(size) for size in (16, 32, 48, 180)}
@@ -76,12 +78,12 @@ def main() -> None:
     if not ROOT.is_dir():
         raise SystemExit("dist/ does not exist; assemble the site first")
 
-    required_assets = (ROOT / "og.jpg", ROOT / FAVICON_SVG, ROOT / FAVICON_PNG)
+    required_assets = (ROOT / "og.jpg", ROOT / FAVICON_SVG)
     missing = [str(path.relative_to(ROOT)) for path in required_assets if not path.is_file() or path.stat().st_size == 0]
     if missing:
         raise SystemExit("Social preview assets missing or empty: " + ", ".join(missing))
 
-    generate_raster_icons(ROOT / FAVICON_PNG)
+    generate_raster_icons(ROOT / FAVICON_SVG)
 
     pages = sorted(ROOT.rglob("index.html"))
     if not pages:

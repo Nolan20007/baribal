@@ -404,7 +404,7 @@ SEO-поля (Title, Description и H1) согласованы для всех 1
 
 ## Фавиконки и превью ссылок
 
-- Мастер чёрного медведя — корневой файл `bear_black_transparent.png`; рабочая копия для сборки — `assets/images/brand/bear-black.png`. SVG `assets/images/brand/favicon.svg` содержит тот же знак на белой подложке. Не возвращать старую светлую фавиконку.
-- `maintenance/inject-social-metadata.py` с помощью Pillow создаёт в `dist` ICO, PNG 16×16/32×32 и Apple touch icon 180×180 с белой подложкой. Затем скрипт добавляет favicon, Open Graph и Twitter Card во все опубликованные `index.html`, используя Title и Description каждой страницы. Оба workflow обязаны запускать скрипт после установки Pillow и проверять наличие OG/favicons.
+- Основная фавиконка BARIBAL — векторный файл `assets/images/brand/favicon-new.svg` с надписью BARIBAL в чёрной рамке и белой подложкой для читаемости на светлой и тёмной панели браузера. Не подменять её старым знаком-медведем из `favicon.svg` или `bear-black.png`.
+- `maintenance/inject-social-metadata.py` использует эту SVG как единственный источник и через CairoSVG + Pillow создаёт в `dist` ICO, PNG 16×16/32×32 и Apple touch icon 180×180. Затем скрипт добавляет новую SVG-фавиконку, растровые favicon, Open Graph и Twitter Card во все опубликованные `index.html`, используя Title и Description каждой страницы. Оба workflow обязаны устанавливать Pillow и CairoSVG, запускать скрипт и проверять наличие исходной SVG и всех растровых favicon.
 - Основное изображение предпросмотра ссылок — корневой `og.jpg`; его копия `plain-site/og.jpg` должна оставаться идентичной исходнику и попадать в корень опубликованного сайта в обоих workflow. Не заменять и не перекодировать без отдельного согласования.
 - При переходе с GitHub Pages на постоянный домен обновить `SITE_BASE_URL` в скрипте и проверить превью главной и внутренних ссылок в мессенджерах.
