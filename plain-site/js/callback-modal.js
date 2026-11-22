@@ -19,6 +19,7 @@
     modal.classList.add("modal-open");
     modal.setAttribute("aria-hidden", "false");
     document.body.classList.add("no-scroll");
+    modal.querySelector('input[name="phone"]')?.focus();
   };
 
   const close = () => {
