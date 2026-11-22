@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import shutil
 
 from PIL import Image, ImageChops, ImageOps
 
@@ -12,6 +13,11 @@ EXPECTED_SIZE = (350, 350)
 
 
 def main() -> None:
+    source_directory = Path("foto")
+    if not source_directory.is_dir():
+        raise SystemExit(f"Missing source portrait directory: {source_directory}")
+    shutil.copytree(source_directory, ROOT / "foto", dirs_exist_ok=True)
+
     if not SOURCE.is_file():
         raise SystemExit(f"Missing original contact portrait: {SOURCE}")
 
