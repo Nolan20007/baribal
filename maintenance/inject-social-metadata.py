@@ -54,9 +54,9 @@ def main() -> None:
     if missing:
         raise SystemExit("Social preview assets missing or empty: " + ", ".join(missing))
 
-    pages = sorted(ROOT.rglob("*.html"))
+    pages = sorted(ROOT.rglob("index.html"))
     if not pages:
-        raise SystemExit("No HTML pages found in dist/")
+        raise SystemExit("No published index.html pages found in dist/")
 
     for page in pages:
         document = page.read_text(encoding="utf-8")
