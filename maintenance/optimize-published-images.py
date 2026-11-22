@@ -12,7 +12,6 @@ from PIL import Image, ImageOps
 ROOT = Path("dist").resolve()
 PHOTO_WIDTHS = (400, 800, 1200, 1600)
 LOGO_WIDTHS = (48, 96, 192, 384)
-AVATAR_WIDTHS = (24, 48, 96, 192)
 QUALITY = 80
 VOID_TAGS = {
     "area", "base", "br", "col", "embed", "hr", "img", "input",
@@ -175,11 +174,8 @@ def main() -> None:
 
             relative_source = source.relative_to(ROOT).as_posix()
             is_logo = source.name.lower() in {"baribal-logo.png", "baribal-logo.webp"}
-            is_avatar = relative_source.endswith("foto/foto.png")
             if is_logo:
                 widths = [w for w in LOGO_WIDTHS if w < source_width] + [source_width]
-            elif is_avatar:
-                widths = [w for w in AVATAR_WIDTHS if w < source_width] + [source_width]
             elif source_width > 500:
                 widths = [w for w in PHOTO_WIDTHS if w < source_width] + [source_width]
             else:
@@ -199,7 +195,7 @@ def main() -> None:
                 for width in widths:
                     output = source.with_name(f"{stem}.r{width}.webp")
                     try:
-                        out_width, out_height, out_bytes = make_webp(source, output, width, quality=92 if is_avatar else None)
+                        out_width, out_height, out_bytes = make_webp(source, output, width)
                         variants.append((out_width, output))
                         responsive_bytes += out_bytes
                         converted += 1
