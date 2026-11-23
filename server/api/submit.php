@@ -152,6 +152,7 @@ if ($pageUrl === '' && !empty($_SERVER['HTTP_REFERER'])) {
 }
 $pageParts = $pageUrl !== '' ? parse_url($pageUrl) : [];
 $pagePath = leadText((string)($pageParts['path'] ?? ''), 255);
+$pageDisplayPath = $pagePath === '/' ? 'index.html' : $pagePath;
 $pageTitle = leadText($_POST['page_title'] ?? '', 255);
 $sourceBlock = leadText($_POST['source_block'] ?? '', 255);
 $sourceButton = leadText($_POST['source_button'] ?? '', 180);
@@ -213,14 +214,22 @@ $display = [
     'Имя' => $name !== '' ? $name : 'Не указано',
     'Телефон' => $phone,
     'Способ связи' => implode(', ', $methodText),
-    'Дополнительный контакт' => $contactOther !== '' ? $contactOther : 'Не указан',
-    'Автомобиль' => $car !== '' ? $car : 'Не указан',
-    'Услуга' => $service !== '' ? $service : 'Не указана',
-    'Выбранные услуги' => $selectedServices !== '' ? $selectedServices : 'Не указаны',
 ];
+if ($contactOther !== '') {
+    $display['Дополнительный контакт'] = $contactOther;
+}
+if ($car !== '') {
+    $display['Автомобиль'] = $car;
+}
+if ($service !== '') {
+    $display['Услуга'] = $service;
+}
+if ($selectedServices !== '') {
+    $display['Выбранные услуги'] = $selectedServices;
+}
 $sourceDisplay = [
     'Страница' => $pageTitle !== '' ? $pageTitle : ($pagePath !== '' ? $pagePath : 'Не определена'),
-    'Адрес страницы' => $pageUrl !== '' ? $pageUrl : 'Не определён',
+    'Адрес страницы' => $pageUrl !== '' ? ($pageDisplayPath !== '' ? $pageDisplayPath : 'index.html') : 'Не определён',
     'Блок' => $sourceBlock !== '' ? $sourceBlock : 'Не определён',
     'Кнопка' => $sourceButton !== '' ? $sourceButton : 'Не определена',
     'Предыдущая страница' => $referrer !== '' ? $referrer : 'Не определена',
@@ -277,7 +286,7 @@ $htmlBody .= '</table><div style="font-size:11px;letter-spacing:1.3px;color:#9a7
 foreach ($sourceDisplay as $label => $value) {
     $safeValue = $e($value);
     if ($label === 'Адрес страницы' && $pageUrl !== '') {
-        $safeValue = '<a href="' . $e($pageUrl) . '" style="color:#94652d;text-decoration:none">' . $e($pagePath !== '' ? $pagePath : $pageUrl) . '</a>';
+        $safeValue = '<a href="' . $e($pageUrl) . '" style="color:#94652d;text-decoration:none">' . $e($pageDisplayPath !== '' ? $pageDisplayPath : 'index.html') . '</a>';
     }
     $htmlBody .= '<tr><td style="width:38%;padding:8px 8px 8px 0;border-bottom:1px solid #edf0f1;color:#697177;font-size:13px;vertical-align:top">' . $e($label) . '</td>'
         . '<td style="padding:8px 0;border-bottom:1px solid #edf0f1;color:#202326;font-size:13px;vertical-align:top">' . $safeValue . '</td></tr>';
