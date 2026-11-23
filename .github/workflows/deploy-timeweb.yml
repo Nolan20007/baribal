@@ -31,9 +31,16 @@ jobs:
           php -l server/api/health.php
           php -l server/lib/lead-store.php
           php -l server/admin/leads.php
+          php -l server/admin/reviews.php
+          php -l server/admin/review-image.php
           php -l server/admin/index.php
+          php -l server/api/review-submit.php
+          php -l server/api/reviews.php
+          php -l server/api/review-image.php
+          php -l server/cron/daily-report.php
           php -r 'if (!extension_loaded("pdo_mysql")) { throw new RuntimeException("pdo_mysql extension is required"); }'
           node --check plain-site/js/main.js
+          node --check plain-site/js/reviews.js
           node --check plain-site/js/callback-modal.js
 
       - name: Assemble the main plain HTML site
@@ -42,10 +49,11 @@ jobs:
           cp -R plain-site/. dist/
           mkdir -p dist/assets
           cp -R assets/. dist/assets/
-          mkdir -p dist/api dist/lib dist/admin
+          mkdir -p dist/api dist/lib dist/admin dist/cron
           cp -R server/api/. dist/api/
           cp -R server/lib/. dist/lib/
           cp -R server/admin/. dist/admin/
+          cp -R server/cron/. dist/cron/
           cp -R vendor dist/vendor
           python -m pip install --disable-pip-version-check Pillow CairoSVG
           python maintenance/inject-social-metadata.py
@@ -90,8 +98,11 @@ jobs:
               "data/work-galleries-41-60.json",
               "data/work-galleries-101-120.json", "data/work-galleries-121-140.json",
               "assets", "foto/foto.png", "foto/foto.webp", "og.jpg",
-              "api/submit.php", "api/health.php", "lib/lead-store.php",
-              "admin/index.php", "admin/leads.php", "vendor/autoload.php",
+              "api/submit.php", "api/health.php", "api/review-submit.php",
+              "api/reviews.php", "api/review-image.php", "lib/lead-store.php",
+              "admin/index.php", "admin/leads.php", "admin/reviews.php",
+              "admin/review-image.php", "cron/daily-report.php",
+              "js/reviews.js", "vendor/autoload.php",
               "assets/images/brand/favicon-new.svg",
               "favicon.ico", "favicon-32.png", "favicon-16.png", "apple-touch-icon.png",
           ]
