@@ -407,7 +407,7 @@ html[data-theme="light"] .service-info-tech{background:#f4f2ed}
 .contact-other-details{margin-top:9px}
 .contact-other-details[hidden]{display:none!important}
 .contact-other-details label{display:grid!important;gap:6px;font-size:10px!important;line-height:1.5}
-.contact-other-details input{width:100%!important;min-width:0}
+.contact-other-details input,.contact-other-details textarea{width:100%!important;min-width:0}.contact-other-details textarea{min-height:68px;resize:vertical}
 .contact-widget-toggle{min-width:190px;justify-content:center}
 .contact-widget.is-open .contact-widget-toggle img{display:none}
 .contact-widget.is-open .contact-widget-toggle{padding-left:18px;padding-right:18px}
