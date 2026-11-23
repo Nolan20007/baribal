@@ -56,6 +56,18 @@ function leadHtml(string $value): string
 try {
     $pdo = baribalLeadDatabase($config);
     $query = trim((string)($_GET['q'] ?? ''));
+    $filter = (string)($_GET['filter'] ?? 'all');
+    $filterLabels = [
+        'all' => 'Все',
+        'unprocessed' => 'Необработанные',
+        'new' => 'Новые',
+        'in_progress' => 'В работе',
+        'booked' => 'Записаны',
+        'completed' => 'Завершённые',
+    ];
+    if (!isset($filterLabels[$filter])) {
+        $filter = 'all';
+    }
     $page = max(1, min(100000, (int)($_GET['page'] ?? 1)));
     $statusLabels = [
         'new' => 'Новая',
@@ -76,19 +88,46 @@ try {
         $updateStatus->execute(['status' => $newStatus, 'id' => $leadId]);
         $redirect = '/admin/leads.php?' . http_build_query([
             'q' => $query,
+            'filter' => $filter,
             'page' => $page,
         ]);
         header('Location: ' . $redirect, true, 303);
         exit;
     }
     $perPage = 40;
-    $where = '';
-    $params = [];
+    $searchWhere = '';
+    $searchParams = [];
     if ($query !== '') {
-        $where = ' WHERE lead_number LIKE :number OR phone LIKE :phone OR name LIKE :name OR service LIKE :service';
+        $searchWhere = ' WHERE lead_number LIKE :number OR phone LIKE :phone OR name LIKE :name OR service LIKE :service';
         $like = '%' . $query . '%';
-        $params = ['number' => $like, 'phone' => $like, 'name' => $like, 'service' => $like];
+        $searchParams = ['number' => $like, 'phone' => $like, 'name' => $like, 'service' => $like];
     }
+
+    $statusCountsQuery = $pdo->prepare(
+        'SELECT status, COUNT(*) AS amount FROM baribal_leads' . $searchWhere . ' GROUP BY status'
+    );
+    $statusCountsQuery->execute($searchParams);
+    $statusCounts = ['new' => 0, 'in_progress' => 0, 'booked' => 0, 'completed' => 0];
+    foreach ($statusCountsQuery->fetchAll() as $statusCount) {
+        if (array_key_exists((string)$statusCount['status'], $statusCounts)) {
+            $statusCounts[(string)$statusCount['status']] = (int)$statusCount['amount'];
+        }
+    }
+    $allCount = array_sum($statusCounts);
+    $unprocessedCount = $statusCounts['new'] + $statusCounts['in_progress'];
+
+    $whereParts = [];
+    $params = $searchParams;
+    if ($searchWhere !== '') {
+        $whereParts[] = substr($searchWhere, 7);
+    }
+    if ($filter === 'unprocessed') {
+        $whereParts[] = "status IN ('new', 'in_progress')";
+    } elseif (isset($statusLabels[$filter])) {
+        $whereParts[] = 'status = :status_filter';
+        $params['status_filter'] = $filter;
+    }
+    $where = $whereParts ? ' WHERE ' . implode(' AND ', $whereParts) : '';
 
     $count = $pdo->prepare('SELECT COUNT(*) FROM baribal_leads' . $where);
     $count->execute($params);
@@ -129,9 +168,10 @@ function leadValue(array $lead, string $key, string $fallback = '—'): string
 main{max-width:1180px;margin:0 auto;padding:28px 20px 56px}.top{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:22px}
 .eyebrow{color:var(--accent);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
 h1{font-size:30px;line-height:1.15;margin:5px 0}.muted{color:var(--muted)}.count{font-variant-numeric:tabular-nums;color:var(--muted)}
-.search{display:flex;gap:8px;margin:0 0 18px}.search input{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;padding:12px 14px;font:inherit;background:white}
+.search{display:flex;gap:8px;margin:0 0 12px}.search input{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;padding:12px 14px;font:inherit;background:white}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}.filter-chip{display:inline-flex;align-items:center;gap:8px;padding:8px 11px;border:1px solid var(--line);border-radius:999px;background:#fff;color:#41484e;text-decoration:none;font-size:13px;font-weight:700}.filter-chip span{display:inline-grid;place-items:center;min-width:21px;height:21px;padding:0 5px;border-radius:999px;background:#edf0f2;color:#596168;font-size:11px;font-variant-numeric:tabular-nums}.filter-chip.is-active{background:#25282b;border-color:#25282b;color:#fff}.filter-chip.is-active span{background:#fff;color:#25282b}.filter-chip.is-alert:not(.is-active){border-color:#efc3c3;background:#fff5f5;color:#a33a3a}.filter-chip.is-alert:not(.is-active) span{background:#f9dddd;color:#a33a3a}
 button{border:0;border-radius:10px;padding:0 18px;background:#25282b;color:white;font:inherit;font-weight:650;cursor:pointer}
-.list{display:grid;gap:14px}.lead{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 20px;box-shadow:0 4px 18px #10182008}
+.list{display:grid;gap:14px}.lead{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 20px;box-shadow:0 4px 18px #10182008}.lead-unprocessed{background:#fffafa;border-color:#edc7c7;box-shadow:inset 3px 0 0 #d96b6b,0 4px 18px #10182008}.tag.status-new{background:#fde5e5;color:#a12e2e}.tag.status-in_progress{background:#fff0e8;color:#a34c2b}.tag.status-booked{background:#e9f1fb;color:#315f91}.tag.status-completed{background:#e8f5ed;color:#21643a}
 .lead-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.number{font-weight:800;font-size:18px;letter-spacing:.02em}
 .tags{display:flex;gap:7px;flex-wrap:wrap}.tag{display:inline-flex;align-items:center;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:700;background:var(--soft);color:#4f5961}
 .tag.repeat{background:var(--warn);color:#875313}.tag.sent{background:var(--green);color:#21643a}.tag.failed{background:#fdeaea;color:#9c3030}
@@ -151,17 +191,33 @@ button{border:0;border-radius:10px;padding:0 18px;background:#25282b;color:white
 </header>
 <form class="search" method="get" action="">
  <input type="search" name="q" value="<?= leadHtml($query) ?>" placeholder="Номер, телефон, имя или услуга" aria-label="Поиск заявок">
+ <input type="hidden" name="filter" value="<?= leadHtml($filter) ?>">
  <button type="submit">Найти</button>
 </form>
+<nav class="filters" aria-label="Фильтр заявок">
+ <?php foreach ($filterLabels as $filterKey => $filterLabel):
+   $filterCount = match ($filterKey) {
+     'all' => $allCount,
+     'unprocessed' => $unprocessedCount,
+     default => $statusCounts[$filterKey] ?? 0,
+   };
+ ?>
+  <a class="filter-chip<?= $filter === $filterKey ? ' is-active' : '' ?><?= $filterKey === 'unprocessed' ? ' is-alert' : '' ?>"
+     href="?<?= http_build_query(['q' => $query, 'filter' => $filterKey]) ?>">
+    <?= leadHtml($filterLabel) ?><span><?= number_format($filterCount, 0, ',', ' ') ?></span>
+  </a>
+ <?php endforeach; ?>
+</nav>
 <section class="list" aria-label="Список заявок">
 <?php if (!$leads): ?>
  <div class="empty">Заявок пока нет<?= $query !== '' ? ' по этому запросу' : '' ?>.</div>
 <?php endif; ?>
 <?php foreach ($leads as $lead): ?>
- <article class="lead">
+ <article class="lead<?= in_array((string)$lead['status'], ['new', 'in_progress'], true) ? ' lead-unprocessed' : '' ?>">
   <div class="lead-head">
    <div><div class="number"><?= leadHtml(leadValue($lead, 'lead_number', 'BAR-' . str_pad((string)$lead['id'], 6, '0', STR_PAD_LEFT))) ?></div><div class="muted"><?= leadHtml((string)$lead['created_at']) ?></div></div>
    <div class="tags">
+    <span class="tag status status-<?= leadHtml((string)$lead['status']) ?>"><?= leadHtml($statusLabels[(string)$lead['status']] ?? 'Неизвестный статус') ?></span>
     <?php if ((int)$lead['is_repeat'] === 1): ?><span class="tag repeat">Повтор · <?= leadHtml(baribalLeadNumber((int)$lead['previous_lead_id'])) ?></span><?php else: ?><span class="tag">Первое обращение</span><?php endif; ?>
     <?php if ($lead['email_status'] === 'sent'): ?><span class="tag sent">Письмо отправлено</span><?php elseif ($lead['email_status'] === 'failed'): ?><span class="tag failed">Ошибка письма</span><?php else: ?><span class="tag">Письмо: <?= leadHtml(leadValue($lead, 'email_status')) ?></span><?php endif; ?>
    </div>
@@ -193,7 +249,7 @@ button{border:0;border-radius:10px;padding:0 18px;background:#25282b;color:white
 </section>
 <nav class="pager" aria-label="Страницы">
  <span class="muted">Страница <?= $page ?> из <?= $pages ?></span>
- <span><?php if ($page > 1): ?><a href="?q=<?= rawurlencode($query) ?>&page=<?= $page - 1 ?>">← Новее</a><?php endif; ?> <?php if ($page < $pages): ?><a href="?q=<?= rawurlencode($query) ?>&page=<?= $page + 1 ?>">Старее →</a><?php endif; ?></span>
+ <span><?php if ($page > 1): ?><a href="?q=<?= rawurlencode($query) ?>&filter=<?= rawurlencode($filter) ?>&page=<?= $page - 1 ?>">← Новее</a><?php endif; ?> <?php if ($page < $pages): ?><a href="?q=<?= rawurlencode($query) ?>&filter=<?= rawurlencode($filter) ?>&page=<?= $page + 1 ?>">Старее →</a><?php endif; ?></span>
 </nav>
 </main>
 </body>
