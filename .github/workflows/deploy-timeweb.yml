@@ -49,11 +49,10 @@ jobs:
           cp -R plain-site/. dist/
           mkdir -p dist/assets
           cp -R assets/. dist/assets/
-          mkdir -p dist/api dist/lib dist/admin dist/cron
+          mkdir -p dist/api dist/lib dist/admin
           cp -R server/api/. dist/api/
           cp -R server/lib/. dist/lib/
           cp -R server/admin/. dist/admin/
-          cp -R server/cron/. dist/cron/
           cp -R vendor dist/vendor
           python -m pip install --disable-pip-version-check Pillow CairoSVG
           python maintenance/inject-social-metadata.py
@@ -101,7 +100,7 @@ jobs:
               "api/submit.php", "api/health.php", "api/review-submit.php",
               "api/reviews.php", "api/review-image.php", "lib/lead-store.php",
               "admin/index.php", "admin/leads.php", "admin/reviews.php",
-              "admin/review-image.php", "cron/daily-report.php",
+              "admin/review-image.php",
               "js/reviews.js", "vendor/autoload.php",
               "assets/images/brand/favicon-new.svg",
               "favicon.ico", "favicon-32.png", "favicon-16.png", "apple-touch-icon.png",
@@ -162,6 +161,9 @@ jobs:
           BARIBAL_ADMIN_PASSWORD: ${{ secrets.BARIBAL_ADMIN_PASSWORD }}
         run: |
           mkdir -p private-config
+          cp server/cron/daily-report.php private-config/daily-report.php
+          php -l private-config/daily-report.php
+          test -s private-config/daily-report.php
           php -r '$config = ["smtp_host" => "smtp.timeweb.ru", "smtp_username" => getenv("TIMEWEB_SMTP_USERNAME"), "smtp_password" => getenv("TIMEWEB_SMTP_PASSWORD"), "recipient" => "info@co376877.tw1.ru", "db_host" => getenv("TIMEWEB_DB_HOST"), "db_name" => getenv("TIMEWEB_DB_NAME"), "db_username" => getenv("TIMEWEB_DB_USERNAME"), "db_password" => getenv("TIMEWEB_DB_PASSWORD"), "admin_password_hash" => password_hash(getenv("BARIBAL_ADMIN_PASSWORD"), PASSWORD_DEFAULT)]; $json = json_encode($config, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES); if (file_put_contents("private-config/baribal-mail.json", $json, LOCK_EX) === false) { throw new RuntimeException("Could not write private mail configuration"); }'
           chmod 644 private-config/baribal-mail.json
           test -s private-config/baribal-mail.json
