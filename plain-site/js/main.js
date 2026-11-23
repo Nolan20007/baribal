@@ -67,6 +67,7 @@ if (estimateForm && estimateOptions.length) {
 }
 
 document.querySelectorAll(".lead-form, .demo-form").forEach((form) => {
+  if (form.matches("[data-review-form]")) return;
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     if (form.dataset.submitting === "1") return;
