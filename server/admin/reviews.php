@@ -49,13 +49,36 @@ try {
         $token = (string)($_POST['csrf'] ?? '');
         $id = (int)($_POST['review_id'] ?? 0);
         $action = (string)($_POST['action'] ?? '');
-        if (!hash_equals((string)$_SESSION['review_csrf'], $token) || $id < 1 || !in_array($action, ['approve', 'reject'], true)) {
+        if (!hash_equals((string)$_SESSION['review_csrf'], $token) || $id < 1 || !in_array($action, ['approve', 'reject', 'delete'], true)) {
             http_response_code(400);
             exit('Не удалось проверить запрос. Обновите страницу и повторите действие.');
         }
-        $newStatus = $action === 'approve' ? 'approved' : 'rejected';
-        $update = $pdo->prepare('UPDATE baribal_reviews SET status = :status, reviewed_at = NOW() WHERE id = :id');
-        $update->execute(['status' => $newStatus, 'id' => $id]);
+        if ($action === 'delete') {
+            $photoQuery = $pdo->prepare('SELECT photo_files FROM baribal_reviews WHERE id = :id LIMIT 1');
+            $photoQuery->execute(['id' => $id]);
+            $photoRow = $photoQuery->fetch();
+            if ($photoRow) {
+                $delete = $pdo->prepare('DELETE FROM baribal_reviews WHERE id = :id');
+                $delete->execute(['id' => $id]);
+                $photoFiles = json_decode((string)($photoRow['photo_files'] ?? '[]'), true);
+                $storagePath = dirname(__DIR__, 2) . '/baribal-review-storage/';
+                if (is_array($photoFiles)) {
+                    foreach ($photoFiles as $filename) {
+                        if (is_string($filename)
+                            && preg_match('/^[a-f0-9]{40}\\.(jpg|png|webp)$/', $filename)) {
+                            $photoPath = $storagePath . $filename;
+                            if (is_file($photoPath)) {
+                                @unlink($photoPath);
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            $newStatus = $action === 'approve' ? 'approved' : 'rejected';
+            $update = $pdo->prepare('UPDATE baribal_reviews SET status = :status, reviewed_at = NOW() WHERE id = :id');
+            $update->execute(['status' => $newStatus, 'id' => $id]);
+        }
         header('Location: /admin/reviews.php?filter=' . rawurlencode($filter), true, 303);
         exit;
     }
@@ -117,12 +140,13 @@ $statusLabel = ['pending' => 'На модерации', 'approved' => 'Опуб�
 <div class="head"><div><div class="name"><?= reviewAdminHtml((string)$review['author_name']) ?></div><div class="meta"><?= reviewAdminHtml((string)$review['car']) ?> · <?= reviewAdminHtml((string)$review['created_at']) ?></div></div><span class="tag <?= reviewAdminHtml($status) ?>"><?= reviewAdminHtml($statusLabel) ?></span></div>
 <div class="review-text"><?= reviewAdminHtml((string)$review['review_text']) ?></div>
 <?php if ($photos): ?><div class="photos" aria-label="Фотографии отзыва"><?php foreach (array_keys($photos) as $photoIndex): ?><a href="/admin/review-image.php?id=<?= (int)$review['id'] ?>&photo=<?= (int)$photoIndex ?>" target="_blank" rel="noopener"><img src="/admin/review-image.php?id=<?= (int)$review['id'] ?>&photo=<?= (int)$photoIndex ?>" alt="Фотография к отзыву" loading="lazy"></a><?php endforeach; ?></div><?php endif; ?>
-<?php if ($status === 'pending'): ?>
 <div class="actions">
+<?php if ($status === 'pending'): ?>
 <form method="post"><input type="hidden" name="csrf" value="<?= reviewAdminHtml((string)$_SESSION['review_csrf']) ?>"><input type="hidden" name="review_id" value="<?= (int)$review['id'] ?>"><input type="hidden" name="action" value="approve"><button class="approve" type="submit">Принять и опубликовать</button></form>
 <form method="post" onsubmit="return confirm('Отклонить этот отзыв? На сайте он не появится.');"><input type="hidden" name="csrf" value="<?= reviewAdminHtml((string)$_SESSION['review_csrf']) ?>"><input type="hidden" name="review_id" value="<?= (int)$review['id'] ?>"><input type="hidden" name="action" value="reject"><button class="reject" type="submit">Отклонить</button></form>
-</div>
 <?php endif; ?>
+<form method="post" onsubmit="return confirm('Удалить отзыв без возможности восстановления? Прикреплённые фотографии тоже будут удалены.');"><input type="hidden" name="csrf" value="<?= reviewAdminHtml((string)$_SESSION['review_csrf']) ?>"><input type="hidden" name="review_id" value="<?= (int)$review['id'] ?>"><input type="hidden" name="action" value="delete"><button class="reject" type="submit">Удалить отзыв</button></form>
+</div>
 </article>
 <?php endforeach; ?>
 </section>
