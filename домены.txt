@@ -1,0 +1,14 @@
+A	baribal-studio.ru
+92.53.96.225	600	
+AAAA	baribal-studio.ru
+2a03:6f00:1::5c35:60e1	600	
+MX	baribal-studio.ru
+mx1.timeweb.ru	600	
+MX	baribal-studio.ru
+mx2.timeweb.ru	600	
+TXT	baribal-studio.ru
+v=spf1 include:_spf.timewe...l	600	
+TXT	_dmarc.baribal-stud...u
+v=DMARC1;p=none	600	
+TXT	dkim._domainkey.bar...u
+k=rsa;p=MIGfMA0GCSqGSIb3DQ...B	600	
