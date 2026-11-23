@@ -1,0 +1,147 @@
+<?php
+declare(strict_types=1);
+
+header('X-Content-Type-Options: nosniff');
+header('X-Frame-Options: DENY');
+header('Referrer-Policy: no-referrer');
+header('Cache-Control: no-store, max-age=0');
+
+$configPath = dirname(__DIR__, 2) . '/baribal-private/baribal-mail.json';
+$autoloadPath = dirname(__DIR__) . '/vendor/autoload.php';
+$storePath = dirname(__DIR__) . '/lib/lead-store.php';
+
+if (!is_file($configPath) || !is_readable($configPath) || !is_file($storePath)) {
+    http_response_code(503);
+    exit('Журнал заявок временно недоступен.');
+}
+$config = json_decode((string)file_get_contents($configPath), true);
+if (!is_array($config) || empty($config['admin_password_hash'])) {
+    http_response_code(503);
+    exit('Доступ к журналу ещё не настроен.');
+}
+
+$user = (string)($_SERVER['PHP_AUTH_USER'] ?? '');
+$password = (string)($_SERVER['PHP_AUTH_PW'] ?? '');
+if ($user !== 'baribal' || !password_verify($password, (string)$config['admin_password_hash'])) {
+    header('WWW-Authenticate: Basic realm="BARIBAL — журнал заявок"');
+    http_response_code(401);
+    exit('Требуется авторизация.');
+}
+
+require $storePath;
+
+function leadHtml(string $value): string
+{
+    return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+}
+
+try {
+    $pdo = baribalLeadDatabase($config);
+    $query = trim((string)($_GET['q'] ?? ''));
+    $page = max(1, min(100000, (int)($_GET['page'] ?? 1)));
+    $perPage = 40;
+    $where = '';
+    $params = [];
+    if ($query !== '') {
+        $where = ' WHERE lead_number LIKE :number OR phone LIKE :phone OR name LIKE :name OR service LIKE :service';
+        $like = '%' . $query . '%';
+        $params = ['number' => $like, 'phone' => $like, 'name' => $like, 'service' => $like];
+    }
+
+    $count = $pdo->prepare('SELECT COUNT(*) FROM baribal_leads' . $where);
+    $count->execute($params);
+    $total = (int)$count->fetchColumn();
+    $pages = max(1, (int)ceil($total / $perPage));
+    $page = min($page, $pages);
+    $offset = ($page - 1) * $perPage;
+    $statement = $pdo->prepare(
+        'SELECT id, lead_number, created_at, status, name, phone, car, service,
+                selected_services, contact_methods, contact_other, page_url, page_path,
+                page_title, source_block, source_button, referrer, utm_source,
+                utm_medium, utm_campaign, is_repeat, previous_lead_id, email_status, email_error
+         FROM baribal_leads' . $where . ' ORDER BY id DESC LIMIT ' . $perPage . ' OFFSET ' . $offset
+    );
+    $statement->execute($params);
+    $leads = $statement->fetchAll();
+} catch (Throwable $error) {
+    error_log('BARIBAL leads dashboard failed (' . get_class($error) . ').');
+    http_response_code(503);
+    exit('Не удалось подключиться к базе заявок. Проверьте настройки базы данных.');
+}
+
+function leadValue(array $lead, string $key, string $fallback = '—'): string
+{
+    $value = trim((string)($lead[$key] ?? ''));
+    return $value !== '' ? $value : $fallback;
+}
+
+?><!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Заявки BARIBAL</title>
+<style>
+:root{color-scheme:light;--ink:#202124;--muted:#687078;--line:#e4e7ea;--paper:#fff;--soft:#f4f6f7;--accent:#b77b36;--warn:#fff3df;--green:#e8f5ed}
+*{box-sizing:border-box}body{margin:0;background:#f1f3f4;color:var(--ink);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+main{max-width:1180px;margin:0 auto;padding:28px 20px 56px}.top{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:22px}
+.eyebrow{color:var(--accent);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+h1{font-size:30px;line-height:1.15;margin:5px 0}.muted{color:var(--muted)}.count{font-variant-numeric:tabular-nums;color:var(--muted)}
+.search{display:flex;gap:8px;margin:0 0 18px}.search input{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;padding:12px 14px;font:inherit;background:white}
+button{border:0;border-radius:10px;padding:0 18px;background:#25282b;color:white;font:inherit;font-weight:650;cursor:pointer}
+.list{display:grid;gap:14px}.lead{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 20px;box-shadow:0 4px 18px #10182008}
+.lead-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.number{font-weight:800;font-size:18px;letter-spacing:.02em}
+.tags{display:flex;gap:7px;flex-wrap:wrap}.tag{display:inline-flex;align-items:center;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:700;background:var(--soft);color:#4f5961}
+.tag.repeat{background:var(--warn);color:#875313}.tag.sent{background:var(--green);color:#21643a}.tag.failed{background:#fdeaea;color:#9c3030}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px 20px}.field{min-width:0}.field small{display:block;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px}
+.field strong,.field span,.field a{display:block;overflow-wrap:anywhere}.field a{color:#8a5b22;text-decoration:none}.field a:hover{text-decoration:underline}
+.wide{grid-column:1/-1}.empty{padding:36px;text-align:center;color:var(--muted);background:white;border:1px solid var(--line);border-radius:14px}
+.pager{display:flex;justify-content:space-between;align-items:center;margin-top:20px}.pager a{color:#80551f;text-decoration:none;font-weight:700}
+@media(max-width:700px){main{padding:20px 12px 40px}.top{display:block}h1{font-size:25px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.lead{padding:15px}.lead-head{align-items:flex-start;flex-direction:column}.search button{padding:0 12px}}
+@media(max-width:420px){.grid{grid-template-columns:1fr}.wide{grid-column:auto}}
+</style>
+</head>
+<body>
+<main>
+<header class="top">
+ <div><div class="eyebrow">BARIBAL · ВНУТРЕННИЙ ЖУРНАЛ</div><h1>Заявки клиентов</h1><div class="muted">Все обращения сохраняются отдельно, включая повторные</div></div>
+ <div class="count">Найдено: <?= number_format($total, 0, ',', ' ') ?></div>
+</header>
+<form class="search" method="get" action="">
+ <input type="search" name="q" value="<?= leadHtml($query) ?>" placeholder="Номер, телефон, имя или услуга" aria-label="Поиск заявок">
+ <button type="submit">Найти</button>
+</form>
+<section class="list" aria-label="Список заявок">
+<?php if (!$leads): ?>
+ <div class="empty">Заявок пока нет<?= $query !== '' ? ' по этому запросу' : '' ?>.</div>
+<?php endif; ?>
+<?php foreach ($leads as $lead): ?>
+ <article class="lead">
+  <div class="lead-head">
+   <div><div class="number"><?= leadHtml(leadValue($lead, 'lead_number', 'BAR-' . str_pad((string)$lead['id'], 6, '0', STR_PAD_LEFT))) ?></div><div class="muted"><?= leadHtml((string)$lead['created_at']) ?></div></div>
+   <div class="tags">
+    <?php if ((int)$lead['is_repeat'] === 1): ?><span class="tag repeat">Повтор · <?= leadHtml(baribalLeadNumber((int)$lead['previous_lead_id'])) ?></span><?php else: ?><span class="tag">Первое обращение</span><?php endif; ?>
+    <?php if ($lead['email_status'] === 'sent'): ?><span class="tag sent">Письмо отправлено</span><?php elseif ($lead['email_status'] === 'failed'): ?><span class="tag failed">Ошибка письма</span><?php else: ?><span class="tag">Письмо: <?= leadHtml(leadValue($lead, 'email_status')) ?></span><?php endif; ?>
+   </div>
+  </div>
+  <div class="grid">
+   <div class="field"><small>Клиент</small><strong><?= leadHtml(leadValue($lead, 'name', 'Имя не указано')) ?></strong></div>
+   <div class="field"><small>Телефон</small><a href="tel:<?= leadHtml((string)$lead['phone']) ?>"><?= leadHtml((string)$lead['phone']) ?></a></div>
+   <div class="field"><small>Автомобиль</small><span><?= leadHtml(leadValue($lead, 'car')) ?></span></div>
+   <div class="field"><small>Услуга</small><strong><?= leadHtml(leadValue($lead, 'service')) ?></strong></div>
+   <div class="field"><small>Способ связи</small><span><?= leadHtml(leadValue($lead, 'contact_methods')) ?><?= trim((string)$lead['contact_other']) !== '' ? ' · ' . leadHtml((string)$lead['contact_other']) : '' ?></span></div>
+   <div class="field"><small>Выбранные услуги</small><span><?= nl2br(leadHtml(leadValue($lead, 'selected_services'))) ?></span></div>
+   <div class="field"><small>Страница</small><a href="<?= leadHtml(leadValue($lead, 'page_url', '#')) ?>" target="_blank" rel="noopener"><?= leadHtml(leadValue($lead, 'page_title', leadValue($lead, 'page_path'))) ?></a></div>
+   <div class="field"><small>Блок / кнопка</small><span><?= leadHtml(leadValue($lead, 'source_block')) ?><?= trim((string)$lead['source_button']) !== '' ? ' · ' . leadHtml((string)$lead['source_button']) : '' ?></span></div>
+   <div class="field"><small>Реклама</small><span><?= leadHtml(implode(' / ', array_filter([(string)$lead['utm_source'], (string)$lead['utm_medium'], (string)$lead['utm_campaign']]))) ?: '—' ?></span></div>
+  </div>
+ </article>
+<?php endforeach; ?>
+</section>
+<nav class="pager" aria-label="Страницы">
+ <span class="muted">Страница <?= $page ?> из <?= $pages ?></span>
+ <span><?php if ($page > 1): ?><a href="?q=<?= rawurlencode($query) ?>&page=<?= $page - 1 ?>">← Новее</a><?php endif; ?> <?php if ($page < $pages): ?><a href="?q=<?= rawurlencode($query) ?>&page=<?= $page + 1 ?>">Старее →</a><?php endif; ?></span>
+</nav>
+</main>
+</body>
+</html>
