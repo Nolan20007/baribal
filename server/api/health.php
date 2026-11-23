@@ -6,9 +6,10 @@ header('Cache-Control: no-store, max-age=0');
 
 $configPath = dirname(__DIR__, 2) . '/baribal-private/baribal-mail.json';
 $autoloadPath = dirname(__DIR__) . '/vendor/autoload.php';
+$storePath = dirname(__DIR__) . '/lib/lead-store.php';
 $configFound = @is_file($configPath);
-$autoloadFound = @is_file($autoloadPath);
 $configReadable = $configFound && @is_readable($configPath);
+$autoloadFound = @is_file($autoloadPath);
 $configLoaded = false;
 $configIsArray = false;
 $configKeys = [];
@@ -18,6 +19,7 @@ $fieldStatus = [
     'recipient_nonempty' => false,
 ];
 $loadError = null;
+$mailConfig = [];
 
 if ($configReadable) {
     try {
@@ -45,17 +47,45 @@ if ($configReadable) {
     }
 }
 
-$configValid = $configLoaded && $configIsArray
+$mailConfigured = $configLoaded && $configIsArray
     && $fieldStatus['smtp_username_nonempty']
     && $fieldStatus['smtp_password_nonempty']
-    && $fieldStatus['recipient_nonempty'];
-$configReady = $configFound && $configReadable && $autoloadFound && $configValid;
+    && $fieldStatus['recipient_nonempty']
+    && $autoloadFound;
 
-http_response_code($configReady ? 200 : 503);
+$dbFields = ['db_host', 'db_name', 'db_username', 'db_password'];
+$dbConfigured = $configIsArray;
+foreach ($dbFields as $key) {
+    $dbConfigured = $dbConfigured && isset($mailConfig[$key])
+        && is_string($mailConfig[$key]) && trim($mailConfig[$key]) !== '';
+}
+$pdoMysqlAvailable = extension_loaded('pdo_mysql');
+$databaseConnected = false;
+$databaseError = null;
+if ($dbConfigured && $pdoMysqlAvailable && is_file($storePath)) {
+    try {
+        require_once $storePath;
+        $pdo = baribalLeadDatabase($mailConfig);
+        $databaseConnected = true;
+    } catch (Throwable $error) {
+        $databaseError = get_class($error);
+        error_log('BARIBAL health database check failed (' . $databaseError . ').');
+    }
+}
+
+$adminConfigured = $configIsArray && isset($mailConfig['admin_password_hash'])
+    && is_string($mailConfig['admin_password_hash'])
+    && trim($mailConfig['admin_password_hash']) !== '';
+
+$ready = $mailConfigured && $dbConfigured && $pdoMysqlAvailable && $databaseConnected && $adminConfigured;
+http_response_code($ready ? 200 : 503);
 echo json_encode([
-    'ok' => $configReady,
+    'ok' => $ready,
     'php' => PHP_VERSION,
-    'mail_configured' => $configReady,
+    'mail_configured' => $mailConfigured,
+    'leads_database_configured' => $dbConfigured,
+    'leads_database_connected' => $databaseConnected,
+    'admin_configured' => $adminConfigured,
     'diagnostics' => [
         'private_config_found' => $configFound,
         'private_config_readable' => $configReadable,
@@ -64,7 +94,9 @@ echo json_encode([
         'config_loaded' => $configLoaded,
         'config_is_array' => $configIsArray,
         'config_keys' => $configKeys,
-        'required_fields' => $fieldStatus,
+        'required_mail_fields' => $fieldStatus,
+        'pdo_mysql_available' => $pdoMysqlAvailable,
+        'database_error_type' => $databaseError,
         'load_error' => $loadError,
         'open_basedir_enabled' => (string)ini_get('open_basedir') !== '',
     ],
