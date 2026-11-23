@@ -12,6 +12,13 @@ function reviewResponse(int $status, array $body): void
     exit;
 }
 
+function reviewCleanup(array $paths): void
+{
+    foreach ($paths as $path) {
+        if (is_string($path) && is_file($path)) @unlink($path);
+    }
+}
+
 function reviewText($value, int $max): string
 {
     if (!is_string($value)) return '';
@@ -92,15 +99,18 @@ if (is_array($photoField) && isset($photoField['name']) && is_array($photoField[
         $error = (int)($photoField['error'][$i] ?? UPLOAD_ERR_NO_FILE);
         if ($error === UPLOAD_ERR_NO_FILE) continue;
         if ($error !== UPLOAD_ERR_OK) {
+            reviewCleanup($storedPaths);
             reviewResponse(422, ['success' => false, 'message' => 'Не удалось загрузить одну из фотографий. Проверьте размер файла.']);
         }
         $tmp = (string)($photoField['tmp_name'][$i] ?? '');
         $size = (int)($photoField['size'][$i] ?? 0);
         if ($size < 1 || $size > 2 * 1024 * 1024 || !is_uploaded_file($tmp)) {
+            reviewCleanup($storedPaths);
             reviewResponse(422, ['success' => false, 'message' => 'Каждая фотография должна быть не больше 2 МБ.']);
         }
         $mime = $finfo->file($tmp);
         if (!is_string($mime) || !isset($extensions[$mime])) {
+            reviewCleanup($storedPaths);
             reviewResponse(422, ['success' => false, 'message' => 'Поддерживаются только JPG, PNG и WebP.']);
         }
         $imageInfo = @getimagesize($tmp);
@@ -108,6 +118,7 @@ if (is_array($photoField) && isset($photoField['name']) && is_array($photoField[
             || (int)$imageInfo[0] < 1 || (int)$imageInfo[1] < 1
             || (int)$imageInfo[0] > 8000 || (int)$imageInfo[1] > 8000
             || (int)$imageInfo[0] * (int)$imageInfo[1] > 40000000) {
+            reviewCleanup($storedPaths);
             reviewResponse(422, ['success' => false, 'message' => 'Одна из фотографий повреждена или имеет неподдерживаемый размер.']);
         }
         $filename = bin2hex(random_bytes(20)) . '.' . $extensions[$mime];
