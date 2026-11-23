@@ -342,6 +342,5 @@ if (!$mailSent && !is_array($storedLead)) {
 
 leadResponse(200, [
     'success' => true,
-    'message' => 'Заявка принята. Мы свяжемся с вами.',
-    'lead_number' => $leadNumber,
+    'message' => 'Спасибо! Заявка принята. Мы свяжемся с вами.',
 ]);
