@@ -215,7 +215,6 @@ if (contactWidget) {
       window.addEventListener("pageshow", autoOpenIfDue);
     }
   }
-}
   contactWidget.querySelectorAll(".contact-preferences").forEach((group) => {
     const otherToggle = group.querySelector("[data-contact-other-toggle]");
     const details = group.querySelector(".contact-other-details");
