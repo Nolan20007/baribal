@@ -84,20 +84,17 @@ $methods = array_values(array_unique(array_filter(
     array_map(static fn($item) => is_string($item) ? $item : '', $methods),
     static fn($item) => in_array($item, $allowedMethods, true)
 )));
-if (!$methods) {
-    leadResponse(422, ['success' => false, 'message' => 'Выберите способ связи.']);
-}
-if (in_array('other', $methods, true) && $contactOther === '') {
-    leadResponse(422, ['success' => false, 'message' => 'Укажите удобный способ связи.']);
+$contactMethods = array_values(array_filter($methods, static fn($method) => $method !== 'other'));
+if (!$contactMethods) {
+    leadResponse(422, ['success' => false, 'message' => 'Выберите способ связи: телефон, MAX или Telegram.']);
 }
 
 $methodLabels = [
     'phone' => 'Телефон',
     'max' => 'MAX',
     'telegram' => 'Telegram',
-    'other' => 'Другой способ',
 ];
-$methodText = array_map(static fn($method) => $methodLabels[$method], $methods);
+$methodText = array_map(static fn($method) => $methodLabels[$method], $contactMethods);
 
 $ip = (string)($_SERVER['REMOTE_ADDR'] ?? 'unknown');
 $rateFile = rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR
@@ -216,7 +213,7 @@ $display = [
     'Способ связи' => implode(', ', $methodText),
 ];
 if ($contactOther !== '') {
-    $display['Дополнительный контакт'] = $contactOther;
+    $display['Комментарий'] = $contactOther;
 }
 if ($car !== '') {
     $display['Автомобиль'] = $car;
