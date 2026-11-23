@@ -21,6 +21,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
+          extensions: pdo_mysql
           tools: composer:v2
 
       - name: Install PHP dependencies and validate server scripts
@@ -28,7 +29,12 @@ jobs:
           composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
           php -l server/api/submit.php
           php -l server/api/health.php
+          php -l server/lib/lead-store.php
+          php -l server/admin/leads.php
+          php -l server/admin/index.php
+          php -r 'if (!extension_loaded("pdo_mysql")) { throw new RuntimeException("pdo_mysql extension is required"); }'
           node --check plain-site/js/main.js
+          node --check plain-site/js/callback-modal.js
 
       - name: Assemble the main plain HTML site
         run: |
@@ -36,8 +42,10 @@ jobs:
           cp -R plain-site/. dist/
           mkdir -p dist/assets
           cp -R assets/. dist/assets/
-          mkdir -p dist/api
+          mkdir -p dist/api dist/lib dist/admin
           cp -R server/api/. dist/api/
+          cp -R server/lib/. dist/lib/
+          cp -R server/admin/. dist/admin/
           cp -R vendor dist/vendor
           python -m pip install --disable-pip-version-check Pillow CairoSVG
           python maintenance/inject-social-metadata.py
@@ -82,7 +90,8 @@ jobs:
               "data/work-galleries-41-60.json",
               "data/work-galleries-101-120.json", "data/work-galleries-121-140.json",
               "assets", "foto/foto.png", "foto/foto.webp", "og.jpg",
-              "api/submit.php", "api/health.php", "vendor/autoload.php",
+              "api/submit.php", "api/health.php", "lib/lead-store.php",
+              "admin/index.php", "admin/leads.php", "vendor/autoload.php",
               "assets/images/brand/favicon-new.svg",
               "favicon.ico", "favicon-32.png", "favicon-16.png", "apple-touch-icon.png",
           ]
@@ -114,22 +123,38 @@ jobs:
           TIMEWEB_FTP_PASSWORD: ${{ secrets.TIMEWEB_FTP_PASSWORD }}
           TIMEWEB_SMTP_USERNAME: ${{ secrets.TIMEWEB_SMTP_USERNAME }}
           TIMEWEB_SMTP_PASSWORD: ${{ secrets.TIMEWEB_SMTP_PASSWORD }}
+          TIMEWEB_DB_HOST: ${{ secrets.TIMEWEB_DB_HOST }}
+          TIMEWEB_DB_NAME: ${{ secrets.TIMEWEB_DB_NAME }}
+          TIMEWEB_DB_USERNAME: ${{ secrets.TIMEWEB_DB_USERNAME }}
+          TIMEWEB_DB_PASSWORD: ${{ secrets.TIMEWEB_DB_PASSWORD }}
+          BARIBAL_ADMIN_PASSWORD: ${{ secrets.BARIBAL_ADMIN_PASSWORD }}
         run: |
           test -n "$TIMEWEB_FTP_USERNAME" || (echo "Missing repository secret: TIMEWEB_FTP_USERNAME" && exit 1)
           test -n "$TIMEWEB_FTP_PASSWORD" || (echo "Missing repository secret: TIMEWEB_FTP_PASSWORD" && exit 1)
           test "$TIMEWEB_SMTP_USERNAME" = "zayavki@co376877.tw1.ru" || (echo "TIMEWEB_SMTP_USERNAME must be the exact staging sender mailbox, with no spaces" && exit 1)
           test -n "$TIMEWEB_SMTP_PASSWORD" || (echo "Missing repository secret: TIMEWEB_SMTP_PASSWORD" && exit 1)
+          test -n "$TIMEWEB_DB_HOST" || (echo "Missing repository secret: TIMEWEB_DB_HOST" && exit 1)
+          test -n "$TIMEWEB_DB_NAME" || (echo "Missing repository secret: TIMEWEB_DB_NAME" && exit 1)
+          test -n "$TIMEWEB_DB_USERNAME" || (echo "Missing repository secret: TIMEWEB_DB_USERNAME" && exit 1)
+          test -n "$TIMEWEB_DB_PASSWORD" || (echo "Missing repository secret: TIMEWEB_DB_PASSWORD" && exit 1)
+          test -n "$BARIBAL_ADMIN_PASSWORD" || (echo "Missing repository secret: BARIBAL_ADMIN_PASSWORD" && exit 1)
+          test "${#BARIBAL_ADMIN_PASSWORD}" -ge 16 || (echo "BARIBAL_ADMIN_PASSWORD must contain at least 16 characters" && exit 1)
 
       - name: Create private SMTP configuration for deployment
         env:
           TIMEWEB_SMTP_USERNAME: ${{ secrets.TIMEWEB_SMTP_USERNAME }}
           TIMEWEB_SMTP_PASSWORD: ${{ secrets.TIMEWEB_SMTP_PASSWORD }}
+          TIMEWEB_DB_HOST: ${{ secrets.TIMEWEB_DB_HOST }}
+          TIMEWEB_DB_NAME: ${{ secrets.TIMEWEB_DB_NAME }}
+          TIMEWEB_DB_USERNAME: ${{ secrets.TIMEWEB_DB_USERNAME }}
+          TIMEWEB_DB_PASSWORD: ${{ secrets.TIMEWEB_DB_PASSWORD }}
+          BARIBAL_ADMIN_PASSWORD: ${{ secrets.BARIBAL_ADMIN_PASSWORD }}
         run: |
           mkdir -p private-config
-          php -r '$config = ["smtp_host" => "smtp.timeweb.ru", "smtp_username" => getenv("TIMEWEB_SMTP_USERNAME"), "smtp_password" => getenv("TIMEWEB_SMTP_PASSWORD"), "recipient" => "info@co376877.tw1.ru"]; $json = json_encode($config, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES); if (file_put_contents("private-config/baribal-mail.json", $json, LOCK_EX) === false) { throw new RuntimeException("Could not write private mail configuration"); }'
+          php -r '$config = ["smtp_host" => "smtp.timeweb.ru", "smtp_username" => getenv("TIMEWEB_SMTP_USERNAME"), "smtp_password" => getenv("TIMEWEB_SMTP_PASSWORD"), "recipient" => "info@co376877.tw1.ru", "db_host" => getenv("TIMEWEB_DB_HOST"), "db_name" => getenv("TIMEWEB_DB_NAME"), "db_username" => getenv("TIMEWEB_DB_USERNAME"), "db_password" => getenv("TIMEWEB_DB_PASSWORD"), "admin_password_hash" => password_hash(getenv("BARIBAL_ADMIN_PASSWORD"), PASSWORD_DEFAULT)]; $json = json_encode($config, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES); if (file_put_contents("private-config/baribal-mail.json", $json, LOCK_EX) === false) { throw new RuntimeException("Could not write private mail configuration"); }'
           chmod 644 private-config/baribal-mail.json
           test -s private-config/baribal-mail.json
-          php -r '$config = json_decode(file_get_contents("private-config/baribal-mail.json"), true, 512, JSON_THROW_ON_ERROR); foreach (["smtp_username", "smtp_password", "recipient"] as $key) { if (!isset($config[$key]) || !is_string($config[$key]) || trim($config[$key]) === "") { throw new RuntimeException("Missing required private mail configuration field: " . $key); } } echo "Private JSON mail configuration validated (values hidden).\n";'
+          php -r '$config = json_decode(file_get_contents("private-config/baribal-mail.json"), true, 512, JSON_THROW_ON_ERROR); foreach (["smtp_username", "smtp_password", "recipient", "db_host", "db_name", "db_username", "db_password", "admin_password_hash"] as $key) { if (!isset($config[$key]) || !is_string($config[$key]) || trim($config[$key]) === "") { throw new RuntimeException("Missing required private mail configuration field: " . $key); } } echo "Private JSON mail and database configuration validated (values hidden).\n";'
 
       - name: Deploy private SMTP configuration outside public_html
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
