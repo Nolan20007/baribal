@@ -11,6 +11,17 @@
     lastTrigger = trigger || document.activeElement;
     if (title) title.textContent = serviceTitle ? "Заказать услугу" : "Мы вам перезвоним";
     if (serviceField) serviceField.value = serviceTitle || "";
+    const form = modal.querySelector("form.lead-form");
+    if (form) {
+      const scope = trigger?.closest("[data-source-block], .work-card, .service-card, section, article");
+      const heading = scope?.querySelector("h1, h2, h3, h4");
+      form.dataset.sourceBlock = trigger?.dataset.sourceBlock
+        || serviceTitle
+        || workTitle
+        || heading?.textContent.trim()
+        || "Модальное окно обратной связи";
+      form.dataset.sourceButton = trigger?.textContent.replace(/\\s+/g, " ").trim() || "Открытие формы";
+    }
     if (context) context.textContent = serviceTitle
       ? `Вы выбрали «${serviceTitle}». Оставьте телефон — мы свяжемся с вами, ответим на вопросы и согласуем удобное время.`
       : workTitle
