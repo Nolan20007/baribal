@@ -119,9 +119,7 @@ document.querySelectorAll(".lead-form, .demo-form").forEach((form) => {
       document.querySelectorAll('.estimate-services input[name="requestedServices"]').forEach((input) => {
         input.dispatchEvent(new Event("change", { bubbles: true }));
       });
-      if (output) output.textContent = result.lead_number
-        ? `Спасибо! Заявка ${result.lead_number} принята. Мы свяжемся с вами.`
-        : "Спасибо! Заявка отправлена. Мы свяжемся с вами.";
+      if (output) output.textContent = "Спасибо! Заявка принята. Мы свяжемся с вами.";
     } catch (error) {
       if (output) output.textContent = error.message || "Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.";
     } finally {
@@ -135,58 +133,83 @@ document.querySelectorAll(".lead-form, .demo-form").forEach((form) => {
 });
 
 
-// Floating callback widget: same timed opening and session behavior as the original site.
+// Floating callback widget: opens once 25 seconds after the first page in a tab session.
 const contactWidget = document.querySelector(".contact-widget");
 if (contactWidget) {
   const contactWidgetToggle = contactWidget.querySelector(".contact-widget-toggle");
   const contactWidgetPanel = contactWidget.querySelector(".contact-widget-panel");
-  let widgetDismissed = false;
-  let widgetAlreadyShown = false;
-  let widgetSessionStartedAt = Date.now();
-  try {
-    const storedStart = Number(sessionStorage.getItem("baribal-contact-widget-started-at"));
-    if (Number.isFinite(storedStart) && storedStart > 0) {
-      widgetSessionStartedAt = storedStart;
-    } else {
-      sessionStorage.setItem("baribal-contact-widget-started-at", String(widgetSessionStartedAt));
-    }
-    widgetDismissed = sessionStorage.getItem("baribal-contact-widget-dismissed") === "1";
-    widgetAlreadyShown = sessionStorage.getItem("baribal-contact-widget-shown") === "1";
-  } catch {}
-  const setWidgetOpen = (open) => {
-    contactWidget.classList.toggle("is-open", open);
-    contactWidgetToggle.setAttribute("aria-expanded", String(open));
-    contactWidgetPanel.setAttribute("aria-hidden", String(!open));
-    contactWidgetToggle.querySelector("span").textContent = open ? "Скрыть" : "Связаться с нами";
-    contactWidgetToggle.querySelector("b").innerHTML = open
-      ? '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/></svg>'
-      : '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg>';
-  };
-  setWidgetOpen(false);
-  contactWidgetToggle.addEventListener("click", () => {
-    const opening = !contactWidget.classList.contains("is-open");
-    if (opening) {
-      widgetAlreadyShown = true;
-      try { sessionStorage.setItem("baribal-contact-widget-shown", "1"); } catch {}
-    } else {
-      widgetDismissed = true;
-      try { sessionStorage.setItem("baribal-contact-widget-dismissed", "1"); } catch {}
-    }
-    setWidgetOpen(opening);
-  });
-  if (!widgetAlreadyShown && !widgetDismissed) {
-    // Count 30 seconds from the first page in this tab session, not from each page load.
-    // If the visitor navigates before the deadline, the widget opens on the page they are viewing.
-    const elapsedOnSite = Math.max(0, Date.now() - widgetSessionStartedAt);
-    const delayUntilAutoOpen = Math.max(0, 30000 - elapsedOnSite);
-    window.setTimeout(() => {
-      if (!widgetAlreadyShown && !widgetDismissed) {
-        widgetAlreadyShown = true;
-        try { sessionStorage.setItem("baribal-contact-widget-shown", "1"); } catch {}
-        setWidgetOpen(true);
+  if (contactWidgetToggle && contactWidgetPanel) {
+    const dismissedKey = "baribal-contact-widget-dismissed";
+    const shownKey = "baribal-contact-widget-shown";
+    const startedKey = "baribal-contact-widget-started-at";
+    let widgetDismissed = false;
+    let widgetAlreadyShown = false;
+    let widgetSessionStartedAt = Date.now();
+
+    try {
+      const storedStart = Number(sessionStorage.getItem(startedKey));
+      if (Number.isFinite(storedStart) && storedStart > 0) {
+        widgetSessionStartedAt = storedStart;
+      } else {
+        sessionStorage.setItem(startedKey, String(widgetSessionStartedAt));
       }
-    }, delayUntilAutoOpen);
+      widgetAlreadyShown = sessionStorage.getItem(shownKey) === "1";
+    } catch {}
+
+    try {
+      widgetDismissed = localStorage.getItem(dismissedKey) === "1";
+    } catch {
+      try { widgetDismissed = sessionStorage.getItem(dismissedKey) === "1"; } catch {}
+    }
+
+    const setWidgetOpen = (open) => {
+      contactWidget.classList.toggle("is-open", open);
+      contactWidgetToggle.setAttribute("aria-expanded", String(open));
+      contactWidgetPanel.setAttribute("aria-hidden", String(!open));
+      const label = contactWidgetToggle.querySelector("span");
+      const icon = contactWidgetToggle.querySelector("b");
+      if (label) label.textContent = open ? "Скрыть" : "Связаться с нами";
+      if (icon) icon.innerHTML = open
+        ? '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/></svg>'
+        : '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg>';
+    };
+
+    const markWidgetShown = () => {
+      widgetAlreadyShown = true;
+      try { sessionStorage.setItem(shownKey, "1"); } catch {}
+    };
+
+    const dismissWidget = () => {
+      widgetDismissed = true;
+      try { localStorage.setItem(dismissedKey, "1"); } catch {
+        try { sessionStorage.setItem(dismissedKey, "1"); } catch {}
+      }
+    };
+
+    setWidgetOpen(false);
+    contactWidgetToggle.addEventListener("click", () => {
+      const opening = !contactWidget.classList.contains("is-open");
+      if (opening) {
+        markWidgetShown();
+      } else {
+        dismissWidget();
+      }
+      setWidgetOpen(opening);
+    });
+
+    if (!widgetAlreadyShown && !widgetDismissed) {
+      // Preserve the original arrival time while the visitor moves between pages.
+      const elapsedOnSite = Math.max(0, Date.now() - widgetSessionStartedAt);
+      const delayUntilAutoOpen = Math.max(0, 25000 - elapsedOnSite);
+      window.setTimeout(() => {
+        if (!widgetAlreadyShown && !widgetDismissed) {
+          markWidgetShown();
+          setWidgetOpen(true);
+        }
+      }, delayUntilAutoOpen);
+    }
   }
+}
   contactWidget.querySelectorAll(".contact-preferences").forEach((group) => {
     const otherToggle = group.querySelector("[data-contact-other-toggle]");
     const details = group.querySelector(".contact-other-details");
