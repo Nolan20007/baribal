@@ -4,6 +4,7 @@ declare(strict_types=1);
 header('X-Content-Type-Options: nosniff');
 header('X-Frame-Options: DENY');
 header('Referrer-Policy: no-referrer');
+header('X-Robots-Tag: noindex, nofollow, noarchive');
 header('Cache-Control: no-store, max-age=0');
 
 $configPath = dirname(__DIR__, 2) . '/baribal-private/baribal-mail.json';
@@ -22,6 +23,13 @@ if (!is_array($config) || empty($config['admin_password_hash'])) {
 
 $user = (string)($_SERVER['PHP_AUTH_USER'] ?? '');
 $password = (string)($_SERVER['PHP_AUTH_PW'] ?? '');
+if ($user === '' && isset($_SERVER['HTTP_AUTHORIZATION'])
+    && preg_match('/^Basic\\s+(.+)$/i', (string)$_SERVER['HTTP_AUTHORIZATION'], $authMatch)) {
+    $decoded = base64_decode($authMatch[1], true);
+    if (is_string($decoded) && str_contains($decoded, ':')) {
+        [$user, $password] = explode(':', $decoded, 2);
+    }
+}
 if ($user !== 'baribal' || !password_verify($password, (string)$config['admin_password_hash'])) {
     header('WWW-Authenticate: Basic realm="BARIBAL — журнал заявок"');
     http_response_code(401);
