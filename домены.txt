@@ -1,15 +1,26 @@
+# DNS-записи baribal-studio.ru для Timeweb
+# Снимок значений, подготовленных в панели Timeweb. Актуальный статус делегации и проверки — в 00-START-HERE-DOMAIN-CUTOVER.md.
+
 A	baribal-studio.ru
-92.53.96.225	600	
+92.53.96.225	600
+
 AAAA	baribal-studio.ru
-2a03:6f00:1::5c35:60e1	600	
+2a03:6f00:1::5c35:60e1	600
+
 MX	baribal-studio.ru
-mx1.timeweb.ru	600	
+mx1.timeweb.ru	10	600
+
 MX	baribal-studio.ru
-mx2.timeweb.ru	600	
+mx2.timeweb.ru	20	600
+
 TXT	baribal-studio.ru
-v=spf1 include:_spf.timeweb.ru ~all		600	
+v=spf1 include:_spf.timeweb.ru ~all	600
+
 TXT	_dmarc.baribal-studio.ru
-v=DMARC1;p=none	
+v=DMARC1;p=none
+
 TXT	dkim._domainkey.baribal-studio.ru
-k=rsa;p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDRlEPghNeifdDpPTOE51bqBLETQXOAvl5ima5hmXE9L1pDNvoqmtDrqKfa3KKmO3FAFujLwZNOd5x/Fq2fhNO8I+2ORg8OFyOd0h3PNaTPqvvTE0mky0saF+jmM7HOpHaK1r+BwtEayajjQub5ziyK3MPygSA06YAA4TGPEbW3MwIDAQAB
-	600	
+k=rsa;p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDRlEPghNeifdDpPTOE51bqBLETQXOAvl5ima5hmXE9L1pDNvoqmtDrqKfa3KKmO3FAFujLwZNOd5x/Fq2fhNO8I+2ORg8OFyOd0h3PNaTPqvvTE0mky0saF+jmM7HOpHaK1r+BwtEayajjQub5ziyK3MPygSA06YAA4TGPEbW3MwIDAQAB	600
+
+CNAME	www.baribal-studio.ru
+baribal-studio.ru	600
