@@ -27,6 +27,7 @@ function baribalLeadDatabase(array $config): PDO
     ]);
 
     baribalEnsureLeadSchema($pdo);
+    baribalEnsureReviewSchema($pdo);
     return $pdo;
 }
 
