@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://nolan20007.github.io/baribal/sitemap.xml
+Sitemap: https://baribal-studio.ru/sitemap.xml
