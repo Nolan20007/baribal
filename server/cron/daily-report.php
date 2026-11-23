@@ -14,10 +14,11 @@ if ((int)$now->format('N') > 5 || $now->format('H:i') < '17:00') {
     exit("Not scheduled now.\n");
 }
 
-$root = dirname(__DIR__, 2);
-$configPath = $root . '/baribal-private/baribal-mail.json';
-$autoloadPath = dirname(__DIR__) . '/vendor/autoload.php';
-$storePath = dirname(__DIR__) . '/lib/lead-store.php';
+$privateDir = __DIR__;
+$publicRoot = dirname(__DIR__) . '/public_html';
+$configPath = $privateDir . '/baribal-mail.json';
+$autoloadPath = $publicRoot . '/vendor/autoload.php';
+$storePath = $publicRoot . '/lib/lead-store.php';
 if (!is_file($configPath) || !is_readable($configPath) || !is_file($autoloadPath) || !is_file($storePath)) {
     error_log('BARIBAL daily report: configuration or dependencies are missing.');
     exit(1);
