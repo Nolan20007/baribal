@@ -80,6 +80,23 @@ document.querySelectorAll(".lead-form, .demo-form").forEach((form) => {
 
     try {
       const payload = new FormData(form);
+      const widget = form.closest(".contact-widget");
+      const context = form.closest("[data-source-block], .modal-card, section, article, .service-card, .work-card");
+      const contextHeading = context?.querySelector("h1, h2, h3, h4");
+      const sourceBlock = form.dataset.sourceBlock
+        || (widget ? "Плавающий виджет связи" : contextHeading?.textContent.trim() || "Форма обратной связи");
+      const sourceButton = form.dataset.sourceButton
+        || submitButton?.textContent.replace(/\\s+/g, " ").trim()
+        || "Отправка формы";
+      const currentUrl = new URL(window.location.href);
+      payload.set("page_url", currentUrl.href);
+      payload.set("page_title", document.title || "");
+      payload.set("source_block", sourceBlock);
+      payload.set("source_button", sourceButton);
+      payload.set("referrer", document.referrer || "");
+      ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"].forEach((key) => {
+        payload.set(key, currentUrl.searchParams.get(key) || "");
+      });
       const contactMethods = payload.getAll("contact_method");
       payload.delete("contact_method");
       contactMethods.forEach((method) => payload.append("contact_method[]", method));
@@ -102,7 +119,9 @@ document.querySelectorAll(".lead-form, .demo-form").forEach((form) => {
       document.querySelectorAll('.estimate-services input[name="requestedServices"]').forEach((input) => {
         input.dispatchEvent(new Event("change", { bubbles: true }));
       });
-      if (output) output.textContent = "Спасибо! Заявка отправлена. Мы свяжемся с вами.";
+      if (output) output.textContent = result.lead_number
+        ? `Спасибо! Заявка ${result.lead_number} принята. Мы свяжемся с вами.`
+        : "Спасибо! Заявка отправлена. Мы свяжемся с вами.";
     } catch (error) {
       if (output) output.textContent = error.message || "Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.";
     } finally {
