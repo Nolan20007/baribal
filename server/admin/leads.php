@@ -227,7 +227,8 @@ button{border:0;border-radius:10px;padding:0 18px;background:#25282b;color:white
    <div class="field"><small>Телефон</small><a href="tel:<?= leadHtml((string)$lead['phone']) ?>"><?= leadHtml((string)$lead['phone']) ?></a></div>
    <div class="field"><small>Автомобиль</small><span><?= leadHtml(leadValue($lead, 'car')) ?></span></div>
    <div class="field"><small>Услуга</small><strong><?= leadHtml(leadValue($lead, 'service')) ?></strong></div>
-   <div class="field"><small>Способ связи</small><span><?= leadHtml(leadValue($lead, 'contact_methods')) ?><?= trim((string)$lead['contact_other']) !== '' ? ' · ' . leadHtml((string)$lead['contact_other']) : '' ?></span></div>
+   <div class="field"><small>Способ связи</small><span><?= leadHtml(leadValue($lead, 'contact_methods')) ?></span></div>
+   <?php if (trim((string)$lead['contact_other']) !== ''): ?><div class="field"><small>Комментарий</small><span><?= nl2br(leadHtml((string)$lead['contact_other'])) ?></span></div><?php endif; ?>
    <div class="field"><small>Выбранные услуги</small><span><?= nl2br(leadHtml(leadValue($lead, 'selected_services'))) ?></span></div>
    <div class="field"><small>Страница</small><a href="<?= leadHtml(leadValue($lead, 'page_url', '#')) ?>" target="_blank" rel="noopener"><?= leadHtml(leadValue($lead, 'page_title', leadValue($lead, 'page_path'))) ?></a></div>
    <div class="field"><small>Блок / кнопка</small><span><?= leadHtml(leadValue($lead, 'source_block')) ?><?= trim((string)$lead['source_button']) !== '' ? ' · ' . leadHtml((string)$lead['source_button']) : '' ?></span></div>
