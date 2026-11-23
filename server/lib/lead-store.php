@@ -174,3 +174,37 @@ function baribalSetLeadEmailStatus(PDO $pdo, int $id, string $status, string $er
         'id' => $id,
     ]);
 }
+
+
+/**
+ * Review moderation and scheduled-report tables share the existing database.
+ */
+function baribalEnsureReviewSchema(PDO $pdo): void
+{
+    $pdo->exec(
+        "CREATE TABLE IF NOT EXISTS baribal_reviews (
+            id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+            created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            reviewed_at DATETIME NULL,
+            status VARCHAR(20) NOT NULL DEFAULT 'pending',
+            author_name VARCHAR(100) NOT NULL,
+            car VARCHAR(150) NOT NULL DEFAULT '',
+            review_text TEXT NOT NULL,
+            photo_files TEXT NULL,
+            PRIMARY KEY (id),
+            KEY idx_baribal_review_status (status, created_at),
+            KEY idx_baribal_review_created (created_at)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+    );
+    $pdo->exec(
+        "CREATE TABLE IF NOT EXISTS baribal_daily_reports (
+            id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+            report_date DATE NOT NULL,
+            sent_at DATETIME NULL,
+            attempts INT UNSIGNED NOT NULL DEFAULT 0,
+            last_error VARCHAR(255) NOT NULL DEFAULT '',
+            PRIMARY KEY (id),
+            UNIQUE KEY uq_baribal_daily_report_date (report_date)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+    );
+}
