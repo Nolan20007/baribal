@@ -24,11 +24,6 @@ const renderApprovedReviews = async () => {
     const data = await response.json();
     if (!data.success || !Array.isArray(data.reviews) || !data.reviews.length) return;
 
-    const heading = document.createElement("h2");
-    heading.className = "approved-reviews-title";
-    heading.textContent = "Отзывы клиентов";
-    container.append(heading);
-
     data.reviews.forEach((review) => {
       const card = document.createElement("article");
       card.className = "approved-review-card";
@@ -48,17 +43,20 @@ const renderApprovedReviews = async () => {
         const photos = document.createElement("div");
         photos.className = "approved-review-photos";
         review.photos.forEach((url) => {
-          const link = document.createElement("a");
-          link.href = url;
-          link.target = "_blank";
-          link.rel = "noopener noreferrer";
+          const frame = document.createElement("div");
+          frame.className = "approved-review-photo";
           const image = document.createElement("img");
           image.src = url;
           image.alt = "Фотография к отзыву клиента BARIBAL";
           image.loading = "lazy";
           image.decoding = "async";
-          link.append(image);
-          photos.append(link);
+          image.classList.add("js-shared-lightbox-image");
+          image.setAttribute("role", "button");
+          image.setAttribute("tabindex", "0");
+          image.setAttribute("aria-label", "Открыть фотографию к отзыву");
+          image.title = "Открыть фотографию";
+          frame.append(image);
+          photos.append(frame);
         });
         card.append(photos);
       }
