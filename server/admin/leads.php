@@ -98,7 +98,7 @@ try {
     $searchWhere = '';
     $searchParams = [];
     if ($query !== '') {
-        $searchWhere = ' WHERE lead_number LIKE :number OR phone LIKE :phone OR name LIKE :name OR service LIKE :service';
+        $searchWhere = ' WHERE (lead_number LIKE :number OR phone LIKE :phone OR name LIKE :name OR service LIKE :service)';
         $like = '%' . $query . '%';
         $searchParams = ['number' => $like, 'phone' => $like, 'name' => $like, 'service' => $like];
     }
