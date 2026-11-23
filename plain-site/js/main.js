@@ -197,16 +197,21 @@ if (contactWidget) {
       setWidgetOpen(opening);
     });
 
+    const autoOpenIfDue = () => {
+      if (widgetAlreadyShown || widgetDismissed || document.visibilityState === "hidden") return;
+      const remaining = widgetSessionStartedAt + 25000 - Date.now();
+      if (remaining > 0) return;
+      markWidgetShown();
+      setWidgetOpen(true);
+    };
+
     if (!widgetAlreadyShown && !widgetDismissed) {
-      // Preserve the original arrival time while the visitor moves between pages.
-      const elapsedOnSite = Math.max(0, Date.now() - widgetSessionStartedAt);
-      const delayUntilAutoOpen = Math.max(0, 25000 - elapsedOnSite);
-      window.setTimeout(() => {
-        if (!widgetAlreadyShown && !widgetDismissed) {
-          markWidgetShown();
-          setWidgetOpen(true);
-        }
-      }, delayUntilAutoOpen);
+      // Keep an absolute deadline across page navigation; also re-check when
+      // a background tab becomes visible in case the browser throttled timers.
+      const delayUntilAutoOpen = Math.max(0, widgetSessionStartedAt + 25000 - Date.now());
+      window.setTimeout(autoOpenIfDue, delayUntilAutoOpen);
+      document.addEventListener("visibilitychange", autoOpenIfDue);
+      window.addEventListener("pageshow", autoOpenIfDue);
     }
   }
 }
