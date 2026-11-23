@@ -38,6 +38,16 @@ if ($user !== 'baribal' || !password_verify($password, (string)$config['admin_pa
 
 require $storePath;
 
+session_set_cookie_params([
+    'httponly' => true,
+    'secure' => (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'),
+    'samesite' => 'Strict',
+]);
+session_start();
+if (empty($_SESSION['lead_csrf'])) {
+    $_SESSION['lead_csrf'] = bin2hex(random_bytes(32));
+}
+
 function leadHtml(string $value): string
 {
     return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
@@ -47,6 +57,30 @@ try {
     $pdo = baribalLeadDatabase($config);
     $query = trim((string)($_GET['q'] ?? ''));
     $page = max(1, min(100000, (int)($_GET['page'] ?? 1)));
+    $statusLabels = [
+        'new' => 'Новая',
+        'in_progress' => 'В работе',
+        'booked' => 'Записан',
+        'completed' => 'Завершена',
+    ];
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $token = (string)($_POST['csrf'] ?? '');
+        $leadId = (int)($_POST['lead_id'] ?? 0);
+        $newStatus = (string)($_POST['status'] ?? '');
+        if (!hash_equals((string)$_SESSION['lead_csrf'], $token)
+            || $leadId < 1 || !isset($statusLabels[$newStatus])) {
+            http_response_code(400);
+            exit('Не удалось проверить запрос. Обновите страницу и повторите действие.');
+        }
+        $updateStatus = $pdo->prepare('UPDATE baribal_leads SET status = :status WHERE id = :id');
+        $updateStatus->execute(['status' => $newStatus, 'id' => $leadId]);
+        $redirect = '/admin/leads.php?' . http_build_query([
+            'q' => $query,
+            'page' => $page,
+        ]);
+        header('Location: ' . $redirect, true, 303);
+        exit;
+    }
     $perPage = 40;
     $where = '';
     $params = [];
@@ -104,7 +138,7 @@ button{border:0;border-radius:10px;padding:0 18px;background:#25282b;color:white
 .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px 20px}.field{min-width:0}.field small{display:block;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px}
 .field strong,.field span,.field a{display:block;overflow-wrap:anywhere}.field a{color:#8a5b22;text-decoration:none}.field a:hover{text-decoration:underline}
 .wide{grid-column:1/-1}.empty{padding:36px;text-align:center;color:var(--muted);background:white;border:1px solid var(--line);border-radius:14px}
-.pager{display:flex;justify-content:space-between;align-items:center;margin-top:20px}.pager a{color:#80551f;text-decoration:none;font-weight:700}
+.pager{display:flex;justify-content:space-between;align-items:center;margin-top:20px}.pager a{color:#80551f;text-decoration:none;font-weight:700}.status-form{display:flex;align-items:center;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}.status-form select{max-width:190px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:#fff;color:var(--ink);font:inherit}.status-form button{padding:8px 12px;font-size:13px}
 @media(max-width:700px){main{padding:20px 12px 40px}.top{display:block}h1{font-size:25px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.lead{padding:15px}.lead-head{align-items:flex-start;flex-direction:column}.search button{padding:0 12px}}
 @media(max-width:420px){.grid{grid-template-columns:1fr}.wide{grid-column:auto}}
 </style>
@@ -143,6 +177,17 @@ button{border:0;border-radius:10px;padding:0 18px;background:#25282b;color:white
    <div class="field"><small>Блок / кнопка</small><span><?= leadHtml(leadValue($lead, 'source_block')) ?><?= trim((string)$lead['source_button']) !== '' ? ' · ' . leadHtml((string)$lead['source_button']) : '' ?></span></div>
    <div class="field"><small>Реклама</small><span><?= leadHtml(implode(' / ', array_filter([(string)$lead['utm_source'], (string)$lead['utm_medium'], (string)$lead['utm_campaign']]))) ?: '—' ?></span></div>
   </div>
+  <form class="status-form" method="post">
+   <input type="hidden" name="csrf" value="<?= leadHtml((string)$_SESSION['lead_csrf']) ?>">
+   <input type="hidden" name="lead_id" value="<?= (int)$lead['id'] ?>">
+   <label class="muted" for="status-<?= (int)$lead['id'] ?>">Статус:</label>
+   <select id="status-<?= (int)$lead['id'] ?>" name="status">
+    <?php foreach ($statusLabels as $statusKey => $statusLabel): ?>
+     <option value="<?= leadHtml($statusKey) ?>"<?= $lead['status'] === $statusKey ? ' selected' : '' ?>><?= leadHtml($statusLabel) ?></option>
+    <?php endforeach; ?>
+   </select>
+   <button type="submit">Сохранить</button>
+  </form>
  </article>
 <?php endforeach; ?>
 </section>
