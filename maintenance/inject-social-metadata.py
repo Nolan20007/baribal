@@ -10,7 +10,7 @@ import cairosvg
 from PIL import Image, ImageDraw
 
 ROOT = Path("dist")
-SITE_BASE_URL = "https://nolan20007.github.io/baribal"
+SITE_BASE_URL = "https://baribal-studio.ru"
 OG_IMAGE = SITE_BASE_URL + "/og.jpg"
 FAVICON_SVG = "assets/images/brand/favicon-new.svg"
 DEFAULT_DESCRIPTION = (
@@ -91,6 +91,7 @@ def main() -> None:
 
     for page in pages:
         document = page.read_text(encoding="utf-8")
+        document = document.replace("https://nolan20007.github.io/baribal", SITE_BASE_URL)
         title_match = re.search(r"<title\b[^>]*>(.*?)</title>", document, re.I | re.S)
         title = re.sub(r"\s+", " ", unescape(title_match.group(1))).strip() if title_match else "BARIBAL — студия защитных технологий"
         description_match = re.search(
@@ -111,6 +112,7 @@ def main() -> None:
 
         document = remove_old_social_and_icon_tags(document)
         metadata = f"""
+  <link rel="canonical" href="{escape(url, quote=True)}">
   <link rel="icon" href="{prefix}favicon.ico" sizes="any">
   <link rel="icon" type="image/svg+xml" href="{prefix}{FAVICON_SVG}">
   <link rel="icon" type="image/png" sizes="32x32" href="{prefix}favicon-32.png">
