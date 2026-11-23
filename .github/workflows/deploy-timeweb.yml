@@ -20,7 +20,7 @@ jobs:
       - name: Set up PHP and install the mailer
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.4'
           tools: composer:v2
 
       - name: Install PHP dependencies and validate server scripts
@@ -140,12 +140,12 @@ jobs:
           protocol: ftp
           port: 21
           local-dir: ./private-config/
-          server-dir: ./baribal-private/
+          server-dir: ./baribal/baribal-private/
           dangerous-clean-slate: true
           dry-run: false
           timeout: 120000
 
-      - name: Deploy website directly to Timeweb public_html
+      - name: Deploy website directly to the additional site's public_html
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: vh480.timeweb.ru
@@ -154,7 +154,7 @@ jobs:
           protocol: ftp
           port: 21
           local-dir: ./dist/
-          server-dir: ./public_html/
+          server-dir: ./baribal/public_html/
           dry-run: false
           timeout: 120000
           exclude: |
