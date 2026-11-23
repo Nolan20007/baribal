@@ -85,14 +85,14 @@ try {
             . '<tr><td style="padding:8px 0;border-bottom:1px solid #edf0f1;color:#596168">В работе</td><td align="right" style="font-weight:bold">' . $inProgressCount . '</td></tr>'
             . '<tr><td style="padding:12px 0;color:#202326;font-weight:bold">Всего требуют внимания</td><td align="right" style="font-size:22px;font-weight:bold;color:#b53c3c">' . ($newCount + $inProgressCount) . '</td></tr>'
             . '</table><div style="margin-top:20px;padding:13px 15px;background:#fff5f5;border-radius:9px;color:#7b3434">Отзывы на модерации: <strong>' . $pendingReviews . '</strong></div>'
-            . '<div style="margin-top:22px"><a href="https://co376877.tw1.ru/admin/leads.php" style="display:inline-block;padding:12px 17px;background:#25292c;border-radius:8px;color:#fff;text-decoration:none;font-size:13px;font-weight:bold">Открыть админку</a></div></div>'
+            . '<div style="margin-top:22px"><a href="https://baribal-studio.ru/admin/leads.php" style="display:inline-block;padding:12px 17px;background:#25292c;border-radius:8px;color:#fff;text-decoration:none;font-size:13px;font-weight:bold">Открыть админку</a></div></div>'
             . '<div style="padding:14px 26px;background:#f7f8f8;color:#8a9298;font-size:11px">Отчёт формируется автоматически по данным базы BARIBAL.</div></div></div>';
 
         $plain = "BARIBAL — итоги рабочего дня {$dateLabel}\n\n"
             . "Результаты за сегодня: поступило {$todayTotal}\n"
             . "Новые: {$daily['new']}\nВ работе: {$daily['in_progress']}\nЗаписаны: {$daily['booked']}\nЗавершены: {$daily['completed']}\n\n"
             . "Накопительные результаты:\nНовые: {$newCount}\nВ работе: {$inProgressCount}\nВсего требуют внимания: " . ($newCount + $inProgressCount) . "\n"
-            . "Отзывы на модерации: {$pendingReviews}\n\nАдминка: https://co376877.tw1.ru/admin/leads.php";
+            . "Отзывы на модерации: {$pendingReviews}\n\nАдминка: https://baribal-studio.ru/admin/leads.php";
 
         $mail = new PHPMailer(true);
         $mail->isSMTP();
