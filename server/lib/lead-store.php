@@ -26,6 +26,8 @@ function baribalLeadDatabase(array $config): PDO
         PDO::ATTR_TIMEOUT => 5,
     ]);
 
+    // Store all DATETIME values consistently in the studio's Moscow time zone.
+    $pdo->exec("SET time_zone = '+03:00'");
     baribalEnsureLeadSchema($pdo);
     baribalEnsureReviewSchema($pdo);
     return $pdo;
