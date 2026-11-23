@@ -20,7 +20,7 @@
         || workTitle
         || heading?.textContent.trim()
         || "Модальное окно обратной связи";
-      form.dataset.sourceButton = trigger?.textContent.replace(/\\s+/g, " ").trim() || "Открытие формы";
+      form.dataset.sourceButton = trigger?.textContent.replace(/\s+/g, " ").trim() || "Открытие формы";
     }
     if (context) context.textContent = serviceTitle
       ? `Вы выбрали «${serviceTitle}». Оставьте телефон — мы свяжемся с вами, ответим на вопросы и согласуем удобное время.`
