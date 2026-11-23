@@ -157,11 +157,10 @@ if (contactWidget) {
       widgetAlreadyShown = sessionStorage.getItem(shownKey) === "1";
     } catch {}
 
-    try {
-      widgetDismissed = localStorage.getItem(dismissedKey) === "1";
-    } catch {
-      try { widgetDismissed = sessionStorage.getItem(dismissedKey) === "1"; } catch {}
-    }
+    // A previous version stored dismissal in localStorage indefinitely.
+    // Clear that legacy flag and keep dismissal only for the current tab session.
+    try { localStorage.removeItem(dismissedKey); } catch {}
+    try { widgetDismissed = sessionStorage.getItem(dismissedKey) === "1"; } catch {}
 
     const setWidgetOpen = (open) => {
       contactWidget.classList.toggle("is-open", open);
@@ -182,9 +181,7 @@ if (contactWidget) {
 
     const dismissWidget = () => {
       widgetDismissed = true;
-      try { localStorage.setItem(dismissedKey, "1"); } catch {
-        try { sessionStorage.setItem(dismissedKey, "1"); } catch {}
-      }
+      try { sessionStorage.setItem(dismissedKey, "1"); } catch {}
     };
 
     setWidgetOpen(false);
