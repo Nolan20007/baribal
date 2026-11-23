@@ -7,8 +7,9 @@ mx1.timeweb.ru	600
 MX	baribal-studio.ru
 mx2.timeweb.ru	600	
 TXT	baribal-studio.ru
-v=spf1 include:_spf.timewe...l	600	
-TXT	_dmarc.baribal-stud...u
-v=DMARC1;p=none	600	
-TXT	dkim._domainkey.bar...u
-k=rsa;p=MIGfMA0GCSqGSIb3DQ...B	600	
+v=spf1 include:_spf.timeweb.ru ~all		600	
+TXT	_dmarc.baribal-studio.ru
+v=DMARC1;p=none	
+TXT	dkim._domainkey.baribal-studio.ru
+k=rsa;p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDRlEPghNeifdDpPTOE51bqBLETQXOAvl5ima5hmXE9L1pDNvoqmtDrqKfa3KKmO3FAFujLwZNOd5x/Fq2fhNO8I+2ORg8OFyOd0h3PNaTPqvvTE0mky0saF+jmM7HOpHaK1r+BwtEayajjQub5ziyK3MPygSA06YAA4TGPEbW3MwIDAQAB
+	600	
