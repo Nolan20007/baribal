@@ -86,7 +86,7 @@ document.querySelectorAll(".lead-form, .demo-form").forEach((form) => {
       const sourceBlock = form.dataset.sourceBlock
         || (widget ? "Плавающий виджет связи" : contextHeading?.textContent.trim() || "Форма обратной связи");
       const sourceButton = form.dataset.sourceButton
-        || submitButton?.textContent.replace(/\\s+/g, " ").trim()
+        || submitButton?.textContent.replace(/\s+/g, " ").trim()
         || "Отправка формы";
       const currentUrl = new URL(window.location.href);
       payload.set("page_url", currentUrl.href);
