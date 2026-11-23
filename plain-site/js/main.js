@@ -861,12 +861,12 @@ if (portfolioGrid) {
       const story = document.querySelector("#service-info-story")?.textContent.trim() || "";
       return { images: images.length ? images : [img], heading, text: [lead, story].filter(Boolean).join(" ") };
     }
-    const card = img.closest(".work-card, .service-card, .split-feature, .feature-photo, figure");
+    const card = img.closest(".approved-review-card, .work-card, .service-card, .split-feature, .feature-photo, figure");
     const scope = card || img.parentElement;
-    const heading = scope?.querySelector("h2, h3, h4, figcaption")?.textContent.trim()
+    const heading = scope?.querySelector(".approved-review-meta strong, h2, h3, h4, figcaption")?.textContent.trim()
       || img.getAttribute("alt")?.trim()
       || "Фотографии";
-    const text = scope?.querySelector(".work-copy p, .service-copy p, .prose-block p, figcaption")?.textContent.trim() || "";
+    const text = scope?.querySelector(".approved-review-card > p, .work-copy p, .service-copy p, .prose-block p, figcaption")?.textContent.trim() || "";
     const grouped = card ? [...card.querySelectorAll("img")].filter(eligibleImage) : [img];
     const images = grouped.length ? grouped : [img];
     return { images, heading, text };
