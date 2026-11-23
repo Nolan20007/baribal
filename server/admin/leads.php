@@ -55,6 +55,7 @@ function leadHtml(string $value): string
 
 try {
     $pdo = baribalLeadDatabase($config);
+    $pendingReviews = (int)$pdo->query("SELECT COUNT(*) FROM baribal_reviews WHERE status = 'pending'")->fetchColumn();
     $query = trim((string)($_GET['q'] ?? ''));
     $filter = (string)($_GET['filter'] ?? 'all');
     $filterLabels = [
@@ -168,6 +169,7 @@ function leadValue(array $lead, string $key, string $fallback = '—'): string
 main{max-width:1180px;margin:0 auto;padding:28px 20px 56px}.top{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:22px}
 .eyebrow{color:var(--accent);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
 h1{font-size:30px;line-height:1.15;margin:5px 0}.muted{color:var(--muted)}.count{font-variant-numeric:tabular-nums;color:var(--muted)}
+.admin-nav{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}.admin-nav a{display:inline-flex;align-items:center;gap:8px;padding:9px 13px;border:1px solid var(--line);border-radius:999px;background:#fff;color:#41484e;text-decoration:none;font-weight:750;font-size:13px}.admin-nav a.active{background:#25282b;border-color:#25282b;color:#fff}.admin-nav b{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border-radius:99px;background:#f9dddd;color:#a33a3a;font-size:11px}
 .search{display:flex;gap:8px;margin:0 0 12px}.search input{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;padding:12px 14px;font:inherit;background:white}
 .filters{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}.filter-chip{display:inline-flex;align-items:center;gap:8px;padding:8px 11px;border:1px solid var(--line);border-radius:999px;background:#fff;color:#41484e;text-decoration:none;font-size:13px;font-weight:700}.filter-chip span{display:inline-grid;place-items:center;min-width:21px;height:21px;padding:0 5px;border-radius:999px;background:#edf0f2;color:#596168;font-size:11px;font-variant-numeric:tabular-nums}.filter-chip.is-active{background:#25282b;border-color:#25282b;color:#fff}.filter-chip.is-active span{background:#fff;color:#25282b}.filter-chip.is-alert:not(.is-active){border-color:#efc3c3;background:#fff5f5;color:#a33a3a}.filter-chip.is-alert:not(.is-active) span{background:#f9dddd;color:#a33a3a}
 button{border:0;border-radius:10px;padding:0 18px;background:#25282b;color:white;font:inherit;font-weight:650;cursor:pointer}
@@ -189,6 +191,10 @@ button{border:0;border-radius:10px;padding:0 18px;background:#25282b;color:white
  <div><div class="eyebrow">BARIBAL · ВНУТРЕННИЙ ЖУРНАЛ</div><h1>Заявки клиентов</h1><div class="muted">Все обращения сохраняются отдельно, включая повторные</div></div>
  <div class="count">Найдено: <?= number_format($total, 0, ',', ' ') ?></div>
 </header>
+<nav class="admin-nav" aria-label="Разделы админки">
+ <a class="active" href="/admin/leads.php">Заявки</a>
+ <a href="/admin/reviews.php">Отзывы<?php if ($pendingReviews > 0): ?><b><?= number_format($pendingReviews, 0, ',', ' ') ?></b><?php endif; ?></a>
+</nav>
 <form class="search" method="get" action="">
  <input type="search" name="q" value="<?= leadHtml($query) ?>" placeholder="Номер, телефон, имя или услуга" aria-label="Поиск заявок">
  <input type="hidden" name="filter" value="<?= leadHtml($filter) ?>">
