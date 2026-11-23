@@ -218,11 +218,11 @@ if (contactWidget) {
   contactWidget.querySelectorAll(".contact-preferences").forEach((group) => {
     const otherToggle = group.querySelector("[data-contact-other-toggle]");
     const details = group.querySelector(".contact-other-details");
-    const otherInput = group.querySelector('input[name="contact_other"]');
+    const otherInput = group.querySelector('[name="contact_other"]');
     if (!otherToggle || !details || !otherInput) return;
     const syncOther = () => {
       details.hidden = !otherToggle.checked;
-      otherInput.required = otherToggle.checked;
+      otherInput.required = false;
     };
     otherToggle.addEventListener("change", syncOther);
     syncOther();
@@ -629,9 +629,9 @@ document.addEventListener("keydown", (event) => {
 document.querySelectorAll(".contact-preferences").forEach((group) => {
   const toggle = group.querySelector("[data-contact-other-toggle]");
   const details = group.querySelector(".contact-other-details");
-  const input = group.querySelector('input[name="contact_other"]');
+  const input = group.querySelector('[name="contact_other"]');
   if (!toggle || !details || !input) return;
-  const sync = () => { details.hidden = !toggle.checked; input.required = toggle.checked; };
+  const sync = () => { details.hidden = !toggle.checked; input.required = false; };
   toggle.addEventListener("change", sync);
   sync();
 });
