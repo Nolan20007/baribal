@@ -102,6 +102,7 @@ jobs:
               "admin/review-image.php",
               "js/reviews.js", "vendor/autoload.php",
               "assets/images/brand/favicon-new.svg",
+              "assets/images/brand/og-preview-wide.png",
               "favicon.ico", "favicon-32.png", "favicon-16.png", "apple-touch-icon.png",
           ]
           required += [f"{route}/index.html" for route in (
