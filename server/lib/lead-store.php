@@ -30,7 +30,6 @@ function baribalLeadDatabase(array $config): PDO
     $pdo->exec("SET time_zone = '+03:00'");
     baribalEnsureLeadSchema($pdo);
     baribalEnsureReviewSchema($pdo);
-    baribalEnsureRatingSchema($pdo);
     return $pdo;
 }
 
@@ -219,25 +218,3 @@ function baribalEnsureReviewSchema(PDO $pdo): void
     );
 }
 
-/**
- * Daily snapshots of public ratings. Provider API credentials stay in the
- * private Timeweb configuration; only normalized values are stored here.
- */
-function baribalEnsureRatingSchema(PDO $pdo): void
-{
-    $pdo->exec(
-        "CREATE TABLE IF NOT EXISTS baribal_rating_snapshots (
-            id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-            provider VARCHAR(24) NOT NULL,
-            rating DECIMAL(3,2) NULL,
-            review_count INT UNSIGNED NULL,
-            checked_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            source VARCHAR(32) NOT NULL DEFAULT 'api',
-            status VARCHAR(24) NOT NULL DEFAULT 'ok',
-            error_code VARCHAR(64) NOT NULL DEFAULT '',
-            PRIMARY KEY (id),
-            KEY idx_baribal_rating_provider_date (provider, checked_at),
-            KEY idx_baribal_rating_date (checked_at)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
-    );
-}
