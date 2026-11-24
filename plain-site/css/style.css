@@ -3399,3 +3399,40 @@ a.button:focus-visible,
  .review-modal-card{padding:28px 20px 22px}
  .review-modal-card h2{font-size:29px;padding-right:18px}
 }
+
+
+/* Reviews page: keep the shared BARIBAL lightbox, but let the photo use the full panel. */
+.project-modal--reviews .project-modal__panel{
+  display:flex;
+  width:min(96vw,1600px);
+  height:min(94vh,94dvh,1100px);
+  max-width:1600px;
+  max-height:1100px;
+  background:#111214;
+  border-color:rgba(184,117,47,.55);
+}
+.project-modal--reviews .project-modal__visual{
+  flex:1 1 auto;
+  width:100%;
+  min-width:0;
+  min-height:0;
+  background:#111214;
+}
+.project-modal--reviews .project-modal__image{
+  width:100%;
+  height:100%;
+  max-height:none;
+  object-fit:contain;
+}
+.project-modal--reviews .project-modal__details{display:none}
+@media(max-width:760px){
+  .project-modal--reviews{padding:10px}
+  .project-modal--reviews .project-modal__panel{
+    width:100%;
+    height:calc(100dvh - 20px);
+    max-height:calc(100dvh - 20px);
+    border-radius:12px;
+  }
+  .project-modal--reviews .project-modal__visual{min-height:0}
+  .project-modal--reviews .project-modal__close{top:10px;right:10px}
+}
