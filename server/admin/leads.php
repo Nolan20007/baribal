@@ -146,6 +146,12 @@ try {
                 http_response_code(409);
                 exit('Сначала переместите заявку в корзину.');
             }
+            $dependents = $pdo->prepare('SELECT COUNT(*) FROM baribal_leads WHERE previous_lead_id = :id');
+            $dependents->execute(['id' => $leadId]);
+            if ((int)$dependents->fetchColumn() > 0) {
+                http_response_code(409);
+                exit('Эта заявка связана с последующими обращениями. Оставьте её в корзине, чтобы сохранить историю повторных заявок.');
+            }
             $change = $pdo->prepare('DELETE FROM baribal_leads WHERE id = :id AND deleted_at IS NOT NULL');
             $change->execute(['id' => $leadId]);
             $redirect = '/admin/leads.php?view=trash';
@@ -361,7 +367,7 @@ button{border:0;border-radius:10px;padding:0 18px;background:#25282b;color:white
 </section>
 <nav class="pager" aria-label="Страницы">
  <span class="muted">Страница <?= $page ?> из <?= $pages ?></span>
- <span><?php if ($page > 1): ?><a href="?q=<?= rawurlencode($query) ?>&filter=<?= rawurlencode($filter) ?>&page=<?= $page - 1 ?>">← Новее</a><?php endif; ?> <?php if ($page < $pages): ?><a href="?q=<?= rawurlencode($query) ?>&filter=<?= rawurlencode($filter) ?>&page=<?= $page + 1 ?>">Старее →</a><?php endif; ?></span>
+ <span><?php if ($page > 1): ?><a href="?q=<?= rawurlencode($query) ?>&filter=<?= rawurlencode($filter) ?>&view=<?= rawurlencode($view) ?>&page=<?= $page - 1 ?>">← Новее</a><?php endif; ?> <?php if ($page < $pages): ?><a href="?q=<?= rawurlencode($query) ?>&filter=<?= rawurlencode($filter) ?>&view=<?= rawurlencode($view) ?>&page=<?= $page + 1 ?>">Старее →</a><?php endif; ?></span>
 </nav>
 </main>
 </body>
