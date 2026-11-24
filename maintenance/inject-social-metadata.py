@@ -10,7 +10,9 @@ from PIL import Image, ImageFilter, ImageOps
 
 ROOT = Path("dist")
 SITE_BASE_URL = "https://baribal-studio.ru"
-OG_IMAGE = SITE_BASE_URL + "/assets/images/brand/og-preview.png"
+OG_IMAGE = SITE_BASE_URL + "/assets/images/brand/og-preview-wide.png"
+OG_SOURCE_IMAGE = ROOT / "assets/images/brand/og-preview.png"
+OG_OUTPUT_IMAGE = ROOT / "assets/images/brand/og-preview-wide.png"
 FAVICON_SVG = "assets/images/brand/favicon-new.svg"
 FAVICON_PNG = "assets/images/brand/bear-black.png"
 DEFAULT_DESCRIPTION = (
@@ -101,18 +103,46 @@ def generate_raster_icons(source_path: Path, svg_path: Path) -> None:
                 raise SystemExit(f"{filename} lost its transparent background")
     print("Transparent BARIBAL bear favicons generated: SVG, ICO, 16px, 32px and 180px.")
 
+def create_wide_social_preview(source_path: Path, output_path: Path) -> tuple[int, int]:
+    """Create a 1200x630 share image without stretching or distorting the original artwork."""
+    target_width, target_height = 1200, 630
+    with Image.open(source_path) as opened:
+        image = ImageOps.exif_transpose(opened).convert("RGB")
+        source_width, source_height = image.size
+        if source_width <= 0 or source_height <= 0:
+            raise SystemExit("Social preview source has invalid dimensions")
+
+        resized_height = round(source_height * target_width / source_width)
+        image = image.resize((target_width, resized_height), Image.Resampling.LANCZOS)
+        if resized_height < target_height:
+            raise SystemExit(
+                f"Social preview source is too wide to create {target_width}x{target_height} "
+                "without adding blank space"
+            )
+
+        # Keep the brand header and all service rows; trim only the bottom contact strip.
+        image = image.crop((0, 0, target_width, target_height))
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        image.save(output_path, format="PNG", optimize=True)
+
+    with Image.open(output_path) as result:
+        if result.size != (target_width, target_height):
+            raise SystemExit(f"Generated social preview has unexpected dimensions: {result.size}")
+    print(f"Generated social preview: {output_path} ({target_width}x{target_height}).")
+    return target_width, target_height
+
+
 def main() -> None:
     if not ROOT.is_dir():
         raise SystemExit("dist/ does not exist; assemble the site first")
 
-    required_assets = (ROOT / "assets/images/brand/og-preview.png", ROOT / FAVICON_PNG)
+    required_assets = (OG_SOURCE_IMAGE, ROOT / FAVICON_PNG)
     missing = [str(path.relative_to(ROOT)) for path in required_assets if not path.is_file() or path.stat().st_size == 0]
     if missing:
         raise SystemExit("Social preview assets missing or empty: " + ", ".join(missing))
 
     generate_raster_icons(ROOT / FAVICON_PNG, ROOT / FAVICON_SVG)
-    with Image.open(ROOT / "assets/images/brand/og-preview.png") as og_image_file:
-        og_width, og_height = og_image_file.size
+    og_width, og_height = create_wide_social_preview(OG_SOURCE_IMAGE, OG_OUTPUT_IMAGE)
 
     pages = sorted(ROOT.rglob("index.html"))
     if not pages:
