@@ -5,6 +5,56 @@ const reviewFileInput = reviewForm?.querySelector("[data-review-photos]");
 const reviewFileList = reviewForm?.querySelector("[data-review-file-list]");
 const reviewOutput = reviewForm?.querySelector("output");
 
+const reviewModal = document.getElementById("review-submit-modal");
+const reviewModalTrigger = document.querySelector("[data-review-modal-open]");
+let reviewModalLastFocus = null;
+
+if (reviewModal && reviewModalTrigger) {
+  const closeButtons = reviewModal.querySelectorAll("[data-review-modal-close]");
+  const dialog = reviewModal.querySelector('[role="dialog"]');
+  const openReviewModal = () => {
+    reviewModalLastFocus = document.activeElement;
+    reviewModal.classList.add("modal-open");
+    reviewModal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("no-scroll");
+    window.requestAnimationFrame(() => reviewModal.querySelector('input[name="name"]')?.focus());
+  };
+  const closeReviewModal = () => {
+    reviewModal.classList.remove("modal-open");
+    reviewModal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("no-scroll");
+    if (reviewModalLastFocus instanceof HTMLElement) reviewModalLastFocus.focus();
+  };
+
+  reviewModalTrigger.addEventListener("click", openReviewModal);
+  closeButtons.forEach((button) => button.addEventListener("click", closeReviewModal));
+  document.addEventListener("keydown", (event) => {
+    if (!reviewModal.classList.contains("modal-open")) return;
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeReviewModal();
+      return;
+    }
+    if (event.key !== "Tab" || !dialog) return;
+    const focusable = [...dialog.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),textarea:not([disabled]),select:not([disabled]),[tabindex]:not([tabindex="-1"])')]
+      .filter((element) => element.getClientRects().length > 0);
+    if (!focusable.length) {
+      event.preventDefault();
+      dialog.focus();
+      return;
+    }
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
+}
+
 const formatReviewDate = (value) => {
   const date = new Date(String(value || "").replace(" ", "T"));
   return Number.isNaN(date.getTime()) ? "" : new Intl.DateTimeFormat("ru-RU", {
