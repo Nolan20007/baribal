@@ -155,9 +155,9 @@ def main() -> None:
   <meta property="og:url" content="{escape(url, quote=True)}">
   <meta property="og:image" content="{OG_IMAGE}">
   <meta property="og:image:secure_url" content="{OG_IMAGE}">
-  <meta property="og:image:type" content="image/jpeg">
-  <meta property="og:image:width" content="1168">
-  <meta property="og:image:height" content="768">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="{og_width}">
+  <meta property="og:image:height" content="{og_height}">
   <meta property="og:image:alt" content="{image_alt}">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{title_attr}">
