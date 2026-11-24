@@ -49,7 +49,6 @@ jobs:
           cp -R plain-site/. dist/
           mkdir -p dist/assets
           cp -R assets/. dist/assets/
-          cp "BARIBAL OG/bear_black.png" dist/assets/images/brand/bear-black.png
           mkdir -p dist/api dist/lib dist/admin
           cp -R server/api/. dist/api/
           cp -R server/lib/. dist/lib/
