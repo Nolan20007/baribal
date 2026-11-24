@@ -10,7 +10,7 @@ from PIL import Image, ImageFilter, ImageOps
 
 ROOT = Path("dist")
 SITE_BASE_URL = "https://baribal-studio.ru"
-OG_IMAGE = SITE_BASE_URL + "/assets/images/brand/og-preview-wide.png"
+OG_IMAGE = SITE_BASE_URL + "/og.jpg"
 OG_SOURCE_IMAGE = ROOT / "assets/images/brand/og-preview.png"
 OG_OUTPUT_IMAGE = ROOT / "assets/images/brand/og-preview-wide.png"
 FAVICON_SVG = "assets/images/brand/favicon-new.svg"
@@ -136,13 +136,20 @@ def main() -> None:
     if not ROOT.is_dir():
         raise SystemExit("dist/ does not exist; assemble the site first")
 
-    required_assets = (OG_SOURCE_IMAGE, ROOT / FAVICON_PNG)
+    required_assets = (OG_SOURCE_IMAGE, ROOT / FAVICON_PNG, ROOT / "og.jpg")
     missing = [str(path.relative_to(ROOT)) for path in required_assets if not path.is_file() or path.stat().st_size == 0]
     if missing:
         raise SystemExit("Social preview assets missing or empty: " + ", ".join(missing))
 
     generate_raster_icons(ROOT / FAVICON_PNG, ROOT / FAVICON_SVG)
     og_width, og_height = create_wide_social_preview(OG_SOURCE_IMAGE, OG_OUTPUT_IMAGE)
+    with Image.open(ROOT / "og.jpg") as og_image:
+        og_image = ImageOps.exif_transpose(og_image)
+        og_width, og_height = og_image.size
+        if (og_image.format != "JPEG" or (og_width, og_height) != (1200, 630):
+            raise SystemExit(
+                f"Published OG image must be a 1200x630 JPEG; got {og_image.format} {og_width}x{og_height}"
+            )
 
     pages = sorted(ROOT.rglob("index.html"))
     if not pages:
@@ -185,7 +192,7 @@ def main() -> None:
   <meta property="og:url" content="{escape(url, quote=True)}">
   <meta property="og:image" content="{OG_IMAGE}">
   <meta property="og:image:secure_url" content="{OG_IMAGE}">
-  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="{og_width}">
   <meta property="og:image:height" content="{og_height}">
   <meta property="og:image:alt" content="{image_alt}">
