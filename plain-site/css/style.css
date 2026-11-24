@@ -3378,3 +3378,24 @@ a.button:focus-visible,
  .approved-review-photo{width:calc(50% - 5px)}
  .approved-review-card>p{font-size:14px}
 }
+
+
+/* Review submission is kept in a dedicated, accessible modal. */
+.review-submit-cta{display:flex;align-items:center;justify-content:space-between;gap:24px;max-width:900px;margin:0 0 34px;padding:24px 28px;background:#202123;border:1px solid #393a3b;border-left:3px solid var(--orange)}
+.review-submit-cta h2{margin:0 0 6px;color:#f4f2ed;font:500 27px Oswald,sans-serif;text-transform:uppercase}
+.review-submit-cta p{margin:0;color:#aaa;font-size:12px;line-height:1.7}
+.review-submit-cta .button{flex:0 0 auto;white-space:nowrap}
+.review-modal-card{width:min(680px,100%);padding:clamp(24px,4vw,42px)}
+.review-modal-card h2{margin:10px 0;font-size:34px}
+.review-modal-card>p{margin:0 0 22px}
+.review-modal-card .lead-form{gap:13px}
+.review-modal-card .lead-form label{font-size:10px}
+.review-modal-card .lead-form textarea{min-height:120px}
+.review-modal-card .review-upload-note{font-size:10px}
+.review-modal-card .lead-form button:disabled{opacity:.6;cursor:wait}
+@media(max-width:600px){
+ .review-submit-cta{align-items:stretch;flex-direction:column;padding:21px;margin-bottom:26px}
+ .review-submit-cta .button{width:100%;justify-content:center}
+ .review-modal-card{padding:28px 20px 22px}
+ .review-modal-card h2{font-size:29px;padding-right:18px}
+}
