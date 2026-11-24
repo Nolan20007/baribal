@@ -143,12 +143,13 @@ def main() -> None:
 
     generate_raster_icons(ROOT / FAVICON_PNG, ROOT / FAVICON_SVG)
     og_width, og_height = create_wide_social_preview(OG_SOURCE_IMAGE, OG_OUTPUT_IMAGE)
-    with Image.open(ROOT / "og.jpg") as og_image:
-        og_image = ImageOps.exif_transpose(og_image)
+    with Image.open(ROOT / "og.jpg") as opened_og:
+        og_format = opened_og.format
+        og_image = ImageOps.exif_transpose(opened_og)
         og_width, og_height = og_image.size
-        if (og_image.format != "JPEG" or (og_width, og_height) != (1200, 630):
+        if og_format != "JPEG" or (og_width, og_height) != (1200, 630):
             raise SystemExit(
-                f"Published OG image must be a 1200x630 JPEG; got {og_image.format} {og_width}x{og_height}"
+                f"Published OG image must be a 1200x630 JPEG; got {og_format} {og_width}x{og_height}"
             )
 
     pages = sorted(ROOT.rglob("index.html"))
