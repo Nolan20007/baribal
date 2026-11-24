@@ -264,7 +264,6 @@ button{border:0;border-radius:10px;padding:0 18px;background:#25282b;color:white
  <a class="<?= $view === 'active' ? 'active' : '' ?>" href="/admin/leads.php">Заявки</a>
  <a class="trash-nav <?= $view === 'trash' ? 'active' : '' ?>" href="/admin/leads.php?view=trash"><span aria-hidden="true">🗑</span> Корзина <b><?= number_format($trashCount, 0, ',', ' ') ?></b></a>
  <a href="/admin/reviews.php">Отзывы<?php if ($pendingReviews > 0): ?><b><?= number_format($pendingReviews, 0, ',', ' ') ?></b><?php endif; ?></a>
- <a href="/admin/ratings.php">Рейтинги</a>
 </nav>
 <form class="search" method="get" action="">
  <input type="search" name="q" value="<?= leadHtml($query) ?>" placeholder="Номер, телефон, имя или услуга" aria-label="Поиск заявок">
