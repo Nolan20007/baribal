@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111214">
+  <meta name="robots" content="noindex,follow">
+  <title>Страница не найдена — BARIBAL</title>
+  <link rel="stylesheet" href="./css/fonts-local.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <style>
+    body{min-height:100vh;display:grid;grid-template-rows:auto 1fr auto;background:#111214;color:#f5f3ef}
+    .error-main{display:grid;place-items:center;padding:64px 20px;text-align:center}
+    .error-content{width:min(100%,760px)}
+    .error-code{margin:0;color:#c7a77b;font-size:clamp(5rem,18vw,11rem);font-weight:700;line-height:.9;letter-spacing:-.08em}
+    .error-content h1{margin:28px 0 14px;font-size:clamp(2rem,5vw,3.5rem);font-weight:600}
+    .error-content p{max-width:560px;margin:0 auto;color:#b8b6b1;font-size:1.05rem;line-height:1.7}
+    .error-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:32px}
+    .error-actions a{min-width:160px;text-decoration:none}
+    .error-home{background:#c7a77b;color:#171717}
+    .error-secondary{border:1px solid #555;color:#f5f3ef}
+    .error-brand{display:flex;align-items:center;justify-content:center;gap:12px;padding:24px 20px;color:inherit;text-decoration:none}
+    .error-brand img{width:48px;height:48px;object-fit:contain}
+    .error-brand b{font-size:1.35rem;letter-spacing:.12em}
+    .error-footer{padding:22px;text-align:center;color:#85837e;font-size:.85rem;border-top:1px solid #303033}
+    @media(max-width:520px){.error-actions{flex-direction:column;align-items:stretch}.error-actions a{width:100%}}
+  </style>
+</head>
+<body>
+  <header><a class="error-brand" href="./"><img src="./assets/images/brand/baribal-logo.png" alt=""><b>BARIBAL</b></a></header>
+  <main class="error-main">
+    <div class="error-content">
+      <p class="error-code" aria-label="Ошибка 404">404</p>
+      <h1>Кажется, мы свернули не туда</h1>
+      <p>Такой страницы нет или её адрес изменился. Но вы всё ещё можете продолжить знакомство с BARIBAL — выберите нужный раздел.</p>
+      <nav class="error-actions" aria-label="Навигация по сайту">
+        <a class="button error-home" href="./">На главную <span>↗</span></a>
+        <a class="button error-secondary" href="./tehnology/">Услуги</a>
+        <a class="button error-secondary" href="./foto/">Наши работы</a>
+        <a class="button error-secondary" href="./reviews/">Отзывы</a>
+      </nav>
+    </div>
+  </main>
+  <footer class="error-footer">© BARIBAL — студия защитных технологий · Пермь</footer>
+</body>
+</html>

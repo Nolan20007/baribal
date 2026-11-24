@@ -10,7 +10,7 @@ from PIL import Image, ImageFilter, ImageOps
 
 ROOT = Path("dist")
 SITE_BASE_URL = "https://baribal-studio.ru"
-OG_IMAGE = SITE_BASE_URL + "/og.jpg"
+OG_IMAGE = SITE_BASE_URL + "/assets/images/brand/og-preview.png"
 FAVICON_SVG = "assets/images/brand/favicon-new.svg"
 FAVICON_PNG = "assets/images/brand/bear-black.png"
 DEFAULT_DESCRIPTION = (
@@ -105,12 +105,14 @@ def main() -> None:
     if not ROOT.is_dir():
         raise SystemExit("dist/ does not exist; assemble the site first")
 
-    required_assets = (ROOT / "og.jpg", ROOT / FAVICON_PNG)
+    required_assets = (ROOT / "assets/images/brand/og-preview.png", ROOT / FAVICON_PNG)
     missing = [str(path.relative_to(ROOT)) for path in required_assets if not path.is_file() or path.stat().st_size == 0]
     if missing:
         raise SystemExit("Social preview assets missing or empty: " + ", ".join(missing))
 
     generate_raster_icons(ROOT / FAVICON_PNG, ROOT / FAVICON_SVG)
+    with Image.open(ROOT / "assets/images/brand/og-preview.png") as og_image_file:
+        og_width, og_height = og_image_file.size
 
     pages = sorted(ROOT.rglob("index.html"))
     if not pages:
