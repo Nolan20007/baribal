@@ -71,6 +71,12 @@ function baribalEnsureLeadSchema(PDO $pdo): void
             KEY idx_baribal_status (status)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
     );
+
+    // Backward-compatible soft-delete migration for existing lead tables.
+    $deletedColumn = $pdo->query("SHOW COLUMNS FROM baribal_leads LIKE 'deleted_at'")->fetch();
+    if (!$deletedColumn) {
+        $pdo->exec('ALTER TABLE baribal_leads ADD COLUMN deleted_at DATETIME NULL DEFAULT NULL, ADD KEY idx_baribal_deleted (deleted_at)');
+    }
 }
 
 function baribalNormalizePhone(string $phone): string
