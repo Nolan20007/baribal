@@ -57,6 +57,10 @@ try {
     $pdo = baribalLeadDatabase($config);
     $pendingReviews = (int)$pdo->query("SELECT COUNT(*) FROM baribal_reviews WHERE status = 'pending'")->fetchColumn();
     $query = trim((string)($_GET['q'] ?? ''));
+    $view = (string)($_GET['view'] ?? 'active');
+    if (!in_array($view, ['active', 'trash'], true)) {
+        $view = 'active';
+    }
     $filter = (string)($_GET['filter'] ?? 'all');
     $filterLabels = [
         'all' => 'Все',
@@ -79,19 +83,73 @@ try {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $token = (string)($_POST['csrf'] ?? '');
         $leadId = (int)($_POST['lead_id'] ?? 0);
-        $newStatus = (string)($_POST['status'] ?? '');
-        if (!hash_equals((string)$_SESSION['lead_csrf'], $token)
-            || $leadId < 1 || !isset($statusLabels[$newStatus])) {
+        $action = (string)($_POST['action'] ?? 'status');
+        if (!hash_equals((string)$_SESSION['lead_csrf'], $token) || $leadId < 1) {
             http_response_code(400);
             exit('Не удалось проверить запрос. Обновите страницу и повторите действие.');
         }
-        $updateStatus = $pdo->prepare('UPDATE baribal_leads SET status = :status WHERE id = :id');
-        $updateStatus->execute(['status' => $newStatus, 'id' => $leadId]);
-        $redirect = '/admin/leads.php?' . http_build_query([
-            'q' => $query,
-            'filter' => $filter,
-            'page' => $page,
-        ]);
+
+        if ($action === 'status') {
+            $newStatus = (string)($_POST['status'] ?? '');
+            if (!isset($statusLabels[$newStatus]) || $view !== 'active') {
+                http_response_code(400);
+                exit('Недопустимое изменение статуса.');
+            }
+            $updateStatus = $pdo->prepare('UPDATE baribal_leads SET status = :status WHERE id = :id AND deleted_at IS NULL');
+            $updateStatus->execute(['status' => $newStatus, 'id' => $leadId]);
+            $redirect = '/admin/leads.php?' . http_build_query(['q' => $query, 'filter' => $filter, 'page' => $page]);
+            header('Location: ' . $redirect, true, 303);
+            exit;
+        }
+
+        if (!in_array($action, ['trash', 'restore', 'delete'], true)) {
+            http_response_code(400);
+            exit('Неизвестное действие.');
+        }
+        $findLead = $pdo->prepare('SELECT id, lead_number, deleted_at FROM baribal_leads WHERE id = :id LIMIT 1');
+        $findLead->execute(['id' => $leadId]);
+        $targetLead = $findLead->fetch();
+        if (!$targetLead) {
+            http_response_code(404);
+            exit('Заявка не найдена.');
+        }
+
+        if ($action === 'trash' || $action === 'delete') {
+            $confirmPassword = (string)($_POST['confirm_password'] ?? '');
+            $confirmNumber = trim((string)($_POST['confirm_number'] ?? ''));
+            $actualNumber = (string)($targetLead['lead_number'] ?: baribalLeadNumber($leadId));
+            if (!password_verify($confirmPassword, (string)$config['admin_password_hash'])
+                || !hash_equals($actualNumber, $confirmNumber)) {
+                http_response_code(403);
+                exit('Пароль или номер заявки не совпадает. Действие не выполнено.');
+            }
+        }
+
+        if ($action === 'trash') {
+            if ($targetLead['deleted_at'] !== null) {
+                http_response_code(409);
+                exit('Заявка уже находится в корзине.');
+            }
+            $change = $pdo->prepare('UPDATE baribal_leads SET deleted_at = NOW() WHERE id = :id AND deleted_at IS NULL');
+            $change->execute(['id' => $leadId]);
+            $redirect = '/admin/leads.php';
+        } elseif ($action === 'restore') {
+            if ($targetLead['deleted_at'] === null) {
+                http_response_code(409);
+                exit('Заявка уже находится в основном списке.');
+            }
+            $change = $pdo->prepare('UPDATE baribal_leads SET deleted_at = NULL WHERE id = :id AND deleted_at IS NOT NULL');
+            $change->execute(['id' => $leadId]);
+            $redirect = '/admin/leads.php?view=trash';
+        } else {
+            if ($targetLead['deleted_at'] === null) {
+                http_response_code(409);
+                exit('Сначала переместите заявку в корзину.');
+            }
+            $change = $pdo->prepare('DELETE FROM baribal_leads WHERE id = :id AND deleted_at IS NOT NULL');
+            $change->execute(['id' => $leadId]);
+            $redirect = '/admin/leads.php?view=trash';
+        }
         header('Location: ' . $redirect, true, 303);
         exit;
     }
@@ -106,8 +164,9 @@ try {
 
     // Status chips are global navigation: clicking one clears any email/search deep-link.
     $statusCountsQuery = $pdo->query(
-        'SELECT status, COUNT(*) AS amount FROM baribal_leads GROUP BY status'
+        'SELECT status, COUNT(*) AS amount FROM baribal_leads WHERE deleted_at IS NULL GROUP BY status'
     );
+    $trashCount = (int)$pdo->query('SELECT COUNT(*) FROM baribal_leads WHERE deleted_at IS NOT NULL')->fetchColumn();
     $statusCounts = ['new' => 0, 'in_progress' => 0, 'booked' => 0, 'completed' => 0];
     foreach ($statusCountsQuery->fetchAll() as $statusCount) {
         if (array_key_exists((string)$statusCount['status'], $statusCounts)) {
@@ -117,14 +176,14 @@ try {
     $allCount = array_sum($statusCounts);
     $unprocessedCount = $statusCounts['new'] + $statusCounts['in_progress'];
 
-    $whereParts = [];
+    $whereParts = [$view === 'trash' ? 'deleted_at IS NOT NULL' : 'deleted_at IS NULL'];
     $params = $searchParams;
     if ($searchWhere !== '') {
         $whereParts[] = substr($searchWhere, 7);
     }
-    if ($filter === 'unprocessed') {
+    if ($view === 'active' && $filter === 'unprocessed') {
         $whereParts[] = "status IN ('new', 'in_progress')";
-    } elseif (isset($statusLabels[$filter])) {
+    } elseif ($view === 'active' && isset($statusLabels[$filter])) {
         $whereParts[] = 'status = :status_filter';
         $params['status_filter'] = $filter;
     }
@@ -181,6 +240,10 @@ button{border:0;border-radius:10px;padding:0 18px;background:#25282b;color:white
 .field strong,.field span,.field a{display:block;overflow-wrap:anywhere}.field a{color:#8a5b22;text-decoration:none}.field a:hover{text-decoration:underline}
 .wide{grid-column:1/-1}.empty{padding:36px;text-align:center;color:var(--muted);background:white;border:1px solid var(--line);border-radius:14px}
 .pager{display:flex;justify-content:space-between;align-items:center;margin-top:20px}.pager a{color:#80551f;text-decoration:none;font-weight:700}.status-form{display:flex;align-items:center;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}.status-form select{max-width:190px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:#fff;color:var(--ink);font:inherit}.status-form button{padding:8px 12px;font-size:13px}
+.trash-nav{margin-left:auto}.trash-nav span{font-size:17px}.trash-nav b{background:#edf0f2;color:#596168}
+.lead-controls{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}.lead-controls .status-form{margin:0;padding:0;border:0}
+.lead-action{position:relative}.lead-action summary{list-style:none;display:grid;place-items:center;width:36px;height:36px;border:1px solid var(--line);border-radius:9px;background:#fff;color:#596168;font-size:19px;cursor:pointer}.lead-action summary::-webkit-details-marker{display:none}.danger-action summary{color:#a33a3a}
+.action-panel{position:absolute;z-index:5;right:0;bottom:44px;width:min(320px,calc(100vw - 44px));display:grid;gap:10px;padding:14px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 36px #10182020}.action-panel strong{font-size:13px}.action-panel label{display:grid;gap:5px;color:var(--muted);font-size:11px;font-weight:700}.action-panel input{width:100%;min-width:0;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);font:13px inherit}.action-panel button{min-height:38px}.danger-action .action-panel button{background:#a33a3a}
 @media(max-width:700px){main{padding:20px 12px 40px}.top{display:block}h1{font-size:25px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.lead{padding:15px}.lead-head{align-items:flex-start;flex-direction:column}.search button{padding:0 12px}}
 @media(max-width:420px){.grid{grid-template-columns:1fr}.wide{grid-column:auto}}
 </style>
@@ -188,18 +251,21 @@ button{border:0;border-radius:10px;padding:0 18px;background:#25282b;color:white
 <body>
 <main>
 <header class="top">
- <div><div class="eyebrow">BARIBAL · ВНУТРЕННИЙ ЖУРНАЛ</div><h1>Заявки клиентов</h1><div class="muted">Все обращения сохраняются отдельно, включая повторные</div></div>
+ <div><div class="eyebrow">BARIBAL · ВНУТРЕННИЙ ЖУРНАЛ</div><h1><?= $view === 'trash' ? 'Корзина заявок' : 'Заявки клиентов' ?></h1><div class="muted"><?= $view === 'trash' ? 'Удалённые заявки можно восстановить или удалить навсегда' : 'Все обращения сохраняются отдельно, включая повторные' ?></div></div>
  <div class="count">Найдено: <?= number_format($total, 0, ',', ' ') ?></div>
 </header>
 <nav class="admin-nav" aria-label="Разделы админки">
- <a class="active" href="/admin/leads.php">Заявки</a>
+ <a class="<?= $view === 'active' ? 'active' : '' ?>" href="/admin/leads.php">Заявки</a>
+ <a class="trash-nav <?= $view === 'trash' ? 'active' : '' ?>" href="/admin/leads.php?view=trash"><span aria-hidden="true">♲</span> Корзина <b><?= number_format($trashCount, 0, ',', ' ') ?></b></a>
  <a href="/admin/reviews.php">Отзывы<?php if ($pendingReviews > 0): ?><b><?= number_format($pendingReviews, 0, ',', ' ') ?></b><?php endif; ?></a>
 </nav>
 <form class="search" method="get" action="">
  <input type="search" name="q" value="<?= leadHtml($query) ?>" placeholder="Номер, телефон, имя или услуга" aria-label="Поиск заявок">
  <input type="hidden" name="filter" value="<?= leadHtml($filter) ?>">
+ <input type="hidden" name="view" value="<?= leadHtml($view) ?>">
  <button type="submit">Найти</button>
 </form>
+<?php if ($view === 'active'): ?>
 <nav class="filters" aria-label="Фильтр заявок">
  <?php foreach ($filterLabels as $filterKey => $filterLabel):
    $filterCount = match ($filterKey) {
@@ -214,9 +280,10 @@ button{border:0;border-radius:10px;padding:0 18px;background:#25282b;color:white
   </a>
  <?php endforeach; ?>
 </nav>
+<?php endif; ?>
 <section class="list" aria-label="Список заявок">
 <?php if (!$leads): ?>
- <div class="empty">Заявок пока нет<?= $query !== '' ? ' по этому запросу' : '' ?>.</div>
+ <div class="empty"><?= $view === 'trash' ? 'Корзина пуста.' : 'Заявок пока нет' . ($query !== '' ? ' по этому запросу' : '') . '.' ?></div>
 <?php endif; ?>
 <?php foreach ($leads as $lead): ?>
  <article class="lead<?= in_array((string)$lead['status'], ['new', 'in_progress'], true) ? ' lead-unprocessed' : '' ?>">
@@ -240,17 +307,55 @@ button{border:0;border-radius:10px;padding:0 18px;background:#25282b;color:white
    <div class="field"><small>Блок / кнопка</small><span><?= leadHtml(leadValue($lead, 'source_block')) ?><?= trim((string)$lead['source_button']) !== '' ? ' · ' . leadHtml((string)$lead['source_button']) : '' ?></span></div>
    <div class="field"><small>Реклама</small><span><?= leadHtml(implode(' / ', array_filter([(string)$lead['utm_source'], (string)$lead['utm_medium'], (string)$lead['utm_campaign']]))) ?: '—' ?></span></div>
   </div>
-  <form class="status-form" method="post">
-   <input type="hidden" name="csrf" value="<?= leadHtml((string)$_SESSION['lead_csrf']) ?>">
-   <input type="hidden" name="lead_id" value="<?= (int)$lead['id'] ?>">
-   <label class="muted" for="status-<?= (int)$lead['id'] ?>">Статус:</label>
-   <select id="status-<?= (int)$lead['id'] ?>" name="status">
-    <?php foreach ($statusLabels as $statusKey => $statusLabel): ?>
-     <option value="<?= leadHtml($statusKey) ?>"<?= $lead['status'] === $statusKey ? ' selected' : '' ?>><?= leadHtml($statusLabel) ?></option>
-    <?php endforeach; ?>
-   </select>
-   <button type="submit">Сохранить</button>
-  </form>
+  <?php if ($view === 'active'): ?>
+  <div class="lead-controls">
+   <form class="status-form" method="post">
+    <input type="hidden" name="csrf" value="<?= leadHtml((string)$_SESSION['lead_csrf']) ?>">
+    <input type="hidden" name="lead_id" value="<?= (int)$lead['id'] ?>">
+    <input type="hidden" name="action" value="status">
+    <label class="muted" for="status-<?= (int)$lead['id'] ?>">Статус:</label>
+    <select id="status-<?= (int)$lead['id'] ?>" name="status">
+     <?php foreach ($statusLabels as $statusKey => $statusLabel): ?>
+      <option value="<?= leadHtml($statusKey) ?>"<?= $lead['status'] === $statusKey ? ' selected' : '' ?>><?= leadHtml($statusLabel) ?></option>
+     <?php endforeach; ?>
+    </select>
+    <button type="submit">Сохранить</button>
+   </form>
+   <details class="lead-action">
+    <summary aria-label="Переместить заявку в корзину" title="Переместить в корзину">♲</summary>
+    <form method="post" class="action-panel">
+     <input type="hidden" name="csrf" value="<?= leadHtml((string)$_SESSION['lead_csrf']) ?>">
+     <input type="hidden" name="lead_id" value="<?= (int)$lead['id'] ?>">
+     <input type="hidden" name="action" value="trash">
+     <strong>Переместить <?= leadHtml(leadValue($lead, 'lead_number')) ?> в корзину</strong>
+     <label>Повторите пароль администратора<input type="password" name="confirm_password" autocomplete="current-password" required></label>
+     <label>Введите номер заявки<input type="text" name="confirm_number" value="" placeholder="<?= leadHtml(leadValue($lead, 'lead_number')) ?>" required></label>
+     <button type="submit">Подтвердить</button>
+    </form>
+   </details>
+  </div>
+  <?php else: ?>
+  <div class="lead-controls trash-controls">
+   <form method="post" class="status-form">
+    <input type="hidden" name="csrf" value="<?= leadHtml((string)$_SESSION['lead_csrf']) ?>">
+    <input type="hidden" name="lead_id" value="<?= (int)$lead['id'] ?>">
+    <input type="hidden" name="action" value="restore">
+    <button type="submit">↶ Восстановить</button>
+   </form>
+   <details class="lead-action danger-action">
+    <summary aria-label="Удалить заявку навсегда" title="Удалить навсегда">×</summary>
+    <form method="post" class="action-panel">
+     <input type="hidden" name="csrf" value="<?= leadHtml((string)$_SESSION['lead_csrf']) ?>">
+     <input type="hidden" name="lead_id" value="<?= (int)$lead['id'] ?>">
+     <input type="hidden" name="action" value="delete">
+     <strong>Удалить <?= leadHtml(leadValue($lead, 'lead_number')) ?> навсегда</strong>
+     <label>Повторите пароль администратора<input type="password" name="confirm_password" autocomplete="current-password" required></label>
+     <label>Введите номер заявки<input type="text" name="confirm_number" value="" placeholder="<?= leadHtml(leadValue($lead, 'lead_number')) ?>" required></label>
+     <button type="submit">Удалить навсегда</button>
+    </form>
+   </details>
+  </div>
+  <?php endif; ?>
  </article>
 <?php endforeach; ?>
 </section>
