@@ -14,6 +14,7 @@ if (reviewModal && reviewModalTrigger) {
   const dialog = reviewModal.querySelector('[role="dialog"]');
   const openReviewModal = () => {
     reviewModalLastFocus = document.activeElement;
+    if (reviewForm?.dataset.submitting !== "1" && reviewOutput) reviewOutput.textContent = "";
     reviewModal.classList.add("modal-open");
     reviewModal.setAttribute("aria-hidden", "false");
     document.body.classList.add("no-scroll");
