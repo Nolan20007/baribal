@@ -1,18 +1,18 @@
 from __future__ import annotations
 
+import base64
 import re
 from html import escape, unescape
 from io import BytesIO
 from pathlib import Path
 
-import cairosvg
-
-from PIL import Image, ImageDraw
+from PIL import Image, ImageFilter, ImageOps
 
 ROOT = Path("dist")
 SITE_BASE_URL = "https://baribal-studio.ru"
 OG_IMAGE = SITE_BASE_URL + "/og.jpg"
 FAVICON_SVG = "assets/images/brand/favicon-new.svg"
+FAVICON_PNG = "assets/images/brand/bear-black.png"
 DEFAULT_DESCRIPTION = (
     "Студия защитных технологий BARIBAL в Перми: детейлинг, защита кузова "
     "и стёкол, плёнки, керамические покрытия и уход за автомобилем."
@@ -49,41 +49,68 @@ def page_url(page: Path) -> str:
     return SITE_BASE_URL + route
 
 
-def generate_raster_icons(source_path: Path) -> None:
-    svg_png = cairosvg.svg2png(url=str(source_path), output_width=512, output_height=512)
-    source = Image.open(BytesIO(svg_png)).convert("RGBA")
+def generate_raster_icons(source_path: Path, svg_path: Path) -> None:
+    with Image.open(source_path) as opened:
+        image = ImageOps.exif_transpose(opened).convert("RGBA")
+        alpha = image.getchannel("A")
+        if alpha.getextrema() == (255, 255):
+            raise SystemExit("BARIBAL bear source must have a transparent background")
+        bounds = alpha.getbbox()
+        if not bounds:
+            raise SystemExit("BARIBAL bear source contains no visible pixels")
+        image = image.crop(bounds)
 
-    def render(size: int) -> Image.Image:
-        scale = 4
-        canvas_size = size * scale
-        canvas = Image.new("RGBA", (canvas_size, canvas_size), (255, 255, 255, 0))
-        draw = ImageDraw.Draw(canvas)
-        draw.rounded_rectangle(
-            (0, 0, canvas_size - 1, canvas_size - 1),
-            radius=int(canvas_size * 0.20),
-            fill=(255, 255, 255, 255),
-        )
-        mark = source.resize((canvas_size, canvas_size), Image.Resampling.LANCZOS)
-        canvas.alpha_composite(mark, (0, 0))
-        return canvas.resize((size, size), Image.Resampling.LANCZOS)
+    # Keep the bear large and centered, while preserving a fully transparent canvas.
+    master_size = 512
+    bear = ImageOps.contain(image, (420, 420), Image.Resampling.LANCZOS)
+    canvas = Image.new("RGBA", (master_size, master_size), (0, 0, 0, 0))
+    position = ((master_size - bear.width) // 2, (master_size - bear.height) // 2)
+    canvas.alpha_composite(bear, position)
 
-    rendered = {size: render(size) for size in (16, 32, 48, 180)}
+    # A fine white edge keeps the dark silhouette readable on dark browser themes.
+    silhouette = canvas.getchannel("A")
+    outline = silhouette.filter(ImageFilter.MaxFilter(35))
+    outline_layer = Image.new("RGBA", canvas.size, (255, 255, 255, 0))
+    outline_layer.putalpha(outline)
+    outlined = Image.alpha_composite(outline_layer, canvas)
+
+    png_buffer = BytesIO()
+    outlined.save(png_buffer, format="PNG", optimize=True)
+    png_data = png_buffer.getvalue()
+    encoded = base64.b64encode(png_data).decode("ascii")
+    svg = (
+        '<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" '
+        'viewBox="0 0 512 512">'
+        f'<image width="512" height="512" href="data:image/png;base64,{encoded}"/>'
+        '</svg>\\n'
+    )
+    svg_path.write_text(svg, encoding="utf-8")
+
+    rendered = {
+        size: outlined.resize((size, size), Image.Resampling.LANCZOS)
+        for size in (16, 32, 48, 180)
+    }
     rendered[16].save(ROOT / "favicon-16.png", format="PNG", optimize=True)
     rendered[32].save(ROOT / "favicon-32.png", format="PNG", optimize=True)
     rendered[180].save(ROOT / "apple-touch-icon.png", format="PNG", optimize=True)
     rendered[48].save(ROOT / "favicon.ico", format="ICO", sizes=[(16, 16), (32, 32), (48, 48)])
 
+    for filename in ("favicon-16.png", "favicon-32.png", "apple-touch-icon.png"):
+        with Image.open(ROOT / filename) as icon:
+            if icon.mode != "RGBA" or icon.getchannel("A").getextrema() == (255, 255):
+                raise SystemExit(f"{filename} lost its transparent background")
+    print("Transparent BARIBAL bear favicons generated: SVG, ICO, 16px, 32px and 180px.")
 
 def main() -> None:
     if not ROOT.is_dir():
         raise SystemExit("dist/ does not exist; assemble the site first")
 
-    required_assets = (ROOT / "og.jpg", ROOT / FAVICON_SVG)
+    required_assets = (ROOT / "og.jpg", ROOT / FAVICON_PNG)
     missing = [str(path.relative_to(ROOT)) for path in required_assets if not path.is_file() or path.stat().st_size == 0]
     if missing:
         raise SystemExit("Social preview assets missing or empty: " + ", ".join(missing))
 
-    generate_raster_icons(ROOT / FAVICON_SVG)
+    generate_raster_icons(ROOT / FAVICON_PNG, ROOT / FAVICON_SVG)
 
     pages = sorted(ROOT.rglob("index.html"))
     if not pages:
