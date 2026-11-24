@@ -256,7 +256,7 @@ button{border:0;border-radius:10px;padding:0 18px;background:#25282b;color:white
 </header>
 <nav class="admin-nav" aria-label="Разделы админки">
  <a class="<?= $view === 'active' ? 'active' : '' ?>" href="/admin/leads.php">Заявки</a>
- <a class="trash-nav <?= $view === 'trash' ? 'active' : '' ?>" href="/admin/leads.php?view=trash"><span aria-hidden="true">♲</span> Корзина <b><?= number_format($trashCount, 0, ',', ' ') ?></b></a>
+ <a class="trash-nav <?= $view === 'trash' ? 'active' : '' ?>" href="/admin/leads.php?view=trash"><span aria-hidden="true">🗑</span> Корзина <b><?= number_format($trashCount, 0, ',', ' ') ?></b></a>
  <a href="/admin/reviews.php">Отзывы<?php if ($pendingReviews > 0): ?><b><?= number_format($pendingReviews, 0, ',', ' ') ?></b><?php endif; ?></a>
 </nav>
 <form class="search" method="get" action="">
@@ -322,7 +322,7 @@ button{border:0;border-radius:10px;padding:0 18px;background:#25282b;color:white
     <button type="submit">Сохранить</button>
    </form>
    <details class="lead-action">
-    <summary aria-label="Переместить заявку в корзину" title="Переместить в корзину">♲</summary>
+    <summary aria-label="Переместить заявку в корзину" title="Переместить в корзину">🗑</summary>
     <form method="post" class="action-panel">
      <input type="hidden" name="csrf" value="<?= leadHtml((string)$_SESSION['lead_csrf']) ?>">
      <input type="hidden" name="lead_id" value="<?= (int)$lead['id'] ?>">
