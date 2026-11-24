@@ -104,10 +104,10 @@ try {
         $searchParams = ['number' => $like, 'phone' => $like, 'name' => $like, 'service' => $like];
     }
 
-    $statusCountsQuery = $pdo->prepare(
-        'SELECT status, COUNT(*) AS amount FROM baribal_leads' . $searchWhere . ' GROUP BY status'
+    // Status chips are global navigation: clicking one clears any email/search deep-link.
+    $statusCountsQuery = $pdo->query(
+        'SELECT status, COUNT(*) AS amount FROM baribal_leads GROUP BY status'
     );
-    $statusCountsQuery->execute($searchParams);
     $statusCounts = ['new' => 0, 'in_progress' => 0, 'booked' => 0, 'completed' => 0];
     foreach ($statusCountsQuery->fetchAll() as $statusCount) {
         if (array_key_exists((string)$statusCount['status'], $statusCounts)) {
@@ -209,7 +209,7 @@ button{border:0;border-radius:10px;padding:0 18px;background:#25282b;color:white
    };
  ?>
   <a class="filter-chip<?= $filter === $filterKey ? ' is-active' : '' ?><?= $filterKey === 'unprocessed' ? ' is-alert' : '' ?>"
-     href="?<?= http_build_query(['q' => $query, 'filter' => $filterKey]) ?>">
+     href="?<?= http_build_query(['filter' => $filterKey]) ?>">
     <?= leadHtml($filterLabel) ?><span><?= number_format($filterCount, 0, ',', ' ') ?></span>
   </a>
  <?php endforeach; ?>
