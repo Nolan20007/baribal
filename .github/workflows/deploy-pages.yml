@@ -26,7 +26,6 @@ jobs:
           cp -R plain-site/. dist/
           mkdir -p dist/assets
           cp -R assets/. dist/assets/
-          cp "BARIBAL OG/bear_black.png" dist/assets/images/brand/bear-black.png
           python -m pip install --disable-pip-version-check Pillow CairoSVG
           python maintenance/inject-social-metadata.py
           python maintenance/convert-contact-avatar-lossless.py
