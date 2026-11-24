@@ -122,7 +122,6 @@ main{max-width:1100px;margin:0 auto;padding:28px 20px 56px}.top{display:flex;ali
 <nav class="admin-nav" aria-label="Разделы админки">
 <a href="/admin/leads.php">Заявки</a>
 <a class="active" href="/admin/reviews.php">Отзывы<?php if ($counts['pending'] > 0): ?><b><?= number_format($counts['pending'], 0, ',', ' ') ?></b><?php endif; ?></a>
-<a href="/admin/ratings.php">Рейтинги</a>
 </nav>
 <nav class="filters" aria-label="Фильтр отзывов">
 <?php foreach ($filters as $key => $label): ?>
