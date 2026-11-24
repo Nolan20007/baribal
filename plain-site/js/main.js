@@ -784,6 +784,8 @@ if (portfolioGrid) {
 
   const modal = document.createElement("div");
   modal.className = "project-modal";
+  // On the reviews page, show the photo without the descriptive side panel.
+  if (document.querySelector("[data-approved-reviews]")) modal.classList.add("project-modal--reviews");
   modal.setAttribute("aria-hidden", "true");
   modal.innerHTML = '<div class="project-modal__backdrop" data-close></div><section class="project-modal__panel" role="dialog" aria-modal="true" aria-labelledby="project-modal-title"><button class="project-modal__close" type="button" aria-label="Закрыть" data-close>×</button><div class="project-modal__visual"><button class="project-modal__nav project-modal__prev" type="button" aria-label="Предыдущее фото">‹</button><img class="project-modal__image" alt=""><button class="project-modal__nav project-modal__next" type="button" aria-label="Следующее фото">›</button></div><div class="project-modal__details"><span class="eyebrow project-modal__eyebrow">ФОТОГАЛЕРЕЯ BARIBAL</span><h2 id="project-modal-title"></h2><p class="project-modal__description"></p><div class="project-modal__footer"><span class="project-modal__count"></span><span class="project-modal__hint"></span></div></div></section>';
   document.body.append(modal);
