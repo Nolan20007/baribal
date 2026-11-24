@@ -32,6 +32,7 @@ jobs:
           php -l server/lib/lead-store.php
           php -l server/admin/leads.php
           php -l server/admin/reviews.php
+          php -l server/admin/ratings.php
           php -l server/admin/review-image.php
           php -l server/admin/index.php
           php -l server/api/review-submit.php
@@ -99,7 +100,7 @@ jobs:
               "assets", "foto/foto.png", "foto/foto.webp", "og.jpg",
               "api/submit.php", "api/health.php", "api/review-submit.php",
               "api/reviews.php", "api/review-image.php", "lib/lead-store.php",
-              "admin/index.php", "admin/leads.php", "admin/reviews.php",
+              "admin/index.php", "admin/leads.php", "admin/reviews.php", "admin/ratings.php",
               "admin/review-image.php",
               "js/reviews.js", "vendor/autoload.php",
               "assets/images/brand/favicon-new.svg",
