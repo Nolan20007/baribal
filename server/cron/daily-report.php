@@ -117,7 +117,6 @@ try {
              ON DUPLICATE KEY UPDATE sent_at = VALUES(sent_at), attempts = attempts + 1, last_error = ''"
         );
         $save->execute(['date' => $reportDate]);
-        echo "Daily report sent for {$reportDate}.\n";
     } catch (Throwable $error) {
         $saveFailure = $pdo->prepare(
             "INSERT INTO baribal_daily_reports (report_date, sent_at, attempts, last_error)
