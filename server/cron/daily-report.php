@@ -10,9 +10,7 @@ if (PHP_SAPI !== 'cli') {
 
 date_default_timezone_set('Europe/Moscow');
 $now = new DateTimeImmutable('now', new DateTimeZone('Europe/Moscow'));
-if ((int)$now->format('N') > 5 || $now->format('H:i') < '17:00') {
-    exit("Not scheduled now.\n");
-}
+$reportEnd = $now->format('Y-m-d H:i:s');
 
 $privateDir = __DIR__;
 $publicRoot = dirname(__DIR__) . '/public_html';
@@ -30,25 +28,23 @@ try {
     require_once $autoloadPath;
     $pdo = baribalLeadDatabase($config);
     $lock = (int)$pdo->query("SELECT GET_LOCK('baribal_daily_report', 0)")->fetchColumn();
-    if ($lock !== 1) exit("Another report process is running.\n");
+    if ($lock !== 1) exit(0);
 
     try {
         $reportDate = $now->format('Y-m-d');
-        $existing = $pdo->prepare('SELECT sent_at FROM baribal_daily_reports WHERE report_date = :date LIMIT 1');
-        $existing->execute(['date' => $reportDate]);
-        $sentAt = $existing->fetchColumn();
-        if ($sentAt !== false && $sentAt !== null) {
-            exit("Report already sent for {$reportDate}.\n");
-        }
-
-        $todayStart = $reportDate . ' 00:00:00';
-        $tomorrowStart = $now->modify('+1 day')->format('Y-m-d') . ' 00:00:00';
+        $lastSuccessfulSend = $pdo->query(
+            'SELECT MAX(sent_at) FROM baribal_daily_reports WHERE sent_at IS NOT NULL'
+        )->fetchColumn();
+        $periodStart = ($lastSuccessfulSend !== false && $lastSuccessfulSend !== null)
+            ? (string)$lastSuccessfulSend
+            : $now->setTime(0, 0)->format('Y-m-d H:i:s');
+        $periodEnd = $reportEnd;
         $daily = ['new' => 0, 'in_progress' => 0, 'booked' => 0, 'completed' => 0];
         $dailyQuery = $pdo->prepare(
             'SELECT status, COUNT(*) AS amount FROM baribal_leads
-             WHERE created_at >= :start AND created_at < :finish GROUP BY status'
+             WHERE created_at > :start AND created_at <= :finish GROUP BY status'
         );
-        $dailyQuery->execute(['start' => $todayStart, 'finish' => $tomorrowStart]);
+        $dailyQuery->execute(['start' => $periodStart, 'finish' => $periodEnd]);
         foreach ($dailyQuery->fetchAll() as $row) {
             if (array_key_exists((string)$row['status'], $daily)) $daily[(string)$row['status']] = (int)$row['amount'];
         }
@@ -65,6 +61,8 @@ try {
         $pendingReviews = (int)$pdo->query("SELECT COUNT(*) FROM baribal_reviews WHERE status = 'pending'")->fetchColumn();
 
         $dateLabel = $now->format('d.m.Y');
+        $periodLabel = (new DateTimeImmutable($periodStart, new DateTimeZone('Europe/Moscow')))->format('d.m.Y H:i')
+            . ' — ' . $now->format('d.m.Y H:i');
         $statusLabels = [
             'new' => 'Новые',
             'in_progress' => 'В работе',
@@ -72,8 +70,8 @@ try {
             'completed' => 'Завершены',
         ];
         $html = '<div style="font-family:Arial,sans-serif;background:#f2f3f4;padding:24px;color:#202326"><div style="max-width:620px;margin:auto;background:#fff;border:1px solid #e4e6e8;border-radius:14px;overflow:hidden">'
-            . '<div style="background:#222629;color:#fff;padding:22px 26px"><div style="color:#d8a05b;font-size:11px;letter-spacing:2px;font-weight:bold">BARIBAL · ПЕРМЬ</div><h2 style="margin:8px 0 0;font-size:23px">Итоги рабочего дня</h2><div style="color:#d4d8da;font-size:13px;margin-top:5px">' . htmlspecialchars($dateLabel, ENT_QUOTES, 'UTF-8') . '</div></div>'
-            . '<div style="padding:22px 26px"><h3 style="font-size:15px;margin:0 0 12px">Результаты за сегодня</h3>'
+            . '<div style="background:#222629;color:#fff;padding:22px 26px"><div style="color:#d8a05b;font-size:11px;letter-spacing:2px;font-weight:bold">BARIBAL · ПЕРМЬ</div><h2 style="margin:8px 0 0;font-size:23px">Отчёт по заявкам</h2><div style="color:#d4d8da;font-size:13px;margin-top:5px">' . htmlspecialchars($periodLabel, ENT_QUOTES, 'UTF-8') . '</div></div>'
+            . '<div style="padding:22px 26px"><h3 style="font-size:15px;margin:0 0 12px">Новые заявки за период</h3>'
             . '<div style="font-size:28px;font-weight:bold;margin-bottom:8px">' . $todayTotal . ' <span style="font-size:13px;font-weight:normal;color:#687078">поступило заявок</span></div>'
             . '<table cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse">';
         foreach ($statusLabels as $key => $label) {
@@ -88,8 +86,8 @@ try {
             . '<div style="margin-top:22px"><a href="https://baribal-studio.ru/admin/leads.php" style="display:inline-block;padding:12px 17px;background:#25292c;border-radius:8px;color:#fff;text-decoration:none;font-size:13px;font-weight:bold">Открыть админку</a></div></div>'
             . '<div style="padding:14px 26px;background:#f7f8f8;color:#8a9298;font-size:11px">Отчёт формируется автоматически по данным базы BARIBAL.</div></div></div>';
 
-        $plain = "BARIBAL — итоги рабочего дня {$dateLabel}\n\n"
-            . "Результаты за сегодня: поступило {$todayTotal}\n"
+        $plain = "BARIBAL — отчёт по заявкам {$dateLabel}\nПериод: {$periodLabel}\n\n"
+            . "Новые заявки за период: {$todayTotal}\n"
             . "Новые: {$daily['new']}\nВ работе: {$daily['in_progress']}\nЗаписаны: {$daily['booked']}\nЗавершены: {$daily['completed']}\n\n"
             . "Накопительные результаты:\nНовые: {$newCount}\nВ работе: {$inProgressCount}\nВсего требуют внимания: " . ($newCount + $inProgressCount) . "\n"
             . "Отзывы на модерации: {$pendingReviews}\n\nАдминка: https://baribal-studio.ru/admin/leads.php";
@@ -105,7 +103,7 @@ try {
         $mail->CharSet = PHPMailer::CHARSET_UTF8;
         $mail->setFrom($mail->Username, 'BARIBAL — ежедневный отчёт');
         $mail->addAddress((string)$config['recipient']);
-        $mail->Subject = 'BARIBAL · итоги рабочего дня · ' . $dateLabel;
+        $mail->Subject = 'BARIBAL · отчёт по заявкам · ' . $dateLabel;
         $mail->isHTML(true);
         $mail->Body = $html;
         $mail->AltBody = $plain;
@@ -113,10 +111,10 @@ try {
 
         $save = $pdo->prepare(
             "INSERT INTO baribal_daily_reports (report_date, sent_at, attempts, last_error)
-             VALUES (:date, NOW(), 1, '')
+             VALUES (:date, :sent_at, 1, '')
              ON DUPLICATE KEY UPDATE sent_at = VALUES(sent_at), attempts = attempts + 1, last_error = ''"
         );
-        $save->execute(['date' => $reportDate]);
+        $save->execute(['date' => $reportDate, 'sent_at' => $periodEnd]);
     } catch (Throwable $error) {
         $saveFailure = $pdo->prepare(
             "INSERT INTO baribal_daily_reports (report_date, sent_at, attempts, last_error)
