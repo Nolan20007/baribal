@@ -113,6 +113,15 @@ document.querySelectorAll(".lead-form, .demo-form").forEach((form) => {
         throw new Error(result.message || "Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.");
       }
 
+      // Count only server-confirmed lead submissions; analytics must never block the form.
+      try {
+        if (typeof window.ym === "function") {
+          window.ym(87543679, "reachGoal", "baribal_form_success");
+        }
+      } catch (analyticsError) {
+        console.warn("BARIBAL form conversion could not be sent to Yandex Metrika.", analyticsError);
+      }
+
       form.reset();
       form.querySelectorAll("[data-contact-other-toggle]").forEach((toggle) => {
         toggle.dispatchEvent(new Event("change", { bubbles: true }));
