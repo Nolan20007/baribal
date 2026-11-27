@@ -275,8 +275,13 @@ if ($dbError !== '') {
 $htmlBody .= '<div style="font-size:11px;letter-spacing:1.3px;color:#9a713f;font-weight:bold;margin:0 0 10px">КОНТАКТ И ЗАПРОС</div>'
     . '<table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse">';
 foreach ($display as $label => $value) {
+    $safeValue = nl2br($e($value));
+    if ($label === 'Телефон') {
+        $phoneTel = preg_replace('/[^\\d+]/', '', $phone) ?? '';
+        $safeValue = '<a href="tel:' . $e($phoneTel) . '" style="color:#94652d;text-decoration:underline;font-weight:700">' . $e($value) . '</a>';
+    }
     $htmlBody .= '<tr><td style="width:38%;padding:9px 8px 9px 0;border-bottom:1px solid #edf0f1;color:#697177;font-size:13px;vertical-align:top">' . $e($label) . '</td>'
-        . '<td style="padding:9px 0;border-bottom:1px solid #edf0f1;color:#202326;font-size:14px;font-weight:600;vertical-align:top">' . nl2br($e($value)) . '</td></tr>';
+        . '<td style="padding:9px 0;border-bottom:1px solid #edf0f1;color:#202326;font-size:14px;font-weight:600;vertical-align:top">' . $safeValue . '</td></tr>';
 }
 $htmlBody .= '</table><div style="font-size:11px;letter-spacing:1.3px;color:#9a713f;font-weight:bold;margin:24px 0 10px">ИСТОЧНИК ОБРАЩЕНИЯ</div>'
     . '<table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse">';
