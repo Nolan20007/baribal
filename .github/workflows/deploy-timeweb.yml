@@ -63,6 +63,9 @@ jobs:
       - name: Inject shared callback forms into every page
         run: python maintenance/build-shared-forms.py
 
+      - name: Inject Google Tag Manager into Timeweb production pages
+        run: python maintenance/inject-google-tag-manager.py
+
       - name: Restore responsive image cache
         uses: actions/cache/restore@v4
         with:
