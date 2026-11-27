@@ -1,18 +1,19 @@
-<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-NXWTSG29"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-</script>
+BARIBAL — настройки Google Analytics
 
+Основной контейнер Google Tag Manager (используем на сайте):
+GTM-NXWTSG29
 
-
-<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-WXLNSTFT"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-</script>
-
-
+Идентификатор потока Google Analytics 4:
 G-MGDBX8E9CM
+
+Второй контейнер GTM, появившийся при настройке Analytics:
+GTM-WXLNSTFT
+Пока не используется. Не устанавливать его на сайт и не удалять из аккаунта.
+
+Установка основного контейнера:
+Скрипт maintenance/inject-google-tag-manager.py автоматически добавляет стандартный код GTM-NXWTSG29 в страницы сборки Timeweb.
+На GitHub Pages (тестовая публикация) код не добавляется.
+
+Важно:
+После установки контейнера в интерфейсе Google Tag Manager нужно создать тег Google tag с ID G-MGDBX8E9CM, назначить триггер All Pages и опубликовать контейнер.
+До публикации этого тега контейнер сам по себе не отправляет данные в Google Analytics.
