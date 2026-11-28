@@ -3464,3 +3464,9 @@ a.button:focus-visible,
   outline:2px solid var(--orange);
   outline-offset:3px;
 }
+
+/* Calculator service selector: increase only its heading and service labels by 20%. */
+.estimate-services-title,
+.estimate-service-option{
+  font-size:10.8px;
+}
