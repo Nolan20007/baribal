@@ -3436,3 +3436,31 @@ a.button:focus-visible,
   .project-modal--reviews .project-modal__visual{min-height:0}
   .project-modal--reviews .project-modal__close{top:10px;right:10px}
 }
+
+/* Focused calculator and PPF contrast refinements — 2026-11-28. */
+@media(min-width:761px){
+  .estimate-services{
+    align-self:stretch;
+    max-height:none;
+  }
+  .estimate-form{
+    align-self:stretch;
+  }
+}
+
+/* The PPF intro panel stays light in both themes, so its outline link needs
+   dark text in the default (dark site theme) as well as in the light theme. */
+.ppf-page .deep-cleaning-intro .button-outline{
+  color:#202123;
+  border-color:rgba(32,33,35,.48);
+  background:transparent;
+}
+.ppf-page .deep-cleaning-intro .button-outline:hover{
+  color:#fff;
+  background:#202123;
+  border-color:#202123;
+}
+.ppf-page .deep-cleaning-intro .button-outline:focus-visible{
+  outline:2px solid var(--orange);
+  outline-offset:3px;
+}
